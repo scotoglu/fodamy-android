@@ -13,5 +13,5 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CommentsFragment :
     BaseFragment<FragmentCommentsBinding, CommentsViewModel>(R.layout.fragment_comments) {
-    override fun getViewModel(): Class<CommentsViewModel> = CommentsViewModel::class.java
+    override fun getViewModelClass(): Class<CommentsViewModel> = CommentsViewModel::class.java
 }

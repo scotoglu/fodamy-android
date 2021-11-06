@@ -8,5 +8,5 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ImagePopupFragment :
     BaseFragment<FragmentImagePopupBinding, ImagePopupViewModel>(R.layout.fragment_image_popup) {
-    override fun getViewModel(): Class<ImagePopupViewModel> = ImagePopupViewModel::class.java
+    override fun getViewModelClass(): Class<ImagePopupViewModel> = ImagePopupViewModel::class.java
 }

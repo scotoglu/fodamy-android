@@ -15,7 +15,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding, WalkThrough
     R.layout.fragment_walk_through
 ) {
 
-    override fun getViewModel(): Class<WalkThroughViewModel> = WalkThroughViewModel::class.java
+    override fun getViewModelClass(): Class<WalkThroughViewModel> = WalkThroughViewModel::class.java
 
 
 }

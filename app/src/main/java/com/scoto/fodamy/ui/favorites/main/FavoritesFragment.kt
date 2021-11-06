@@ -8,5 +8,5 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FavoritesFragment :
     BaseFragment<FragmentFavoritesBinding, FavoritesViewModel>(R.layout.fragment_favorites) {
-    override fun getViewModel(): Class<FavoritesViewModel> = FavoritesViewModel::class.java
+    override fun getViewModelClass(): Class<FavoritesViewModel> = FavoritesViewModel::class.java
 }

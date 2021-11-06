@@ -15,5 +15,5 @@ import dagger.hilt.android.AndroidEntryPoint
 class RecipesFragment : BaseFragment<FragmentRecipeBinding, RecipesViewModel>(
     R.layout.fragment_recipe
 ) {
-    override fun getViewModel(): Class<RecipesViewModel> = RecipesViewModel::class.java
+    override fun getViewModelClass(): Class<RecipesViewModel> = RecipesViewModel::class.java
 }

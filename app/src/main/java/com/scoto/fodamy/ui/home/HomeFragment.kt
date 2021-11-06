@@ -14,6 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
 
-    override fun getViewModel(): Class<HomeViewModel> = HomeViewModel::class.java
+    override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
 
 }
