@@ -3,7 +3,41 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/editor_pick.xml" value="0.240625" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/fodamy_log.xml" value="0.240625" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_clock.xml" value="0.240625" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_close.xml" value="0.240625" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_commect.xml" value="0.240625" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_cross.xml" value="0.240625" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_heart.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_home.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_logout.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_mail.xml" value="0.240625" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_menu.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_password.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_send.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_share.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_user.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_user_placeholder.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_users.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/ic_warning.xml" value="0.1" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/drawable/progressbar_custom.xml" value="0.240625" />
         <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/dialog_auth_required.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/dialog_comment_edit.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_comments.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_favorites.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_image_popup.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_login.xml" value="0.21041666666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_recipe.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_register.xml" value="0.21041666666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_splash.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/fragment_walk_through.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/item_favorite_card.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/item_food_card.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/progressbar.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/scoto/AndroidStudioProjects/Fodamy/app/src/main/res/layout/slider_layout.xml" value="0.22447916666666667" />
       </map>
     </option>
   </component>

@@ -1,3 +1,61 @@
 <resources>
     <string name="app_name">Fodamy</string>
+
+    <!--Walkthrough Contents-->
+    <string-array name="walkthrouh_title">
+        <item>Welcom to Fodamy Network!</item>
+        <item>Finding recipes were not that easy.</item>
+        <item>Add new recipe.</item>
+        <item>Share recipes with others.</item>
+    </string-array>
+
+    <string-array name="walkthrouhg_content">
+        <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
+        <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
+        <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
+        <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
+    </string-array>
+
+    <!--  Auth-->
+    <string name="username">Kullanıcı Adı</string>
+    <string name="email_address">E-mail Adresi</string>
+    <string name="password">Şifre</string>
+    <string name="forgotten_password">Şifrenizi mi unuttunuz?</string>
+    <string name="reset">Sıfırla</string>
+    <string name="signup">Üye Ol</string>
+    <string name="login">Giriş Yap</string>
+    <string name="reset_password">Şifre Sıfırlama</string>
+    <string name="have_account">Hesabın mı var?</string>
+    <string name="dont_have_account">Hesabın yok mu?</string>
+    <!--Required Fields-->
+    <string name="required_field_password">Şifre alanı boş bırakılamaz.</string>
+    <string name="required_field_email">Email alanı boş bırakılamaz.</string>
+
+    <!--    Tabs-->
+    <string name="tab_editor_choice">Editör Seçimi</string>
+    <string name="tab_recently_added">Son Eklenenler</string>
+
+
+    <!--    Hints-->
+    <string name="hint_comment">Bir şey yaz...</string>
+
+    <!--    Buttons-->
+    <string name="btn_followed">Takip Ediliyor</string>
+    <string name="btn_unfollowed">Takip Et</string>
+    <string name="btn_cancel">İptal</string>
+    <string name="btn_giveup">Vazgeç</string>
+    <string name="btn_unfollow">Takibi Bırak</string>
+    <string name="btn_edit">Düzenle</string>
+    <string name="btn_delete">Sil</string>
+    <string name="btn_save">Kaydet</string>
+    <string name="btn_back">Geri</string>
+    <string name="btn_add_comment">Yorum Ekle</string>
+    <string name="btn_move_next">İlerle</string>
+
+    <!--With Params-->
+    <string name="comment">%1$d Yorum</string>
+    <string name="like">%1$d Beğeni</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
