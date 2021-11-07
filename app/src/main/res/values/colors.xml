@@ -12,4 +12,8 @@
     <color name="raven">#6C757D</color>
     <color name="zircon">#DEE2E6</color>
     <color name="heather">#ADB5BD</color>
+    <color name="text_dark">#212529</color>
+    <color name="text_content">#6C757D</color>
+    <color name="indicator_inactive">#F9C3BB</color>
+
 </resources>
