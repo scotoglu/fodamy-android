@@ -9,7 +9,7 @@
         <item>Share recipes with others.</item>
     </string-array>
 
-    <string-array name="walkthrouhg_content">
+    <string-array name="walkthrouhg_descriptions">
         <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
         <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
         <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
@@ -57,5 +57,6 @@
     <string name="like">%1$d Beğeni</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_start">Başla</string>
 
 </resources>
