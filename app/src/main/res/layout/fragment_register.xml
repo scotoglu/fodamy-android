@@ -1,21 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.scoto.fodamy.ui.auth.signup.RegisterViewModel" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.auth.signup.RegisterFragment">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
+            android:id="@+id/tv_signup"
+            style="@style/AuthScreenTitles"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_margin_40dp"
+            android:text="@string/signup"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username"
+            style="@style/TextInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+
+            android:layout_marginTop="@dimen/size_margin_40dp"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:hint="@string/username"
+            app:layout_constraintTop_toBottomOf="@+id/tv_signup"
+            app:startIconDrawable="@drawable/ic_user"
+            app:startIconTint="@color/cinder">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/text_input_layout_background" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email"
+            style="@style/TextInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginTop="@dimen/size_margin_16dp"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:hint="@string/email_address"
+            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:startIconDrawable="@drawable/ic_mail"
+            app:startIconTint="@color/cinder">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/text_input_layout_background" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            style="@style/TextInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginTop="@dimen/size_margin_16dp"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:hint="@string/password"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            app:startIconDrawable="@drawable/ic_password"
+            app:startIconTint="@color/cinder">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/text_input_layout_background" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_signup"
+            style="@style/PrimaryButtonLarge.Filled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_margin_16dp"
+            android:letterSpacing="0"
+            android:padding="@dimen/size_padding_15dp"
+            android:text="@string/signup"
+            android:textSize="@dimen/text_size_20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
+
+        <TextView
+            android:id="@+id/tv_have_account"
+            style="@style/WalkThroughContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:text="@string/have_account"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
