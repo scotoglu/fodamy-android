@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment2">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -14,8 +14,8 @@
             android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_nav_auth"
-            app:destination="@id/nav_auth" />
+            android:id="@+id/action_homeFragment_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -25,21 +25,15 @@
         <action
             android:id="@+id/action_favoritesFragment_to_recipeFragment"
             app:destination="@id/recipeFragment" />
-        <action
-            android:id="@+id/action_favoritesFragment_to_nav_auth"
-            app:destination="@id/nav_auth" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="com.scoto.fodamy.ui.favorites.recipes.RecipeFragment"
+        android:name="com.scoto.fodamy.ui.favorites.recipes.RecipesFragment"
         android:label="fragment_recipe"
         tools:layout="@layout/fragment_recipe" >
         <action
             android:id="@+id/action_recipeFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment" />
-        <action
-            android:id="@+id/action_recipeFragment_to_nav_auth"
-            app:destination="@id/nav_auth" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailsFragment"
@@ -63,5 +57,28 @@
         android:name="com.scoto.fodamy.ui.favorites.recipe_details.image_popup.ImagePopupFragment"
         android:label="fragment_image_popup"
         tools:layout="@layout/fragment_image_popup" />
-    <include app:graph="@navigation/nav_auth" />
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.scoto.fodamy.ui.auth.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment2_to_registerFragment2"
+            app:destination="@id/registerFragment2" />
+        <action
+            android:id="@+id/action_loginFragment2_to_resetPasswordFragment2"
+            app:destination="@id/resetPasswordFragment2" />
+        <action
+            android:id="@+id/action_loginFragment2_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment2"
+        android:name="com.scoto.fodamy.ui.auth.signup.RegisterFragment"
+        android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/resetPasswordFragment2"
+        android:name="com.scoto.fodamy.ui.auth.reset_password.ResetPasswordFragment"
+        android:label="ResetPasswordFragment" />
 </navigation>

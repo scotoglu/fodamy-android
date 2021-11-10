@@ -30,6 +30,7 @@
     <!--Required Fields-->
     <string name="required_field_password">Şifre alanı boş bırakılamaz.</string>
     <string name="required_field_email">Email alanı boş bırakılamaz.</string>
+    <string name="required_field_username">Kullanıcı adı alanı boş bırakılamaz.</string>
 
     <!--    Tabs-->
     <string name="tab_editor_choice">Editör Seçimi</string>

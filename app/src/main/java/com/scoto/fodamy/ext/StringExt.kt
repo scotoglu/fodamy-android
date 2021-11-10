@@ -1,11 +1,10 @@
 package com.scoto.fodamy.ext
 
 import android.graphics.Color
-import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.view.View
+import android.util.Patterns
+
 
 fun String.spannableText(text: String = ""): SpannableString {
     val start = text.length
@@ -22,21 +21,9 @@ fun String.spannableText(text: String = ""): SpannableString {
 
 }
 
-fun SpannableString.withClickable(
-    clickablePart: String,
-    onClickListener: () -> Unit
-): SpannableString {
-    val clickableSpan = object : ClickableSpan() {
-        override fun onClick(widget: View) {
-            onClickListener.invoke()
-        }
+fun String.isEmailValid(): Boolean {
+    if (this.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()) {
+        return true
     }
-    val clickablePartStart = indexOf(clickablePart)
-    setSpan(
-        clickableSpan,
-        clickablePartStart,
-        clickablePartStart + clickablePart.length,
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-    return this
+    return false
 }
