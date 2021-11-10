@@ -13,7 +13,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
         tools:context=".ui.auth.signup.RegisterFragment">
+
+        <include
+            android:id="@+id/included"
+            layout="@layout/required_field_warning"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--        app:layout_goneMarginTop="size_margin_40dp" -->
 
         <TextView
             android:id="@+id/tv_signup"
@@ -22,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_margin_40dp"
             android:text="@string/signup"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/guideline4" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username"
@@ -30,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_margin_16dp"
-
             android:layout_marginTop="@dimen/size_margin_40dp"
             android:layout_marginEnd="@dimen/size_margin_16dp"
             android:hint="@string/username"
@@ -41,7 +50,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/text_input_layout_background" />
+                android:background="@drawable/text_input_layout_background"
+                android:text="@={viewModel.username}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,7 +70,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/text_input_layout_background" />
+                android:background="@drawable/text_input_layout_background"
+                android:text="@={viewModel.email}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -70,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_margin_16dp"
             android:layout_marginTop="@dimen/size_margin_16dp"
+            app:passwordToggleEnabled="true"
             android:layout_marginEnd="@dimen/size_margin_16dp"
             android:hint="@string/password"
             app:layout_constraintTop_toBottomOf="@+id/email"
@@ -79,7 +91,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/text_input_layout_background" />
+                android:inputType="textPassword"
+                android:background="@drawable/text_input_layout_background"
+                android:text="@={viewModel.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -89,12 +103,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_margin_16dp"
             android:letterSpacing="0"
+            android:onClick="@{()->viewModel.doRegisterRequest()}"
             android:padding="@dimen/size_padding_15dp"
             android:text="@string/signup"
             android:textSize="@dimen/text_size_20sp"
+            progressbarState="@{!viewModel.progressbarVisibility}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            progressbarState="@{viewModel.progressbarVisibility}"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/red"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
         <TextView
             android:id="@+id/tv_have_account"
@@ -106,5 +132,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="36dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="396dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

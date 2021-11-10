@@ -27,7 +27,7 @@ class LoginViewModel @Inject constructor(
         get() = _state
 
 
-    val isDialogShowing = MutableLiveData<InputErrorType<Boolean>>()
+    val requiredFieldWarning = MutableLiveData<InputErrorType<Boolean>>()
 
     val progressbarVisibility = MutableLiveData<Boolean>()
 
@@ -46,7 +46,7 @@ class LoginViewModel @Inject constructor(
                         setProgressbarVisibility(false)
                     }
                     is NetworkResult.Error -> {
-                        isDialogShowing.value =
+                        requiredFieldWarning.value =
                             InputErrorType.InvalidInputs(response.message!!.parseResponse())
                         _state.value = false
                         setProgressbarVisibility(false)
@@ -60,10 +60,10 @@ class LoginViewModel @Inject constructor(
     private fun validateInputs(username: String, password: String): Boolean {
         var isValid = false
         if (username.isNullOrBlank()) {
-            isDialogShowing.value = InputErrorType.Email(true)
+            requiredFieldWarning.value = InputErrorType.Email(true)
         } else {
             if (password.isNullOrBlank()) {
-                isDialogShowing.value = InputErrorType.Password(true)
+                requiredFieldWarning.value = InputErrorType.Password(true)
             } else {
                 isValid = true
             }

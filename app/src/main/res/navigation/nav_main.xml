@@ -76,7 +76,11 @@
     <fragment
         android:id="@+id/registerFragment2"
         android:name="com.scoto.fodamy.ui.auth.signup.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment2_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment2"
         android:name="com.scoto.fodamy.ui.auth.reset_password.ResetPasswordFragment"

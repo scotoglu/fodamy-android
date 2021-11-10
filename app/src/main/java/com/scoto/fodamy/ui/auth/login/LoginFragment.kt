@@ -47,8 +47,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
 
     }
 
+
     private fun requiredFiledObserver() {
-        viewModel.isDialogShowing.observe(viewLifecycleOwner, {
+        viewModel.requiredFieldWarning.observe(viewLifecycleOwner, {
             when (it) {
                 is InputErrorType.Email -> {
                     showRequiredField(getString(R.string.required_field_username))

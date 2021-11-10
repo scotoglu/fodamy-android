@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_margin_40dp"
             android:text="@string/login"
-            app:layout_constraintTop_toBottomOf="@id/included" />
+            app:layout_constraintTop_toBottomOf="@id/guideline5" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username"
@@ -84,6 +84,7 @@
             progressbarState="@{viewModel.progressbarVisibility}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminateTint="@color/red"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -141,6 +142,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="310dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="36dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
