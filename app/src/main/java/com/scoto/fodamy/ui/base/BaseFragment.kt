@@ -10,9 +10,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
-import com.scoto.fodamy.R
-import javax.inject.Inject
 
 
 abstract class BaseFragment<V : ViewDataBinding, T : ViewModel>(

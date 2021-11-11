@@ -22,5 +22,13 @@ interface AuthService {
         @Field("username") username: String,
         @Field("email") email: String,
         @Field("password") password: String
+    ): Response<AuthResponse>
+
+
+    @FormUrlEncoded
+    @POST("auth/forgot")
+    suspend fun forgot(
+        @Field("email") email: String
     ):Response<AuthResponse>
+
 }

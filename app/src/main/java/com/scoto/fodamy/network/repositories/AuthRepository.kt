@@ -7,6 +7,7 @@ import javax.inject.Inject
 interface AuthRepository {
     suspend fun login(username: String, password: String): NetworkResult<String>
     suspend fun register(username: String, email: String, password: String): NetworkResult<String>
+    suspend fun forgot(email: String): NetworkResult<String>
 }
 
 
@@ -29,6 +30,15 @@ class AuthRepositoryImpl @Inject constructor(
         password: String
     ): NetworkResult<String> {
         val response = authService.register(username, email, password)
+        return if (response.isSuccessful) {
+            NetworkResult.Success("Success")
+        } else {
+            NetworkResult.Error(response.errorBody())
+        }
+    }
+
+    override suspend fun forgot(email: String): NetworkResult<String> {
+        val response = authService.forgot(email)
         return if (response.isSuccessful) {
             NetworkResult.Success("Success")
         } else {
