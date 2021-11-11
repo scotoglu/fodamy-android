@@ -2,6 +2,7 @@ package com.scoto.fodamy.ui.splash
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentSplashBinding
@@ -10,9 +11,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
+class SplashFragment : BaseFragment<FragmentSplashBinding>(
     R.layout.fragment_splash
 ) {
+
+    private val viewModel: SplashViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -26,10 +30,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
             }
         })
     }
-
-
-    override fun getViewModelClass(): Class<SplashViewModel> = SplashViewModel::class.java
-
 
 }
 

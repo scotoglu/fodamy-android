@@ -12,18 +12,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 
-abstract class BaseFragment<V : ViewDataBinding, T : ViewModel>(
+abstract class BaseFragment<V : ViewDataBinding>(
     @LayoutRes val layoutId: Int
 ) : Fragment() {
 
-    protected lateinit var viewModel: T
     protected lateinit var binding: V
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(getViewModelClass())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +36,5 @@ abstract class BaseFragment<V : ViewDataBinding, T : ViewModel>(
     }
 
 
-    abstract fun getViewModelClass(): Class<T>
 
 }

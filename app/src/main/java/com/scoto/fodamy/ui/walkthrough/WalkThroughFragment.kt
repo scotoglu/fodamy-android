@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding, WalkThroughViewModel>(
+class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(
     R.layout.fragment_walk_through
 ) {
 
@@ -101,8 +101,6 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding, WalkThrough
             }
         }
     }
-
-    override fun getViewModelClass(): Class<WalkThroughViewModel> = WalkThroughViewModel::class.java
 
     companion object {
         private const val TAG = "WalkThroughFragment"

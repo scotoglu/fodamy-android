@@ -2,6 +2,7 @@ package com.scoto.fodamy.ui.auth.login
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
@@ -12,9 +13,11 @@ import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
+class LoginFragment : BaseFragment<FragmentLoginBinding>(
     R.layout.fragment_login
 ), View.OnClickListener {
+
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,8 +89,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
         val navController = findNavController()
         navController.navigate(directions)
     }
-
-    override fun getViewModelClass(): Class<LoginViewModel> = LoginViewModel::class.java
 
     companion object {
         private const val TAG = "LoginFragment"

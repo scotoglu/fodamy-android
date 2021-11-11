@@ -2,6 +2,7 @@ package com.scoto.fodamy.ui.auth.signup
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
@@ -13,7 +14,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment :
-    BaseFragment<FragmentRegisterBinding, RegisterViewModel>(R.layout.fragment_register) {
+    BaseFragment<FragmentRegisterBinding>(R.layout.fragment_register) {
+
+    private val viewModel: RegisterViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +25,7 @@ class RegisterFragment :
 
         viewModel.state.observe(viewLifecycleOwner, { state ->
             if (state) {
-                   navigateTo(actionRegisterToLogin)
+                navigateTo(actionRegisterToLogin)
             }
         })
 
@@ -70,7 +73,6 @@ class RegisterFragment :
         }
     }
 
-    override fun getViewModelClass(): Class<RegisterViewModel> = RegisterViewModel::class.java
 
     companion object {
         private val actionRegisterToLogin =

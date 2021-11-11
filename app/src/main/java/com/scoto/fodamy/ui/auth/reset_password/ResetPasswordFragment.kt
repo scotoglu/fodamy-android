@@ -2,6 +2,7 @@ package com.scoto.fodamy.ui.auth.reset_password
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentResetPasswordBinding
 import com.scoto.fodamy.helper.states.InputErrorType
@@ -10,7 +11,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ResetPasswordFragment :
-    BaseFragment<FragmentResetPasswordBinding, ResetPasswordViewModel>(R.layout.fragment_reset_password) {
+    BaseFragment<FragmentResetPasswordBinding>(R.layout.fragment_reset_password) {
+
+
+    private val viewModel:ResetPasswordViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,9 +58,6 @@ class ResetPasswordFragment :
             visibility = View.VISIBLE
         }
     }
-
-    override fun getViewModelClass(): Class<ResetPasswordViewModel> =
-        ResetPasswordViewModel::class.java
 
     companion object {
         private const val TAG = "ResetPasswordFragment"
