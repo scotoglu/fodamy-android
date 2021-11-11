@@ -7,6 +7,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentLoginBinding
+import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.ext.spannableText
 import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.ui.base.BaseFragment
@@ -15,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(
     R.layout.fragment_login
-), View.OnClickListener {
+) {
 
     private val viewModel: LoginViewModel by viewModels()
 
@@ -30,19 +31,21 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
         requiredFiledObserver()
         setSpannableText()
-        setListener()
 
+        textOnClickNavigateToDirections()
+        
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
     }
 
-    private fun setListener() {
+    private fun textOnClickNavigateToDirections() {
         binding.apply {
-            tvDontHaveAccount.setOnClickListener(this@LoginFragment)
-            tvForgottenPassword.setOnClickListener(this@LoginFragment)
+            tvDontHaveAccount.onClick { navigateTo(actionLoginToRegister) }
+            tvForgottenPassword.onClick { navigateTo(actionLoginToResetPassword) }
         }
     }
+
 
     private fun setSpannableText() {
         binding.tvDontHaveAccount.text =
@@ -74,16 +77,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         }
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            binding.tvDontHaveAccount.id -> {
-                navigateTo(actionLoginToRegister)
-            }
-            binding.tvForgottenPassword.id -> {
-                navigateTo(actionLoginToResetPassword)
-            }
-        }
-    }
 
     private fun navigateTo(directions: NavDirections) {
         val navController = findNavController()

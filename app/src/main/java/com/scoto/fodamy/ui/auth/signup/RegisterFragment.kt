@@ -7,6 +7,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRegisterBinding
+import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.ext.spannableText
 import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.ui.base.BaseFragment
@@ -69,7 +70,7 @@ class RegisterFragment :
     private fun setSpannableText() {
         binding.tvHaveAccount.apply {
             text = getString(R.string.login).spannableText(getString(R.string.have_account))
-            setOnClickListener { navigateTo(actionRegisterToLogin) }
+            onClick { navigateTo(actionRegisterToLogin) }
         }
     }
 
