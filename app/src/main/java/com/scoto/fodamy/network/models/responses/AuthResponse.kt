@@ -1,6 +1,7 @@
-package com.scoto.fodamy.network.models
+package com.scoto.fodamy.network.models.responses
 
 import android.os.Parcelable
+import com.scoto.fodamy.network.models.User
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
