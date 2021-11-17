@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -18,6 +17,7 @@
         app:cardCornerRadius="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -127,27 +127,22 @@
                 app:layout_constraintEnd_toEndOf="@+id/iv_food_image"
                 app:layout_constraintTop_toTopOf="@+id/iv_food_image" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/tv_comment_count"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_margin_16dp"
-                android:layout_marginEnd="@dimen/size_margin_16dp"
-                android:orientation="horizontal"
-                android:paddingVertical="@dimen/size_padding_15dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/size_margin_8dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:paddingVertical="@dimen/size_padding_4dp"
+                android:textSize="@dimen/text_size_16sp"
+                app:commentCount="@{recipe.commentCount}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_food_image">
+                app:layout_constraintTop_toBottomOf="@+id/iv_food_image"
+                app:likeCount="@{recipe.likeCount}"
+                tools:text="0 Yorum 0 Takipçi" />
 
-                <TextView
-                    android:id="@+id/tv_comment_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_semibold"
-                    android:textSize="@dimen/text_size_16sp"
-                    app:commentCount="@{recipe.commentCount}"
-                    app:likeCount="@{recipe.likeCount}"
-                    tools:text="0 Yorum 0 Takipçi" />
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.scoto.fodamy.R
 
+
 @BindingAdapter(value = ["app:recipeCount", "app:followerCount"])
 fun setRecipeAndFollowers(tv: TextView, recipes: Int, followers: Int) {
     val recipeTxt = tv.context.resources.getString(R.string.recipe, recipes)

@@ -8,8 +8,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 
 
 abstract class BaseFragment<V : ViewDataBinding>(
@@ -17,7 +15,6 @@ abstract class BaseFragment<V : ViewDataBinding>(
 ) : Fragment() {
 
     protected lateinit var binding: V
-
 
 
     override fun onCreateView(
@@ -35,6 +32,9 @@ abstract class BaseFragment<V : ViewDataBinding>(
         return binding.root
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.unbind()
+    }
 
 }
