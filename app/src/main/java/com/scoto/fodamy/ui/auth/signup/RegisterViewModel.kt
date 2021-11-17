@@ -41,7 +41,6 @@ class RegisterViewModel @Inject constructor(
             val password = password.value.toString()
 
 
-
             if (validateInputs(username, email, password)) {
                 setProgreessbarVisibility(true)
                 val response = authRepository.register(username, email, password)

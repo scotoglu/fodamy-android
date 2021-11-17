@@ -36,8 +36,6 @@ class HomeFragment :
             }
         }.attach()
 
-        viewModel.getEditorChoices()
-
     }
 
 }

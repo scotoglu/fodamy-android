@@ -33,7 +33,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         setSpannableText()
 
         textOnClickNavigateToDirections()
-        
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
