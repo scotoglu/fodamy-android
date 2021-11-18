@@ -1,5 +1,6 @@
 package com.scoto.fodamy.ui.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -19,6 +20,7 @@ class RecipesAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
+        Log.d("SEFA", "onBindViewHolder: $currentItem")
         currentItem?.let {
             holder.bind(it)
         }
@@ -36,6 +38,7 @@ class RecipesAdapter
 
         fun bind(item: Recipe) {
             binding.recipe = item
+            binding.executePendingBindings()
         }
     }
 

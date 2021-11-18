@@ -10,14 +10,14 @@ import com.scoto.fodamy.R
 
 
 @BindingAdapter(value = ["app:recipeCount", "app:followerCount"])
-fun setRecipeAndFollowers(tv: TextView, recipes: Int, followers: Int) {
+fun setRecipeAndFollowers(tv: TextView, recipes: Int?, followers: Int?) {
     val recipeTxt = tv.context.resources.getString(R.string.recipe, recipes)
     val followingTxt = tv.context.resources.getString(R.string.follower, followers)
     tv.text = "$recipeTxt $followingTxt"
 }
 
 @BindingAdapter(value = ["app:commentCount", "app:likeCount"])
-fun setCommentAndLike(tv: TextView, comments: Int, likes: Int) {
+fun setCommentAndLike(tv: TextView, comments: Int?, likes: Int?) {
     val commentTxt = tv.context.resources.getString(R.string.comment, comments)
     val likeTxt = tv.context.resources.getString(R.string.like, likes)
     tv.text = "$commentTxt $likeTxt"
@@ -25,7 +25,7 @@ fun setCommentAndLike(tv: TextView, comments: Int, likes: Int) {
 }
 
 @BindingAdapter("imageLoaderCircle")
-fun setImageWithGlideCircle(iv: ImageView, url: String) {
+fun setImageWithGlideCircle(iv: ImageView, url: String?) {
     Glide
         .with(iv.context)
         .load(url)
@@ -35,7 +35,7 @@ fun setImageWithGlideCircle(iv: ImageView, url: String) {
 }
 
 @BindingAdapter("imageLoaderNormal")
-fun setImageWithGlideNormal(iv: ImageView, url: String) {
+fun setImageWithGlideNormal(iv: ImageView, url: String?) {
     Glide
         .with(iv.context)
         .load(url)

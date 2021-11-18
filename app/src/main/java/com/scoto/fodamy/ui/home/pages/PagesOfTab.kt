@@ -1,10 +1,9 @@
 package com.scoto.fodamy.ui.home.pages
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentPagesOfTabBinding
 import com.scoto.fodamy.ui.base.BaseFragment
@@ -15,36 +14,46 @@ import dagger.hilt.android.AndroidEntryPoint
 class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
     R.layout.fragment_pages_of_tab
 ) {
-
-
     private val viewModel: PagesOfTabViewModel by viewModels()
-    private lateinit var adapter: RecipesAdapter
+    private lateinit var recipeAdapter: RecipesAdapter
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        adapter = RecipesAdapter()
+        recipeAdapter = RecipesAdapter()
 
-        adapter.addLoadStateListener {state ->
-            //Check
-        }
         setupRv()
 
         viewModel.recipes.observe(viewLifecycleOwner, {
-//            adapter.submitData(viewLifecycleOwner.lifecycle, it)
-            Log.d(TAG, "onViewCreated:$it ")
+            recipeAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
     }
 
+
     private fun setupRv() {
         binding.rvRecipes.apply {
             setHasFixedSize(true)
-            adapter = adapter
+            adapter = recipeAdapter
+            layoutManager =
+                LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
         }
     }
-companion object{
-    private const val TAG = "PagesOfTab"
-}
+
+    private fun navigateTo() {
+        //navigateTo recipeDetails
+    }
+
+    companion object {
+        private const val TAG = "PagesOfTab"
+        private val actionToRecipeDetails =
+            PagesOfTabDirections.actionPagesOfTabToRecipeDetailsFragment()
+    }
+
 }

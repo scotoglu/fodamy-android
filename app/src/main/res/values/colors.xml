@@ -15,5 +15,6 @@
     <color name="text_dark">#212529</color>
     <color name="text_content">#6C757D</color>
     <color name="indicator_inactive">#F9C3BB</color>
+    <color name="secondary_background">#F1F2F3</color>
 
 </resources>

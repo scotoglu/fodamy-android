@@ -13,7 +13,7 @@
         android:id="@+id/cv_food_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/size_margin_16dp"
+        android:layout_marginTop="@dimen/size_margin_16dp"
         app:cardCornerRadius="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,9 +33,10 @@
                 <ImageView
                     android:id="@+id/civ_profile"
                     imageLoaderCircle="@{recipe.user.image.url}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/icon_size_48dp"
+                    android:layout_height="@dimen/icon_size_48dp"
                     android:layout_centerVertical="true"
+                    android:contentDescription="@string/user_profile_content_description"
                     android:src="@drawable/ic_baseline_person_outline_48" />
 
                 <LinearLayout
@@ -52,18 +53,18 @@
                         android:fontFamily="@font/nunito_bold"
                         android:text="@{recipe.user.username}"
                         android:textColor="@color/cinder"
-                        android:textSize="@dimen/text_size_20sp"
+                        android:textSize="@dimen/text_size_18sp"
                         tools:text="scoto" />
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/tv_follower_and_followed"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:fontFamily="@font/nunito_semibold"-->
-<!--                        android:textSize="@dimen/text_size_20sp"-->
-<!--                        app:followerCount="@{recipe.user.followingCount"-->
-<!--                        app:recipeCount="@{recipe.user.recipeCount}"-->
-<!--                        tools:text="3 Tarif 0 Takipçi" />-->
+                    <TextView
+                        android:id="@+id/tv_follower_and_followed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:followerCount="@{recipe.user.followingCount}"
+                        app:recipeCount="@{recipe.user.recipeCount}"
+                        tools:text="3 Tarif 0 Takipçi" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -83,7 +84,7 @@
                 android:fontFamily="@font/nunito_bold"
                 android:text="@{recipe.title}"
                 android:textColor="@color/cinder"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_size_20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/relative_layout"
                 tools:text="Makarna Tarifi" />
@@ -92,23 +93,24 @@
                 android:id="@+id/tv_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/size_margin_16dp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="@{recipe.category.name}"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size_16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title"
                 tools:text="Hamur İşi" />
 
             <ImageView
+                android:contentDescription="@string/food_image_content_description"
                 android:id="@+id/iv_food_image"
                 imageLoaderNormal="@{recipe.images.get(0).url}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="@dimen/size_margin_16dp"
                 android:layout_marginTop="@dimen/size_margin_16dp"
                 android:layout_marginEnd="@dimen/size_margin_16dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/photo"
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -118,10 +120,11 @@
             <ImageView
                 android:id="@+id/iv_badge"
                 badgeVisibility="@{recipe.editorChoice}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/icon_size_32dp"
+                android:layout_height="@dimen/icon_size_32dp"
                 android:layout_marginTop="@dimen/size_margin_16dp"
                 android:layout_marginEnd="@dimen/size_margin_16dp"
+                android:contentDescription="@string/editor_choice_badge_content_description"
                 android:background="@drawable/bg_editor_choice"
                 android:src="@drawable/ic_editor_pick"
                 app:layout_constraintEnd_toEndOf="@+id/iv_food_image"
