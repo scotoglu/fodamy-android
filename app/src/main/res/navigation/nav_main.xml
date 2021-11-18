@@ -11,11 +11,11 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
-            app:destination="@id/recipeDetailsFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_loginFragment2"
             app:destination="@id/loginFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_pagesOfTab"
+            app:destination="@id/pagesOfTab" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -85,4 +85,12 @@
         android:id="@+id/resetPasswordFragment2"
         android:name="com.scoto.fodamy.ui.auth.reset_password.ResetPasswordFragment"
         android:label="ResetPasswordFragment" />
+    <fragment
+        android:id="@+id/pagesOfTab"
+        android:name="com.scoto.fodamy.ui.home.pages.PagesOfTab"
+        android:label="PagesOfTab" >
+        <action
+            android:id="@+id/action_pagesOfTab_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
 </navigation>

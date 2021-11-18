@@ -20,22 +20,30 @@ class HomeFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViewPagerAndTabLayout()
+    }
 
-        val fragmentManager = requireActivity().supportFragmentManager
-
-        val adapter = ViewPagerAdapter(fragmentManager, viewLifecycleOwner)
-        binding.viewPager.adapter = adapter
+    private fun setupViewPagerAndTabLayout() {
+        val viewPagerAdapter = ViewPagerAdapter(this)
+        binding.viewPager.adapter = viewPagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            when (position) {
-                0 -> {
-                    tab.text = getString(R.string.tab_editor_choice)
-                }
-                1 -> {
-                    tab.text = getString(R.string.tab_recently_added)
-                }
+            tab.text = when (position) {
+                ViewPagerAdapter.SCREEN_EDITOR_CHOICE_POSITION -> getString(R.string.tab_editor_choice)
+                ViewPagerAdapter.SCREEN_LAST_ADDED_POSITION -> getString(R.string.tab_recently_added)
+                else -> getString(R.string.tab_empty)
+
             }
         }.attach()
+    }
+
+    private fun logout() {
+        //Logout icon will change
+        //User will be logout
 
     }
 
+    private fun navigateTo() {
+        //navigateTo login if user not login yet
+
+    }
 }
