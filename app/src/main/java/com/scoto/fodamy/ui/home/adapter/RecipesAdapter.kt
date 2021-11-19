@@ -1,6 +1,5 @@
 package com.scoto.fodamy.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -8,9 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.scoto.fodamy.databinding.ItemFoodCardBinding
 import com.scoto.fodamy.network.models.Recipe
+import com.scoto.fodamy.ui.home.pages.RecipeItemClickListener
 
-class RecipesAdapter
-    : PagingDataAdapter<Recipe, RecipesAdapter.ViewHolder>(recipeComparator) {
+class RecipesAdapter(
+    private val listener: RecipeItemClickListener
+) : PagingDataAdapter<Recipe, RecipesAdapter.ViewHolder>(recipeComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -20,7 +21,6 @@ class RecipesAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
-        Log.d("SEFA", "onBindViewHolder: $currentItem")
         currentItem?.let {
             holder.bind(it)
         }
@@ -33,6 +33,11 @@ class RecipesAdapter
 
             binding.clContainer.setOnClickListener {
                 //Item to details screen
+                val currentItemPosition = bindingAdapterPosition
+                if (currentItemPosition != RecyclerView.NO_POSITION) {
+                    val currentItem = getItem(bindingAdapterPosition)
+                    currentItem?.let { listener.onItemClicked(it) }
+                }
             }
         }
 

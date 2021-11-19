@@ -35,7 +35,7 @@
     <!--    Tabs-->
     <string name="tab_editor_choice">Editör Seçimi</string>
     <string name="tab_recently_added">Son Eklenenler</string>
-
+    <string name="tab_empty">Empty</string>
 
     <!--    Hints-->
     <string name="hint_comment">Bir şey yaz...</string>
@@ -53,7 +53,7 @@
     <string name="btn_add_comment">Yorum Ekle</string>
     <string name="btn_move_next">İlerle</string>
     <string name="btn_start">Başla</string>
-
+    <string name="btn_reload">Yükle</string>
     <!--With Params-->
     <string name="comment">%1$d Yorum</string>
     <string name="like">%1$d Beğeni</string>
@@ -68,10 +68,15 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    Content Description-->
     <string name="user_profile_content_description">user profile</string>
     <string name="editor_choice_badge_content_description">Editor Choice Badge</string>
     <string name="food_image_content_description">Food Image</string>
-    <string name="tab_empty">Empty</string>
+
+    <!--    Error Texts-->
+    <string name="text_error_load_state">Tarifler yüklenemedi.</string>
+    <string name="empty_list_text">Henüz birşeyler eklenmedi.</string>
 
 
 </resources>

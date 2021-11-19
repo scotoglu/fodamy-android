@@ -14,8 +14,8 @@
             android:id="@+id/action_homeFragment_to_loginFragment2"
             app:destination="@id/loginFragment2" />
         <action
-            android:id="@+id/action_homeFragment_to_pagesOfTab"
-            app:destination="@id/pagesOfTab" />
+            android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_recipeDetailsFragment_to_imagePopupFragment"
             app:destination="@id/imagePopupFragment" />
+        <argument
+            android:name="RECIPE"
+            app:argType="com.scoto.fodamy.network.models.Recipe" />
     </fragment>
     <fragment
         android:id="@+id/commentsFragment"
@@ -88,9 +91,5 @@
     <fragment
         android:id="@+id/pagesOfTab"
         android:name="com.scoto.fodamy.ui.home.pages.PagesOfTab"
-        android:label="PagesOfTab" >
-        <action
-            android:id="@+id/action_pagesOfTab_to_recipeDetailsFragment"
-            app:destination="@id/recipeDetailsFragment" />
-    </fragment>
+        android:label="PagesOfTab" />
 </navigation>

@@ -46,11 +46,6 @@ class PagesOfTabViewModel @Inject constructor(
         }
     }
 
-    fun onItemClicked(recipe: Recipe) {
-
-
-
-    }
 
     companion object {
         private const val TAG = "PagesOfTabViewModel"
