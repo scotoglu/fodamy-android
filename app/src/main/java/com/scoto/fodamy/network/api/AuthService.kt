@@ -1,6 +1,7 @@
 package com.scoto.fodamy.network.api
 
 import com.scoto.fodamy.network.models.responses.AuthResponse
+import com.scoto.fodamy.network.models.responses.LogoutResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -29,6 +30,9 @@ interface AuthService {
     @POST("auth/forgot")
     suspend fun forgot(
         @Field("email") email: String
-    ):Response<AuthResponse>
+    ): Response<AuthResponse>
+
+    @POST("auth/logout")
+    suspend fun logout(): Response<LogoutResponse>
 
 }

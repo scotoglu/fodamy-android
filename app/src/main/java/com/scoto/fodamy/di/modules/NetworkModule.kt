@@ -1,5 +1,6 @@
 package com.scoto.fodamy.di.modules
 
+import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.network.api.AuthService
 import com.scoto.fodamy.network.api.RecipeService
 import com.scoto.fodamy.network.repositories.AuthRepository
@@ -64,8 +65,11 @@ object NetworkModule {
     //Repositories
     @Provides
     @Singleton
-    fun provideAuthRepository(authService: AuthService): AuthRepository {
-        return AuthRepositoryImpl(authService)
+    fun provideAuthRepository(
+        authService: AuthService,
+        dataStoreManager: DataStoreManager
+    ): AuthRepository {
+        return AuthRepositoryImpl(authService, dataStoreManager)
     }
 
 

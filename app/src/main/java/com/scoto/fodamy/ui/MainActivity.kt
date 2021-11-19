@@ -2,6 +2,7 @@ package com.scoto.fodamy.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -43,8 +44,41 @@ class MainActivity : AppCompatActivity() {
                 R.id.loginFragment2
             )
         )
-        binding.toolbar.setupWithNavController(navController,appBarConfiguration)
+
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.loginFragment2 -> {
+                    navAndToolbarVisibility(false)
+                }
+                R.id.registerFragment2 -> {
+                    navAndToolbarVisibility(false)
+                }
+                R.id.resetPasswordFragment2 -> {
+                    navAndToolbarVisibility(false)
+                }
+                R.id.walkThroughFragment -> {
+                    navAndToolbarVisibility(false)
+                }
+                R.id.splashFragment -> {
+                    navAndToolbarVisibility(false)
+                }
+                else -> {
+                    navAndToolbarVisibility(true)
+                }
+            }
+        }
+
+
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationView.setupWithNavController(navController)
+    }
+
+    private fun navAndToolbarVisibility(state: Boolean) {
+        binding.apply {
+            bottomNavigationView.isVisible = state
+            appBarLayout.isVisible = state
+        }
     }
 
 

@@ -35,17 +35,17 @@
                         android:paddingVertical="@dimen/size_padding_4dp"
                         android:src="@drawable/fodamy_logo"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/iv_end_icon"
+                        app:layout_constraintEnd_toStartOf="@+id/toolbar_iv_end_icon"
                         app:layout_constraintHorizontal_bias="0.56"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/iv_end_icon"
+                        android:id="@+id/toolbar_iv_end_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:src="@drawable/ic_logout"
+                        android:src="@drawable/ic_login"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
