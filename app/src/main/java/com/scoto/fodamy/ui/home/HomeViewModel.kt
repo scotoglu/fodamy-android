@@ -20,35 +20,6 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private var _state: SingleLiveEvent<String> = SingleLiveEvent()
-    val state: SingleLiveEvent<String> get() = _state
-
-    private var _token: MutableLiveData<String> = MutableLiveData()
-    val token: LiveData<String> get() = _token
-
-    init {
-
-        checkUserLoginBefore()
-    }
-
-    fun logout() = viewModelScope.launch {
-        when (val response = authRepository.logout()) {
-            is NetworkResult.Success -> {
-                _state.value = response.data.toString()
-            }
-            is NetworkResult.Error -> {
-                _state.value = response.message?.parseResponse()
-            }
-        }
-
-    }
-
-    private fun checkUserLoginBefore() {
-        viewModelScope.launch {
-            _token.value = dataStoreManager.getToken()
-        }
-    }
-
     companion object {
         private const val TAG = "HomeViewModel"
     }
