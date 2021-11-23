@@ -54,11 +54,14 @@
     <string name="btn_move_next">İlerle</string>
     <string name="btn_start">Başla</string>
     <string name="btn_reload">Yükle</string>
+
+
     <!--With Params-->
     <string name="comment">%1$d Yorum</string>
     <string name="like">%1$d Beğeni</string>
     <string name="recipe">%1$d Tarif</string>
     <string name="follower">%1$d Takipçi</string>
+    <string name="timeOfRecie">%1s dk</string>
 
     <!--    Menu items-->
     <string name="menu_home">Home</string>
@@ -78,5 +81,15 @@
     <string name="text_error_load_state">Tarifler yüklenemedi.</string>
     <string name="empty_list_text">Henüz birşeyler eklenmedi.</string>
 
+    <!--    Titles-->
+    <string name="text_title_ingredients">Malzemeler</string>
+    <string name="text_title_directions">Yapılışı</string>
+    <string name="text_title_comments">Yorumlar</string>
+    <string name="empty_comment">İlk yorum yapan siz olun</string>
+
+    <!--    Samples-->
+    <string name="sample_comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="sample_ingredients">8 su bardağı su 1 silme yemek kaşığı tuz 250 gram makarna(yarım paket) 3 yemek kaşığı sıvı yağ Makarna süzgeci</string>
+    <string name="sample_directions">8 su bardağı su 1 silme yemek kaşığı tuz 250 gram makarna(yarım paket) 3 yemek kaşığı sıvı yağ Makarna süzgeci</string>
 
 </resources>

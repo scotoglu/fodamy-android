@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.scoto.fodamy.network.models.User" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/size_margin_16dp">
+
+        <ImageView
+            android:id="@+id/iv_user_profile"
+            imageLoaderCircle="@{user.image.url}"
+            android:layout_width="@dimen/icon_size_48dp"
+            android:layout_height="@dimen/icon_size_48dp"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_baseline_person_outline_48" />
+
+        <TextView
+
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@{user.username}"
+            android:textColor="@color/cinder"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintBottom_toTopOf="@+id/rv_recipes_and_followers"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_profile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="scoto" />
+
+        <TextView
+            android:id="@+id/rv_recipes_and_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:textSize="@dimen/text_size_16sp"
+            app:followerCount="@{user.followingCount}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username"
+            app:recipeCount="@{user.recipeCount}"
+            tools:text="3 Tarif 3 Takipçi" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_follow"
+            style="@style/PrimaryButtonSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:text="@string/btn_unfollowed"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RelativeOverlap" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
