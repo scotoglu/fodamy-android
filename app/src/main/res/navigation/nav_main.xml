@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.scoto.fodamy.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_loginFragment2"
             app:destination="@id/loginFragment2" />
@@ -21,7 +21,7 @@
         android:id="@+id/favoritesFragment"
         android:name="com.scoto.fodamy.ui.favorites.main.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_recipeFragment"
             app:destination="@id/recipeFragment" />
@@ -30,7 +30,7 @@
         android:id="@+id/recipeFragment"
         android:name="com.scoto.fodamy.ui.favorites.recipes.RecipesFragment"
         android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe" >
+        tools:layout="@layout/fragment_recipe">
         <action
             android:id="@+id/action_recipeFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment" />
@@ -38,8 +38,8 @@
     <fragment
         android:id="@+id/recipeDetailsFragment"
         android:name="com.scoto.fodamy.ui.favorites.recipe_details.RecipeDetailsFragment"
-        android:label="fragment_recipe_details"
-        tools:layout="@layout/fragment_recipe_details" >
+        android:label="{TITLE}"
+        tools:layout="@layout/fragment_recipe_details">
         <action
             android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
             app:destination="@id/commentsFragment" />
@@ -49,6 +49,16 @@
         <argument
             android:name="RECIPE"
             app:argType="com.scoto.fodamy.network.models.Recipe" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_authDialog"
+            app:destination="@id/authDialog" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_unfollowDialog"
+            app:destination="@id/unfollowDialog" />
+        <argument
+            android:name="TITLE"
+            app:argType="string"
+            android:defaultValue=" " />
     </fragment>
     <fragment
         android:id="@+id/commentsFragment"
@@ -63,7 +73,7 @@
     <fragment
         android:id="@+id/loginFragment2"
         android:name="com.scoto.fodamy.ui.auth.login.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment2_to_registerFragment2"
             app:destination="@id/registerFragment2" />
@@ -79,7 +89,7 @@
     <fragment
         android:id="@+id/registerFragment2"
         android:name="com.scoto.fodamy.ui.auth.signup.RegisterFragment"
-        android:label="RegisterFragment" >
+        android:label="RegisterFragment">
         <action
             android:id="@+id/action_registerFragment2_to_loginFragment2"
             app:destination="@id/loginFragment2" />
@@ -92,4 +102,16 @@
         android:id="@+id/pagesOfTab"
         android:name="com.scoto.fodamy.ui.home.pages.PagesOfTab"
         android:label="PagesOfTab" />
+    <dialog
+        android:id="@+id/authDialog"
+        android:name="com.scoto.fodamy.ui.dialog.AuthDialog"
+        android:label="AuthDialog">
+        <action
+            android:id="@+id/action_authDialog_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
+    </dialog>
+    <dialog
+        android:id="@+id/unfollowDialog"
+        android:name="com.scoto.fodamy.ui.dialog.UnfollowDialog"
+        android:label="UnfollowDialog" />
 </navigation>

@@ -10,6 +10,16 @@
         <item name="android:padding">@dimen/size_padding_15dp</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    <style name="PrimaryButtonLarge.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/nunito_semibold</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="cornerRadius">@dimen/corner_radius_15dp</item>
+        <item name="android:textSize">@dimen/text_size_18sp</item>
+        <item name="android:padding">@dimen/size_padding_8dp</item>
+        <item name="android:textColor">@color/cinder</item>
+    </style>
+
 
     <style name="PrimaryButtonMedium" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="backgroundTint">?colorPrimary</item>
@@ -29,9 +39,22 @@
         <item name="strokeWidth">1dp</item>
     </style>
 
+    <style name="PrimaryButtonSmall.Filled" parent="Widget.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/size_margin_16dp</item>
+        <item name="android:paddingVertical" tools:targetApi="o">@dimen/size_margin_8dp</item>
+        <item name="fontFamily">@font/nunito_semibold</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textSize">@dimen/text_size_18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">0dp</item>
+
+    </style>
+
     <style name="RetryButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
     </style>
+
     <!--    TextView styles-->
     <style name="WalkThroughTitle" parent="TextAppearance.AppCompat.Title">
         <item name="fontFamily">@font/nunito_bold</item>

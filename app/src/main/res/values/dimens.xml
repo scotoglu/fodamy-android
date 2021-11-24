@@ -11,8 +11,12 @@
     <dimen name="size_margin_8dp">8dp</dimen>
 
     <dimen name="size_padding_15dp">15dp</dimen>
+    <dimen name="size_padding_8dp">8dp</dimen>
     <dimen name="size_padding_4dp">4dp</dimen>
 
     <dimen name="icon_size_32dp">32dp</dimen>
     <dimen name="icon_size_48dp">48dp</dimen>
+
+    <dimen name="corner_radius_15dp">15dp</dimen>
+    <dimen name="corner_radius_0dp">0dp</dimen>
 </resources>

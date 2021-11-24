@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/size_margin_16dp">
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/PrimaryButtonLarge.Outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_unfollow"
+        android:textAllCaps="false"
+        android:textColor="@color/red"
+        android:textSize="@dimen/text_size_20sp" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/PrimaryButtonLarge.Outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/btn_cancel"
+
+        android:textColor="@color/raven"
+        android:textSize="@dimen/text_size_20sp" />
+
+</LinearLayout>
