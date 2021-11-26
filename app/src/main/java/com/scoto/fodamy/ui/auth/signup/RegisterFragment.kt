@@ -2,14 +2,16 @@ package com.scoto.fodamy.ui.auth.signup
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRegisterBinding
-import com.scoto.fodamy.ext.onClick
+import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ext.spannableText
 import com.scoto.fodamy.helper.states.InputErrorType
+import com.scoto.fodamy.ui.auth.UIAuthEvent
 import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,9 +26,12 @@ class RegisterFragment :
 
         setSpannableText()
 
-        viewModel.state.observe(viewLifecycleOwner, { state ->
-            if (state) {
-                navigateTo(actionRegisterToLogin)
+        viewModel.state.observe(viewLifecycleOwner, { event ->
+            when (event) {
+                is UIAuthEvent.NavigateTo -> {
+                    event.directions?.let { navigateTo(it) }
+                    view.snackbar(event.message!!)
+                }
             }
         })
 
@@ -48,8 +53,11 @@ class RegisterFragment :
                 is InputErrorType.Username -> {
                     showRequiredField(getString(R.string.required_field_username))
                 }
-                is InputErrorType.InvalidInputs -> {
+                is InputErrorType.ShowMessage -> {
                     showRequiredField(it.message)
+                }
+                InputErrorType.CloseMessage -> {
+                    binding.included.tvRequiredField.isVisible = false
                 }
             }
         })
@@ -68,15 +76,9 @@ class RegisterFragment :
     }
 
     private fun setSpannableText() {
-        binding.tvHaveAccount.apply {
-            text = getString(R.string.login).spannableText(getString(R.string.have_account))
-            onClick { navigateTo(actionRegisterToLogin) }
-        }
+        binding.tvHaveAccount.text =
+            getString(R.string.login).spannableText(getString(R.string.have_account))
+
     }
 
-
-    companion object {
-        private val actionRegisterToLogin =
-            RegisterFragmentDirections.actionRegisterFragment2ToLoginFragment2()
-    }
 }

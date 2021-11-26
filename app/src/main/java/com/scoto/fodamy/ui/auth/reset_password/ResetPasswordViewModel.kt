@@ -1,13 +1,15 @@
 package com.scoto.fodamy.ui.auth.reset_password
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scoto.fodamy.ext.parseResponse
+import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
-import com.scoto.fodamy.helper.states.NetworkResult
+import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.repositories.AuthRepository
+import com.scoto.fodamy.ui.auth.UIAuthEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,40 +24,39 @@ class ResetPasswordViewModel @Inject constructor(
 
     val progressBarVisibility = MutableLiveData<Boolean>()
 
-    val requiredFieldWarnings = MutableLiveData<InputErrorType<String>>()
+    private val _requiredFieldWarnings: MutableLiveData<InputErrorType> = MutableLiveData()
+    val requiredFieldWarnings: LiveData<InputErrorType> get() = _requiredFieldWarnings
 
 
-    private var _state = SingleLiveEvent<Boolean>()
-    val state: SingleLiveEvent<Boolean>
+    private var _state = SingleLiveEvent<UIAuthEvent>()
+    val state: SingleLiveEvent<UIAuthEvent>
         get() = _state
 
-    fun doForgotRequest() {
+    fun doForgotRequest() =
         viewModelScope.launch {
             val email = email.value.toString()
-
             if (validateInputs(email)) {
                 setProgressbarVisibility(true)
-                val response = authRepository.forgot(email)
-                when (response) {
-                    is NetworkResult.Success -> {
-                        _state.value = true
+                when (val response = authRepository.forgot(email)) {
+                    is NetworkResponse.Success -> {
+                        _state.value =
+                            UIAuthEvent.NavigateTo(null, "Email adresinizi kontrol edin.")
                         setProgressbarVisibility(false)
                     }
-                    is NetworkResult.Error -> {
-                        requiredFieldWarnings.value =
-                            InputErrorType.InvalidInputs(response.message!!.parseResponse())
-                        _state.value = false
+                    is NetworkResponse.Error -> {
+                        _requiredFieldWarnings.value =
+                            InputErrorType.ShowMessage(response.exception.handleException())
                         setProgressbarVisibility(false)
                     }
                 }
             }
 
         }
-    }
+
 
     private fun validateInputs(email: String): Boolean {
-        return if (email.isNullOrBlank()) {
-            requiredFieldWarnings.value = InputErrorType.Email(true)
+        return if (email.isBlank()) {
+            _requiredFieldWarnings.value = InputErrorType.Email(true)
             false
         } else {
             true

@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.scoto.fodamy.ui.MainViewModel" />
+            type="com.scoto.fodamy.ui.main.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
+        tools:context=".ui.main.MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"

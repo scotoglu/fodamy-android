@@ -3,15 +3,15 @@ package com.scoto.fodamy.network.repositories
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.scoto.fodamy.helper.states.NetworkResult
+import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.api.RecipeService
 import com.scoto.fodamy.network.models.Comment
 import com.scoto.fodamy.network.models.Recipe
+import com.scoto.fodamy.network.utils.CommentPagingSource
+import com.scoto.fodamy.network.utils.RecipePagingSource
 import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
 import com.scoto.fodamy.util.FROM_LAST_ADDED
 import kotlinx.coroutines.flow.Flow
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,8 +19,9 @@ import javax.inject.Singleton
 interface RecipeRepository {
     suspend fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>>
     suspend fun getLastAdded(): Flow<PagingData<Recipe>>
+    suspend fun getRecipeById(recipeId: Int): NetworkResponse<Recipe>
     suspend fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
-    suspend fun getFirstComment(recipeId: Int): NetworkResult<Comment>
+    suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
 }
 
 @Singleton
@@ -58,17 +59,22 @@ class RecipeRepositoryImpl @Inject constructor(
         pagingSourceFactory = { CommentPagingSource(recipeService, recipeId) }
     ).flow
 
-    override suspend fun getFirstComment(recipeId: Int): NetworkResult<Comment> {
+    override suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment> {
         return try {
             val response = recipeService.getRecipeComments(recipeId, 1)
             val comment = response.data[0]
-            NetworkResult.Success(comment)
-        } catch (e: IOException) {
-            NetworkResult.Error.IOError(e.message)
-        } catch (e: HttpException) {
-            NetworkResult.Error.HttpError(e.message())
-        } catch (e: IndexOutOfBoundsException) {
-            NetworkResult.Error.OutOfIndexError(e.message.toString())
+            NetworkResponse.Success(comment)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
+    override suspend fun getRecipeById(recipeId: Int): NetworkResponse<Recipe> {
+        return try {
+            val recipe = recipeService.getRecipeById(recipeId)
+            NetworkResponse.Success(recipe)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
         }
     }
 

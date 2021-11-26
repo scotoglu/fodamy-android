@@ -1,8 +1,9 @@
 package com.scoto.fodamy.helper.states
 
-sealed class InputErrorType<T>() {
-    data class Email<T>(val hasError: Boolean) : InputErrorType<T>()
-    data class Password<T>(val hasError: Boolean) : InputErrorType<T>()
-    data class Username<T>(val hasError: Boolean) : InputErrorType<T>()
-    data class InvalidInputs<T>(val message: String) : InputErrorType<T>()
+sealed class InputErrorType {
+    data class Email(val hasError: Boolean) : InputErrorType()
+    data class Password(val hasError: Boolean) : InputErrorType()
+    data class Username(val hasError: Boolean) : InputErrorType()
+    data class ShowMessage(val message: String) : InputErrorType()
+    object CloseMessage : InputErrorType()
 }

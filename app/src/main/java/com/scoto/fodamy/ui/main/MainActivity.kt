@@ -1,10 +1,10 @@
-package com.scoto.fodamy.ui
+package com.scoto.fodamy.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.asLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,10 +12,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.ActivityMainBinding
-import com.scoto.fodamy.ext.toast
-import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.fodamy.ext.snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,9 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-
-    @Inject
-    lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -56,12 +51,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logoutStateObserver() {
-        viewModel.state.observe(this, { state ->
-            this.toast(state)
+        viewModel.event.observe(this, { event ->
+            when (event) {
+                is UIMainEvent.NavigateTo -> {
+                    event.directions?.let { navController.navigate(it) }
+                    event.message?.let { binding.root.snackbar(it) }
+                }
+                is UIMainEvent.ShowMessage -> {
+                    binding.root.snackbar(event.message)
+                }
+            }
         })
-        viewModel.navigateTo.observe(this, {
-            navController.navigate(R.id.loginFragment2)
-        })
+
     }
 
     private fun navigationSetup() {
@@ -116,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toolbarEndIconCheckByAuth() {
-        dataStoreManager.token.asLiveData().observe(this, { token ->
+        viewModel.token.observe(this, { token ->
             val endIcon = if (token.isNullOrBlank()) R.drawable.ic_login else R.drawable.ic_logout_2
             binding.toolbarIvEndIcon.setImageResource(endIcon)
         })
@@ -125,5 +126,9 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }

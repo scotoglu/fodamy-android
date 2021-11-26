@@ -38,7 +38,6 @@
     <fragment
         android:id="@+id/recipeDetailsFragment"
         android:name="com.scoto.fodamy.ui.favorites.recipe_details.RecipeDetailsFragment"
-        android:label="{TITLE}"
         tools:layout="@layout/fragment_recipe_details">
         <action
             android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
@@ -55,10 +54,6 @@
         <action
             android:id="@+id/action_recipeDetailsFragment_to_unfollowDialog"
             app:destination="@id/unfollowDialog" />
-        <argument
-            android:name="TITLE"
-            app:argType="string"
-            android:defaultValue=" " />
     </fragment>
     <fragment
         android:id="@+id/commentsFragment"

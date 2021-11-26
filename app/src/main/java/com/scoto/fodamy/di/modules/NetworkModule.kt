@@ -1,7 +1,7 @@
 package com.scoto.fodamy.di.modules
 
 import com.scoto.fodamy.helper.DataStoreManager
-import com.scoto.fodamy.network.AuthInterceptor
+import com.scoto.fodamy.network.utils.AuthInterceptor
 import com.scoto.fodamy.network.api.AuthService
 import com.scoto.fodamy.network.api.RecipeService
 import com.scoto.fodamy.network.api.UserService

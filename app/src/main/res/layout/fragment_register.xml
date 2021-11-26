@@ -81,24 +81,25 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_margin_16dp"
             android:layout_marginTop="@dimen/size_margin_16dp"
-            app:passwordToggleEnabled="true"
             android:layout_marginEnd="@dimen/size_margin_16dp"
             android:hint="@string/password"
             app:layout_constraintTop_toBottomOf="@+id/email"
+            app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_password"
             app:startIconTint="@color/cinder">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPassword"
                 android:background="@drawable/text_input_layout_background"
+                android:inputType="textPassword"
                 android:text="@={viewModel.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_signup"
             style="@style/PrimaryButtonLarge.Filled"
+            progressbarState="@{!viewModel.progressbarVisibility}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_margin_16dp"
@@ -107,14 +108,13 @@
             android:padding="@dimen/size_padding_15dp"
             android:text="@string/signup"
             android:textSize="@dimen/text_size_20sp"
-            progressbarState="@{!viewModel.progressbarVisibility}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
         <ProgressBar
-            android:layout_width="wrap_content"
             progressbarState="@{viewModel.progressbarVisibility}"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminateTint="@color/red"
             app:layout_constraintBottom_toBottomOf="@+id/guideline6"
@@ -128,6 +128,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()->viewModel.loginOnClick()}"
             android:text="@string/have_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

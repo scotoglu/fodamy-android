@@ -1,9 +1,12 @@
 package com.scoto.fodamy.ui.favorites.adapter
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
+import com.google.android.material.button.MaterialButton
 import com.scoto.fodamy.R
 
 @BindingAdapter("app:comments")
@@ -14,8 +17,11 @@ fun setCommentsCount(tv: TextView, comments: Int?) {
 
 @BindingAdapter("app:likes")
 fun setLikes(tv: TextView, likes: Int?) {
-    val likesTxt = tv.context.resources.getString(R.string.like, likes)
-    tv.text = likesTxt
+
+    likes?.let {
+        val likesTxt = tv.context.resources.getString(R.string.like, likes)
+        tv.text = likesTxt
+    }
 }
 
 @BindingAdapter("app:emptyComment")
@@ -24,6 +30,9 @@ fun setVisibilityEmptyComment(view: View, visibility: Boolean) {
 }
 
 @BindingAdapter("app:timeOfRecipe")
-fun setTimeOfRecipe(tv: TextView, timeOfRecipe: String) {
-    tv.text = tv.context.resources.getString(R.string.timeOfRecie, timeOfRecipe)
+fun setTimeOfRecipe(tv: TextView, timeOfRecipe: String?) {
+    timeOfRecipe?.let {
+        tv.text = tv.context.resources.getString(R.string.timeOfRecie, timeOfRecipe)
+    }
+
 }

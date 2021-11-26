@@ -1,4 +1,4 @@
-package com.scoto.fodamy.network.repositories
+package com.scoto.fodamy.network.utils
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

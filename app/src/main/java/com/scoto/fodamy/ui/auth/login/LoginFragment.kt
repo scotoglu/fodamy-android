@@ -7,9 +7,10 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentLoginBinding
-import com.scoto.fodamy.ext.onClick
+import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ext.spannableText
 import com.scoto.fodamy.helper.states.InputErrorType
+import com.scoto.fodamy.ui.auth.UIAuthEvent
 import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,27 +24,22 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.state.observe(viewLifecycleOwner, { state ->
-            if (state) {
-                navigateTo(actionLoginToHome)
+        viewModel.state.observe(viewLifecycleOwner, { event ->
+            when (event) {
+                is UIAuthEvent.NavigateTo -> {
+                    navigateTo(event.directions!!)
+                    view.snackbar(event.message.toString())
+                }
             }
         })
 
         requiredFiledObserver()
         setSpannableText()
 
-        textOnClickNavigateToDirections()
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-    }
-
-    private fun textOnClickNavigateToDirections() {
-        binding.apply {
-            tvDontHaveAccount.onClick { navigateTo(actionLoginToRegister) }
-            tvForgottenPassword.onClick { navigateTo(actionLoginToResetPassword) }
-        }
     }
 
 
@@ -53,18 +49,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     }
 
-
     private fun requiredFiledObserver() {
-        viewModel.requiredFieldWarning.observe(viewLifecycleOwner, {
-            when (it) {
+        viewModel.requiredFieldWarning.observe(viewLifecycleOwner, { errorType ->
+            when (errorType) {
                 is InputErrorType.Email -> {
                     showRequiredField(getString(R.string.required_field_username))
                 }
                 is InputErrorType.Password -> {
                     showRequiredField(getString(R.string.required_field_password))
                 }
-                is InputErrorType.InvalidInputs -> {
-                    showRequiredField(it.message)
+                is InputErrorType.ShowMessage -> {
+                    showRequiredField(errorType.message)
+                }
+                else -> {
+                    showRequiredField("")
                 }
             }
         })
@@ -85,8 +83,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     companion object {
         private const val TAG = "LoginFragment"
-        private val actionLoginToHome: NavDirections =
-            LoginFragmentDirections.actionLoginFragment2ToHomeFragment()
 
         private val actionLoginToResetPassword: NavDirections =
             LoginFragmentDirections.actionLoginFragment2ToResetPasswordFragment2()

@@ -2,6 +2,7 @@ package com.scoto.fodamy.network.api
 
 import com.scoto.fodamy.network.models.responses.BaseResponse
 import retrofit2.http.DELETE
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -17,4 +18,8 @@ interface UserService {
         @Path("followedId") followedId: Int
     ): BaseResponse
 
+    @GET("user/{userId}/following")
+    suspend fun getUserFollowing(
+        @Path("userId")userId:Int
+    )
 }

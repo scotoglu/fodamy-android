@@ -3,11 +3,12 @@ package com.scoto.fodamy.ui.auth.signup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scoto.fodamy.ext.parseResponse
+import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
-import com.scoto.fodamy.helper.states.NetworkResult
+import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.repositories.AuthRepository
+import com.scoto.fodamy.ui.auth.UIAuthEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,17 +24,17 @@ class RegisterViewModel @Inject constructor(
     val progressbarVisibility = MutableLiveData<Boolean>()
 
 
-    private var _requiredFieldWarnings = MutableLiveData<InputErrorType<Boolean>>()
-    val requiredFieldWarning: MutableLiveData<InputErrorType<Boolean>>
+    private var _requiredFieldWarnings = MutableLiveData<InputErrorType>()
+    val requiredFieldWarning: MutableLiveData<InputErrorType>
         get() = _requiredFieldWarnings
 
 
-    private var _state = SingleLiveEvent<Boolean>()
-    val state: SingleLiveEvent<Boolean>
+    private var _state = SingleLiveEvent<UIAuthEvent>()
+    val state: SingleLiveEvent<UIAuthEvent>
         get() = _state
 
 
-    fun doRegisterRequest() {
+    fun doRegisterRequest() =
         viewModelScope.launch {
 
             val username = username.value.toString()
@@ -42,33 +43,40 @@ class RegisterViewModel @Inject constructor(
 
 
             if (validateInputs(username, email, password)) {
-                setProgreessbarVisibility(true)
-                val response = authRepository.register(username, email, password)
-                when (response) {
-                    is NetworkResult.Success -> {
-                        _state.value = true
-                        setProgreessbarVisibility(false)
+                setProgressbarVisibility(true)
+                when (val response = authRepository.register(username, email, password)) {
+                    is NetworkResponse.Success -> {
+                        _state.value =
+                            UIAuthEvent.NavigateTo(
+                                null, "Kullanıcı kaydedildi.Giriş ekranından giriş yapabilirsiniz."
+                            )
+                        resetInputFields()
+                        requiredFieldWarning.value = InputErrorType.CloseMessage
+                        setProgressbarVisibility(false)
                     }
-                    is NetworkResult.Error -> {
+                    is NetworkResponse.Error -> {
                         requiredFieldWarning.value =
-                            InputErrorType.InvalidInputs(response.message!!.parseResponse())
-                        _state.value = false
-                        setProgreessbarVisibility(false)
+                            InputErrorType.ShowMessage(response.exception.handleException())
+                        setProgressbarVisibility(false)
                     }
                 }
             }
         }
+
+    fun loginOnClick() {
+        _state.value =
+            UIAuthEvent.NavigateTo(RegisterFragmentDirections.actionRegisterFragment2ToLoginFragment2())
     }
 
     private fun validateInputs(username: String, email: String, password: String): Boolean {
         when {
-            username.isNullOrBlank() -> {
+            username.isBlank() -> {
                 requiredFieldWarning.value = InputErrorType.Username(true)
             }
-            email.isNullOrBlank() -> {
+            email.isBlank() -> {
                 requiredFieldWarning.value = InputErrorType.Email(true)
             }
-            password.isNullOrBlank() -> {
+            password.isBlank() -> {
                 requiredFieldWarning.value = InputErrorType.Password(true)
             }
             else -> {
@@ -78,7 +86,13 @@ class RegisterViewModel @Inject constructor(
         return false
     }
 
-    private fun setProgreessbarVisibility(state: Boolean) {
+    private fun resetInputFields() {
+        username.value = ""
+        email.value = ""
+        password.value = ""
+    }
+
+    private fun setProgressbarVisibility(state: Boolean) {
         progressbarVisibility.value = state
 
     }

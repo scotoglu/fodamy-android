@@ -1,15 +1,16 @@
 package com.scoto.fodamy.ui.auth.login
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scoto.fodamy.ext.parseResponse
+import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
-import com.scoto.fodamy.helper.states.NetworkResult
+import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.repositories.AuthRepository
+import com.scoto.fodamy.ui.auth.UIAuthEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,52 +19,70 @@ class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    val username = MutableLiveData("")
-    val password = MutableLiveData("")
 
-
-    private var _state = SingleLiveEvent<Boolean>()
-    val state: SingleLiveEvent<Boolean>
-        get() = _state
-
-
-    val requiredFieldWarning = MutableLiveData<InputErrorType<Boolean>>()
-
+    val username = MutableLiveData("scoto")
+    val password = MutableLiveData("123456**")
     val progressbarVisibility = MutableLiveData<Boolean>()
 
 
-    fun doLoginRequest() {
+    private var _state = SingleLiveEvent<UIAuthEvent>()
+    val state: SingleLiveEvent<UIAuthEvent>
+        get() = _state
+
+
+    private val _requiredFieldWarning: MutableLiveData<InputErrorType> = MutableLiveData()
+    val requiredFieldWarning: LiveData<InputErrorType>
+        get() = _requiredFieldWarning
+
+
+    fun doLoginRequest() =
         viewModelScope.launch {
             val username = username.value.toString()
             val password = password.value.toString()
 
             if (validateInputs(username, password)) {
                 setProgressbarVisibility(true)
-                val response = authRepository.login(username, password)
-                when (response) {
-                    is NetworkResult.Success -> {
-                        _state.value = true
+                when (val response = authRepository.login(username, password)) {
+                    is NetworkResponse.Success -> {
+                        _state.value =
+                            UIAuthEvent.NavigateTo(
+                                LoginFragmentDirections
+                                    .actionLoginFragment2ToHomeFragment(), "Giriş başarılı."
+                            )
+                        _requiredFieldWarning.value = InputErrorType.CloseMessage
                         setProgressbarVisibility(false)
                     }
-                    is NetworkResult.Error -> {
-                        requiredFieldWarning.value =
-                            InputErrorType.InvalidInputs(response.message!!.parseResponse())
-                        _state.value = false
+                    is NetworkResponse.Error -> {
+                        _requiredFieldWarning.value =
+                            InputErrorType.ShowMessage(response.exception.handleException())
                         setProgressbarVisibility(false)
                     }
                 }
             }
         }
+
+
+    fun registerOnClick() {
+        _state.value =
+            UIAuthEvent.NavigateTo(
+                LoginFragmentDirections.actionLoginFragment2ToRegisterFragment2()
+            )
     }
 
+    fun forgotPasswordOnClick() {
+        _state.value =
+            UIAuthEvent.NavigateTo(
+                LoginFragmentDirections.actionLoginFragment2ToResetPasswordFragment2()
+            )
+    }
 
     private fun validateInputs(username: String, password: String): Boolean {
         var isValid = false
-        if (username.isNullOrBlank()) {
-            requiredFieldWarning.value = InputErrorType.Email(true)
+        if (username.isBlank()) {
+            _requiredFieldWarning.value = InputErrorType.Email(true)
         } else {
-            if (password.isNullOrBlank()) {
-                requiredFieldWarning.value = InputErrorType.Password(true)
+            if (password.isBlank()) {
+                _requiredFieldWarning.value = InputErrorType.Password(true)
             } else {
                 isValid = true
             }
@@ -80,5 +99,3 @@ class LoginViewModel @Inject constructor(
     }
 
 }
-
-data class ErrorResponse(val code: String, val error: String)

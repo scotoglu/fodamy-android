@@ -1,15 +1,16 @@
 package com.scoto.fodamy.network.repositories
 
 import com.scoto.fodamy.helper.DataStoreManager
-import com.scoto.fodamy.helper.states.NetworkResult
+import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.api.AuthService
+import com.scoto.fodamy.network.models.responses.BaseResponse
 import javax.inject.Inject
 
 interface AuthRepository {
-    suspend fun login(username: String, password: String): NetworkResult<String>
-    suspend fun register(username: String, email: String, password: String): NetworkResult<String>
-    suspend fun forgot(email: String): NetworkResult<String>
-    suspend fun logout(): NetworkResult<String>
+    suspend fun login(username: String, password: String): NetworkResponse<String>
+    suspend fun register(username: String, email: String, password: String): NetworkResponse<String>
+    suspend fun forgot(email: String): NetworkResponse<String>
+    suspend fun logout(): NetworkResponse<BaseResponse>
 }
 
 
@@ -17,16 +18,16 @@ class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val dataStoreManager: DataStoreManager
 ) : AuthRepository {
+    //
 
-
-    override suspend fun login(username: String, password: String): NetworkResult<String> {
-        val response = authService.login(username, password)
-        return if (response.isSuccessful) {
-            val token = response.body()?.token
-            token?.let { saveAuth(it) }
-            NetworkResult.Success("Success")
-        } else {
-            NetworkResult.Error(response.errorBody())
+    override suspend fun login(username: String, password: String): NetworkResponse<String> {
+        return try {
+            val response = authService.login(username, password)
+            val token = response.token
+            saveAuth(token)
+            NetworkResponse.Success("response")
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
         }
     }
 
@@ -34,32 +35,32 @@ class AuthRepositoryImpl @Inject constructor(
         username: String,
         email: String,
         password: String
-    ): NetworkResult<String> {
-        val response = authService.register(username, email, password)
-        return if (response.isSuccessful) {
-            NetworkResult.Success("Success")
-        } else {
-            NetworkResult.Error(response.errorBody())
+    ): NetworkResponse<String> {
+        return try {
+            authService.register(username, email, password)
+            NetworkResponse.Success("")
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
         }
     }
 
-    override suspend fun forgot(email: String): NetworkResult<String> {
-        val response = authService.forgot(email)
-        return if (response.isSuccessful) {
-            NetworkResult.Success("Success")
-        } else {
-            NetworkResult.Error(response.errorBody())
+    override suspend fun forgot(email: String): NetworkResponse<String> {
+        return try {
+            authService.forgot(email)
+            NetworkResponse.Success("")
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
         }
     }
 
 
-    override suspend fun logout(): NetworkResult<String> {
-        val response = authService.logout()
-        return if (response.isSuccessful) {
+    override suspend fun logout(): NetworkResponse<BaseResponse> {
+        return try {
+            val response = authService.logout()
             removeAuth()
-            NetworkResult.Success(response.message())
-        } else {
-            NetworkResult.Error(response.errorBody())
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
         }
     }
 
