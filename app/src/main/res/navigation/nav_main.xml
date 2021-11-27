@@ -1,112 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_main"
-    app:startDestination="@id/homeFragment">
+    android:id="@+id/nav_app_v2"
+    app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.scoto.fodamy.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/splashFragment"
+        android:name="com.scoto.fodamy.ui.splash.SplashFragment"
+        android:label="SplashFragment">
         <action
-            android:id="@+id/action_homeFragment_to_loginFragment2"
-            app:destination="@id/loginFragment2" />
+            android:id="@+id/action_splashFragment_to_walkThroughFragment"
+            app:destination="@id/walkThroughFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
-            app:destination="@id/recipeDetailsFragment" />
+            android:id="@+id/action_splashFragment_to_bottom_nav_home"
+            app:destination="@id/bottom_nav_home"
+            app:popUpTo="@id/bottom_nav_home" />
     </fragment>
     <fragment
-        android:id="@+id/favoritesFragment"
-        android:name="com.scoto.fodamy.ui.favorites.main.FavoritesFragment"
-        android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites">
+        android:id="@+id/walkThroughFragment"
+        android:name="com.scoto.fodamy.ui.walkthrough.WalkThroughFragment"
+        android:label="WalkThroughFragment">
         <action
-            android:id="@+id/action_favoritesFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            android:id="@+id/action_walkThroughFragment_to_bottom_nav_home"
+            app:destination="@id/bottom_nav_home"
+            app:popUpTo="@id/bottom_nav_home"
+           />
     </fragment>
-    <fragment
-        android:id="@+id/recipeFragment"
-        android:name="com.scoto.fodamy.ui.favorites.recipes.RecipesFragment"
-        android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe">
-        <action
-            android:id="@+id/action_recipeFragment_to_recipeDetailsFragment"
-            app:destination="@id/recipeDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/recipeDetailsFragment"
-        android:name="com.scoto.fodamy.ui.favorites.recipe_details.RecipeDetailsFragment"
-        tools:layout="@layout/fragment_recipe_details">
-        <action
-            android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
-            app:destination="@id/commentsFragment" />
-        <action
-            android:id="@+id/action_recipeDetailsFragment_to_imagePopupFragment"
-            app:destination="@id/imagePopupFragment" />
-        <argument
-            android:name="RECIPE"
-            app:argType="com.scoto.fodamy.network.models.Recipe" />
-        <action
-            android:id="@+id/action_recipeDetailsFragment_to_authDialog"
-            app:destination="@id/authDialog" />
-        <action
-            android:id="@+id/action_recipeDetailsFragment_to_unfollowDialog"
-            app:destination="@id/unfollowDialog" />
-    </fragment>
-    <fragment
-        android:id="@+id/commentsFragment"
-        android:name="com.scoto.fodamy.ui.comments.CommentsFragment"
-        android:label="fragment_comments"
-        tools:layout="@layout/fragment_comments" />
-    <fragment
-        android:id="@+id/imagePopupFragment"
-        android:name="com.scoto.fodamy.ui.favorites.recipe_details.image_popup.ImagePopupFragment"
-        android:label="fragment_image_popup"
-        tools:layout="@layout/fragment_image_popup" />
-    <fragment
-        android:id="@+id/loginFragment2"
-        android:name="com.scoto.fodamy.ui.auth.login.LoginFragment"
-        android:label="LoginFragment">
-        <action
-            android:id="@+id/action_loginFragment2_to_registerFragment2"
-            app:destination="@id/registerFragment2" />
-        <action
-            android:id="@+id/action_loginFragment2_to_resetPasswordFragment2"
-            app:destination="@id/resetPasswordFragment2" />
-        <action
-            android:id="@+id/action_loginFragment2_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/loginFragment2"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerFragment2"
-        android:name="com.scoto.fodamy.ui.auth.signup.RegisterFragment"
-        android:label="RegisterFragment">
-        <action
-            android:id="@+id/action_registerFragment2_to_loginFragment2"
-            app:destination="@id/loginFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/resetPasswordFragment2"
-        android:name="com.scoto.fodamy.ui.auth.reset_password.ResetPasswordFragment"
-        android:label="ResetPasswordFragment" />
-    <fragment
-        android:id="@+id/pagesOfTab"
-        android:name="com.scoto.fodamy.ui.home.pages.PagesOfTab"
-        android:label="PagesOfTab" />
-    <dialog
-        android:id="@+id/authDialog"
-        android:name="com.scoto.fodamy.ui.dialog.AuthDialog"
-        android:label="AuthDialog">
-        <action
-            android:id="@+id/action_authDialog_to_loginFragment2"
-            app:destination="@id/loginFragment2" />
-    </dialog>
-    <dialog
-        android:id="@+id/unfollowDialog"
-        android:name="com.scoto.fodamy.ui.dialog.UnfollowDialog"
-        android:label="UnfollowDialog" />
+    <include app:graph="@navigation/bottom_nav_home" />
+    <include app:graph="@navigation/bottom_nav_favorites" />
 </navigation>
