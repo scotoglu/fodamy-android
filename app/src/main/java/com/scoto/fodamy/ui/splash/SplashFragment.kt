@@ -26,7 +26,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(
                 navController.navigate(SplashFragmentDirections.actionSplashFragmentToWalkThroughFragment())
                 viewModel.saveFirstLaunch()
             } else {
-                navController.navigate(SplashFragmentDirections.actionSplashFragmentToNavMain())
+                navController.navigate(SplashFragmentDirections.actionSplashFragmentToBottomNavHome())
             }
         })
     }

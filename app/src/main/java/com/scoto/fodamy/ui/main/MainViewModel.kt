@@ -44,7 +44,7 @@ class MainViewModel @Inject constructor(
             }
         } else {
             _event.value = UIMainEvent.NavigateTo(
-                HomeFragmentDirections.actionHomeFragmentToLoginFragment2()
+                HomeFragmentDirections.actionHomeFragmentToLoginFragment()
             )
         }
     }

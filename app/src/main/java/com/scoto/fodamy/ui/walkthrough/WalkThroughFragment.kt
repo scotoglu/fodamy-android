@@ -52,7 +52,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(
     private fun navigateTo() {
         val navController = findNavController()
         navController.navigate(
-            WalkThroughFragmentDirections.actionWalkThroughFragmentToNavMain()
+            WalkThroughFragmentDirections.actionWalkThroughFragmentToBottomNavHome()
         )
     }
 

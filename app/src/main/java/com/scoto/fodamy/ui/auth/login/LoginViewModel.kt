@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
                         _state.value =
                             UIAuthEvent.NavigateTo(
                                 LoginFragmentDirections
-                                    .actionLoginFragment2ToHomeFragment(), "Giriş başarılı."
+                                    .actionLoginFragmentToHomeFragment(), "Giriş başarılı."
                             )
                         _requiredFieldWarning.value = InputErrorType.CloseMessage
                         setProgressbarVisibility(false)
@@ -65,14 +65,14 @@ class LoginViewModel @Inject constructor(
     fun registerOnClick() {
         _state.value =
             UIAuthEvent.NavigateTo(
-                LoginFragmentDirections.actionLoginFragment2ToRegisterFragment2()
+                LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
             )
     }
 
     fun forgotPasswordOnClick() {
         _state.value =
             UIAuthEvent.NavigateTo(
-                LoginFragmentDirections.actionLoginFragment2ToResetPasswordFragment2()
+                LoginFragmentDirections.actionLoginFragmentToResetPasswordFragment()
             )
     }
 

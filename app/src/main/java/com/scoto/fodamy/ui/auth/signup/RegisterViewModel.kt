@@ -65,7 +65,7 @@ class RegisterViewModel @Inject constructor(
 
     fun loginOnClick() {
         _state.value =
-            UIAuthEvent.NavigateTo(RegisterFragmentDirections.actionRegisterFragment2ToLoginFragment2())
+            UIAuthEvent.NavigateTo(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
     }
 
     private fun validateInputs(username: String, email: String, password: String): Boolean {

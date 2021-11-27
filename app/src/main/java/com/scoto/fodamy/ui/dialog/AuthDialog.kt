@@ -36,7 +36,7 @@ class AuthDialog() : DialogFragment(R.layout.dialog_auth) {
 
         binding.apply {
             btnCancel.onClick { dismiss() }
-            btnLogin.onClick { navController.navigate(AuthDialogDirections.actionAuthDialogToLoginFragment2()) }
+            btnLogin.onClick { navController.navigate(AuthDialogDirections.actionAuthDialogToLoginFragment()) }
         }
 
 

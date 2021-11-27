@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -37,7 +36,6 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
         viewModel.recipe.observe(viewLifecycleOwner, {
             binding.apply {
                 recipe = it
-                includeUser.user = it.user
             }
         })
 
@@ -48,7 +46,7 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
 
     private fun followButton() {
         binding.includeUser.btnFollow.apply {
-            isVisible = true
+            visibility = View.VISIBLE
             onClick {
                 viewModel.follow()
             }

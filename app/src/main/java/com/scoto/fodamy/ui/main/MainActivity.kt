@@ -1,7 +1,6 @@
 package com.scoto.fodamy.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.homeFragment,
                 R.id.favoritesFragment,
-                R.id.loginFragment2
+                R.id.loginFragment
             )
         )
 
@@ -86,13 +85,13 @@ class MainActivity : AppCompatActivity() {
     private fun navControllerListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment2 -> {
+                R.id.loginFragment -> {
                     navAndToolbarVisibility(false)
                 }
-                R.id.registerFragment2 -> {
+                R.id.registerFragment -> {
                     navAndToolbarVisibility(false)
                 }
-                R.id.resetPasswordFragment2 -> {
+                R.id.resetPasswordFragment -> {
                     navAndToolbarVisibility(false)
                 }
                 R.id.walkThroughFragment -> {
@@ -128,7 +127,33 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
+    override fun onBackPressed() {
+        /*
+        *
+        * There is two scenario:
+        * the goal: https://www.youtube.com/watch?v=Covu3fPA1nQ
+        * navigation component release 2.4.0-alpha01
+        * Scenario 1 :
+        *              if we set the  app:popUpTo="@id/splashFragment or WalkThroughFragment" and popUpToInclusive="true"
+        *              bottom navigation multiple back stack doesn't work properly. When navigate to between fragment using bottomNav fragments doesn't save the state
+        *
+        * Scenario 2 :
+        *              if we set the  app:popUpTo="@id/splashFragment or WalkThroughFragment" app bottomNav working properly but back button is not finish the app
+        *              when user homeFragment(checked by currentBackStackEntry. Also previousBackStackEntry is SplashFragment or WalkthoroughFragment)
+        *              to handle app finishing problem simply I wrote below code.
+        * */
+
+        //TODO("App not finished using back button")
+        if (navController.currentBackStackEntry?.destination?.id == R.id.homeFragment &&
+            navController.previousBackStackEntry?.destination?.id == R.id.splashFragment
+            || navController.previousBackStackEntry?.destination?.id == R.id.walkThroughFragment
+        ) {
+            finish()
+        }
+        super.onBackPressed()
+    }
+
     companion object {
-        private const val TAG = "MainActivity"
+        private const val TAG = "XXXXXXXX"
     }
 }
