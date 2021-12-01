@@ -2,6 +2,8 @@ package com.scoto.fodamy.ui.auth.login
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -28,6 +30,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             when (event) {
                 is UIAuthEvent.NavigateTo -> {
                     navigateTo(event.directions!!)
+                   // setFragmentResult("loginControl", bundleOf("isLogin" to true))
                     view.snackbar(event.message.toString())
                 }
             }
@@ -84,10 +87,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     companion object {
         private const val TAG = "LoginFragment"
 
-        private val actionLoginToResetPassword: NavDirections =
-            LoginFragmentDirections.actionLoginFragment2ToResetPasswordFragment2()
-
-        private val actionLoginToRegister: NavDirections =
-            LoginFragmentDirections.actionLoginFragment2ToRegisterFragment2()
     }
 }

@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -16,6 +17,9 @@ import javax.inject.Singleton
 class DataStoreManager @Inject constructor(
     private val context: Context
 ) {
+
+    suspend fun isLogin(): Boolean = getToken().isNotBlank()
+    suspend fun isLoginLiveData() = token.asLiveData()
 
     val isFirstTimeLaunch: Flow<String> = context.dataStore.data.map { preference ->
         preference[FIRST_LAUNCH] ?: ""

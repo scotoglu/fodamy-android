@@ -92,5 +92,6 @@
     <string name="sample_comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="sample_ingredients">8 su bardağı su 1 silme yemek kaşığı tuz 250 gram makarna(yarım paket) 3 yemek kaşığı sıvı yağ Makarna süzgeci</string>
     <string name="sample_directions">8 su bardağı su 1 silme yemek kaşığı tuz 250 gram makarna(yarım paket) 3 yemek kaşığı sıvı yağ Makarna süzgeci</string>
+    <string name="toolbar_back_text">Geri</string>
 
 </resources>

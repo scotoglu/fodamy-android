@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/red">
+
+
+    <ImageView
+        android:id="@+id/toolbar_iv_back"
+        android:layout_width="@dimen/icon_size_32dp"
+        android:layout_height="@dimen/icon_size_32dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toolbar_tv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_bold"
+        android:text="@string/toolbar_back_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/toolbar_iv_back"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/toolbar_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_margin_8dp"
+        android:layout_marginBottom="@dimen/size_margin_8dp"
+        android:src="@drawable/fodamy_logo"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_bold"
+        android:paddingHorizontal="@dimen/size_padding_4dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/toolbar_end_icon"
+        app:layout_constraintStart_toEndOf="@+id/toolbar_tv_back"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Fodamy" />
+
+    <ImageView
+        android:id="@+id/toolbar_end_icon"
+        android:layout_width="@dimen/icon_size_32dp"
+        android:layout_height="@dimen/icon_size_32dp"
+        android:layout_marginTop="@dimen/size_margin_8dp"
+        android:layout_marginEnd="@dimen/size_margin_8dp"
+        android:layout_marginBottom="@dimen/size_margin_8dp"
+        android:src="@drawable/ic_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

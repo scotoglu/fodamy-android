@@ -2,10 +2,16 @@ package com.scoto.fodamy.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentHomeBinding
+import com.scoto.fodamy.ext.onClick
+import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.home.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,13 +23,29 @@ class HomeFragment :
 
     private val viewModel: HomeViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+//        setFragmentResultListener("loginControl") { requestKey, bundle ->
+//            val result = bundle.getBoolean("isLogin")
+//            val drawable =
+//                ContextCompat.getDrawable(requireContext(), R.drawable.ic_logout_2)
+//            if (result) binding.customToolbar.setEndIcon(drawable)
+//        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.customToolbar.getEndIcon().onClick {
+            viewModel.logout()
+        }
         setupViewPagerAndTabLayout()
+        eventObserver()
+        endIconObserver()
+
     }
 
+    //TODO() remove and use buttons instead of tabLayout
     private fun setupViewPagerAndTabLayout() {
         val viewPagerAdapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = viewPagerAdapter
@@ -34,6 +56,51 @@ class HomeFragment :
                 else -> getString(R.string.tab_empty)
             }
         }.attach()
+    }
+
+
+    private fun endIconObserver() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.isLoginLiveData().observe(viewLifecycleOwner, {
+                if (it.isNotBlank()) {
+                    val drawable =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_logout_2)
+                    binding.customToolbar.setEndIcon(drawable)
+                }
+            })
+        }
+
+    }
+
+
+    private fun eventObserver() {
+        viewModel.event.observe(viewLifecycleOwner, { event ->
+            when (event) {
+                is UIHomeEvent.NavigateTo -> {
+                    navigateTo(event.direction)
+                }
+                is UIHomeEvent.ShowMessage.Success -> {
+                    val drawable =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_login)
+                    binding.customToolbar.setEndIcon(drawable)
+                    binding.root.snackbar(event.message)
+                }
+                is UIHomeEvent.ShowMessage.Error -> {
+                    binding.root.snackbar(event.message)
+                }
+            }
+
+        })
+    }
+
+    private fun navigateTo(directions: NavDirections) {
+        val navController = findNavController()
+        navController.navigate(directions)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     companion object {

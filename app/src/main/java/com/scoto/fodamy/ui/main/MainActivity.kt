@@ -11,7 +11,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.ActivityMainBinding
-import com.scoto.fodamy.ext.snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,30 +36,13 @@ class MainActivity : AppCompatActivity() {
 
         navigationSetup()
 
-        toolbarEndIconCheckByAuth()
 
         navControllerListener()
 
-        logoutStateObserver()
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
-    }
-
-    private fun logoutStateObserver() {
-        viewModel.event.observe(this, { event ->
-            when (event) {
-                is UIMainEvent.NavigateTo -> {
-                    event.directions?.let { navController.navigate(it) }
-                    event.message?.let { binding.root.snackbar(it) }
-                }
-                is UIMainEvent.ShowMessage -> {
-                    binding.root.snackbar(event.message)
-                }
-            }
-        })
 
     }
 
@@ -77,8 +59,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.loginFragment
             )
         )
-
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
@@ -111,15 +91,8 @@ class MainActivity : AppCompatActivity() {
     private fun navAndToolbarVisibility(state: Boolean) {
         binding.apply {
             bottomNavigationView.isVisible = state
-            appBarLayout.isVisible = state
-        }
-    }
 
-    private fun toolbarEndIconCheckByAuth() {
-        viewModel.token.observe(this, { token ->
-            val endIcon = if (token.isNullOrBlank()) R.drawable.ic_login else R.drawable.ic_logout_2
-            binding.toolbarIvEndIcon.setImageResource(endIcon)
-        })
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -148,6 +121,7 @@ class MainActivity : AppCompatActivity() {
             navController.previousBackStackEntry?.destination?.id == R.id.splashFragment
             || navController.previousBackStackEntry?.destination?.id == R.id.walkThroughFragment
         ) {
+
             finish()
         }
         super.onBackPressed()

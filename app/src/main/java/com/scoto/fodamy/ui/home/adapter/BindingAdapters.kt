@@ -26,21 +26,28 @@ fun setCommentAndLike(tv: TextView, comments: Int?, likes: Int?) {
 
 @BindingAdapter("imageLoaderCircle")
 fun setImageWithGlideCircle(iv: ImageView, url: String?) {
-    Glide
-        .with(iv.context)
-        .load(url)
-        .placeholder(R.drawable.ic_user_placeholder)
-        .apply(RequestOptions.circleCropTransform())
-        .into(iv)
+    if (!url.isNullOrBlank()){
+        Glide
+            .with(iv.context)
+            .load(url)
+            .placeholder(R.drawable.ic_user_placeholder)
+            .apply(RequestOptions.circleCropTransform())
+            .into(iv)
+    }
+
 }
 
 @BindingAdapter("imageLoaderNormal")
 fun setImageWithGlideNormal(iv: ImageView, url: String?) {
-    Glide
-        .with(iv.context)
-        .load(url)
-        .placeholder(R.drawable.photo)
-        .into(iv)
+    if (!url.isNullOrBlank()){
+        Glide
+            .with(iv.context)
+            .load(url)
+            .placeholder(R.drawable.photo)
+            .into(iv)
+    }
+
+
 }
 
 @BindingAdapter("badgeVisibility")

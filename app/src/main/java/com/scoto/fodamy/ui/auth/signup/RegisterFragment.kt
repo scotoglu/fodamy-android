@@ -30,7 +30,7 @@ class RegisterFragment :
             when (event) {
                 is UIAuthEvent.NavigateTo -> {
                     event.directions?.let { navigateTo(it) }
-                    view.snackbar(event.message!!)
+                    event.message?.let { view.snackbar(it) }
                 }
             }
         })
