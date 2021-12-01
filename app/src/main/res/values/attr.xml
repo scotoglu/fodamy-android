@@ -4,5 +4,6 @@
         <attr name="backButtonVisible" format="boolean" />
         <attr name="endIcon" format="reference" />
         <attr name="title" format="string" />
+        <attr name="endIconVisibility" format="boolean" />
     </declare-styleable>
 </resources>

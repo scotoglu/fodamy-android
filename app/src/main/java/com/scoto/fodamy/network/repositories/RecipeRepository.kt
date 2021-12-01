@@ -7,6 +7,7 @@ import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.api.RecipeService
 import com.scoto.fodamy.network.models.Comment
 import com.scoto.fodamy.network.models.Recipe
+import com.scoto.fodamy.network.models.responses.BaseResponse
 import com.scoto.fodamy.network.utils.CommentPagingSource
 import com.scoto.fodamy.network.utils.RecipePagingSource
 import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
@@ -22,6 +23,7 @@ interface RecipeRepository {
     suspend fun getRecipeById(recipeId: Int): NetworkResponse<Recipe>
     suspend fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
+    suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment>
 }
 
 @Singleton
@@ -64,6 +66,15 @@ class RecipeRepositoryImpl @Inject constructor(
             val response = recipeService.getRecipeComments(recipeId, 1)
             val comment = response.data[0]
             NetworkResponse.Success(comment)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
+    override suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment> {
+        return try {
+            val response = recipeService.sendComment(recipeId, text)
+            NetworkResponse.Success(response)
         } catch (e: Exception) {
             NetworkResponse.Error(e)
         }

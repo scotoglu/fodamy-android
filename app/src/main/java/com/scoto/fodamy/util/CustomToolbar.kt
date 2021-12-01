@@ -47,6 +47,13 @@ class CustomToolbar @JvmOverloads constructor(
                     false
                 }
             )
+            setEndIconVisibility(
+                if (typedArray.hasValue(R.styleable.CustomToolbar_endIconVisibility)) {
+                    typedArray.getBoolean(R.styleable.CustomToolbar_endIconVisibility, true)
+                } else {
+                    false
+                }
+            )
             setEndIcon(
                 if (typedArray.hasValue(R.styleable.CustomToolbar_endIcon)) {
                     typedArray.getDrawable(R.styleable.CustomToolbar_endIcon)
@@ -75,6 +82,12 @@ class CustomToolbar @JvmOverloads constructor(
     fun setEndIcon(drawable: Drawable?) {
         binding.apply {
             drawable?.let { toolbarEndIcon.setImageDrawable(drawable) }
+        }
+    }
+
+    fun setEndIconVisibility(isVisible: Boolean) {
+        binding.apply {
+            endIcon.isVisible = isVisible
         }
     }
 

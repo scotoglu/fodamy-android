@@ -8,7 +8,6 @@ import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.network.repositories.RecipeRepository
 import com.scoto.fodamy.network.repositories.UserRepository
-import com.scoto.fodamy.ui.home.HomeFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,6 +27,7 @@ class RecipeDetailsViewModel @Inject constructor(
     val recipe: LiveData<Recipe> = MutableLiveData(_recipe.value)
 
     private var _isFollowing: Boolean = _recipe.value?.user?.isFollowing!!
+    private var recipeId: Int = _recipe.value?.id!!
 
     init {
         getRecipeComments()
@@ -65,9 +65,12 @@ class RecipeDetailsViewModel @Inject constructor(
         }
     }
 
-    fun onCommentAddClick(){
-//        _event.value = UIRecipeEvent.NavigateTo(RecipeDetailsFragmentDirections.)
+    fun onCommentAddClick() {
+        _event.value = UIRecipeEvent.NavigateTo(
+            RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToCommentsFragment(recipeId)
+        )
     }
+
     fun onFollowClick() = viewModelScope.launch {
         if (!dataStoreManager.isLogin()) {
             _event.value =
@@ -81,6 +84,7 @@ class RecipeDetailsViewModel @Inject constructor(
             }
         }
     }
+
 
     private fun unFollow(followedUserId: Int) = viewModelScope.launch {
         when (val response = userRepository.unFollowUser(followedUserId)) {

@@ -4,6 +4,7 @@ import com.scoto.fodamy.network.models.Comment
 import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.network.models.responses.RecipeResponse
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -32,5 +33,9 @@ interface RecipeService {
         @Query("page") page: Int
     ): RecipeResponse<List<Comment>>
 
-
+    @POST("recipe/{recipe_id}/comment")
+    suspend fun sendComment(
+        @Path("recipe_id") recipeId: Int,
+        @Query("text") text: String
+    ): Comment
 }

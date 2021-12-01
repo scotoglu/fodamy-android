@@ -1,20 +1,67 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.scoto.fodamy.ui.comments.CommentsViewModel" />
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.comments.CommentsFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <com.scoto.fodamy.util.CustomToolbar
+            android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="wrap_content"
+            app:backButtonVisible="true"
+            app:endIconVisibility="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/screen_title_comments" />
 
-    </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_comments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
+            app:layout_constraintBottom_toTopOf="@+id/et_add_comment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_toolbar" />
+
+        <EditText
+            android:id="@+id/et_add_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:layout_marginBottom="@dimen/size_margin_8dp"
+            android:background="@drawable/bg_add_comment_edittext"
+            android:hint="@string/hint_comment"
+            android:text="@={viewModel.comment}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_add_comment"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_add_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:background="@drawable/bg_send_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()->viewModel.onSendClick()}"
+            android:src="@drawable/ic_send"
+            app:layout_constraintBottom_toBottomOf="@+id/et_add_comment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_add_comment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -32,6 +32,9 @@
         <argument
             android:name="RECIPE"
             app:argType="com.scoto.fodamy.network.models.Recipe" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
     </fragment>
     <dialog
         android:id="@+id/authDialog"
@@ -71,4 +74,15 @@
         android:id="@+id/resetPasswordFragment"
         android:name="com.scoto.fodamy.ui.auth.reset_password.ResetPasswordFragment"
         android:label="ResetPasswordFragment" />
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.scoto.fodamy.ui.comments.CommentsFragment"
+        android:label="CommentsFragment" >
+        <argument
+            android:name="RECIPE_ID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_commentsFragment_to_authDialog"
+            app:destination="@id/authDialog" />
+    </fragment>
 </navigation>
