@@ -25,18 +25,12 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getRecipeById()
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
 
-        //TODO("complete share functionality")
-        //TODO("move the logic to viewModel")
-        binding.customToolbar.apply {
-            getEndIcon().onClick { view.snackbar("Recipe will be shared.") }
-            getBackIcon().onClick { findNavController().popBackStack() }
-        }
 
+        viewModel.getRecipeById()
         viewModel.recipe.observe(viewLifecycleOwner, {
             binding.apply {
                 recipe = it
@@ -74,7 +68,9 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
                 is UIRecipeEvent.ShowMessage.SuccessMessage -> {
                     setupFollowButton(event.isFollowing)
                     binding.root.snackbar(event.message)
-
+                }
+                is UIRecipeEvent.BackTo -> {
+                    findNavController().popBackStack()
                 }
             }
         })

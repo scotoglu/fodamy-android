@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.scoto.fodamy.ui.home.HomeViewModel" />
+
     </data>
 
     <LinearLayout
@@ -13,11 +17,13 @@
         android:orientation="vertical"
         tools:context=".ui.home.HomeFragment">
 
+
         <com.scoto.fodamy.util.CustomToolbar
             android:id="@+id/custom_toolbar"
-            app:endIconVisibility="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:endIconVisibility="true"
+            app:onEndIconListener="@{()->viewModel.logout()}" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"

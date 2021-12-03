@@ -9,7 +9,7 @@ sealed class UIRecipeEvent {
         data class ErrorMessage(val message: String) : UIRecipeEvent()
         data class SuccessMessage(val message: String, val isFollowing: Boolean) : UIRecipeEvent()
     }
-
+    object BackTo : UIRecipeEvent()
     object IsFollowing : UIRecipeEvent()
     data class CommentData(val comment: Comment) : UIRecipeEvent()
 }

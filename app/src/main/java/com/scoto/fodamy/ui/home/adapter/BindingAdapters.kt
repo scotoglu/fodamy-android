@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.scoto.fodamy.R
+import com.scoto.fodamy.util.CustomToolbar
 
 
 @BindingAdapter(value = ["app:recipeCount", "app:followerCount"])
@@ -26,20 +27,17 @@ fun setCommentAndLike(tv: TextView, comments: Int?, likes: Int?) {
 
 @BindingAdapter("imageLoaderCircle")
 fun setImageWithGlideCircle(iv: ImageView, url: String?) {
-    if (!url.isNullOrBlank()){
-        Glide
-            .with(iv.context)
-            .load(url)
-            .placeholder(R.drawable.ic_user_placeholder)
-            .apply(RequestOptions.circleCropTransform())
-            .into(iv)
-    }
-
+    Glide
+        .with(iv.context)
+        .load(url)
+        .placeholder(R.drawable.ic_user_placeholder)
+        .apply(RequestOptions.circleCropTransform())
+        .into(iv)
 }
 
 @BindingAdapter("imageLoaderNormal")
 fun setImageWithGlideNormal(iv: ImageView, url: String?) {
-    if (!url.isNullOrBlank()){
+    if (!url.isNullOrBlank()) {
         Glide
             .with(iv.context)
             .load(url)
@@ -53,4 +51,15 @@ fun setImageWithGlideNormal(iv: ImageView, url: String?) {
 @BindingAdapter("badgeVisibility")
 fun setBadgeVisibility(iv: ImageView, isVisible: Boolean) {
     iv.isVisible = isVisible
+}
+
+
+@BindingAdapter("app:onBackListener")
+fun setOnBackListener(toolbar: CustomToolbar, listener: CustomToolbar.OnBackListener) {
+    toolbar.onBackListener = listener
+}
+
+@BindingAdapter("app:onEndIconListener")
+fun setOnEndIconListener(toolbar: CustomToolbar, listener: CustomToolbar.OnEndIconListener) {
+    toolbar.onEndIconListener = listener
 }

@@ -27,6 +27,8 @@
             app:backButtonVisible="true"
             app:endIcon="@drawable/ic_share"
             app:endIconVisibility="true"
+            app:onBackListener="@{()->viewModel.onBackClick()}"
+            app:onEndIconListener="@{()->viewModel.onShareClick()}"
             app:title="@{recipe.title}" />
 
         <ScrollView
@@ -54,6 +56,9 @@
                         imageLoaderNormal="@{recipe.images.get(0).url}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{()->viewModel.onImageSlider()}"
                         android:scaleType="centerCrop"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -151,8 +156,10 @@
                         app:layout_constraintTop_toBottomOf="@id/divider3">
 
                         <ImageView
+                            android:id="@+id/iv_like"
                             android:layout_width="@dimen/icon_size_32dp"
                             android:layout_height="@dimen/icon_size_32dp"
+                            android:onClick="@{()->viewModel.onLikeClick()}"
                             android:src="@drawable/ic_heart" />
 
                         <TextView

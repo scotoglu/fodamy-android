@@ -31,9 +31,6 @@ class CommentsFragment :
         binding.viewModel = viewModel
 
         // TODO("move to viewmodel")
-        binding.customToolbar.getBackIcon().onClick {
-            findNavController().popBackStack()
-        }
 
         viewModel.comments.observe(viewLifecycleOwner, {
             commentsAdapter.submitData(viewLifecycleOwner.lifecycle, it)

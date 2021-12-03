@@ -11,3 +11,8 @@ data class Image(
     val url: String,
     val width: Int
 ) : Parcelable
+
+@Parcelize
+data class ImageList(
+    val images: List<Image>
+) : Parcelable

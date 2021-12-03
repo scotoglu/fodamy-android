@@ -45,9 +45,7 @@
             android:layout_width="@dimen/icon_size_48dp"
             android:layout_height="@dimen/icon_size_48dp"
             android:layout_marginStart="@dimen/size_margin_16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/guideline8"
+            android:layout_marginTop="@dimen/size_margin_16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider2"
             tools:src="@drawable/ic_baseline_person_outline_48" />
@@ -57,13 +55,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_margin_8dp"
-            android:layout_marginTop="16dp"
             android:fontFamily="@font/nunito_bold"
             android:text="@{comment.user.username}"
             android:textColor="@color/cinder"
             android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintBottom_toTopOf="@+id/rv_recipes_and_followers"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:layout_constraintTop_toTopOf="@+id/imageView3"
             tools:text="scoto" />
 
         <TextView
@@ -71,22 +69,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_margin_8dp"
-            android:layout_marginBottom="@dimen/size_margin_8dp"
+            android:layout_marginTop="@dimen/size_margin_16dp"
             android:fontFamily="@font/nunito_semibold"
             android:textSize="@dimen/text_size_16sp"
             app:followerCount="@{comment.user.followingCount}"
-            app:layout_constraintBottom_toBottomOf="@id/guideline8"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username"
+            app:layout_constraintTop_toTopOf="@+id/imageView3"
             app:recipeCount="@{comment.user.recipeCount}"
             tools:text="3 Tarif 3 Takipçi" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="142dp" />
+
 
         <TextView
             android:id="@+id/tv_difference"
@@ -98,7 +91,7 @@
             android:padding="@dimen/size_padding_4dp"
             android:text="@{comment.difference}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline8"
+            app:layout_constraintTop_toBottomOf="@id/imageView3"
             tools:text="3 dakika önce" />
 
         <TextView

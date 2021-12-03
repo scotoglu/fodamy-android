@@ -36,9 +36,12 @@ class HomeFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.customToolbar.getEndIcon().onClick {
-            viewModel.logout()
-        }
+//        binding.customToolbar.getEndIcon().onClick {
+//            viewModel.logout()
+//        }
+
+        binding.lifecycleOwner  =this
+        binding.viewModel = viewModel
         setupViewPagerAndTabLayout()
         eventObserver()
         endIconObserver()
