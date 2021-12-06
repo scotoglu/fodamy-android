@@ -12,7 +12,3 @@ data class Image(
     val width: Int
 ) : Parcelable
 
-@Parcelize
-data class ImageList(
-    val images: List<Image>
-) : Parcelable

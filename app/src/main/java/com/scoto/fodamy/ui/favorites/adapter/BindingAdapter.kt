@@ -8,6 +8,16 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.spannableNum
 
 
+@BindingAdapter(value = ["comments", "likes"])
+fun setCommentAndLikeCount(tv: TextView, comments: Int?, likes: Int?) {
+    tv.text = tv.context.resources.getString(
+        R.string.comment_and_like_count,
+        comments ?: 0,
+        likes ?: 0
+    )
+}
+
+
 @BindingAdapter("app:comments")
 fun setCommentsCount(tv: TextView, comments: Int?) {
     val commentTxt = tv.context.resources.getString(R.string.comment, comments)

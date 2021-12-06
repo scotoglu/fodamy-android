@@ -4,9 +4,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Comment(
-    val id: Int,
-    val text: String,
-    val difference: String,
-    val user: User
+data class ImageList(
+    val images: List<Image>
 ) : Parcelable

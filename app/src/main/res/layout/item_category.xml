@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_category_image"
+            android:layout_width="@dimen/icon_size_32dp"
+            android:layout_height="@dimen/icon_size_32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_main_course"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_category_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_8dp"
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="@color/cinder"
+            android:textSize="@dimen/text_size_20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_category_image"
+            app:layout_constraintStart_toEndOf="@+id/iv_category_image"
+            app:layout_constraintTop_toTopOf="@+id/iv_category_image"
+            tool:text="Ana Yemekler" />
+
+        <TextView
+            android:id="@+id/tv_see_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/see_all_items"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintBottom_toTopOf="@+id/rv_category_items"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tv_category_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_category_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginTop="@dimen/size_margin_8dp"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_category_image"
+            tool:listitem="@layout/item_category_recipe" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

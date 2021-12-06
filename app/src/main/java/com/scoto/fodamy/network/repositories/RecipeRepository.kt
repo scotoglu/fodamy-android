@@ -1,18 +1,24 @@
 package com.scoto.fodamy.network.repositories
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.api.RecipeService
+import com.scoto.fodamy.network.models.Category
 import com.scoto.fodamy.network.models.Comment
 import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.network.models.responses.BaseResponse
+import com.scoto.fodamy.network.utils.CategoryPagingSource
 import com.scoto.fodamy.network.utils.CommentPagingSource
 import com.scoto.fodamy.network.utils.RecipePagingSource
 import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
 import com.scoto.fodamy.util.FROM_LAST_ADDED
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,12 +30,17 @@ interface RecipeRepository {
     suspend fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
     suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment>
+    suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
+    suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
+    suspend fun getCategoriesWithRecipes(): Flow<PagingData<Category>>
 }
+
 
 @Singleton
 class RecipeRepositoryImpl @Inject constructor(
     private val recipeService: RecipeService
 ) : RecipeRepository {
+
 
     override suspend fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>> = Pager(
         config = PagingConfig(
@@ -89,10 +100,43 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse> {
+        return try {
+            val response = recipeService.likeRecipe(recipeId)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
+    override suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse> {
+        return try {
+            val response = recipeService.dislikeRecipe(recipeId)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
+    override suspend fun getCategoriesWithRecipes(): Flow<PagingData<Category>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = CATEGORY_NETWORK_PAGE_SIZE,
+                maxSize = NETWORK_MAX_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                CategoryPagingSource(recipeService)
+            }
+        ).flow
+
+
+
     companion object {
         private const val TAG = "RecipeRepository"
         private const val NETWORK_PAGE_SIZE = 24
         private const val NETWORK_MAX_SIZE = 100
+        private const val CATEGORY_NETWORK_PAGE_SIZE = 4
 
     }
 }

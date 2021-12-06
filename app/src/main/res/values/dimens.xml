@@ -19,4 +19,5 @@
 
     <dimen name="corner_radius_15dp">15dp</dimen>
     <dimen name="corner_radius_0dp">0dp</dimen>
+    <dimen name="size_padding_5dp">5dp</dimen>
 </resources>

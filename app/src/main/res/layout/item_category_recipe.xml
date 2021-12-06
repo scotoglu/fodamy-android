@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="recipe"
+            type="com.scoto.fodamy.network.models.Recipe" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_margin_8dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="200dp"
+            android:layout_height="256dp">
+
+
+            <ImageView
+                android:id="@+id/iv_food_image"
+                imageLoaderNormal="@{recipe.images.get(0).url}"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/category_item"
+                app:layout_constraintBottom_toTopOf="@+id/guideline8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@{recipe.title}"
+                android:textColor="@color/cinder"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline8"
+                tool:text="Köfte Tarifi" />
+
+            <TextView
+                android:id="@+id/tv_comments_and_likes"
+                comments="@{recipe.commentCount}"
+                likes="@{recipe.likeCount}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                tool:text="0 Yorum 0 Beğeni" />
+
+            <ImageView
+                android:id="@+id/iv_user_profile"
+                imageLoaderCircle="@{recipe.user.image.url}"
+                android:layout_width="@dimen/icon_size_48dp"
+                android:layout_height="@dimen/icon_size_48dp"
+                android:layout_margin="@dimen/size_margin_8dp"
+                android:elevation="4dp"
+                android:src="@drawable/ic_user_placeholder"
+                app:civ_border_color="@color/red"
+                app:civ_border_width="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintStart_toStartOf="@id/iv_food_image"
+                app:layout_constraintTop_toTopOf="@id/iv_food_image" />
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:background="@drawable/bg_user_profile_item_category"
+                android:fontFamily="@font/nunito_bold"
+                android:paddingStart="@dimen/icon_size_32dp"
+                android:text="@{recipe.user.username}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_user_profile"
+                app:layout_constraintStart_toStartOf="@id/iv_food_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_user_profile"
+                tool:ignore="RtlSymmetry"
+                tool:text="scoto" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="184dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

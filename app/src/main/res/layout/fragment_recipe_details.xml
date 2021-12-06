@@ -159,7 +159,6 @@
                             android:id="@+id/iv_like"
                             android:layout_width="@dimen/icon_size_32dp"
                             android:layout_height="@dimen/icon_size_32dp"
-                            android:onClick="@{()->viewModel.onLikeClick()}"
                             android:src="@drawable/ic_heart" />
 
                         <TextView
@@ -378,6 +377,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>
-
 
 </layout>

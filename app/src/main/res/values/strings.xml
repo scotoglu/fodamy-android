@@ -63,6 +63,7 @@
     <string name="recipe">%1$d Tarif</string>
     <string name="follower">%1$d Takipçi</string>
     <string name="timeOfRecie">%1s dk</string>
+    <string name="comment_and_like_count">%1d Yorum %1d Beğeni</string>
 
     <!--    Menu items-->
     <string name="menu_home">Home</string>
@@ -96,4 +97,5 @@
 
     <string name="toolbar_back_text">Geri</string>
     <string name="screen_title_comments">YORUMLAR</string>
+    <string name="see_all_items">TÜMÜNÜ GÖR</string>
 </resources>

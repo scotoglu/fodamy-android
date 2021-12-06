@@ -4,9 +4,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.scoto.fodamy.R
+import com.scoto.fodamy.ext.loadCircleImageFromUrl
+import com.scoto.fodamy.ext.loadImageFromUrl
 import com.scoto.fodamy.util.CustomToolbar
 
 
@@ -27,25 +27,15 @@ fun setCommentAndLike(tv: TextView, comments: Int?, likes: Int?) {
 
 @BindingAdapter("imageLoaderCircle")
 fun setImageWithGlideCircle(iv: ImageView, url: String?) {
-    Glide
-        .with(iv.context)
-        .load(url)
-        .placeholder(R.drawable.ic_user_placeholder)
-        .apply(RequestOptions.circleCropTransform())
-        .into(iv)
+    if (url != null) iv.loadCircleImageFromUrl(url)
+
 }
 
 @BindingAdapter("imageLoaderNormal")
 fun setImageWithGlideNormal(iv: ImageView, url: String?) {
     if (!url.isNullOrBlank()) {
-        Glide
-            .with(iv.context)
-            .load(url)
-            .placeholder(R.drawable.photo)
-            .into(iv)
+        iv.loadImageFromUrl(url)
     }
-
-
 }
 
 @BindingAdapter("badgeVisibility")
