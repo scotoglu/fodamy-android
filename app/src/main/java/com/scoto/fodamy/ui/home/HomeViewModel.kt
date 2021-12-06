@@ -1,7 +1,6 @@
 package com.scoto.fodamy.ui.home
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scoto.fodamy.ext.handleException
@@ -45,8 +44,7 @@ class HomeViewModel @Inject constructor(
     }
 
     suspend fun isLoginLiveData(): LiveData<String> =
-            dataStoreManager.isLoginLiveData()
-
+        dataStoreManager.isLoginLiveData()
 
 
     companion object {

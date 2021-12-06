@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
             app:destination="@id/commentsFragment" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_imagePopupFragment"
+            app:destination="@id/imagePopupFragment" />
     </fragment>
     <dialog
         android:id="@+id/authDialog"
@@ -84,5 +87,13 @@
         <action
             android:id="@+id/action_commentsFragment_to_authDialog"
             app:destination="@id/authDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/imagePopupFragment"
+        android:name="com.scoto.fodamy.ui.favorites.recipe_details.image_popup.ImagePopupFragment"
+        android:label="ImagePopupFragment" >
+        <argument
+            android:name="Images"
+            app:argType="com.scoto.fodamy.network.models.ImageList" />
     </fragment>
 </navigation>

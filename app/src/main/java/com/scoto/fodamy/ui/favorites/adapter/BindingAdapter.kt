@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.spannableNum
 
+
 @BindingAdapter("app:comments")
 fun setCommentsCount(tv: TextView, comments: Int?) {
     val commentTxt = tv.context.resources.getString(R.string.comment, comments)

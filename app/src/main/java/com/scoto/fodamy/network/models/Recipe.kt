@@ -22,6 +22,8 @@ data class Recipe(
     val isEditorChoice: Boolean,
     @SerializedName("is_owner")
     val isOwner: Boolean,
+    @SerializedName("is_liked")
+    val isLiked: Boolean,
     @SerializedName("like_count")
     val likeCount: Int,
     @SerializedName("number_of_favorite_count")

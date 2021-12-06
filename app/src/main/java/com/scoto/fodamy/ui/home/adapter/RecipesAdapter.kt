@@ -30,7 +30,6 @@ class RecipesAdapter(
     inner class ViewHolder(val binding: ItemFoodCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-
             binding.clContainer.setOnClickListener {
                 //Item to details screen
                 val currentItemPosition = bindingAdapterPosition

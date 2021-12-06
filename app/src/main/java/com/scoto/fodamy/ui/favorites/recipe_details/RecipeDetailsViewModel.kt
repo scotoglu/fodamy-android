@@ -1,5 +1,12 @@
 package com.scoto.fodamy.ui.favorites.recipe_details
-
+/*
+* like/unLike and follow/unFollow operations send request per each call.
+* To update of like count we should update the recipe also.
+* So each successful request send cost two request 1-Operation (like,unlike vs) request 2-getRecipeById request for update recipe.
+*
+* TODO("Fix this")
+*
+* */
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
@@ -24,34 +31,29 @@ class RecipeDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
-
-    private val _event: SingleLiveEvent<UIRecipeEvent> = SingleLiveEvent()//remove line
-    val event: SingleLiveEvent<UIRecipeEvent> get() = _event
+    val event: SingleLiveEvent<UIRecipeEvent> = SingleLiveEvent()
 
     private val _recipe = savedStateHandle.getLiveData<Recipe>("RECIPE")
     val recipe: LiveData<Recipe> get() = _recipe
 
-    private var _isFollowing: Boolean = _recipe.value?.user?.isFollowing!!
-    private var recipeId: Int = _recipe.value?.id!!
-    private var _isLiked: Boolean = _recipe.value?.isLiked ?: false
+    private val recipeId: Int = _recipe.value?.id!!
+    private val followedUserId: Int = _recipe.value?.user?.id ?: 1
 
     init {
+        getRecipeById()
         getRecipeComments()
-
     }
 
 
-    fun getRecipeById() = viewModelScope.launch {
+    private fun getRecipeById() = viewModelScope.launch {
         _recipe.value?.let {
             when (val response = recipeRepository.getRecipeById(it.id)) {
                 is NetworkResponse.Success -> {
-//                    _event.value = UIRecipeEvent.RecipeData(response.data)
-                    if (response.data.user.isFollowing) _event.value = UIRecipeEvent.IsFollowing
                     savedStateHandle.set("RECIPE", response.data)
                 }
                 is NetworkResponse.Error -> {
-                    _event.value =
-                        UIRecipeEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                    event.value =
+                        UIRecipeEvent.ShowMessage(response.exception.handleException())
                 }
             }
         }
@@ -62,18 +64,18 @@ class RecipeDetailsViewModel @Inject constructor(
         _recipe.value?.let {
             when (val response = recipeRepository.getFirstComment(it.id)) {
                 is NetworkResponse.Success -> {
-                    _event.value = UIRecipeEvent.CommentData(response.data)
+                    event.value = UIRecipeEvent.CommentData(response.data)
                 }
                 is NetworkResponse.Error -> {
-                    _event.value =
-                        UIRecipeEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                    event.value =
+                        UIRecipeEvent.ShowMessage(response.exception.handleException())
                 }
             }
         }
     }
 
     fun onImageSlider() {
-        _event.value = UIRecipeEvent.NavigateTo(
+        event.value = UIRecipeEvent.NavigateTo(
             RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToImagePopupFragment(
                 ImageList(recipe.value!!.images)
             )
@@ -81,23 +83,9 @@ class RecipeDetailsViewModel @Inject constructor(
     }
 
     fun onCommentAddClick() {
-        _event.value = UIRecipeEvent.NavigateTo(
+        event.value = UIRecipeEvent.NavigateTo(
             RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToCommentsFragment(recipeId)
         )
-    }
-
-    fun onFollowClick() = viewModelScope.launch {
-        if (!dataStoreManager.isLogin()) {
-            _event.value =
-                UIRecipeEvent.NavigateTo(RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToAuthDialog())
-        } else {
-            _recipe.value?.let {
-                val followedUserId = it.user.id
-                if (_isFollowing) unFollow(followedUserId)
-                else follow(followedUserId)
-
-            }
-        }
     }
 
     fun onShareClick() {
@@ -105,49 +93,83 @@ class RecipeDetailsViewModel @Inject constructor(
     }
 
     fun onBackClick() {
-        _event.value = UIRecipeEvent.BackTo
+        event.value = UIRecipeEvent.BackTo
     }
 
-    fun onLikeClick() {
-        Log.d(TAG, "onLikeClick: OnLikeClicked")
-        if (_isLiked) unLike()
-        else like()
-    }
-
-    private fun like() {
-
-    }
-
-    private fun unLike() {
-
-    }
-
-    private fun unFollow(followedUserId: Int) = viewModelScope.launch {
-        when (val response = userRepository.unFollowUser(followedUserId)) {
-            is NetworkResponse.Success -> {
-                _event.value =
-                    UIRecipeEvent.ShowMessage.SuccessMessage(response.data.message, false)
-                _isFollowing = false
+    fun onLikeClick() = viewModelScope.launch {
+        if (dataStoreManager.isLogin()) {
+            recipe.value!!.let {
+                if (it.isLiked) dislike() else like()
             }
+        } else {
+            event.value =
+                UIRecipeEvent.NavigateTo(RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToAuthDialog())
+        }
+    }
+
+    private fun like() = viewModelScope.launch {
+        when (val response = recipeRepository.likeRecipe(recipeId)) {
             is NetworkResponse.Error -> {
-                _event.value =
-                    UIRecipeEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                event.value =
+                    UIRecipeEvent.ShowMessage(response.exception.handleException())
+            }
+            is NetworkResponse.Success -> {
+                event.value = UIRecipeEvent.ShowMessage(response.data.message)
+                getRecipeById()
             }
         }
-
     }
 
-    private fun follow(followedUserId: Int) =
+    private fun dislike() = viewModelScope.launch {
+        when (val response = recipeRepository.dislikeRecipe(recipeId)) {
+            is NetworkResponse.Error -> {
+                event.value =
+                    UIRecipeEvent.ShowMessage(response.exception.handleException())
+            }
+            is NetworkResponse.Success -> {
+                event.value = UIRecipeEvent.ShowMessage(response.data.message)
+                getRecipeById()
+            }
+        }
+    }
+
+    fun onFollowClick() = viewModelScope.launch {
+        if (!dataStoreManager.isLogin()) {
+            event.value =
+                UIRecipeEvent.NavigateTo(RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToAuthDialog())
+        } else {
+            _recipe.value?.let {
+                if (it.user.isFollowing) unFollow() else follow()
+
+            }
+        }
+    }
+
+    private fun unFollow() = viewModelScope.launch {
+        when (val response = userRepository.unFollowUser(followedUserId)) {
+            is NetworkResponse.Success -> {
+                event.value =
+                    UIRecipeEvent.ShowMessage(response.data.message)
+                getRecipeById()
+            }
+            is NetworkResponse.Error -> {
+                event.value =
+                    UIRecipeEvent.ShowMessage(response.exception.handleException())
+            }
+        }
+    }
+
+    private fun follow() =
         viewModelScope.launch {
             when (val response = userRepository.followUser(followedUserId)) {
                 is NetworkResponse.Success -> {
-                    _event.value =
-                        UIRecipeEvent.ShowMessage.SuccessMessage(response.data.message, true)
-                    _isFollowing = true
+                    event.value =
+                        UIRecipeEvent.ShowMessage(response.data.message)
+                    getRecipeById()
                 }
                 is NetworkResponse.Error -> {
-                    _event.value =
-                        UIRecipeEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                    event.value =
+                        UIRecipeEvent.ShowMessage(response.exception.handleException())
                 }
 
             }

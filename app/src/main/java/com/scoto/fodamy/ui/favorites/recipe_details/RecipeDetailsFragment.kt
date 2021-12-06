@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -28,45 +29,41 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
-
-        viewModel.getRecipeById()
         viewModel.recipe.observe(viewLifecycleOwner, {
             binding.apply {
                 recipe = it
+                ivLike.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        if (it.isLiked) R.color.red else R.color.black
+                    )
+                )
+                includeUser.btnFollow.apply {
+                    setupFollowButton(it.user.isFollowing)
+                }
             }
         })
 
+        binding.apply {
+            ivLike.onClick { viewModel?.onLikeClick() }
+
+            includeUser.btnFollow.isVisible = true
+            includeUser.btnFollow.onClick { viewModel?.onFollowClick() }
+        }
         eventObserver()
-        followButton()
     }
 
-    private fun followButton() {
-        binding.includeUser.btnFollow.apply {
-            visibility = View.VISIBLE
-            onClick {
-                viewModel.onFollowClick()
-            }
-        }
-    }
 
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
-                is UIRecipeEvent.IsFollowing -> {
-                    setupFollowButton(true)
-                }
                 is UIRecipeEvent.CommentData -> {
                     binding.includeComment.comment = event.comment
                 }
                 is UIRecipeEvent.NavigateTo -> {
                     navigateTo(event.directions)
                 }
-                is UIRecipeEvent.ShowMessage.ErrorMessage -> {
-                    binding.root.snackbar(event.message)
-                }
-                is UIRecipeEvent.ShowMessage.SuccessMessage -> {
-                    setupFollowButton(event.isFollowing)
+                is UIRecipeEvent.ShowMessage -> {
                     binding.root.snackbar(event.message)
                 }
                 is UIRecipeEvent.BackTo -> {

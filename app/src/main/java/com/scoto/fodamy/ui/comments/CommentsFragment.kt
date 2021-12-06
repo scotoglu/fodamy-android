@@ -30,7 +30,6 @@ class CommentsFragment :
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        // TODO("move to viewmodel")
 
         viewModel.comments.observe(viewLifecycleOwner, {
             commentsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
