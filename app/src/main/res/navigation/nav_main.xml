@@ -28,4 +28,16 @@
     </fragment>
     <include app:graph="@navigation/bottom_nav_home" />
     <include app:graph="@navigation/bottom_nav_favorites" />
+    <dialog
+        android:id="@+id/authDialog"
+        android:name="com.scoto.fodamy.ui.dialog.AuthDialog"
+        android:label="AuthDialog" >
+        <action
+            android:id="@+id/action_authDialog_to_login_flow"
+            app:destination="@id/login_flow" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_authDialog"
+        app:destination="@id/authDialog" />
+    <include app:graph="@navigation/login_flow" />
 </navigation>

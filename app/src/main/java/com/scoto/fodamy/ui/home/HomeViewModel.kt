@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
         } else {
             //Navigate To login
             _event.value =
-                UIHomeEvent.NavigateTo(HomeFragmentDirections.actionHomeFragmentToLoginFragment())
+                UIHomeEvent.NavigateTo(HomeFragmentDirections.actionHomeFragmentToLoginFlow())
         }
 
     }

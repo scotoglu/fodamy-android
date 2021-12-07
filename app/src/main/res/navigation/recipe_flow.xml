@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recipe_flow"
+    app:startDestination="@id/recipeDetailsFragment">
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="com.scoto.fodamy.ui.favorites.recipe_details.RecipeDetailsFragment"
+        android:label="RecipeDetailsFragment" >
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_imagePopupFragment"
+            app:destination="@id/imagePopupFragment" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_unfollowDialog"
+            app:destination="@id/unfollowDialog" />
+        <argument
+            android:name="RECIPE"
+            app:argType="com.scoto.fodamy.network.models.Recipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.scoto.fodamy.ui.comments.CommentsFragment"
+        android:label="CommentsFragment" >
+        <argument
+            android:name="RECIPE_ID"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/imagePopupFragment"
+        android:name="com.scoto.fodamy.ui.favorites.recipe_details.image_popup.ImagePopupFragment"
+        android:label="ImagePopupFragment" >
+        <argument
+            android:name="images"
+            app:argType="com.scoto.fodamy.network.models.ImageList" />
+    </fragment>
+    <dialog
+        android:id="@+id/unfollowDialog"
+        android:name="com.scoto.fodamy.ui.dialog.UnfollowDialog"
+        android:label="UnfollowDialog" />
+</navigation>

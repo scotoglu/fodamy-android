@@ -7,93 +7,22 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.scoto.fodamy.ui.home.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
-            android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
-            app:destination="@id/recipeDetailsFragment" />
+            android:id="@+id/action_homeFragment_to_recipe_flow"
+            app:destination="@id/recipe_flow">
+            <argument
+                android:name="RECIPE"
+                app:argType="com.scoto.fodamy.network.models.Recipe" />
+        </action>
         <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_homeFragment_to_login_flow"
+            app:destination="@id/login_flow" />
     </fragment>
     <fragment
         android:id="@+id/pagesOfTab"
         android:name="com.scoto.fodamy.ui.home.pages.PagesOfTab"
         android:label="PagesOfTab" />
-    <fragment
-        android:id="@+id/recipeDetailsFragment"
-        android:name="com.scoto.fodamy.ui.favorites.recipe_details.RecipeDetailsFragment"
-        android:label="RecipeDetailsFragment" >
-        <action
-            android:id="@+id/action_recipeDetailsFragment_to_authDialog"
-            app:destination="@id/authDialog" />
-        <action
-            android:id="@+id/action_recipeDetailsFragment_to_unfollowDialog"
-            app:destination="@id/unfollowDialog" />
-        <argument
-            android:name="RECIPE"
-            app:argType="com.scoto.fodamy.network.models.Recipe" />
-        <action
-            android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
-            app:destination="@id/commentsFragment" />
-        <action
-            android:id="@+id/action_recipeDetailsFragment_to_imagePopupFragment"
-            app:destination="@id/imagePopupFragment" />
-    </fragment>
-    <dialog
-        android:id="@+id/authDialog"
-        android:name="com.scoto.fodamy.ui.dialog.AuthDialog"
-        android:label="AuthDialog" >
-        <action
-            android:id="@+id/action_authDialog_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </dialog>
-    <dialog
-        android:id="@+id/unfollowDialog"
-        android:name="com.scoto.fodamy.ui.dialog.UnfollowDialog"
-        android:label="UnfollowDialog" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.scoto.fodamy.ui.auth.login.LoginFragment"
-        android:label="LoginFragment" >
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_resetPasswordFragment"
-            app:destination="@id/resetPasswordFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.scoto.fodamy.ui.auth.signup.RegisterFragment"
-        android:label="RegisterFragment" >
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/resetPasswordFragment"
-        android:name="com.scoto.fodamy.ui.auth.reset_password.ResetPasswordFragment"
-        android:label="ResetPasswordFragment" />
-    <fragment
-        android:id="@+id/commentsFragment"
-        android:name="com.scoto.fodamy.ui.comments.CommentsFragment"
-        android:label="CommentsFragment" >
-        <argument
-            android:name="RECIPE_ID"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_commentsFragment_to_authDialog"
-            app:destination="@id/authDialog" />
-    </fragment>
-    <fragment
-        android:id="@+id/imagePopupFragment"
-        android:name="com.scoto.fodamy.ui.favorites.recipe_details.image_popup.ImagePopupFragment"
-        android:label="ImagePopupFragment" >
-        <argument
-            android:name="Images"
-            app:argType="com.scoto.fodamy.network.models.ImageList" />
-    </fragment>
+    <include app:graph="@navigation/recipe_flow" />
+    <include app:graph="@navigation/login_flow" />
 </navigation>

@@ -5,4 +5,6 @@ import androidx.navigation.NavDirections
 sealed class UIAuthEvent {
     data class NavigateTo(val directions: NavDirections?, val message: String? = null) :
         UIAuthEvent()
+
+    data class BackTo(val message: String) : UIAuthEvent()
 }

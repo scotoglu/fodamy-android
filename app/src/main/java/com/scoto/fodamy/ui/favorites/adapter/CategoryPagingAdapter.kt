@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scoto.fodamy.databinding.ItemCategoryBinding
 import com.scoto.fodamy.ext.loadImageFromUrl
+import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.network.models.Category
 
 class CategoryPagingAdapter() :
@@ -34,9 +35,17 @@ class CategoryPagingAdapter() :
     inner class ViewHolder(val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.tvSeeAll.onClick {
+                //navigate to category recipes
+            }
+        }
+
         fun bind(item: Category) {
+
             binding.tvCategoryTitle.text = item.name
             binding.ivCategoryImage.loadImageFromUrl(item.image?.url)
+
             val itemAdapter = CategoryItemAdapter(item.recipes)
             binding.rvCategoryItems.apply {
                 adapter = itemAdapter

@@ -8,4 +8,6 @@
         android:id="@+id/favoritesFragment"
         android:name="com.scoto.fodamy.ui.favorites.main.FavoritesFragment"
         android:label="FavoritesFragment"/>
+    <include app:graph="@navigation/login_flow" />
+    <include app:graph="@navigation/recipe_flow" />
 </navigation>

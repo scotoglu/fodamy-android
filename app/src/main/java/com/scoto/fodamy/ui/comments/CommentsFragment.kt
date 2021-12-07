@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCommentsBinding
 import com.scoto.fodamy.ext.hideSoftKeyboard
-import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.comments.adapter.CommentsAdapter
@@ -52,6 +51,9 @@ class CommentsFragment :
                 }
                 is UICommentEvent.ShowMessage.ErrorMessage -> {
                     view?.snackbar(event.message)
+                }
+                is UICommentEvent.OpenDialog -> {
+                    findNavController().navigate(event.actionId)
                 }
             }
 

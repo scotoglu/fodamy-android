@@ -90,7 +90,7 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
     override fun onItemClicked(recipe: Recipe) {
         val navController = findNavController()
         navController.navigate(
-            HomeFragmentDirections.actionHomeFragmentToRecipeDetailsFragment(
+            HomeFragmentDirections.actionHomeFragmentToRecipeFlow(
                 recipe
             )
         )

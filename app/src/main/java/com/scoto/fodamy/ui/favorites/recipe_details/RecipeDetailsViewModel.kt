@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
@@ -103,7 +104,7 @@ class RecipeDetailsViewModel @Inject constructor(
             }
         } else {
             event.value =
-                UIRecipeEvent.NavigateTo(RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToAuthDialog())
+                UIRecipeEvent.OpenDialog(R.id.action_global_authDialog)
         }
     }
 
@@ -136,7 +137,7 @@ class RecipeDetailsViewModel @Inject constructor(
     fun onFollowClick() = viewModelScope.launch {
         if (!dataStoreManager.isLogin()) {
             event.value =
-                UIRecipeEvent.NavigateTo(RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToAuthDialog())
+                UIRecipeEvent.OpenDialog(R.id.action_global_authDialog)
         } else {
             _recipe.value?.let {
                 if (it.user.isFollowing) unFollow() else follow()

@@ -1,8 +1,8 @@
 package com.scoto.fodamy.ui.comments
 
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
+import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.states.NetworkResponse
@@ -60,10 +60,7 @@ class CommentsViewModel @Inject constructor(
             }
 
         } else {
-            _event.value = UICommentEvent.NavigateTo(
-                CommentsFragmentDirections.actionCommentsFragmentToAuthDialog()
-            )
-
+            _event.value = UICommentEvent.OpenDialog(R.id.action_global_authDialog)
         }
 
 

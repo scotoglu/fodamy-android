@@ -1,6 +1,5 @@
 package com.scoto.fodamy.network.repositories
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -15,10 +14,7 @@ import com.scoto.fodamy.network.utils.CommentPagingSource
 import com.scoto.fodamy.network.utils.RecipePagingSource
 import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
 import com.scoto.fodamy.util.FROM_LAST_ADDED
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,12 +31,9 @@ interface RecipeRepository {
     suspend fun getCategoriesWithRecipes(): Flow<PagingData<Category>>
 }
 
-
-@Singleton
 class RecipeRepositoryImpl @Inject constructor(
     private val recipeService: RecipeService
 ) : RecipeRepository {
-
 
     override suspend fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>> = Pager(
         config = PagingConfig(
@@ -129,7 +122,6 @@ class RecipeRepositoryImpl @Inject constructor(
                 CategoryPagingSource(recipeService)
             }
         ).flow
-
 
 
     companion object {

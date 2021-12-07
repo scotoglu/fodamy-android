@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRecipeDetailsBinding
 import com.scoto.fodamy.ext.onClick
@@ -21,7 +20,6 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
     R.layout.fragment_recipe_details
 ) {
     private val viewModel: RecipeDetailsViewModel by viewModels()
-    private val navArgs: RecipeDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,6 +66,9 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
                 }
                 is UIRecipeEvent.BackTo -> {
                     findNavController().popBackStack()
+                }
+                is UIRecipeEvent.OpenDialog -> {
+                    findNavController().navigate(event.actionId)
                 }
             }
         })

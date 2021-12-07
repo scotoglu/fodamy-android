@@ -44,11 +44,11 @@ class LoginViewModel @Inject constructor(
                 setProgressbarVisibility(true)
                 when (val response = authRepository.login(username, password)) {
                     is NetworkResponse.Success -> {
-                        _state.value =
-                            UIAuthEvent.NavigateTo(
-                                LoginFragmentDirections
-                                    .actionLoginFragmentToHomeFragment(), "Giriş başarılı."
-                            )
+                        _state.value = UIAuthEvent.BackTo("Giriş Başarılı")
+//                            UIAuthEvent.NavigateTo(
+//                                LoginFragmentDirections
+//                                    .actionLoginFragmentToHomeFragment(), "Giriş başarılı."
+//                            )
                         _requiredFieldWarning.value = InputErrorType.CloseMessage
                         setProgressbarVisibility(false)
                     }
