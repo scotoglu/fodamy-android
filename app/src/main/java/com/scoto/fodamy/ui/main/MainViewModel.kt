@@ -18,41 +18,41 @@ class MainViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
-
-    private var _token: MutableLiveData<String> = MutableLiveData()
-    val token: LiveData<String> get() = dataStoreManager.token.asLiveData()
-
-    init {
-        //  checkUserAuth()
-        Log.d(TAG, "init: token ${token.value.toString()} ")
-    }
-
-    private var _event: SingleLiveEvent<UIMainEvent> = SingleLiveEvent()
-    val event: SingleLiveEvent<UIMainEvent> get() = _event
-
-
-    fun logout() = viewModelScope.launch {
-        if (token.value.toString().isNotBlank()) {
-            when (val response = authRepository.logout()) {
-                is NetworkResponse.Success -> {
-//                    _event.value = UIMainEvent.NavigateTo(null, "Çıkış yapıldı.")
-                    _event.value = UIMainEvent.ShowMessage(response.data.message)
-                }
-                is NetworkResponse.Error -> {
-                    _event.value = UIMainEvent.ShowMessage(response.exception.handleException())
-                }
-            }
-        } else {
-            _event.value = UIMainEvent.NavigateTo(
-                HomeFragmentDirections.actionHomeFragmentToLoginFragment()
-            )
-        }
-    }
-
-
-    private fun checkUserAuth() = viewModelScope.launch {
-        _token.value = dataStoreManager.getToken()
-    }
+//
+//    private var _token: MutableLiveData<String> = MutableLiveData()
+//    val token: LiveData<String> get() = dataStoreManager.token.asLiveData()
+//
+//    init {
+//        //  checkUserAuth()
+//        Log.d(TAG, "init: token ${token.value.toString()} ")
+//    }
+//
+//    private var _event: SingleLiveEvent<UIMainEvent> = SingleLiveEvent()
+//    val event: SingleLiveEvent<UIMainEvent> get() = _event
+//
+//
+//    fun logout() = viewModelScope.launch {
+//        if (token.value.toString().isNotBlank()) {
+//            when (val response = authRepository.logout()) {
+//                is NetworkResponse.Success -> {
+////                    _event.value = UIMainEvent.NavigateTo(null, "Çıkış yapıldı.")
+//                    _event.value = UIMainEvent.ShowMessage(response.data.message)
+//                }
+//                is NetworkResponse.Error -> {
+//                    _event.value = UIMainEvent.ShowMessage(response.exception.handleException())
+//                }
+//            }
+//        } else {
+//            _event.value = UIMainEvent.NavigateTo(
+//                HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+//            )
+//        }
+//    }
+//
+//
+//    private fun checkUserAuth() = viewModelScope.launch {
+//        _token.value = dataStoreManager.getToken()
+//    }
 
     companion object {
         private const val TAG = "MainViewModel"

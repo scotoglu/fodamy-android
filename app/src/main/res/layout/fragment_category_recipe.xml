@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -6,32 +7,36 @@
 
         <variable
             name="viewModel"
-            type="com.scoto.fodamy.ui.favorites.main.FavoritesViewModel" />
+            type="com.scoto.fodamy.ui.favorites.category_recipes.CategoryRecipesViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.favorites.main.FavoritesFragment">
+        tools:context=".ui.favorites.category_recipes.RecipeFragment">
 
         <com.scoto.fodamy.util.CustomToolbar
             android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:backButtonVisible="true"
             app:endIconVisibility="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:onBackListener="@{()->viewModel.onBackClick()}"
             app:onEndIconListener="@{()->viewModel.onLogoutClick()}" />
 
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_categories"
+            android:id="@+id/rv_category_recipes"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
+            tools:listitem="@layout/item_food_card" />
 
         <ProgressBar
             android:id="@+id/progressbar"
@@ -47,10 +52,8 @@
             android:id="@+id/tv_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:fontFamily="@font/nunito_bold"
-            android:text="Yükleniyor"
-            android:textColor="@color/cinder"
+            android:text="Yükleniyor..."
             android:textSize="@dimen/text_size_20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

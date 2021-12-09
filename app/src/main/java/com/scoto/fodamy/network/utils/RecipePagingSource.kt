@@ -6,11 +6,13 @@ import com.scoto.fodamy.network.api.RecipeService
 import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
 import com.scoto.fodamy.util.FROM_LAST_ADDED
+import com.scoto.fodamy.util.FROM_RECIPES_BY_CATEGORY
 
 
 class RecipePagingSource(
     private val recipeService: RecipeService,
-    private val fetchedFrom: String
+    private val fetchedFrom: String,
+    private val categoryId: Int?
 ) : PagingSource<Int, Recipe>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Recipe> {
@@ -24,8 +26,17 @@ class RecipePagingSource(
                 FROM_LAST_ADDED -> {
                     recipeService.getLastAddedRecipes(currentPage)
                 }
+                FROM_RECIPES_BY_CATEGORY -> {
+                    if (categoryId != null) {
+                        recipeService.getRecipesByCategory(
+                            categoryId,
+                            currentPage
+                        )
+                    } else null
+
+                }
                 else -> {
-                    null
+                    recipeService.getEditorChoiceRecipes(currentPage)
                 }
             }
 

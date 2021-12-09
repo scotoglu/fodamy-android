@@ -14,21 +14,26 @@ import com.scoto.fodamy.network.utils.CommentPagingSource
 import com.scoto.fodamy.network.utils.RecipePagingSource
 import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
 import com.scoto.fodamy.util.FROM_LAST_ADDED
+import com.scoto.fodamy.util.FROM_RECIPES_BY_CATEGORY
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-import javax.inject.Singleton
 
 
 interface RecipeRepository {
     suspend fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>>
     suspend fun getLastAdded(): Flow<PagingData<Recipe>>
+
     suspend fun getRecipeById(recipeId: Int): NetworkResponse<Recipe>
+
     suspend fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
     suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment>
+
     suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
     suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
+
     suspend fun getCategoriesWithRecipes(): Flow<PagingData<Category>>
+    suspend fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>>
 }
 
 class RecipeRepositoryImpl @Inject constructor(
@@ -42,7 +47,7 @@ class RecipeRepositoryImpl @Inject constructor(
             enablePlaceholders = false
         ),
         pagingSourceFactory = {
-            RecipePagingSource(recipeService, FROM_EDITOR_CHOICE)
+            RecipePagingSource(recipeService, FROM_EDITOR_CHOICE, null)
         },
     ).flow
 
@@ -52,7 +57,7 @@ class RecipeRepositoryImpl @Inject constructor(
             maxSize = NETWORK_MAX_SIZE,
             enablePlaceholders = false
         ),
-        pagingSourceFactory = { RecipePagingSource(recipeService, FROM_LAST_ADDED) }
+        pagingSourceFactory = { RecipePagingSource(recipeService, FROM_LAST_ADDED, null) }
     ).flow
 
 
@@ -123,6 +128,21 @@ class RecipeRepositoryImpl @Inject constructor(
             }
         ).flow
 
+    override suspend fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                maxSize = NETWORK_MAX_SIZE,
+                enablePlaceholders = true
+            ),
+            pagingSourceFactory = {
+                RecipePagingSource(
+                    recipeService,
+                    FROM_RECIPES_BY_CATEGORY,
+                    categoryId
+                )
+            }
+        ).flow
 
     companion object {
         private const val TAG = "RecipeRepository"

@@ -6,8 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.fodamy.helper.SingleLiveEvent
+import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Category
+import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.network.repositories.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -17,18 +21,35 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _categories: MutableLiveData<PagingData<Category>> = MutableLiveData()
     val categories: LiveData<PagingData<Category>> get() = _categories
 
+    val event: SingleLiveEvent<UIFavoritesEvent> = SingleLiveEvent()
 
     init {
         getCategories()
     }
 
-    fun logout() = viewModelScope.launch {
+    fun onLogoutClick() = viewModelScope.launch {
+
+        if (dataStoreManager.isLogin()) {
+            when (val response = authRepository.logout()) {
+                is NetworkResponse.Error -> {
+                    event.value = UIFavoritesEvent.ShowMessage(response.exception.handleException())
+
+                }
+                is NetworkResponse.Success -> {
+                    event.value = UIFavoritesEvent.ShowMessage(response.data.message)
+                }
+            }
+        } else {
+            event.value =
+                UIFavoritesEvent.NavigateTo(FavoritesFragmentDirections.actionFavoritesFragmentToLoginFlow2())
+        }
 
     }
 
@@ -37,5 +58,9 @@ class FavoritesViewModel @Inject constructor(
             _categories.value = it
         }
     }
+
+    suspend fun isLoginLiveData(): LiveData<String> =
+        dataStoreManager.isLoginLiveData()
+
 
 }

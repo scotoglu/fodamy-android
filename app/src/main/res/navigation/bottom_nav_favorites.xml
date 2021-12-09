@@ -7,7 +7,35 @@
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.scoto.fodamy.ui.favorites.main.FavoritesFragment"
-        android:label="FavoritesFragment"/>
+        android:label="FavoritesFragment">
+        <action
+            android:id="@+id/action_favoritesFragment_to_login_flow2"
+            app:destination="@id/login_flow" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_categoryRecipesFragment"
+            app:destination="@id/categoryRecipesFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_recipe_flow2"
+            app:destination="@id/recipe_flow" />
+    </fragment>
     <include app:graph="@navigation/login_flow" />
     <include app:graph="@navigation/recipe_flow" />
+    <fragment
+        android:id="@+id/categoryRecipesFragment"
+        android:name="com.scoto.fodamy.ui.favorites.category_recipes.CategoryRecipesFragment"
+        android:label="CategoryRecipesFragment" >
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_recipe_flow"
+            app:destination="@id/recipe_flow">
+            <argument
+                android:name="RECIPE"
+                app:argType="com.scoto.fodamy.network.models.Recipe" />
+        </action>
+        <argument
+            android:name="CategoryId"
+            app:argType="integer" />
+        <argument
+            android:name="CategoryTitle"
+            app:argType="string" />
+    </fragment>
 </navigation>
