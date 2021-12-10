@@ -59,6 +59,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.loginFragment
             )
         )
+
+        //prevents the adding bottom margin to bottomNavigationView after changing fullscreen to normal screen
+        binding.bottomNavigationView.setOnApplyWindowInsetsListener(null)
+
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
@@ -78,6 +82,9 @@ class MainActivity : AppCompatActivity() {
                     navAndToolbarVisibility(false)
                 }
                 R.id.splashFragment -> {
+                    navAndToolbarVisibility(false)
+                }
+                R.id.imagePopupFragment -> {
                     navAndToolbarVisibility(false)
                 }
                 else -> {

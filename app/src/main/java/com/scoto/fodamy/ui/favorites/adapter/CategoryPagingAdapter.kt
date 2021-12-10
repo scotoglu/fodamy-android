@@ -10,11 +10,15 @@ import com.scoto.fodamy.databinding.ItemCategoryBinding
 import com.scoto.fodamy.ext.loadImageFromUrl
 import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.network.models.Category
+import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.ui.favorites.main.CategoryClickListener
 
 class CategoryPagingAdapter(private val listener: CategoryClickListener) :
     PagingDataAdapter<Category, CategoryPagingAdapter.ViewHolder>(categoryComparator) {
 
+
+    var onItemClicked: ((Category) -> Unit)? = null
+    var onChildItemClicked: ((Recipe) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -43,6 +47,7 @@ class CategoryPagingAdapter(private val listener: CategoryClickListener) :
                     val currentItem = getItem(position)
                     currentItem?.let {
                         listener.onItemClicked(it)
+//                        onItemClicked?.invoke(it)
                     }
                 }
             }
@@ -54,6 +59,11 @@ class CategoryPagingAdapter(private val listener: CategoryClickListener) :
             binding.ivCategoryImage.loadImageFromUrl(item.image?.url)
 
             val itemAdapter = CategoryItemAdapter(item.recipes)
+
+            itemAdapter.onCategoryItemClicked = {
+                onChildItemClicked?.invoke(it)
+            }
+
             binding.rvCategoryItems.apply {
                 adapter = itemAdapter
                 setHasFixedSize(true)
