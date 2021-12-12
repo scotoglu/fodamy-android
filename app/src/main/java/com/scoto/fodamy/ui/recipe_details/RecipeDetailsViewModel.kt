@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.recipe_details
+package com.scoto.fodamy.ui.recipe_details
 /*
 * like/unLike and follow/unFollow operations send request per each call.
 * To update of like count we should update the recipe also.

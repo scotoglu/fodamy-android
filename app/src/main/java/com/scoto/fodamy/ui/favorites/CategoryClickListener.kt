@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.main
+package com.scoto.fodamy.ui.favorites
 
 import com.scoto.fodamy.network.models.Category
 

@@ -1,7 +1,6 @@
-package com.scoto.fodamy.ui.main
+package com.scoto.fodamy.ui
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -20,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding get() = _binding!!
 
-    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -38,10 +36,6 @@ class MainActivity : AppCompatActivity() {
 
 
         navControllerListener()
-
-
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
 
 
     }
@@ -134,7 +128,4 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    companion object {
-        private const val TAG = "XXXXXXXX"
-    }
 }

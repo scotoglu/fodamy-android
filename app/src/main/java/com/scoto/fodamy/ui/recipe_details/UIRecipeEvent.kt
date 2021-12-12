@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.recipe_details
+package com.scoto.fodamy.ui.recipe_details
 
 import androidx.navigation.NavDirections
 import com.scoto.fodamy.network.models.Comment

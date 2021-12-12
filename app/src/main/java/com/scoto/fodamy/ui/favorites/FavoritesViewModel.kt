@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.main
+package com.scoto.fodamy.ui.favorites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -48,7 +48,7 @@ class FavoritesViewModel @Inject constructor(
             }
         } else {
             event.value =
-                UIFavoritesEvent.NavigateTo(FavoritesFragmentDirections.actionFavoritesFragmentToLoginFlow2())
+                UIFavoritesEvent.NavigateTo(com.scoto.fodamy.ui.favorites.FavoritesFragmentDirections.actionFavoritesFragmentToLoginFlow2())
         }
 
     }

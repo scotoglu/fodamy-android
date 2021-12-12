@@ -11,7 +11,7 @@ import com.scoto.fodamy.ext.loadImageFromUrl
 import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.network.models.Category
 import com.scoto.fodamy.network.models.Recipe
-import com.scoto.fodamy.ui.favorites.main.CategoryClickListener
+import com.scoto.fodamy.ui.favorites.CategoryClickListener
 
 class CategoryPagingAdapter(private val listener: CategoryClickListener) :
     PagingDataAdapter<Category, CategoryPagingAdapter.ViewHolder>(categoryComparator) {

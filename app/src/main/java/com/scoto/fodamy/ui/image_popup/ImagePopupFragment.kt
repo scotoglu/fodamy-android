@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.recipe_details.image_popup
+package com.scoto.fodamy.ui.image_popup
 
 import android.os.Bundle
 import android.view.View

@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.scoto.fodamy.ui.favorites.category_recipes.CategoryRecipesViewModel" />
+            type="com.scoto.fodamy.ui.category_recipes.CategoryRecipesViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.favorites.category_recipes.RecipeFragment">
+        tools:context=".ui.category_recipes.RecipeFragment">
 
         <com.scoto.fodamy.util.CustomToolbar
             android:id="@+id/custom_toolbar"

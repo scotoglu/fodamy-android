@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.recipe_details
+package com.scoto.fodamy.ui.recipe_details
 
 import android.content.res.ColorStateList
 import android.os.Bundle

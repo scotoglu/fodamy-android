@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.favorites.recipe_details.image_popup.ImagePopupFragment">
+        tools:context=".ui.image_popup.ImagePopupFragment">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_slider"

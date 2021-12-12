@@ -5,7 +5,7 @@
     app:startDestination="@id/recipeDetailsFragment">
     <fragment
         android:id="@+id/recipeDetailsFragment"
-        android:name="com.scoto.fodamy.ui.favorites.recipe_details.RecipeDetailsFragment"
+        android:name="com.scoto.fodamy.ui.recipe_details.RecipeDetailsFragment"
         android:label="RecipeDetailsFragment" >
         <action
             android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/imagePopupFragment"
-        android:name="com.scoto.fodamy.ui.favorites.recipe_details.image_popup.ImagePopupFragment"
+        android:name="com.scoto.fodamy.ui.image_popup.ImagePopupFragment"
         android:label="ImagePopupFragment" >
         <argument
             android:name="images"

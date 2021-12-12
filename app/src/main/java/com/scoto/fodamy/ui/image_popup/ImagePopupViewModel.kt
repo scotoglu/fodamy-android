@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.recipe_details.image_popup
+package com.scoto.fodamy.ui.image_popup
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

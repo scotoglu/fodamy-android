@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.category_recipes
+package com.scoto.fodamy.ui.category_recipes
 
 import android.os.Bundle
 import android.view.View

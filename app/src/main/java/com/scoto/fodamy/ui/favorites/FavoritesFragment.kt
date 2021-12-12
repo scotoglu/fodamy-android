@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.favorites.main
+package com.scoto.fodamy.ui.favorites
 
 import android.os.Bundle
 import android.view.View
@@ -31,12 +31,22 @@ class FavoritesFragment :
 
         endIconObserver()
         eventObserver()
-
         categoryAdapter = CategoryPagingAdapter(this)
         setupRvCategory()
         viewModel.categories.observe(viewLifecycleOwner, {
             categoryAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
+//
+//        categoryAdapter.onItemClicked = {
+//
+//        }
+        categoryAdapter.onChildItemClicked = {
+            navigateTo(
+                FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFlow2(
+                    it
+                )
+            )
+        }
 
         categoryAdapter.addLoadStateListener { loadState ->
             binding.apply {
@@ -47,6 +57,13 @@ class FavoritesFragment :
         }
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+//        binding.root.setOnApplyWindowInsetsListener { _, insets ->
+//            val navHeight = WindowInsetsCompat.toWindowInsetsCompat(insets)
+//                .getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+//            (binding.root.layoutParams as? ViewGroup.MarginLayoutParams)?.bottomMargin = navHeight
+//            insets
+//        }
     }
 
     private fun setupRvCategory() {

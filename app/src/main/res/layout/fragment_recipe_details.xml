@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.scoto.fodamy.ui.favorites.recipe_details.RecipeDetailsViewModel" />
+            type="com.scoto.fodamy.ui.recipe_details.RecipeDetailsViewModel" />
 
         <variable
             name="recipe"
@@ -48,7 +48,7 @@
                     android:background="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:context=".ui.favorites.recipe_details.RecipeDetailsFragment">
+                    tools:context=".ui.recipe_details.RecipeDetailsFragment">
 
 
                     <ImageView

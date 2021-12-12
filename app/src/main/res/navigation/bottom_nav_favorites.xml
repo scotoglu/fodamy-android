@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.scoto.fodamy.ui.favorites.main.FavoritesFragment"
+        android:name="com.scoto.fodamy.ui.favorites.FavoritesFragment"
         android:label="FavoritesFragment">
         <action
             android:id="@+id/action_favoritesFragment_to_login_flow2"
@@ -26,7 +26,7 @@
     <include app:graph="@navigation/recipe_flow" />
     <fragment
         android:id="@+id/categoryRecipesFragment"
-        android:name="com.scoto.fodamy.ui.favorites.category_recipes.CategoryRecipesFragment"
+        android:name="com.scoto.fodamy.ui.category_recipes.CategoryRecipesFragment"
         android:label="CategoryRecipesFragment">
         <action
             android:id="@+id/action_categoryRecipesFragment_to_recipe_flow"
