@@ -11,7 +11,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -25,6 +28,9 @@ object NetworkModule {
     fun provideInterceptor(authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .build()
     }
 
@@ -72,9 +78,10 @@ object NetworkModule {
     @Singleton
     fun provideAuthRepository(
         authService: AuthService,
-        dataStoreManager: DataStoreManager
+        dataStoreManager: DataStoreManager,
+        @IODispatcher dispatcher: CoroutineDispatcher
     ): AuthRepository {
-        return AuthRepositoryImpl(authService, dataStoreManager)
+        return AuthRepositoryImpl(authService, dataStoreManager,dispatcher)
     }
 
     @Provides

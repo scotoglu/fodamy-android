@@ -1,97 +1,113 @@
 package com.scoto.fodamy.ui.auth.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.scoto.fodamy.ext.handleException
+import androidx.lifecycle.*
+import com.scoto.fodamy.domain.usecase.login.LoginParams
+import com.scoto.fodamy.domain.usecase.login.LoginUseCase
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.ui.auth.UIAuthEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 
+    private val loginJob = Job()
 
     val username = MutableLiveData("scoto")
     val password = MutableLiveData("123456**")
     val progressbarVisibility = MutableLiveData<Boolean>()
 
+    val checkValidateInputs: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        fun validateUsername(): Boolean {
+            return if (username.value?.isBlank() == true) {
+                _requiredFieldWarning.value = InputErrorType.Email(true)
+                false
+            } else
+                true
+        }
 
-    private var _state = SingleLiveEvent<UIAuthEvent>()
-    val state: SingleLiveEvent<UIAuthEvent>
-        get() = _state
+        fun validatePassword(): Boolean {
+            return if (password.value?.isBlank() == true) {
+                _requiredFieldWarning.value = InputErrorType.Password(true)
+                false
+            } else
+                true
+        }
+
+        addSource(username) { value = validateUsername() }
+        addSource(password) { value = validatePassword() }
+
+    }
+
+    private var _event = MutableLiveData<LoginViewEvent>()
+    val state: LiveData<UIAuthEvent>
+        get() = _event.switchMap {
+            when (it) {
+                LoginViewEvent.DoLogin -> {
+                    login()
+                }
+                else -> {
+                    login()
+                }
+            }
+        }
 
 
     private val _requiredFieldWarning: MutableLiveData<InputErrorType> = MutableLiveData()
     val requiredFieldWarning: LiveData<InputErrorType>
         get() = _requiredFieldWarning
 
+    fun login(): LiveData<UIAuthEvent> {
+        val username = username.value.toString()
+        val password = password.value.toString()
+        val params = LoginParams(username, password)
 
-    fun doLoginRequest() =
-        viewModelScope.launch {
-            val username = username.value.toString()
-            val password = password.value.toString()
-
-            if (validateInputs(username, password)) {
-                setProgressbarVisibility(true)
-                when (val response = authRepository.login(username, password)) {
-                    is NetworkResponse.Success -> {
-                        _state.value = UIAuthEvent.BackTo("Giriş Başarılı")
-//                            UIAuthEvent.NavigateTo(
-//                                LoginFragmentDirections
-//                                    .actionLoginFragmentToHomeFragment(), "Giriş başarılı."
-//                            )
-                        _requiredFieldWarning.value = InputErrorType.CloseMessage
-                        setProgressbarVisibility(false)
-                    }
-                    is NetworkResponse.Error -> {
-                        _requiredFieldWarning.value =
-                            InputErrorType.ShowMessage(response.exception.handleException())
-                        setProgressbarVisibility(false)
-                    }
-                }
+        return loginUseCase.invoke(params).map {
+            when (it) {
+                is NetworkResponse.Error -> UIAuthEvent.NavigateTo(
+                    LoginFragmentDirections.actionLoginFragmentToRegisterFragment(),
+                    ""
+                )
+                is NetworkResponse.Success -> UIAuthEvent.BackTo("Giris Basarili")
             }
+
+        }.asLiveData(loginJob).distinctUntilChanged()
+    }
+
+
+    fun doLoginRequest() = viewModelScope.launch {
+        if (checkValidateInputs.value == true) {
+            _event.value = LoginViewEvent.DoLogin
         }
+    }
 
 
     fun registerOnClick() {
-        _state.value =
-            UIAuthEvent.NavigateTo(
-                LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
-            )
+        _event.value = LoginViewEvent.NavigateToRegister
     }
 
     fun forgotPasswordOnClick() {
-        _state.value =
-            UIAuthEvent.NavigateTo(
-                LoginFragmentDirections.actionLoginFragmentToResetPasswordFragment()
-            )
-    }
-
-    private fun validateInputs(username: String, password: String): Boolean {
-        var isValid = false
-        if (username.isBlank()) {
-            _requiredFieldWarning.value = InputErrorType.Email(true)
-        } else {
-            if (password.isBlank()) {
-                _requiredFieldWarning.value = InputErrorType.Password(true)
-            } else {
-                isValid = true
-            }
-        }
-        return isValid
+        _event.value = LoginViewEvent.NavigateToForgotPassword
     }
 
     private fun setProgressbarVisibility(state: Boolean) {
         progressbarVisibility.value = state
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        loginJob.cancel()
     }
 
     companion object {

@@ -99,6 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_margin_16dp"
             android:letterSpacing="0"
+            android:enabled="@{viewModel.checkValidateInputs}"
             android:onClick="@{()->viewModel.doLoginRequest()}"
             android:text="@string/login"
             android:textSize="@dimen/text_size_20sp"
