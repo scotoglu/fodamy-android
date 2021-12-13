@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@ExperimentalCoroutinesApi
 @Singleton
 class LoginUseCase @Inject constructor(
     private val authRepository: AuthRepository,

@@ -22,8 +22,6 @@ interface AuthRepository {
     suspend fun logout(): NetworkResponse<BaseResponse>
 }
 
-
-@ExperimentalCoroutinesApi
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val dataStoreManager: DataStoreManager,

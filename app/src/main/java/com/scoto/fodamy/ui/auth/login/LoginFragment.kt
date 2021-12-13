@@ -22,7 +22,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     private val viewModel: LoginViewModel by viewModels()
 
-    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

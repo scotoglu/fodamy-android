@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flowOn
 
-@ExperimentalCoroutinesApi
 internal class DefaultAsyncManager(
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) : AsyncManager {
