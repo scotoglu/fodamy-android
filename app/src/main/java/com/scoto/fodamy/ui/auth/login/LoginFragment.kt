@@ -13,6 +13,7 @@ import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.ui.auth.UIAuthEvent
 import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(
@@ -32,6 +33,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
                     // setFragmentResult("loginControl", bundleOf("isLogin" to true))
                     view.snackbar(event.message)
                 }
+                else -> {}
             }
         })
 
