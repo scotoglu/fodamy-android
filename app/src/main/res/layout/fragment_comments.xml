@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backButtonVisible="true"
+            app:onBackListener="@{()->viewModel.onBackClick()}"
             app:endIconVisibility="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +63,31 @@
             app:layout_constraintBottom_toBottomOf="@+id/et_add_comment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/et_add_comment" />
+
+        <EditText
+            android:id="@+id/et_edit_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="@dimen/size_padding_5dp"
+            android:text="@={viewModel.editableComment}"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
+            tools:text="@string/sample_directions" />
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/PrimaryButtonSmall.Filled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.onSaveClick()}"
+            android:text="@string/btn_save"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

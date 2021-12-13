@@ -24,6 +24,8 @@ class AuthRepositoryImpl @Inject constructor(
         return try {
             val response = authService.login(username, password)
             val token = response.token
+            val userID = response.user.id
+            saveUserId(userID)
             saveAuth(token)
             NetworkResponse.Success("response")
         } catch (e: Exception) {
@@ -57,11 +59,20 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun logout(): NetworkResponse<BaseResponse> {
         return try {
             val response = authService.logout()
+            removeUserId()
             removeAuth()
             NetworkResponse.Success(response)
         } catch (e: Exception) {
             NetworkResponse.Error(e)
         }
+    }
+
+    private suspend fun saveUserId(userId: Int) {
+        dataStoreManager.saveUserId(userId)
+    }
+
+    private suspend fun removeUserId() {
+        dataStoreManager.removeUserId()
     }
 
     private suspend fun saveAuth(token: String) {

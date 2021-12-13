@@ -27,6 +27,9 @@
         <argument
             android:name="RECIPE_ID"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_commentsFragment_to_commentDialog"
+            app:destination="@id/commentDialog" />
     </fragment>
     <fragment
         android:id="@+id/imagePopupFragment"
@@ -40,4 +43,8 @@
         android:id="@+id/unfollowDialog"
         android:name="com.scoto.fodamy.ui.dialog.UnfollowDialog"
         android:label="UnfollowDialog" />
+    <dialog
+        android:id="@+id/commentDialog"
+        android:name="com.scoto.fodamy.ui.dialog.CommentDialog"
+        android:label="CommentDialog" />
 </navigation>

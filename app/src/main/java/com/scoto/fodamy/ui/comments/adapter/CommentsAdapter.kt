@@ -11,11 +11,24 @@ import com.scoto.fodamy.network.models.Comment
 
 class CommentsAdapter : PagingDataAdapter<Comment, CommentsAdapter.ViewHolder>(commentComparator) {
 
+    var onItemLongClicked: ((Comment) -> Unit)? = null
+
+
     inner class ViewHolder(val binding: UserCommentCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.textView2.visibility = View.GONE
+            binding.tvComments.setOnLongClickListener(View.OnLongClickListener {
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                    val currentItem = getItem(bindingAdapterPosition)
+                    currentItem?.let {
+                        onItemLongClicked?.invoke(it)
+                    }
+                }
+
+                false
+            })
         }
 
         fun bind(item: Comment) {

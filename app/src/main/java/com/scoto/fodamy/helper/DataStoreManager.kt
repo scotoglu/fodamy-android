@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.asLiveData
@@ -19,6 +20,7 @@ class DataStoreManager @Inject constructor(
 ) {
 
     suspend fun isLogin(): Boolean = getToken().isNotBlank()
+    suspend fun isUserComment(commentUserId: Int): Boolean = getUserId() == commentUserId
     suspend fun isLoginLiveData() = token.asLiveData()
 
     val isFirstTimeLaunch: Flow<String> = context.dataStore.data.map { preference ->
@@ -52,11 +54,30 @@ class DataStoreManager @Inject constructor(
         }
     }
 
+
+    suspend fun saveUserId(userId: Int) {
+        context.dataStore.edit { preference ->
+            preference[USER_ID] = userId
+        }
+    }
+
+    suspend fun getUserId(): Int {
+        return context.dataStore.data.map { it[USER_ID] ?: 0 }.first()
+    }
+
+    suspend fun removeUserId() {
+        context.dataStore.edit {
+            it.remove(USER_ID)
+        }
+    }
+
+
     companion object {
 
         private const val FODAMY_LAUNCH_PREF = "FODAMY_LAUNCH_PREF"
         private val FIRST_LAUNCH = stringPreferencesKey("first_launched")
         private val AUTH_TOKEN = stringPreferencesKey("AUTH_TOKEN")
+        private val USER_ID = intPreferencesKey("USER_ID")
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = FODAMY_LAUNCH_PREF)
 
 

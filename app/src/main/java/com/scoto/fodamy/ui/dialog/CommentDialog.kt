@@ -5,12 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.scoto.fodamy.databinding.DialogCommentBinding
+import com.scoto.fodamy.ext.onClick
+import dagger.hilt.android.AndroidEntryPoint
 
-class CommentDialog : DialogFragment() {
+
+@AndroidEntryPoint
+class CommentDialog : BottomSheetDialogFragment() {
+
+
     private var _binding: DialogCommentBinding? = null
     private val binding: DialogCommentBinding get() = _binding!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +35,25 @@ class CommentDialog : DialogFragment() {
     ): View {
         _binding = DialogCommentBinding.inflate(inflater, container, false)
 
+        binding.btbDelete.onClick {
 
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                "DialogAction",
+                "DELETE"
+            )
+            findNavController().popBackStack()
+
+        }
+        binding.btnEdit.onClick {
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                "DialogAction",
+                "EDIT"
+            )
+            findNavController().popBackStack()
+        }
+        binding.btnCancel.onClick {
+            dismiss()
+        }
 
 
         return binding.root
@@ -37,7 +63,9 @@ class CommentDialog : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-    companion object{
+
+
+    companion object {
         private const val TAG = "CommentDialog"
     }
 }

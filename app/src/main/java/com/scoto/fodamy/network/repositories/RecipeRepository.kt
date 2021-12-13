@@ -28,6 +28,13 @@ interface RecipeRepository {
     suspend fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
     suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment>
+    suspend fun editComment(
+        recipeId: Int,
+        commentId: Int,
+        text: String
+    ): NetworkResponse<BaseResponse>
+
+    suspend fun deleteComment(recipeId: Int, commentId: Int): NetworkResponse<BaseResponse>
 
     suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
     suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
@@ -83,6 +90,31 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment> {
         return try {
             val response = recipeService.sendComment(recipeId, text)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
+    override suspend fun editComment(
+        recipeId: Int,
+        commentId: Int,
+        text: String
+    ): NetworkResponse<BaseResponse> {
+        return try {
+            val response = recipeService.editComment(recipeId, commentId, text)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
+    override suspend fun deleteComment(
+        recipeId: Int,
+        commentId: Int
+    ): NetworkResponse<BaseResponse> {
+        return try {
+            val response = recipeService.deleteComment(recipeId, commentId)
             NetworkResponse.Success(response)
         } catch (e: Exception) {
             NetworkResponse.Error(e)

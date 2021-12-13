@@ -5,6 +5,7 @@ import androidx.paging.PagingData
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Comment
 import com.scoto.fodamy.network.repositories.RecipeRepository
@@ -26,6 +27,11 @@ class CommentsViewModel @Inject constructor(
     private val _event: MutableLiveData<UICommentEvent> = MutableLiveData()
     val event: LiveData<UICommentEvent> get() = _event
 
+    var isUserComment: Boolean = false
+
+    val editableComment: MutableLiveData<String> = MutableLiveData()
+    val commentId: SingleLiveEvent<Int> = SingleLiveEvent()
+
 
     //Layout edittext text
     val comment = MutableLiveData<String>()
@@ -45,10 +51,14 @@ class CommentsViewModel @Inject constructor(
     }
 
 
+    fun isUserComment(commentUserId: Int) = viewModelScope.launch {
+        isUserComment = dataStoreManager.isUserComment(commentUserId)
+    }
+
+
     fun onSendClick() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            val response = recipeRepository.sendComment(recipeId, comment.value.toString())
-            when (response) {
+            when (val response = recipeRepository.sendComment(recipeId, comment.value.toString())) {
                 is NetworkResponse.Success -> {
                     _event.value = UICommentEvent.ShowMessage.SuccessMessage("Yorum Eklendi")
                     comment.value = ""
@@ -63,7 +73,43 @@ class CommentsViewModel @Inject constructor(
             _event.value = UICommentEvent.OpenDialog(R.id.action_global_authDialog)
         }
 
+    }
 
+    fun onBackClick() {
+        _event.value = UICommentEvent.BackTo
+    }
+
+    fun onSaveClick() = viewModelScope.launch {
+        if (dataStoreManager.isLogin()) {
+            val response =
+                recipeRepository.editComment(
+                    recipeId = recipeId,
+                    commentId = commentId.value!!,
+                    text = editableComment.value!!
+                )
+            when (response) {
+                is NetworkResponse.Error -> {
+                    _event.value =
+                        UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                }
+                is NetworkResponse.Success -> {
+                    _event.value = UICommentEvent.CommentEdited(response.data.message)
+                }
+            }
+        }
+    }
+
+    fun onDelete() = viewModelScope.launch {
+        when (val response =
+            recipeRepository.deleteComment(recipeId = recipeId, commentId = commentId.value!!)) {
+            is NetworkResponse.Error -> {
+                _event.value =
+                    UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+            }
+            is NetworkResponse.Success -> {
+                _event.value = UICommentEvent.ShowMessage.SuccessMessage(response.data.message)
+            }
+        }
     }
 
     companion object {

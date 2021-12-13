@@ -9,4 +9,7 @@ sealed class UICommentEvent {
         data class SuccessMessage(val message: String) : UICommentEvent()
         data class ErrorMessage(val message: String) : UICommentEvent()
     }
+
+    object BackTo : UICommentEvent()
+    data class CommentEdited(val message: String) : UICommentEvent()
 }

@@ -26,6 +26,7 @@ interface RecipeService {
         @Path("recipe_id") recipeId: Int
     ): Recipe
 
+    //   Recipe Comment Related Operations
     @GET("recipe/{recipe_id}/comment")
     suspend fun getRecipeComments(
         @Path("recipe_id") recipeId: Int,
@@ -38,6 +39,20 @@ interface RecipeService {
         @Query("text") text: String
     ): Comment
 
+    @PUT("recipe/{recipe_id}/comment/{comment_id}")
+    suspend fun editComment(
+        @Path("recipe_id") recipeId: Int,
+        @Path("comment_id") commentId: Int,
+        @Query("text") text: String
+    ): BaseResponse
+
+    @DELETE("recipe/{recipe_id}/comment/{comment_id}")
+    suspend fun deleteComment(
+        @Path("recipe_id") recipeId: Int,
+        @Path("comment_id") commentId: Int
+    ): BaseResponse
+
+    // Recipe Like Related Operations
     @POST("recipe/{recipe_id}/like")
     suspend fun likeRecipe(
         @Path("recipe_id") recipeId: Int
@@ -49,6 +64,7 @@ interface RecipeService {
     ): BaseResponse
 
 
+    //    Category and related recipes
     @GET("category-recipes")
     suspend fun getCategoriesWithRecipes(
         @Query("page") page: Int
@@ -59,4 +75,6 @@ interface RecipeService {
         @Path("category_id") categoryId: Int,
         @Query("page") page: Int
     ): RecipeResponse<List<Recipe>>
+
+
 }

@@ -2,6 +2,7 @@ package com.scoto.fodamy.ui.comments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,7 @@ class CommentsFragment :
 
     private val viewModel: CommentsViewModel by viewModels()
 
+
     private lateinit var commentsAdapter: CommentsAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,11 +31,49 @@ class CommentsFragment :
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
         viewModel.comments.observe(viewLifecycleOwner, {
             commentsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
+        commentsAdapter.onItemLongClicked = { comment ->
+            viewModel.isUserComment(comment.user.id)
+            if (viewModel.isUserComment) {
+                viewModel.editableComment.value = comment.text
+                viewModel.commentId.value = comment.id
+                navigateTo(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog())
+            }
+        }
+        getDialogAction()
+    }
+
+    private fun getDialogAction() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("DialogAction")
+            ?.observe(viewLifecycleOwner) { action ->
+                when (action) {
+                    "EDIT" -> {
+                        editComment()
+                    }
+                    "DELETE" -> {
+                        deleteComment()
+                    }
+                    else -> {}
+                }
+
+            }
+    }
+
+    private fun editComment() {
+        binding.apply {
+            rvComments.isVisible = false
+            etAddComment.isVisible = false
+            btnAddComment.isVisible = false
+            etEditComment.isVisible = true
+            btnSave.isVisible = true
+        }
+    }
+
+    private fun deleteComment() {
+        viewModel.onDelete()
     }
 
     private fun eventObserver() {
@@ -42,6 +82,7 @@ class CommentsFragment :
                 is UICommentEvent.NavigateTo -> {
                     navigateTo(event.directions)
                 }
+                is UICommentEvent.BackTo -> findNavController().popBackStack()
                 is UICommentEvent.ShowMessage.SuccessMessage -> {
                     view?.snackbar(event.message)
                     context?.hideSoftKeyboard(binding.root)
@@ -54,6 +95,21 @@ class CommentsFragment :
                 }
                 is UICommentEvent.OpenDialog -> {
                     findNavController().navigate(event.actionId)
+                }
+                is UICommentEvent.CommentEdited -> {
+                    view?.snackbar(event.message)
+                    context?.hideSoftKeyboard(binding.root)
+                    requireView().clearFocus()
+
+                    commentsAdapter.refresh()
+
+                    binding.apply {
+                        rvComments.isVisible = true
+                        etAddComment.isVisible = true
+                        btnAddComment.isVisible = true
+                        etEditComment.isVisible = false
+                        btnSave.isVisible = false
+                    }
                 }
             }
 
