@@ -1,5 +1,6 @@
 package com.scoto.fodamy.network.api
 
+import com.scoto.fodamy.network.models.User
 import com.scoto.fodamy.network.models.responses.BaseResponse
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -22,4 +23,8 @@ interface UserService {
     suspend fun getUserFollowing(
         @Path("userId")userId:Int
     )
+    @GET("user/{user_id}")
+    suspend fun getUserDetails(
+        @Path("user_id")userId: Int
+    ): User
 }

@@ -24,9 +24,8 @@ data class User(
     val followingCount: Int,
     @SerializedName("is_following")
     val isFollowing: Boolean,
-    @SerializedName("is_top_user_choice")
-    val isTopUserChoice: Boolean,
-    @SerializedName("is_trusted")
+
+    @SerializedName("likes_count")
     val likesCount: Int,
     @SerializedName("recipe_count")
     val recipeCount: Int,

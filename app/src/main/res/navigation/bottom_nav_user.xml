@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_nav_user"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.scoto.fodamy.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_authDialog2"
+            app:destination="@id/authDialog2" />
+    </fragment>
+    <dialog
+        android:id="@+id/authDialog2"
+        android:name="com.scoto.fodamy.ui.dialog.AuthDialog"
+        android:label="AuthDialog" />
+</navigation>

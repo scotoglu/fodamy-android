@@ -40,4 +40,5 @@
         android:id="@+id/action_global_authDialog"
         app:destination="@id/authDialog" />
     <include app:graph="@navigation/login_flow" />
+    <include app:graph="@navigation/bottom_nav_user" />
 </navigation>
