@@ -9,8 +9,9 @@
 
     <ImageView
         android:id="@+id/toolbar_iv_back"
-        android:layout_width="@dimen/icon_size_32dp"
-        android:layout_height="@dimen/icon_size_32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:src="@drawable/ic_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +25,7 @@
         android:padding="2dp"
         android:text="@string/toolbar_back_text"
         android:textColor="@color/white"
-        android:textSize="22sp"
+        android:textSize="@dimen/text_size_16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/toolbar_iv_back"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/size_margin_8dp"
         android:src="@drawable/fodamy_logo"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,19 +50,21 @@
         android:fontFamily="@font/nunito_bold"
         android:paddingHorizontal="@dimen/size_padding_4dp"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_20sp"
+        android:textSize="@dimen/text_size_18sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/toolbar_end_icon"
         app:layout_constraintStart_toEndOf="@+id/toolbar_tv_back"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Fodamy" />
+        app:layout_goneMarginEnd="@dimen/icon_size_48dp"
+        tools:text="FODAMY" />
 
     <ImageView
         android:id="@+id/toolbar_end_icon"
-        android:layout_width="@dimen/icon_size_32dp"
-        android:layout_height="@dimen/icon_size_32dp"
-        android:layout_marginEnd="@dimen/size_margin_8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="@dimen/size_margin_8dp"
         android:src="@drawable/ic_login"
         app:layout_constraintBottom_toBottomOf="parent"

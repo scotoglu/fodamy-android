@@ -20,12 +20,12 @@ import javax.inject.Inject
 
 
 interface RecipeRepository {
-    suspend fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>>
-    suspend fun getLastAdded(): Flow<PagingData<Recipe>>
+    fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>>
+    fun getLastAdded(): Flow<PagingData<Recipe>>
 
     suspend fun getRecipeById(recipeId: Int): NetworkResponse<Recipe>
 
-    suspend fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
+    fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
     suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment>
     suspend fun editComment(
@@ -39,15 +39,15 @@ interface RecipeRepository {
     suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
     suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
 
-    suspend fun getCategoriesWithRecipes(): Flow<PagingData<Category>>
-    suspend fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>>
+    fun getCategoriesWithRecipes(): Flow<PagingData<Category>>
+    fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>>
 }
 
 class RecipeRepositoryImpl @Inject constructor(
     private val recipeService: RecipeService
 ) : RecipeRepository {
 
-    override suspend fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>> = Pager(
+    override fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>> = Pager(
         config = PagingConfig(
             pageSize = NETWORK_PAGE_SIZE,
             maxSize = NETWORK_MAX_SIZE,
@@ -58,7 +58,7 @@ class RecipeRepositoryImpl @Inject constructor(
         },
     ).flow
 
-    override suspend fun getLastAdded(): Flow<PagingData<Recipe>> = Pager(
+    override fun getLastAdded(): Flow<PagingData<Recipe>> = Pager(
         config = PagingConfig(
             pageSize = NETWORK_PAGE_SIZE,
             maxSize = NETWORK_MAX_SIZE,
@@ -68,7 +68,7 @@ class RecipeRepositoryImpl @Inject constructor(
     ).flow
 
 
-    override suspend fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>> = Pager(
+    override fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>> = Pager(
         config = PagingConfig(
             pageSize = NETWORK_PAGE_SIZE,
             maxSize = NETWORK_MAX_SIZE,
@@ -148,7 +148,7 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCategoriesWithRecipes(): Flow<PagingData<Category>> =
+    override fun getCategoriesWithRecipes(): Flow<PagingData<Category>> =
         Pager(
             config = PagingConfig(
                 pageSize = CATEGORY_NETWORK_PAGE_SIZE,
@@ -160,7 +160,7 @@ class RecipeRepositoryImpl @Inject constructor(
             }
         ).flow
 
-    override suspend fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>> =
+    override fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>> =
         Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,

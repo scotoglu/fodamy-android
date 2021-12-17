@@ -3,6 +3,7 @@ package com.scoto.fodamy.ui.comments.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -18,17 +19,22 @@ class CommentsAdapter : PagingDataAdapter<Comment, CommentsAdapter.ViewHolder>(c
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.textView2.visibility = View.GONE
-            binding.tvComments.setOnLongClickListener(View.OnLongClickListener {
-                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                    val currentItem = getItem(bindingAdapterPosition)
-                    currentItem?.let {
-                        onItemLongClicked?.invoke(it)
+            binding.apply {
+                tvComments.setOnLongClickListener(View.OnLongClickListener {
+                    if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                        val currentItem = getItem(bindingAdapterPosition)
+                        currentItem?.let {
+                            onItemLongClicked?.invoke(it)
+                        }
                     }
-                }
 
-                false
-            })
+                    false
+                })
+
+                textView2.isVisible = false
+                divider2.isVisible = false
+            }
+
         }
 
         fun bind(item: Comment) {

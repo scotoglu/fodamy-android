@@ -106,7 +106,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guideline3" />
+            app:layout_constraintTop_toBottomOf="@+id/guideline3"
+          />
 
         <TextView
             android:id="@+id/tv_forgotten_password"
@@ -118,12 +119,14 @@
             android:layout_marginEnd="@dimen/size_margin_16dp"
             android:clickable="true"
             android:focusable="true"
+            android:fontFamily="@font/nunito_semibold"
             android:onClick="@{()->viewModel.forgotPasswordOnClick()}"
             android:text="@string/forgotten_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialButton" />
+            app:layout_constraintTop_toBottomOf="@+id/materialButton"
+            app:layout_goneMarginTop="@dimen/size_margin_24dp" />
 
         <TextView
             android:id="@+id/tv_dont_have_account"
@@ -144,14 +147,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="310dp" />
+            app:layout_constraintGuide_begin="321dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="36dp" />
+            app:layout_constraintGuide_begin="47dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

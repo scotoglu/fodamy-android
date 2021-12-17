@@ -7,15 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class User(
     val id: Int,
-    val cover: Image,
-    val definition: String,
-    val email: String,
     val image: Image,
     val name: String,
     val username: String,
-    val surname: String,
-    @SerializedName("cover_image")
-    val coverImage: Image,
     @SerializedName("favorites_count")
     val favoritesCount: Int,
     @SerializedName("followed_count")
@@ -24,7 +18,6 @@ data class User(
     val followingCount: Int,
     @SerializedName("is_following")
     val isFollowing: Boolean,
-
     @SerializedName("likes_count")
     val likesCount: Int,
     @SerializedName("recipe_count")

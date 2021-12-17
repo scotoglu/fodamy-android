@@ -21,72 +21,75 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/relative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/size_padding_15dp"
-                app:layout_constraintEnd_toEndOf="parent"
+
+            <ImageView
+                android:id="@+id/civ_profile"
+                imageLoaderCircle="@{recipe.user.image.url}"
+                android:layout_width="@dimen/icon_size_48dp"
+                android:layout_height="@dimen/icon_size_48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/user_profile_content_description"
+                android:src="@drawable/ic_baseline_person_outline_48"
+                app:layout_constraintBottom_toTopOf="@id/divider"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/civ_profile"
-                    imageLoaderCircle="@{recipe.user.image.url}"
-                    android:layout_width="@dimen/icon_size_48dp"
-                    android:layout_height="@dimen/icon_size_48dp"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/user_profile_content_description"
-                    android:src="@drawable/ic_baseline_person_outline_48" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@+id/civ_profile"
-                    android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_margin_8dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@{recipe.user.username}"
+                android:textColor="@color/cinder"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_follower_and_followed"
+                app:layout_constraintStart_toEndOf="@+id/civ_profile"
+                app:layout_constraintTop_toTopOf="@+id/civ_profile"
+                tools:text="scoto" />
 
-                    <TextView
-                        android:id="@+id/tv_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_bold"
-                        android:text="@{recipe.user.username}"
-                        android:textColor="@color/cinder"
-                        android:textSize="@dimen/text_size_18sp"
-                        tools:text="scoto" />
+            <TextView
+                android:id="@+id/tv_follower_and_followed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_margin_8dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="@dimen/text_size_16sp"
+                app:followerCount="@{recipe.user.followingCount}"
+                app:layout_constraintBottom_toBottomOf="@+id/civ_profile"
+                app:layout_constraintStart_toEndOf="@+id/civ_profile"
+                app:layout_constraintTop_toBottomOf="@+id/tv_username"
+                app:recipeCount="@{recipe.user.recipeCount}"
+                tools:text="3 Tarif 0 Takipçi" />
 
-                    <TextView
-                        android:id="@+id/tv_follower_and_followed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_semibold"
-                        android:textSize="@dimen/text_size_16sp"
-                        app:followerCount="@{recipe.user.followingCount}"
-                        app:recipeCount="@{recipe.user.recipeCount}"
-                        tools:text="3 Tarif 0 Takipçi" />
-                </LinearLayout>
-            </RelativeLayout>
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider"
-                app:layout_constraintTop_toBottomOf="@id/relative_layout" />
+                app:layout_constraintBottom_toTopOf="@+id/tv_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_title" />
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_margin_16dp"
-                android:layout_marginTop="@dimen/size_margin_16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="@{recipe.title}"
                 android:textColor="@color/cinder"
                 android:textSize="@dimen/text_size_20sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relative_layout"
+                app:layout_constraintTop_toBottomOf="@id/divider"
                 tools:text="Makarna Tarifi" />
 
             <TextView
@@ -102,7 +105,6 @@
                 tools:text="Hamur İşi" />
 
             <ImageView
-                android:contentDescription="@string/food_image_content_description"
                 android:id="@+id/iv_food_image"
                 imageLoaderNormal="@{recipe.images.get(0).url}"
                 android:layout_width="0dp"
@@ -110,6 +112,7 @@
                 android:layout_marginStart="@dimen/size_margin_16dp"
                 android:layout_marginTop="@dimen/size_margin_16dp"
                 android:layout_marginEnd="@dimen/size_margin_16dp"
+                android:contentDescription="@string/food_image_content_description"
                 android:scaleType="centerCrop"
                 android:src="@drawable/photo"
                 app:layout_constraintDimensionRatio="w,1:1"
@@ -120,12 +123,12 @@
             <ImageView
                 android:id="@+id/iv_badge"
                 badgeVisibility="@{recipe.editorChoice}"
-                android:layout_width="@dimen/icon_size_32dp"
-                android:layout_height="@dimen/icon_size_32dp"
+                android:layout_width="@dimen/icon_size_48dp"
+                android:layout_height="@dimen/icon_size_48dp"
                 android:layout_marginTop="@dimen/size_margin_16dp"
                 android:layout_marginEnd="@dimen/size_margin_16dp"
-                android:contentDescription="@string/editor_choice_badge_content_description"
                 android:background="@drawable/bg_editor_choice"
+                android:contentDescription="@string/editor_choice_badge_content_description"
                 android:src="@drawable/ic_editor_pick"
                 app:layout_constraintEnd_toEndOf="@+id/iv_food_image"
                 app:layout_constraintTop_toTopOf="@+id/iv_food_image" />
@@ -136,11 +139,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_margin_16dp"
-                android:layout_marginTop="@dimen/size_margin_8dp"
+                android:layout_marginTop="@dimen/size_margin_16dp"
+                android:layout_marginBottom="@dimen/size_margin_16dp"
                 android:fontFamily="@font/nunito_semibold"
-                android:paddingVertical="@dimen/size_padding_4dp"
                 android:textSize="@dimen/text_size_16sp"
                 app:commentCount="@{recipe.commentCount}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_food_image"
                 app:likeCount="@{recipe.likeCount}"

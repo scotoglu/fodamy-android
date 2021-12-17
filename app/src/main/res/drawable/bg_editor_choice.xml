@@ -3,8 +3,8 @@
     android:shape="oval">
     <solid android:color="@color/white" />
     <size
-        android:width="@dimen/icon_size_32dp"
-        android:height="@dimen/icon_size_32dp" />
+        android:width="40dp"
+        android:height="40dp" />
 
     <padding
         android:bottom="8dp"

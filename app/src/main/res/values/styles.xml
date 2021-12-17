@@ -10,6 +10,7 @@
         <item name="android:padding">@dimen/size_padding_15dp</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="PrimaryButtonLarge.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="textAllCaps">false</item>
         <item name="fontFamily">@font/nunito_semibold</item>
@@ -30,8 +31,8 @@
 
     <style name="PrimaryButtonSmall" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="textAllCaps">false</item>
-        <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/size_margin_16dp</item>
-        <item name="android:paddingVertical" tools:targetApi="o">@dimen/size_margin_8dp</item>
+        <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/size_padding_15dp</item>
+        <item name="android:paddingVertical" tools:targetApi="o">@dimen/size_padding_8dp</item>
         <item name="background">@drawable/btn_follow_background</item>
         <item name="fontFamily">@font/nunito_bold</item>
         <item name="android:textColor">@color/red</item>
@@ -43,7 +44,7 @@
         <item name="textAllCaps">false</item>
         <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/size_margin_16dp</item>
         <item name="android:paddingVertical" tools:targetApi="o">@dimen/size_margin_8dp</item>
-        <item name="fontFamily">@font/nunito_semibold</item>
+        <item name="fontFamily">@font/nunito_bold</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textSize">@dimen/text_size_18sp</item>
         <item name="android:textColor">@color/white</item>
@@ -58,9 +59,10 @@
     <!--    TextView styles-->
     <style name="WalkThroughTitle" parent="TextAppearance.AppCompat.Title">
         <item name="fontFamily">@font/nunito_bold</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:padding">4dp</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:textSize">@dimen/text_size_18sp</item>
     </style>
 
     <style name="WalkThroughContent" parent="TextAppearance.AppCompat.Title">
@@ -99,4 +101,9 @@
         <item name="android:textSize">@dimen/text_size_20sp</item>
     </style>
 
+    <!--    BottomSheetFragmetn-->
+    <style name="TransparentBottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+    </style>
 </resources>

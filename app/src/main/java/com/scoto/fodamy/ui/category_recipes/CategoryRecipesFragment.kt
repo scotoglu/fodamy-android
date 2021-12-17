@@ -10,27 +10,32 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCategoryRecipeBinding
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.home.adapter.RecipesAdapter
-import com.scoto.fodamy.ui.home.pages.RecipeItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
     R.layout.fragment_category_recipe
-), RecipeItemClickListener {
+) {
 
-    private lateinit var categoryRecipesAdapter: RecipesAdapter
+
     private val viewModel: CategoryRecipesViewModel by viewModels()
+
     private val args: CategoryRecipesFragmentArgs by navArgs()
+    private lateinit var categoryRecipesAdapter: RecipesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
 
         setupRvCategoryRecipes()
 
@@ -39,30 +44,42 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
             categoryRecipesAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
+        categoryRecipesAdapter.onItemClicked = {
+            navigateTo(
+                CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToRecipeFlow(
+                    it
+                )
+            )
+        }
 
+        eventObserver()
+        endIconObserver()
+        adapterLoadStateListener()
+        setToolbarTitle()
 
+    }
+
+    private fun setToolbarTitle() {
+        binding.customToolbar.setTitle(
+            args.categoryTitle
+                .uppercase(Locale.forLanguageTag("tr"))
+        )
+
+    }
+
+    private fun adapterLoadStateListener() {
         categoryRecipesAdapter.addLoadStateListener { loadState ->
             binding.apply {
                 progressbar.isVisible = loadState.source.refresh is LoadState.Loading
                 tvLoading.isVisible = loadState.source.refresh is LoadState.Loading
             }
         }
-
-        eventObserver()
-        endIconObserver()
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-        binding.customToolbar.setTitle(args.categoryTitle)
-
     }
 
     private fun setupRvCategoryRecipes() {
-        categoryRecipesAdapter = RecipesAdapter(this)
+        categoryRecipesAdapter = RecipesAdapter()
         binding.rvCategoryRecipes.apply {
             setHasFixedSize(true)
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = categoryRecipesAdapter
         }
     }
@@ -96,16 +113,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
     private fun navigateTo(directions: NavDirections) {
         val navController = findNavController()
         navController.navigate(directions)
-    }
-
-    override fun onItemClicked(recipe: Recipe) {
-        navigateTo(
-            CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToRecipeFlow(
-                recipe
-            )
-        )
-
-
     }
 
     companion object {

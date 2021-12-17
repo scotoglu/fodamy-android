@@ -12,30 +12,29 @@ import com.scoto.fodamy.util.CustomToolbar
 
 @BindingAdapter(value = ["app:recipeCount", "app:followerCount"])
 fun setRecipeAndFollowers(tv: TextView, recipes: Int?, followers: Int?) {
-    val recipeTxt = tv.context.resources.getString(R.string.recipe, recipes)
-    val followingTxt = tv.context.resources.getString(R.string.follower, followers)
-    tv.text = "$recipeTxt $followingTxt"
+    tv.text = tv.context.resources.getString(
+        R.string.recipes_and_following_count,
+        recipes, followers
+    )
 }
 
 @BindingAdapter(value = ["app:commentCount", "app:likeCount"])
 fun setCommentAndLike(tv: TextView, comments: Int?, likes: Int?) {
-    val commentTxt = tv.context.resources.getString(R.string.comment, comments)
-    val likeTxt = tv.context.resources.getString(R.string.like, likes)
-    tv.text = "$commentTxt $likeTxt"
+    tv.text = tv.context.resources.getString(
+        R.string.comment_and_like_count,
+        comments, likes
+    )
 
 }
 
 @BindingAdapter("imageLoaderCircle")
 fun setImageWithGlideCircle(iv: ImageView, url: String?) {
-    if (url != null) iv.loadCircleImageFromUrl(url)
-
+    iv.loadCircleImageFromUrl(url)
 }
 
 @BindingAdapter("imageLoaderNormal")
 fun setImageWithGlideNormal(iv: ImageView, url: String?) {
-    if (!url.isNullOrBlank()) {
-        iv.loadImageFromUrl(url)
-    }
+    iv.loadImageFromUrl(url)
 }
 
 @BindingAdapter("badgeVisibility")

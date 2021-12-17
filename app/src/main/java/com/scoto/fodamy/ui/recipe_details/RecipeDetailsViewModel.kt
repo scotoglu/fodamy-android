@@ -1,8 +1,8 @@
 package com.scoto.fodamy.ui.recipe_details
 /*
 * like/unLike and follow/unFollow operations send request per each call.
-* To update of like count we should update the recipe also.
-* So each successful request send cost two request 1-Operation (like,unlike vs) request 2-getRecipeById request for update recipe.
+* To update the like count we should update the recipe also.
+* So each successful request send two request, 1-Operation (like,unlike vs) request 2-getRecipeById request for update recipe.
 *
 * TODO("Fix this")
 *
@@ -32,6 +32,7 @@ class RecipeDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
+
     val event: SingleLiveEvent<UIRecipeEvent> = SingleLiveEvent()
 
     private val _recipe = savedStateHandle.getLiveData<Recipe>("RECIPE")
@@ -43,6 +44,7 @@ class RecipeDetailsViewModel @Inject constructor(
     init {
         getRecipeById()
         getRecipeComments()
+
     }
 
 
@@ -68,8 +70,8 @@ class RecipeDetailsViewModel @Inject constructor(
                     event.value = UIRecipeEvent.CommentData(response.data)
                 }
                 is NetworkResponse.Error -> {
-                    event.value =
-                        UIRecipeEvent.ShowMessage(response.exception.handleException())
+                    event.value = UIRecipeEvent.CommentData(null)
+                    //  UIRecipeEvent.ShowMessage(response.exception.handleException())
                 }
             }
         }
@@ -98,6 +100,7 @@ class RecipeDetailsViewModel @Inject constructor(
     }
 
     fun onLikeClick() = viewModelScope.launch {
+
         if (dataStoreManager.isLogin()) {
             recipe.value!!.let {
                 if (it.isLiked) dislike() else like()
@@ -135,18 +138,26 @@ class RecipeDetailsViewModel @Inject constructor(
     }
 
     fun onFollowClick() = viewModelScope.launch {
-        if (!dataStoreManager.isLogin()) {
+        if (recipe.value?.user?.isFollowing == true) {
             event.value =
-                UIRecipeEvent.OpenDialog(R.id.action_global_authDialog)
+                UIRecipeEvent.NavigateTo(
+                    RecipeDetailsFragmentDirections
+                        .actionRecipeDetailsFragmentToUnfollowDialog()
+                )
         } else {
-            _recipe.value?.let {
-                if (it.user.isFollowing) unFollow() else follow()
-
+            if (!dataStoreManager.isLogin()) {
+                event.value =
+                    UIRecipeEvent.OpenDialog(R.id.action_global_authDialog)
+            } else {
+                _recipe.value?.let {
+                    follow()
+                }
             }
         }
+
     }
 
-    private fun unFollow() = viewModelScope.launch {
+    fun unFollow() = viewModelScope.launch {
         when (val response = userRepository.unFollowUser(followedUserId)) {
             is NetworkResponse.Success -> {
                 event.value =

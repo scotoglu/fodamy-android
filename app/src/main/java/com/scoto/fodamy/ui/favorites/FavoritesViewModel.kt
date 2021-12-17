@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
@@ -48,14 +49,16 @@ class FavoritesViewModel @Inject constructor(
             }
         } else {
             event.value =
-                UIFavoritesEvent.NavigateTo(com.scoto.fodamy.ui.favorites.FavoritesFragmentDirections.actionFavoritesFragmentToLoginFlow2())
+                UIFavoritesEvent.NavigateTo(FavoritesFragmentDirections.actionFavoritesFragmentToLoginFlow2())
         }
 
     }
 
     private fun getCategories() = viewModelScope.launch {
-        recipeRepository.getCategoriesWithRecipes().cachedIn(viewModelScope).collect {
-            _categories.value = it
+        recipeRepository.getCategoriesWithRecipes().cachedIn(viewModelScope).collect { pagingData ->
+            _categories.value = pagingData.filter { category ->
+                category.recipes?.size!! > 0
+            }
         }
     }
 

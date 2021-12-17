@@ -4,7 +4,6 @@ import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.api.UserService
 import com.scoto.fodamy.network.models.User
 import com.scoto.fodamy.network.models.responses.BaseResponse
-import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +25,7 @@ class UserRepositoryImpl @Inject constructor(
         return try {
             val response = userService.followUser(followedId)
             NetworkResponse.Success(response)
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             NetworkResponse.Error(e)
         }
     }

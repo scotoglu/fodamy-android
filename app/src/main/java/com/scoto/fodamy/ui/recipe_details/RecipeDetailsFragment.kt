@@ -48,7 +48,21 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
             includeUser.btnFollow.isVisible = true
             includeUser.btnFollow.onClick { viewModel?.onFollowClick() }
         }
+
+
+
         eventObserver()
+        dialogActionObserver()
+
+    }
+
+    private fun dialogActionObserver() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("ACTION")
+            ?.observe(viewLifecycleOwner) {
+                if (it.equals("unfollow")) {
+                    viewModel.unFollow()
+                }
+            }
     }
 
 
@@ -56,7 +70,12 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UIRecipeEvent.CommentData -> {
-                    binding.includeComment.comment = event.comment
+                    if (event.comment == null) {
+                        binding.includeComment.isEmptyComment = true
+                    } else {
+                        binding.includeComment.isEmptyComment = false
+                        binding.includeComment.comment = event.comment
+                    }
                 }
                 is UIRecipeEvent.NavigateTo -> {
                     navigateTo(event.directions)

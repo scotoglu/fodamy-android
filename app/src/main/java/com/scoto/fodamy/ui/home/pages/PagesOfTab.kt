@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentPagesOfTabBinding
 import com.scoto.fodamy.ext.onClick
-import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.home.HomeFragmentDirections
 import com.scoto.fodamy.ui.home.adapter.RecipesAdapter
@@ -19,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
     R.layout.fragment_pages_of_tab
-), RecipeItemClickListener {
+) {
 
     private val viewModel: PagesOfTabViewModel by viewModels()
     private lateinit var recipeAdapter: RecipesAdapter
@@ -32,16 +31,23 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
         initAdapterAndAddStateListener()
         setupRecyclerView()
 
+
+
         viewModel.recipes.observe(viewLifecycleOwner, {
             recipeAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
+        recipeAdapter.onItemClicked = {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToRecipeFlow(it)
+            )
+        }
     }
 
 
     private fun initAdapterAndAddStateListener() {
 
-        recipeAdapter = RecipesAdapter(this)
+        recipeAdapter = RecipesAdapter()
 
         recipeAdapter.addLoadStateListener { loadState ->
             binding.apply {
@@ -72,29 +78,9 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
         binding.rvRecipes.apply {
             setHasFixedSize(true)
             adapter = recipeAdapter
-            layoutManager =
-                LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
         }
     }
 
-    /*
-    * ViewPager hosted by HomeFragment.And PagesOfTab() fragments host on home.
-    * Calling details screen from PagesOfTabDirections cause error. CurrentDestination is HomeFragment.
-    * To handle this error, navigate to details screen using HomeFragmentDirections also add action home to recipeDetails.
-    * Not from PagesOfTab to recipeDetails.
-    * */
-    override fun onItemClicked(recipe: Recipe) {
-        val navController = findNavController()
-        navController.navigate(
-            HomeFragmentDirections.actionHomeFragmentToRecipeFlow(
-                recipe
-            )
-        )
-    }
 
     companion object {
         private const val TAG = "PagesOfTab"

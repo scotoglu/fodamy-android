@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCommentsBinding
@@ -23,6 +24,7 @@ class CommentsFragment :
 
 
     private lateinit var commentsAdapter: CommentsAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRvComments()
@@ -44,6 +46,15 @@ class CommentsFragment :
             }
         }
         getDialogAction()
+        adapterLoadStateListener()
+    }
+
+
+    private fun adapterLoadStateListener() {
+        commentsAdapter.addLoadStateListener { loadState ->
+            binding.progressbar.isVisible = loadState.source.refresh is LoadState.Loading
+            binding.tvLoading.isVisible = loadState.source.refresh is LoadState.Loading
+        }
     }
 
     private fun getDialogAction() {

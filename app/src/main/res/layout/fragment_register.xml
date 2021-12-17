@@ -26,6 +26,7 @@
         <!--        app:layout_goneMarginTop="size_margin_40dp" -->
 
         <TextView
+
             android:id="@+id/tv_signup"
             style="@style/AuthScreenTitles"
             android:layout_width="match_parent"
@@ -142,14 +143,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="36dp" />
+            app:layout_constraintGuide_begin="47dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="396dp" />
+            app:layout_constraintGuide_begin="407dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

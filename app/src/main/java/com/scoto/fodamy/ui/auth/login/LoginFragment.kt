@@ -27,11 +27,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         viewModel.state.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UIAuthEvent.BackTo -> {
-                    findNavController().popBackStack()
+                        findNavController().popBackStack()
 //                    navigateTo(event.directions!!)
                     // setFragmentResult("loginControl", bundleOf("isLogin" to true))
                     view.snackbar(event.message)
                 }
+                is UIAuthEvent.NavigateTo -> event.directions?.let { navigateTo(it) }
             }
         })
 

@@ -14,8 +14,9 @@
         android:id="@+id/recipe_card_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_margin_8dp"
-        app:cardCornerRadius="5dp"
+        android:layout_marginVertical="@dimen/size_margin_16dp"
+        android:layout_marginLeft="@dimen/size_margin_16dp"
+        app:cardCornerRadius="@dimen/card_radius_5dp"
         app:cardElevation="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,14 +41,15 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/size_margin_8dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="@{recipe.title}"
                 android:textColor="@color/cinder"
                 android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_comments_and_likes"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline8"
+                app:layout_constraintTop_toBottomOf="@+id/iv_food_image"
+                app:layout_constraintVertical_chainStyle="packed"
                 tool:text="Köfte Tarifi" />
 
             <TextView
@@ -56,14 +58,15 @@
                 likes="@{recipe.likeCount}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/size_margin_8dp"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
                 tool:text="0 Yorum 0 Beğeni" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_user_profile"
                 imageLoaderCircle="@{recipe.user.image.url}"
                 android:layout_width="@dimen/icon_size_48dp"
@@ -72,7 +75,7 @@
                 android:elevation="4dp"
                 android:src="@drawable/ic_user_placeholder"
                 app:civ_border_color="@color/red"
-                app:civ_border_width="2dp"
+                app:civ_border_width="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toStartOf="@id/iv_food_image"
@@ -82,9 +85,10 @@
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="@dimen/size_padding_32dp"
                 android:background="@drawable/bg_user_profile_item_category"
                 android:fontFamily="@font/nunito_bold"
+                android:includeFontPadding="false"
                 android:paddingStart="@dimen/icon_size_32dp"
                 android:text="@{recipe.user.username}"
                 android:textColor="@color/white"

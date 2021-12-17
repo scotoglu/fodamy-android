@@ -8,18 +8,12 @@ import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.network.models.Image
 import com.scoto.fodamy.network.models.ImageList
 
-class SliderAdapter(private val images: ImageList, private val onClose: () -> Unit) :
+class SliderAdapter(private val images: ImageList) :
     RecyclerView.Adapter<SliderAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemImageSliderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.ivClose.onClick {
-                //to close fragment
-                onClose.invoke()
-            }
-        }
 
         fun bind(item: Image) {
             binding.image = item
@@ -37,7 +31,7 @@ class SliderAdapter(private val images: ImageList, private val onClose: () -> Un
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(images.images[position])
+        holder.bind(images.images?.get(position)!!)
     }
 
     override fun getItemCount(): Int {

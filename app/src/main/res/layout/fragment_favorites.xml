@@ -11,6 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/secondary_background"
         android:layout_height="match_parent"
         tools:context=".ui.favorites.FavoritesFragment">
 
@@ -27,8 +28,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_categories"
             android:layout_width="match_parent"
+            tools:listitem="@layout/item_category"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/custom_toolbar" />
@@ -47,9 +51,9 @@
             android:id="@+id/tv_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/size_margin_8dp"
             android:fontFamily="@font/nunito_bold"
-            android:text="Yükleniyor"
+            android:text="@string/text_loading"
             android:textColor="@color/cinder"
             android:textSize="@dimen/text_size_20sp"
             app:layout_constraintEnd_toEndOf="parent"

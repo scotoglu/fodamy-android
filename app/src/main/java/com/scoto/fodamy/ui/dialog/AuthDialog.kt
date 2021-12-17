@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
@@ -17,11 +17,11 @@ class AuthDialog() : DialogFragment(R.layout.dialog_auth) {
     private var _binding: DialogAuthBinding? = null
     private val binding: DialogAuthBinding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         dialog?.window?.setLayout(
-            RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
     }
 
@@ -31,6 +31,7 @@ class AuthDialog() : DialogFragment(R.layout.dialog_auth) {
         savedInstanceState: Bundle?
     ): View {
         _binding = DialogAuthBinding.inflate(inflater, container, false)
+
 
         val navController = findNavController()
 

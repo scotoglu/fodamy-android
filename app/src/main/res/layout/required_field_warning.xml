@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/tv_required_field"
-    android:layout_height="wrap_content"
     style="@style/RequiredFieldWarning"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/red"
-    android:visibility="gone"
+    android:padding="10dp"
     android:textColor="@color/white"
-    tools:text="@string/required_field_email">
-
-</TextView>
+    android:visibility="gone"
+    tools:text="@string/required_field_email" />

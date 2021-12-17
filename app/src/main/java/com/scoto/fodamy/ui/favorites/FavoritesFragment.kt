@@ -9,18 +9,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentFavoritesBinding
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.network.models.Category
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.favorites.adapter.CategoryPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoritesFragment :
-    BaseFragment<FragmentFavoritesBinding>(R.layout.fragment_favorites), CategoryClickListener {
+    BaseFragment<FragmentFavoritesBinding>(R.layout.fragment_favorites) {
 
     private val viewModel: FavoritesViewModel by viewModels()
 
@@ -31,30 +29,18 @@ class FavoritesFragment :
 
         endIconObserver()
         eventObserver()
-        categoryAdapter = CategoryPagingAdapter(this)
+        categoryAdapter = CategoryPagingAdapter()
         setupRvCategory()
+
+
         viewModel.categories.observe(viewLifecycleOwner, {
             categoryAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
-//
-//        categoryAdapter.onItemClicked = {
-//
-//        }
-        categoryAdapter.onChildItemClicked = {
-            navigateTo(
-                FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFlow2(
-                    it
-                )
-            )
-        }
 
-        categoryAdapter.addLoadStateListener { loadState ->
-            binding.apply {
-                progressbar.isVisible = loadState.source.refresh is LoadState.Loading
-                tvLoading.isVisible = loadState.source.refresh is LoadState.Loading
-                rvCategories.isVisible = loadState.source.refresh is LoadState.NotLoading
-            }
-        }
+
+        adapterItemClicks()
+        adapterLoadStateListener()
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -66,12 +52,37 @@ class FavoritesFragment :
 //        }
     }
 
+    private fun adapterItemClicks() {
+        categoryAdapter.onItemClicked = {
+            navigateTo(
+                FavoritesFragmentDirections.actionFavoritesFragmentToCategoryRecipesFragment(
+                    it.id, it.name
+                )
+            )
+        }
+        categoryAdapter.onChildItemClicked = {
+            navigateTo(
+                FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFlow2(
+                    it
+                )
+            )
+        }
+    }
+
+    private fun adapterLoadStateListener() {
+        categoryAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                progressbar.isVisible = loadState.source.refresh is LoadState.Loading
+                tvLoading.isVisible = loadState.source.refresh is LoadState.Loading
+                rvCategories.isVisible = loadState.source.refresh is LoadState.NotLoading
+            }
+        }
+    }
+
     private fun setupRvCategory() {
         binding.rvCategories.apply {
             setHasFixedSize(true)
             adapter = categoryAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
 
@@ -102,13 +113,6 @@ class FavoritesFragment :
         navController.navigate(directions)
     }
 
-    override fun onItemClicked(item: Category) {
-        navigateTo(
-            FavoritesFragmentDirections.actionFavoritesFragmentToCategoryRecipesFragment(
-                item.id, item.name!!
-            )
-        )
-    }
 
     companion object {
         private const val TAG = "FavoritesFragment"

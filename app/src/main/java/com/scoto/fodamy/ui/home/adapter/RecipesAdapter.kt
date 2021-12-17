@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.scoto.fodamy.databinding.ItemFoodCardBinding
 import com.scoto.fodamy.network.models.Recipe
-import com.scoto.fodamy.ui.home.pages.RecipeItemClickListener
 
 class RecipesAdapter(
-    private val listener: RecipeItemClickListener
+
 ) : PagingDataAdapter<Recipe, RecipesAdapter.ViewHolder>(recipeComparator) {
 
+    var onItemClicked: ((Recipe) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ItemFoodCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -35,7 +35,9 @@ class RecipesAdapter(
                 val currentItemPosition = bindingAdapterPosition
                 if (currentItemPosition != RecyclerView.NO_POSITION) {
                     val currentItem = getItem(bindingAdapterPosition)
-                    currentItem?.let { listener.onItemClicked(it) }
+                    currentItem?.let {
+                        onItemClicked?.invoke(it)
+                    }
                 }
             }
         }

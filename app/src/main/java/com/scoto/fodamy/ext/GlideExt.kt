@@ -7,21 +7,18 @@ import com.scoto.fodamy.R
 
 
 fun ImageView.loadImageFromUrl(url: String?) {
-    if (url != null) {
-        Glide.with(this)
-            .load(url)
-            .placeholder(R.drawable.photo)
-            .into(this)
-    }
+    Glide.with(this)
+        .load(url)
+        .placeholder(R.drawable.photo)
+        .into(this)
+
 }
 
 fun ImageView.loadCircleImageFromUrl(url: String?) {
-    if (url != null) {
-        Glide
-            .with(this)
-            .load(url)
-            .placeholder(R.drawable.ic_user_placeholder)
-            .apply(RequestOptions.circleCropTransform())
-            .into(this)
-    }
+    Glide
+        .with(this)
+        .load(url)
+        .placeholder(R.drawable.ic_user_placeholder)
+        .apply(RequestOptions.circleCropTransform())
+        .into(this)
 }

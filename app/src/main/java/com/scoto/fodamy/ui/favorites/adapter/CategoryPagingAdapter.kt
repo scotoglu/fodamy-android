@@ -4,16 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scoto.fodamy.databinding.ItemCategoryBinding
-import com.scoto.fodamy.ext.loadImageFromUrl
 import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.network.models.Category
 import com.scoto.fodamy.network.models.Recipe
-import com.scoto.fodamy.ui.favorites.CategoryClickListener
 
-class CategoryPagingAdapter(private val listener: CategoryClickListener) :
+class CategoryPagingAdapter() :
     PagingDataAdapter<Category, CategoryPagingAdapter.ViewHolder>(categoryComparator) {
 
 
@@ -46,19 +43,19 @@ class CategoryPagingAdapter(private val listener: CategoryClickListener) :
                 if (position != RecyclerView.NO_POSITION) {
                     val currentItem = getItem(position)
                     currentItem?.let {
-                        listener.onItemClicked(it)
-//                        onItemClicked?.invoke(it)
+                        onItemClicked?.invoke(it)
                     }
                 }
             }
         }
 
         fun bind(item: Category) {
+            binding.apply {
+                cTitle = item.name
+                cUrl = item.image?.url ?: " "
+            }
 
-            binding.tvCategoryTitle.text = item.name
-            binding.ivCategoryImage.loadImageFromUrl(item.image?.url)
-
-            val itemAdapter = CategoryItemAdapter(item.recipes)
+            val itemAdapter = CategoryItemAdapter(item.recipes!!)
 
             itemAdapter.onCategoryItemClicked = {
                 onChildItemClicked?.invoke(it)
@@ -67,8 +64,6 @@ class CategoryPagingAdapter(private val listener: CategoryClickListener) :
             binding.rvCategoryItems.apply {
                 adapter = itemAdapter
                 setHasFixedSize(true)
-                layoutManager =
-                    LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
             }
 
 

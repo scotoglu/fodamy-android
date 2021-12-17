@@ -6,12 +6,12 @@
         android:width="1dp"
         android:color="@color/heather" />
     <size
-        android:width="@dimen/icon_size_32dp"
-        android:height="@dimen/icon_size_32dp" />
+        android:width="34dp"
+        android:height="34dp" />
 
     <padding
         android:bottom="8dp"
-        android:left="10dp"
-        android:right="10dp"
+        android:left="8dp"
+        android:right="8dp"
         android:top="8dp" />
 </shape>

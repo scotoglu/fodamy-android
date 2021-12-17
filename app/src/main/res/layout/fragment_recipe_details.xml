@@ -74,7 +74,7 @@
                         android:fontFamily="@font/nunito_bold"
                         android:text="@{recipe.title}"
                         android:textColor="@color/cinder"
-                        android:textSize="@dimen/text_size_20sp"
+                        android:textSize="@dimen/text_size_16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_food_image"
                         tools:text="Makarna Tarifi" />
@@ -83,11 +83,13 @@
                         android:id="@+id/tv_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
                         android:fontFamily="@font/nunito_semibold"
                         android:text="@{recipe.category.name}"
                         android:textSize="@dimen/text_size_16sp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/divider3"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_title"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title"
                         app:layout_constraintTop_toBottomOf="@+id/tv_title"
                         tools:text="Hamur İşi" />
 
@@ -96,6 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/size_margin_16dp"
+                        android:layout_marginBottom="16dp"
                         android:fontFamily="@font/nunito_semibold"
                         android:text="@{recipe.difference}"
                         android:textSize="@dimen/text_size_16sp"
@@ -108,7 +111,7 @@
                         android:id="@+id/divider3"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
                         android:background="?android:attr/listDivider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -128,14 +131,15 @@
                         app:layout_constraintTop_toBottomOf="@id/divider3">
 
                         <ImageView
-                            android:layout_width="@dimen/icon_size_32dp"
-                            android:layout_height="@dimen/icon_size_32dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:src="@drawable/ic_comment" />
 
                         <TextView
                             android:id="@+id/tv_comment_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
                             android:fontFamily="@font/nunito_semibold"
                             android:textSize="@dimen/text_size_16sp"
                             app:comments="@{recipe.commentCount}"
@@ -157,14 +161,15 @@
 
                         <ImageView
                             android:id="@+id/iv_like"
-                            android:layout_width="@dimen/icon_size_32dp"
-                            android:layout_height="@dimen/icon_size_32dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:src="@drawable/ic_heart" />
 
                         <TextView
                             android:id="@+id/tv_like_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
                             android:fontFamily="@font/nunito_semibold"
                             android:textSize="@dimen/text_size_16sp"
                             app:likes="@{recipe.likeCount}"
@@ -172,44 +177,39 @@
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                <RelativeLayout
-                    android:id="@+id/relative_layout"
+                <include
+                    android:id="@+id/include_user"
+                    layout="@layout/user_info_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_margin_8dp"
-                    android:background="@color/white"
+                    android:layout_marginTop="@dimen/size_margin_16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                    app:user="@{recipe.user}" />
 
-                    <include
-                        android:id="@+id/include_user"
-                        layout="@layout/user_info_card"
-                        app:user="@{recipe.user}" />
-                </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:layout_marginTop="@dimen/size_margin_16dp"
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/relative_layout">
+                    app:layout_constraintTop_toBottomOf="@id/include_user">
 
                     <TextView
                         android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_margin_16dp"
-                        android:layout_marginTop="@dimen/size_margin_16dp"
+                        android:layout_marginTop="@dimen/size_margin_32dp"
                         android:fontFamily="@font/nunito_bold"
                         android:padding="@dimen/size_padding_4dp"
                         android:text="@string/text_title_ingredients"
                         android:textColor="@color/cinder"
-                        android:textSize="@dimen/text_size_20sp"
+                        android:textSize="@dimen/text_size_18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -230,7 +230,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/size_margin_16dp"
-                        android:layout_marginBottom="@dimen/size_margin_16dp"
                         android:fontFamily="@font/nunito_semibold"
                         android:padding="@dimen/size_padding_4dp"
                         android:text="@{recipe.numberOfPerson.text}"
@@ -244,6 +243,7 @@
                         android:id="@+id/divider4"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/size_margin_16dp"
                         android:background="?android:attr/listDivider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -271,7 +271,7 @@
                     android:id="@+id/constraintLayout3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/size_margin_16dp"
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -281,13 +281,15 @@
                         android:id="@+id/tv_description_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="@dimen/size_margin_16dp"
+                        android:layout_marginTop="@dimen/size_margin_32dp"
+                        android:layout_marginBottom="@dimen/size_margin_32dp"
                         android:fontFamily="@font/nunito_bold"
                         android:padding="@dimen/size_padding_4dp"
                         android:text="@string/text_title_directions"
                         android:textColor="@color/cinder"
-                        android:textSize="@dimen/text_size_20sp"
+                        android:textSize="@dimen/text_size_18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/divider5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -310,6 +312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/size_margin_16dp"
                         android:fontFamily="@font/nunito_semibold"
+                        android:padding="@dimen/size_padding_4dp"
                         android:textSize="@dimen/text_size_16sp"
                         app:layout_constraintBottom_toTopOf="@+id/divider5"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -345,34 +348,32 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <RelativeLayout
-                    android:id="@+id/relativeLayout2"
+
+                <include
+                    android:id="@+id/include_comment"
+                    layout="@layout/user_comment_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/white"
+                    android:layout_marginTop="@dimen/size_margin_16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-                    <include
-                        android:id="@+id/include_comment"
-                        layout="@layout/user_comment_card" />
-
-                </RelativeLayout>
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/PrimaryButtonLarge.Filled"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_margin_16dp"
-                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="@dimen/size_margin_16dp"
+                    android:layout_marginBottom="@dimen/size_margin_16dp"
                     android:onClick="@{()->viewModel.onCommentAddClick()}"
                     android:text="@string/btn_add_comment"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/relativeLayout2" />
+                    app:layout_constraintTop_toBottomOf="@id/include_comment" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

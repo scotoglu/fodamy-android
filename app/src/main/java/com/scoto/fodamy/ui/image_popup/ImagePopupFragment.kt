@@ -9,7 +9,10 @@ import androidx.navigation.fragment.navArgs
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentImagePopupBinding
 import com.scoto.fodamy.ext.hideSystemUI
+import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.ext.showSystemUI
+import com.scoto.fodamy.network.models.Image
+import com.scoto.fodamy.network.models.ImageList
 import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,11 +29,21 @@ class ImagePopupFragment :
         (activity as AppCompatActivity).hideSystemUI(binding.root)
 
         val images = args.images
-        val sliderAdapter = SliderAdapter(images) {
-            //TODO("Close the image slider fragment,fix this, use interface for readability")
+        val populatedImages = mutableListOf<Image>()
+        if (images.images.size == 1) {
+            val image = images.images[0]
+            for (i in 0 until 4) {
+                populatedImages.add(image)
+            }
+        }
+
+        val sliderAdapter = SliderAdapter(ImageList(populatedImages))
+        binding.viewpagerSlider.adapter = sliderAdapter
+        binding.dotsIndicator.setViewPager2(binding.viewpagerSlider)
+
+        binding.ivClose.onClick {
             findNavController().popBackStack()
         }
-        binding.viewpagerSlider.adapter = sliderAdapter
 
     }
 
