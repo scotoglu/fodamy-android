@@ -29,9 +29,7 @@ class RegisterViewModel @Inject constructor(
         get() = _requiredFieldWarnings
 
 
-    private var _state = SingleLiveEvent<UIAuthEvent>()
-    val state: SingleLiveEvent<UIAuthEvent>
-        get() = _state
+    val event = SingleLiveEvent<UIAuthEvent>()
 
 
     fun doRegisterRequest() =
@@ -46,7 +44,7 @@ class RegisterViewModel @Inject constructor(
                 setProgressbarVisibility(true)
                 when (val response = authRepository.register(username, email, password)) {
                     is NetworkResponse.Success -> {
-                        _state.value =
+                        event.value =
                             UIAuthEvent.NavigateTo(
                                 null, "Kullanıcı kaydedildi.Giriş ekranından giriş yapabilirsiniz."
                             )
@@ -64,7 +62,7 @@ class RegisterViewModel @Inject constructor(
         }
 
     fun loginOnClick() {
-        _state.value =
+        event.value =
             UIAuthEvent.NavigateTo(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
     }
 

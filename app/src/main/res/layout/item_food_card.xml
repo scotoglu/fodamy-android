@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="recipe"
             type="com.scoto.fodamy.network.models.Recipe" />
@@ -122,7 +124,6 @@
 
             <ImageView
                 android:id="@+id/iv_badge"
-                badgeVisibility="@{recipe.editorChoice}"
                 android:layout_width="@dimen/icon_size_48dp"
                 android:layout_height="@dimen/icon_size_48dp"
                 android:layout_marginTop="@dimen/size_margin_16dp"
@@ -130,6 +131,7 @@
                 android:background="@drawable/bg_editor_choice"
                 android:contentDescription="@string/editor_choice_badge_content_description"
                 android:src="@drawable/ic_editor_pick"
+                android:visibility="@{recipe.isEditorChoice ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="@+id/iv_food_image"
                 app:layout_constraintTop_toTopOf="@+id/iv_food_image" />
 

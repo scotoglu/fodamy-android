@@ -28,7 +28,10 @@ class ViewPagerAdapter(
                 fragment.arguments = bundleOf(REQUEST_TYPE to FROM_LAST_ADDED)
                 fragment
             }
-            else -> throw IllegalStateException("Invalid adapter position") //TODO()
+            else -> {
+                fragment.arguments = bundleOf(REQUEST_TYPE to FROM_EDITOR_CHOICE)
+                fragment
+            }
         }
     }
 

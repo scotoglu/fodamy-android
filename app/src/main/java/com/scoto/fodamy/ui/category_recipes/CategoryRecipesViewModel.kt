@@ -30,6 +30,7 @@ class CategoryRecipesViewModel @Inject constructor(
 
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
+
     val event: SingleLiveEvent<UICategoryEvent> = SingleLiveEvent()
 
     init {
@@ -50,7 +51,6 @@ class CategoryRecipesViewModel @Inject constructor(
 
     fun onLogoutClick() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            //logout
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Error -> event.value =
                     UICategoryEvent.ShowMessage(response.exception.handleException())
@@ -60,7 +60,6 @@ class CategoryRecipesViewModel @Inject constructor(
             }
 
         } else {
-            //open auth
             event.value = UICategoryEvent.OpenDialog(R.id.action_global_authDialog)
         }
     }

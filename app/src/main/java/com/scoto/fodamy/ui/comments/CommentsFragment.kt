@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCommentsBinding
 import com.scoto.fodamy.ext.hideSoftKeyboard
@@ -27,11 +26,14 @@ class CommentsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRvComments()
-        initAdapterLoadStateListener()
-        eventObserver()
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        setupRvComments()
+        eventObserver()
+
+        binding.editMode = false
 
         viewModel.comments.observe(viewLifecycleOwner, {
             commentsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -62,7 +64,7 @@ class CommentsFragment :
             ?.observe(viewLifecycleOwner) { action ->
                 when (action) {
                     "EDIT" -> {
-                        editComment()
+                        binding.editMode = true
                     }
                     "DELETE" -> {
                         deleteComment()
@@ -73,32 +75,33 @@ class CommentsFragment :
             }
     }
 
-    private fun editComment() {
-        binding.apply {
-            rvComments.isVisible = false
-            etAddComment.isVisible = false
-            btnAddComment.isVisible = false
-            etEditComment.isVisible = true
-            btnSave.isVisible = true
-        }
-    }
 
     private fun deleteComment() {
         viewModel.onDelete()
     }
 
     private fun eventObserver() {
+        //TODO(reduce the event type )
+        //TODO(scroll to top of recyclerview after new comment added.)
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UICommentEvent.NavigateTo -> {
                     navigateTo(event.directions)
                 }
-                is UICommentEvent.BackTo -> findNavController().popBackStack()
+                is UICommentEvent.BackTo -> {
+                    if (binding.editMode == true) {
+                        binding.editMode = false
+                    } else {
+                        findNavController().popBackStack()
+
+                    }
+                }
                 is UICommentEvent.ShowMessage.SuccessMessage -> {
                     view?.snackbar(event.message)
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()
                     commentsAdapter.refresh()
+
 
                 }
                 is UICommentEvent.ShowMessage.ErrorMessage -> {
@@ -111,16 +114,8 @@ class CommentsFragment :
                     view?.snackbar(event.message)
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()
-
                     commentsAdapter.refresh()
-
-                    binding.apply {
-                        rvComments.isVisible = true
-                        etAddComment.isVisible = true
-                        btnAddComment.isVisible = true
-                        etEditComment.isVisible = false
-                        btnSave.isVisible = false
-                    }
+                    binding.editMode = false
                 }
             }
 
@@ -131,16 +126,10 @@ class CommentsFragment :
         commentsAdapter = CommentsAdapter()
         binding.rvComments.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
             adapter = commentsAdapter
         }
     }
 
-    private fun initAdapterLoadStateListener() {
-        commentsAdapter.addLoadStateListener { loadState ->
-
-        }
-    }
 
     private fun navigateTo(directions: NavDirections) {
         val navController = findNavController()

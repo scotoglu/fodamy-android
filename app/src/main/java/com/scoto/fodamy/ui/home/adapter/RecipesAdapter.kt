@@ -13,6 +13,7 @@ class RecipesAdapter(
 ) : PagingDataAdapter<Recipe, RecipesAdapter.ViewHolder>(recipeComparator) {
 
     var onItemClicked: ((Recipe) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ItemFoodCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,7 +32,7 @@ class RecipesAdapter(
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.clContainer.setOnClickListener {
-                //Item to details screen
+                
                 val currentItemPosition = bindingAdapterPosition
                 if (currentItemPosition != RecyclerView.NO_POSITION) {
                     val currentItem = getItem(bindingAdapterPosition)

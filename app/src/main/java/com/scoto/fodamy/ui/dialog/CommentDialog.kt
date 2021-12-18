@@ -41,7 +41,7 @@ class CommentDialog : BottomSheetDialogFragment() {
     ): View {
         _binding = DialogCommentBinding.inflate(inflater, container, false)
 
-        binding.btbDelete.onClick {
+        binding.btnDelete.onClick {
 
             findNavController().previousBackStackEntry?.savedStateHandle?.set(
                 "DialogAction",

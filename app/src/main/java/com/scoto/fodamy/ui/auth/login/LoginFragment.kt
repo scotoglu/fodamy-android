@@ -24,12 +24,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.state.observe(viewLifecycleOwner, { event ->
+        viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UIAuthEvent.BackTo -> {
-                        findNavController().popBackStack()
-//                    navigateTo(event.directions!!)
-                    // setFragmentResult("loginControl", bundleOf("isLogin" to true))
+                    findNavController().popBackStack()
                     view.snackbar(event.message)
                 }
                 is UIAuthEvent.NavigateTo -> event.directions?.let { navigateTo(it) }

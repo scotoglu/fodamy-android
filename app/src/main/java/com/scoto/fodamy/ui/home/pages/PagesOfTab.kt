@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentPagesOfTabBinding
 import com.scoto.fodamy.ext.onClick
@@ -28,7 +28,7 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
         super.onViewCreated(view, savedInstanceState)
 
 
-        initAdapterAndAddStateListener()
+        adapterLoadStateListener()
         setupRecyclerView()
 
 
@@ -38,14 +38,12 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
         })
 
         recipeAdapter.onItemClicked = {
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToRecipeFlow(it)
-            )
+            navigateTo(HomeFragmentDirections.actionHomeFragmentToRecipeFlow(it))
         }
     }
 
 
-    private fun initAdapterAndAddStateListener() {
+    private fun adapterLoadStateListener() {
 
         recipeAdapter = RecipesAdapter()
 
@@ -81,6 +79,10 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
         }
     }
 
+    private fun navigateTo(directions: NavDirections) {
+        val navController = findNavController()
+        navController.navigate(directions)
+    }
 
     companion object {
         private const val TAG = "PagesOfTab"

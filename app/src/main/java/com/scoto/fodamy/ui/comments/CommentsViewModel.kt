@@ -24,8 +24,7 @@ class CommentsViewModel @Inject constructor(
     private val _comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
     val comments: LiveData<PagingData<Comment>> get() = _comments
 
-    private val _event: MutableLiveData<UICommentEvent> = MutableLiveData()
-    val event: LiveData<UICommentEvent> get() = _event
+     val event: MutableLiveData<UICommentEvent> = MutableLiveData()
 
     var isUserComment: Boolean = false
 
@@ -60,23 +59,23 @@ class CommentsViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             when (val response = recipeRepository.sendComment(recipeId, comment.value.toString())) {
                 is NetworkResponse.Success -> {
-                    _event.value = UICommentEvent.ShowMessage.SuccessMessage("Yorum Eklendi")
+                    event.value = UICommentEvent.ShowMessage.SuccessMessage("Yorum Eklendi")
                     comment.value = ""
                 }
                 is NetworkResponse.Error -> {
-                    _event.value =
+                    event.value =
                         UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
                 }
             }
 
         } else {
-            _event.value = UICommentEvent.OpenDialog(R.id.action_global_authDialog)
+            event.value = UICommentEvent.OpenDialog(R.id.action_global_authDialog)
         }
 
     }
 
     fun onBackClick() {
-        _event.value = UICommentEvent.BackTo
+        event.value = UICommentEvent.BackTo
     }
 
     fun onSaveClick() = viewModelScope.launch {
@@ -89,11 +88,11 @@ class CommentsViewModel @Inject constructor(
                 )
             when (response) {
                 is NetworkResponse.Error -> {
-                    _event.value =
+                    event.value =
                         UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
                 }
                 is NetworkResponse.Success -> {
-                    _event.value = UICommentEvent.CommentEdited(response.data.message)
+                    event.value = UICommentEvent.CommentEdited(response.data.message)
                 }
             }
         }
@@ -103,11 +102,11 @@ class CommentsViewModel @Inject constructor(
         when (val response =
             recipeRepository.deleteComment(recipeId = recipeId, commentId = commentId.value!!)) {
             is NetworkResponse.Error -> {
-                _event.value =
+                event.value =
                     UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
             }
             is NetworkResponse.Success -> {
-                _event.value = UICommentEvent.ShowMessage.SuccessMessage(response.data.message)
+                event.value = UICommentEvent.ShowMessage.SuccessMessage(response.data.message)
             }
         }
     }

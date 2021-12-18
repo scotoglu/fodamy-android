@@ -7,7 +7,6 @@ import android.util.Patterns
 
 
 fun String.spannableText(text: String = ""): SpannableString {
-    //   TODO("use spannableNum(), spannable method for all needed texts in app general")
     val start = text.length
     val end = if (text.isEmpty()) this.length else text.length + this.length
 

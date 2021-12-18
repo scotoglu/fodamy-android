@@ -37,12 +37,6 @@ fun setImageWithGlideNormal(iv: ImageView, url: String?) {
     iv.loadImageFromUrl(url)
 }
 
-@BindingAdapter("badgeVisibility")
-fun setBadgeVisibility(iv: ImageView, isVisible: Boolean) {
-    iv.isVisible = isVisible
-}
-
-
 @BindingAdapter("app:onBackListener")
 fun setOnBackListener(toolbar: CustomToolbar, listener: CustomToolbar.OnBackListener) {
     toolbar.onBackListener = listener

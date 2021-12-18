@@ -5,6 +5,12 @@
     <data>
 
         <variable
+            name="editMode"
+            type="Boolean" />
+
+        <import type="android.view.View" />
+
+        <variable
             name="viewModel"
             type="com.scoto.fodamy.ui.comments.CommentsViewModel" />
     </data>
@@ -32,6 +38,9 @@
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/size_margin_16dp"
             android:background="@color/secondary_background"
+            android:orientation="vertical"
+            android:visibility="@{editMode ? View.GONE : View.VISIBLE }"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/et_add_comment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +58,7 @@
             android:background="@drawable/bg_add_comment_edittext"
             android:hint="@string/hint_comment"
             android:text="@={viewModel.comment}"
+            android:visibility="@{editMode ? View.GONE :View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_add_comment"
             app:layout_constraintStart_toStartOf="parent" />
@@ -63,6 +73,7 @@
             android:focusable="true"
             android:onClick="@{()->viewModel.onSendClick()}"
             android:src="@drawable/ic_send"
+            android:visibility="@{editMode ? View.GONE :View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/et_add_comment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/et_add_comment"
@@ -75,7 +86,7 @@
             android:background="@null"
             android:padding="@dimen/size_padding_5dp"
             android:text="@={viewModel.editableComment}"
-            android:visibility="gone"
+            android:visibility="@{editMode ? View.VISIBLE :View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
@@ -88,7 +99,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{()->viewModel.onSaveClick()}"
             android:text="@string/btn_save"
-            android:visibility="gone"
+            android:visibility="@{editMode ? View.VISIBLE :View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -108,9 +119,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColor="@color/cinder"
             android:fontFamily="@font/nunito_bold"
             android:text="@string/text_loading"
+            android:textColor="@color/cinder"
             android:textSize="@dimen/text_size_20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

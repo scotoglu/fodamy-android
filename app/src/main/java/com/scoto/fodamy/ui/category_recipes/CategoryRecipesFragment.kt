@@ -25,8 +25,8 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
 
 
     private val viewModel: CategoryRecipesViewModel by viewModels()
-
     private val args: CategoryRecipesFragmentArgs by navArgs()
+
     private lateinit var categoryRecipesAdapter: RecipesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

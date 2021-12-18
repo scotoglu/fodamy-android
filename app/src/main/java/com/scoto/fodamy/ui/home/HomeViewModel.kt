@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
 
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            //do logout request
+
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Success -> {
                     _event.value = UIHomeEvent.ShowMessage.Success(response.data.message)
@@ -36,7 +36,7 @@ class HomeViewModel @Inject constructor(
                 }
             }
         } else {
-            //Navigate To login
+
             _event.value =
                 UIHomeEvent.NavigateTo(HomeFragmentDirections.actionHomeFragmentToLoginFlow())
         }

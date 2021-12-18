@@ -38,11 +38,7 @@ class PagesOfTabViewModel @Inject constructor(
 
     private fun getLastAdded() = viewModelScope.launch {
         recipeRepository.getLastAdded().cachedIn(viewModelScope).collect {
-
             _recipes.value = it
-//            _recipes.value = it.filter { recipe ->
-//                recipe.isEditorChoice
-//            }
         }
     }
 

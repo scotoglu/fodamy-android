@@ -26,7 +26,7 @@ class RegisterFragment :
 
         setSpannableText()
 
-        viewModel.state.observe(viewLifecycleOwner, { event ->
+        viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UIAuthEvent.NavigateTo -> {
                     event.directions?.let { navigateTo(it) }

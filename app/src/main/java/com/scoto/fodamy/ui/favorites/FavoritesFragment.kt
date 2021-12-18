@@ -27,6 +27,11 @@ class FavoritesFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+
+
         endIconObserver()
         eventObserver()
         categoryAdapter = CategoryPagingAdapter()
@@ -41,15 +46,6 @@ class FavoritesFragment :
         adapterItemClicks()
         adapterLoadStateListener()
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-
-//        binding.root.setOnApplyWindowInsetsListener { _, insets ->
-//            val navHeight = WindowInsetsCompat.toWindowInsetsCompat(insets)
-//                .getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-//            (binding.root.layoutParams as? ViewGroup.MarginLayoutParams)?.bottomMargin = navHeight
-//            insets
-//        }
     }
 
     private fun adapterItemClicks() {

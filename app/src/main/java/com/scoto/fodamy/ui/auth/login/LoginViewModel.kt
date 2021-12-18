@@ -25,9 +25,7 @@ class LoginViewModel @Inject constructor(
     val progressbarVisibility = MutableLiveData<Boolean>()
 
 
-    private var _state = SingleLiveEvent<UIAuthEvent>()
-    val state: SingleLiveEvent<UIAuthEvent>
-        get() = _state
+     val event = SingleLiveEvent<UIAuthEvent>()
 
 
     private val _requiredFieldWarning: MutableLiveData<InputErrorType> = MutableLiveData()
@@ -44,11 +42,7 @@ class LoginViewModel @Inject constructor(
                 setProgressbarVisibility(true)
                 when (val response = authRepository.login(username, password)) {
                     is NetworkResponse.Success -> {
-                        _state.value = UIAuthEvent.BackTo("Giriş Başarılı")
-//                            UIAuthEvent.NavigateTo(
-//                                LoginFragmentDirections
-//                                    .actionLoginFragmentToHomeFragment(), "Giriş başarılı."
-//                            )
+                        event.value = UIAuthEvent.BackTo("Giriş Başarılı")
                         _requiredFieldWarning.value = InputErrorType.CloseMessage
                         setProgressbarVisibility(false)
                     }
@@ -63,14 +57,14 @@ class LoginViewModel @Inject constructor(
 
 
     fun registerOnClick() {
-        _state.value =
+        event.value =
             UIAuthEvent.NavigateTo(
                 LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
             )
     }
 
     fun forgotPasswordOnClick() {
-        _state.value =
+        event.value =
             UIAuthEvent.NavigateTo(
                 LoginFragmentDirections.actionLoginFragmentToResetPasswordFragment()
             )
