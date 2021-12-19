@@ -23,8 +23,7 @@ class CategoryRecipesViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager,
     private val savedStateHandle: SavedStateHandle,
 
-    ) : ViewModel() {
-
+) : ViewModel() {
 
     private val id: Int = savedStateHandle.get<Int>("CategoryId") ?: 0
 
@@ -37,13 +36,11 @@ class CategoryRecipesViewModel @Inject constructor(
         getRecipesByCategory()
     }
 
-
     private fun getRecipesByCategory() = viewModelScope.launch {
         recipeRepository.getRecipesByCategory(id).cachedIn(viewModelScope).collect {
             _recipes.value = it
         }
     }
-
 
     fun onBackClick() {
         event.value = UICategoryEvent.BackTo
@@ -52,13 +49,13 @@ class CategoryRecipesViewModel @Inject constructor(
     fun onLogoutClick() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             when (val response = authRepository.logout()) {
-                is NetworkResponse.Error -> event.value =
-                    UICategoryEvent.ShowMessage(response.exception.handleException())
+                is NetworkResponse.Error ->
+                    event.value =
+                        UICategoryEvent.ShowMessage(response.exception.handleException())
                 is NetworkResponse.Success -> {
                     event.value = UICategoryEvent.ShowMessage(response.data.message)
                 }
             }
-
         } else {
             event.value = UICategoryEvent.OpenDialog(R.id.action_global_authDialog)
         }

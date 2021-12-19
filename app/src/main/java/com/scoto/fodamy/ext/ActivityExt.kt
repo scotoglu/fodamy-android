@@ -6,13 +6,12 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
-
 fun AppCompatActivity.hideSystemUI(container: View) {
 
     WindowCompat.setDecorFitsSystemWindows(window, false)
     WindowInsetsControllerCompat(window, container).hide(
         WindowInsetsCompat.Type.statusBars()
-                or WindowInsetsCompat.Type.navigationBars()
+            or WindowInsetsCompat.Type.navigationBars()
     )
 }
 
@@ -23,7 +22,7 @@ fun AppCompatActivity.showSystemUI(container: View) {
         container
     ).show(
         WindowInsetsCompat.Type.statusBars()
-                or WindowInsetsCompat.Type.navigationBars()
+            or WindowInsetsCompat.Type.navigationBars()
     )
 }
 

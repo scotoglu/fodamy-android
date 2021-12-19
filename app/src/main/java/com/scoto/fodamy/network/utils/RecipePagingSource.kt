@@ -8,7 +8,6 @@ import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
 import com.scoto.fodamy.util.FROM_LAST_ADDED
 import com.scoto.fodamy.util.FROM_RECIPES_BY_CATEGORY
 
-
 class RecipePagingSource(
     private val recipeService: RecipeService,
     private val fetchedFrom: String,
@@ -33,7 +32,6 @@ class RecipePagingSource(
                             currentPage
                         )
                     } else null
-
                 }
                 else -> {
                     recipeService.getEditorChoiceRecipes(currentPage)
@@ -57,7 +55,6 @@ class RecipePagingSource(
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
-
 
     companion object {
         private const val TAG = "RecipePagingSource"

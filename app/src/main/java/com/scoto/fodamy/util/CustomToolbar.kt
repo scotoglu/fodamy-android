@@ -18,7 +18,6 @@ class CustomToolbar @JvmOverloads constructor(
 ) :
     ConstraintLayout(context, attr, defStyle) {
 
-
     interface OnBackListener {
         fun onClick()
     }
@@ -38,7 +37,6 @@ class CustomToolbar @JvmOverloads constructor(
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.custom_toolbar, this, true)
         binding = CustomToolbarBinding.bind(view)
-
 
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.CustomToolbar)
         try {
@@ -70,11 +68,9 @@ class CustomToolbar @JvmOverloads constructor(
                     null
                 }
             )
-
         } finally {
             typedArray.recycle()
         }
-
     }
 
     fun setTitle(title: String?) {
@@ -100,7 +96,8 @@ class CustomToolbar @JvmOverloads constructor(
             this.isVisible = isVisible
             setOnClickListener {
                 Log.d("Custom Toolbar", "setEndIconVisibility:called ")
-                onEndIconListener?.onClick() }
+                onEndIconListener?.onClick()
+            }
         }
     }
 

@@ -9,7 +9,6 @@ import com.scoto.fodamy.databinding.FragmentSplashBinding
 import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>(
     R.layout.fragment_splash
@@ -30,6 +29,4 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(
             }
         })
     }
-
 }
-

@@ -44,9 +44,7 @@ class RecipeDetailsViewModel @Inject constructor(
     init {
         getRecipeById()
         getRecipeComments()
-
     }
-
 
     private fun getRecipeById() = viewModelScope.launch {
         _recipe.value?.let {
@@ -61,7 +59,6 @@ class RecipeDetailsViewModel @Inject constructor(
             }
         }
     }
-
 
     private fun getRecipeComments() = viewModelScope.launch {
         _recipe.value?.let {
@@ -154,7 +151,6 @@ class RecipeDetailsViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun unFollow() = viewModelScope.launch {
@@ -183,13 +179,10 @@ class RecipeDetailsViewModel @Inject constructor(
                     event.value =
                         UIRecipeEvent.ShowMessage(response.exception.handleException())
                 }
-
             }
         }
-
 
     companion object {
         private const val TAG = "RecipeDetailsViewModel"
     }
-
 }

@@ -15,9 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ResetPasswordFragment :
     BaseFragment<FragmentResetPasswordBinding>(R.layout.fragment_reset_password) {
 
-
     private val viewModel: ResetPasswordViewModel by viewModels()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,9 +32,7 @@ class ResetPasswordFragment :
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
     }
-
 
     private fun requiredFieldObserver() {
         viewModel.requiredFieldWarnings.observe(viewLifecycleOwner, {
@@ -65,6 +61,5 @@ class ResetPasswordFragment :
 
     companion object {
         private const val TAG = "ResetPasswordFragment"
-
     }
 }

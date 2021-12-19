@@ -21,7 +21,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-
     @Provides
     fun provideInterceptor(authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
@@ -29,7 +28,6 @@ object NetworkModule {
             .addInterceptor(HttpLoggingInterceptor())
             .build()
     }
-
 
 //    @Provides
 //    @Singleton
@@ -49,8 +47,7 @@ object NetworkModule {
             .build()
     }
 
-
-    //Services
+    // Services
     @Provides
     @Singleton
     fun provideAuthService(retrofit: Retrofit): AuthService {
@@ -69,7 +66,7 @@ object NetworkModule {
         return retrofit.create(UserService::class.java)
     }
 
-    //Repositories
+    // Repositories
     @Provides
     @Singleton
     fun provideAuthRepository(
@@ -85,11 +82,9 @@ object NetworkModule {
         return RecipeRepositoryImpl(recipeService)
     }
 
-
     @Provides
     @Singleton
     fun provideUserRepository(userService: UserService): UserRepository {
         return UserRepositoryImpl(userService)
     }
-
 }

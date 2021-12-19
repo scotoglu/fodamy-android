@@ -31,4 +31,3 @@ data class Recipe(
     val category: Category,
     val images: List<Image>
 ) : Parcelable
-

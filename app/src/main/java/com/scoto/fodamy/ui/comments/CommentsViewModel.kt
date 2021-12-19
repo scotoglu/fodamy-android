@@ -24,15 +24,14 @@ class CommentsViewModel @Inject constructor(
     private val _comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
     val comments: LiveData<PagingData<Comment>> get() = _comments
 
-     val event: MutableLiveData<UICommentEvent> = MutableLiveData()
+    val event: MutableLiveData<UICommentEvent> = MutableLiveData()
 
     var isUserComment: Boolean = false
 
     val editableComment: MutableLiveData<String> = MutableLiveData()
     val commentId: SingleLiveEvent<Int> = SingleLiveEvent()
 
-
-    //Layout edittext text
+    // Layout edittext text
     val comment = MutableLiveData<String>()
 
     private val recipeId: Int = savedStateHandle.get<Int>("RECIPE_ID") ?: 0
@@ -49,11 +48,9 @@ class CommentsViewModel @Inject constructor(
         }
     }
 
-
     fun isUserComment(commentUserId: Int) = viewModelScope.launch {
         isUserComment = dataStoreManager.isUserComment(commentUserId)
     }
-
 
     fun onSendClick() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
@@ -67,11 +64,9 @@ class CommentsViewModel @Inject constructor(
                         UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
                 }
             }
-
         } else {
             event.value = UICommentEvent.OpenDialog(R.id.action_global_authDialog)
         }
-
     }
 
     fun onBackClick() {
@@ -99,8 +94,10 @@ class CommentsViewModel @Inject constructor(
     }
 
     fun onDelete() = viewModelScope.launch {
-        when (val response =
-            recipeRepository.deleteComment(recipeId = recipeId, commentId = commentId.value!!)) {
+        when (
+            val response =
+                recipeRepository.deleteComment(recipeId = recipeId, commentId = commentId.value!!)
+        ) {
             is NetworkResponse.Error -> {
                 event.value =
                     UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
@@ -114,5 +111,4 @@ class CommentsViewModel @Inject constructor(
     companion object {
         private const val TAG = "CommentsViewModel"
     }
-
 }

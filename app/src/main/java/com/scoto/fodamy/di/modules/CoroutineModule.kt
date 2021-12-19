@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object CoroutineModule {
 
-
     @Provides
     @IODispatcher
     fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
@@ -26,14 +25,11 @@ object CoroutineModule {
     fun provideCoroutineScope(
         @IODispatcher ioDispatcher: CoroutineDispatcher
     ): CoroutineScope = CoroutineScope(SupervisorJob() + ioDispatcher)
-
-
 }
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class IODispatcher
-
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier

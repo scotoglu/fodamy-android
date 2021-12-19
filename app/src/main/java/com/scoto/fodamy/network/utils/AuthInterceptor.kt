@@ -1,6 +1,5 @@
 package com.scoto.fodamy.network.utils
 
-import android.util.Log
 import com.scoto.fodamy.di.modules.ApplicationScope
 import com.scoto.fodamy.helper.DataStoreManager
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +29,5 @@ class AuthInterceptor @Inject constructor(
         scope.launch {
             token = dataStoreManager.getToken()
         }
-
     }
 }

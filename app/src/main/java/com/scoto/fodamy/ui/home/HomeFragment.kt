@@ -20,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment :
     BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,7 +30,6 @@ class HomeFragment :
         setupViewPagerAndTabLayout()
         eventObserver()
         endIconObserver()
-
     }
 
     private fun setupViewPagerAndTabLayout() {
@@ -45,8 +43,7 @@ class HomeFragment :
             }
         }.attach()
 
-
-        //adds vertical divider to beween tabs in tabLayout.
+        // adds vertical divider to beween tabs in tabLayout.
         binding.tabLayout.addVerticalLineToTabs()
     }
 
@@ -60,9 +57,7 @@ class HomeFragment :
                 }
             })
         }
-
     }
-
 
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
@@ -80,7 +75,6 @@ class HomeFragment :
                     binding.root.snackbar(event.message)
                 }
             }
-
         })
     }
 

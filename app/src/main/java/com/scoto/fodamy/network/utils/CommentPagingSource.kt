@@ -13,7 +13,7 @@ class CommentPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Comment> {
         val currentPage = params.key ?: COMMENT_STARTING_INDEX
         return try {
-            val response = recipeService.getRecipeComments(recipeId,currentPage)
+            val response = recipeService.getRecipeComments(recipeId, currentPage)
             val comment = response.data
             LoadResult.Page(
                 data = comment,

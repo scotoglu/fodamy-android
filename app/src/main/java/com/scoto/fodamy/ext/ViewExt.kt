@@ -35,7 +35,5 @@ fun TabLayout.addVerticalLineToTabs() {
             dividerDrawable = drawable
             dividerPadding = 10
         }
-
-
     }
 }

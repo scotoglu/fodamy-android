@@ -62,10 +62,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(
                 }
             })
         }
-
     }
 
     private fun navigateTo() {
-
     }
 }

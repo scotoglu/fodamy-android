@@ -35,7 +35,6 @@ data class Walkthrough(
                     R.drawable.walkthrough4
                 ),
 
-                )
+            )
     }
-
 }

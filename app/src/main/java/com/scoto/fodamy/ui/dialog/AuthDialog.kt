@@ -11,7 +11,6 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.DialogAuthBinding
 import com.scoto.fodamy.ext.onClick
 
-
 class AuthDialog() : DialogFragment(R.layout.dialog_auth) {
 
     private var _binding: DialogAuthBinding? = null
@@ -32,15 +31,12 @@ class AuthDialog() : DialogFragment(R.layout.dialog_auth) {
     ): View {
         _binding = DialogAuthBinding.inflate(inflater, container, false)
 
-
         val navController = findNavController()
 
         binding.apply {
             btnCancel.onClick { dismiss() }
             btnLogin.onClick { navController.navigate(AuthDialogDirections.actionAuthDialogToLoginFlow()) }
         }
-
-
 
         return binding.root
     }

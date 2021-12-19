@@ -9,7 +9,6 @@ class CategoryPagingSource(
     private val recipeService: RecipeService
 ) : PagingSource<Int, Category>() {
 
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Category> {
         val currentPage = params.key ?: CATEGORY_STARTING_INDEX
         return try {

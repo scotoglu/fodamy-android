@@ -18,10 +18,8 @@ class HomeViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
-
     private val _event: SingleLiveEvent<UIHomeEvent> = SingleLiveEvent()
     val event: LiveData<UIHomeEvent> get() = _event
-
 
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
@@ -40,12 +38,10 @@ class HomeViewModel @Inject constructor(
             _event.value =
                 UIHomeEvent.NavigateTo(HomeFragmentDirections.actionHomeFragmentToLoginFlow())
         }
-
     }
 
     suspend fun isLoginLiveData(): LiveData<String> =
         dataStoreManager.isLoginLiveData()
-
 
     companion object {
         private const val TAG = "HomeViewModel"

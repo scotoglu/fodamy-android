@@ -19,19 +19,15 @@ class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-
     val username = MutableLiveData("scoto")
     val password = MutableLiveData("123456**")
     val progressbarVisibility = MutableLiveData<Boolean>()
 
-
-     val event = SingleLiveEvent<UIAuthEvent>()
-
+    val event = SingleLiveEvent<UIAuthEvent>()
 
     private val _requiredFieldWarning: MutableLiveData<InputErrorType> = MutableLiveData()
     val requiredFieldWarning: LiveData<InputErrorType>
         get() = _requiredFieldWarning
-
 
     fun doLoginRequest() =
         viewModelScope.launch {
@@ -54,7 +50,6 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }
-
 
     fun registerOnClick() {
         event.value =
@@ -91,5 +86,4 @@ class LoginViewModel @Inject constructor(
     companion object {
         private const val TAG = "LoginViewModel"
     }
-
 }

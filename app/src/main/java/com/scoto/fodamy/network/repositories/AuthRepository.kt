@@ -13,7 +13,6 @@ interface AuthRepository {
     suspend fun logout(): NetworkResponse<BaseResponse>
 }
 
-
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val dataStoreManager: DataStoreManager
@@ -54,7 +53,6 @@ class AuthRepositoryImpl @Inject constructor(
             NetworkResponse.Error(e)
         }
     }
-
 
     override suspend fun logout(): NetworkResponse<BaseResponse> {
         return try {

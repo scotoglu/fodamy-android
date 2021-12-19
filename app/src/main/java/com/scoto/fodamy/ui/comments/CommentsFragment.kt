@@ -21,7 +21,6 @@ class CommentsFragment :
 
     private val viewModel: CommentsViewModel by viewModels()
 
-
     private lateinit var commentsAdapter: CommentsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +50,6 @@ class CommentsFragment :
         adapterLoadStateListener()
     }
 
-
     private fun adapterLoadStateListener() {
         commentsAdapter.addLoadStateListener { loadState ->
             binding.progressbar.isVisible = loadState.source.refresh is LoadState.Loading
@@ -71,18 +69,16 @@ class CommentsFragment :
                     }
                     else -> {}
                 }
-
             }
     }
-
 
     private fun deleteComment() {
         viewModel.onDelete()
     }
 
     private fun eventObserver() {
-        //TODO(reduce the event type )
-        //TODO(scroll to top of recyclerview after new comment added.)
+        // TODO(reduce the event type )
+        // TODO(scroll to top of recyclerview after new comment added.)
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UICommentEvent.NavigateTo -> {
@@ -93,7 +89,6 @@ class CommentsFragment :
                         binding.editMode = false
                     } else {
                         findNavController().popBackStack()
-
                     }
                 }
                 is UICommentEvent.ShowMessage.SuccessMessage -> {
@@ -101,8 +96,6 @@ class CommentsFragment :
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()
                     commentsAdapter.refresh()
-
-
                 }
                 is UICommentEvent.ShowMessage.ErrorMessage -> {
                     view?.snackbar(event.message)
@@ -118,7 +111,6 @@ class CommentsFragment :
                     binding.editMode = false
                 }
             }
-
         })
     }
 
@@ -129,7 +121,6 @@ class CommentsFragment :
             adapter = commentsAdapter
         }
     }
-
 
     private fun navigateTo(directions: NavDirections) {
         val navController = findNavController()

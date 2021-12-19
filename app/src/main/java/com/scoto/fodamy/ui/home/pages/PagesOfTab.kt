@@ -23,15 +23,11 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
     private val viewModel: PagesOfTabViewModel by viewModels()
     private lateinit var recipeAdapter: RecipesAdapter
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         adapterLoadStateListener()
         setupRecyclerView()
-
-
 
         viewModel.recipes.observe(viewLifecycleOwner, {
             recipeAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -41,7 +37,6 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
             navigateTo(HomeFragmentDirections.actionHomeFragmentToRecipeFlow(it))
         }
     }
-
 
     private fun adapterLoadStateListener() {
 
@@ -53,7 +48,6 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
                 rvRecipes.isVisible = loadState.source.refresh is LoadState.NotLoading
                 btnRetry.isVisible = loadState.source.refresh is LoadState.Error
                 tvStateError.isVisible = loadState.source.refresh is LoadState.Error
-
 
                 btnRetry.onClick {
                     recipeAdapter.retry()
@@ -87,5 +81,4 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
     companion object {
         private const val TAG = "PagesOfTab"
     }
-
 }

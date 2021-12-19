@@ -23,7 +23,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
     R.layout.fragment_category_recipe
 ) {
 
-
     private val viewModel: CategoryRecipesViewModel by viewModels()
     private val args: CategoryRecipesFragmentArgs by navArgs()
 
@@ -32,13 +31,10 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-
         setupRvCategoryRecipes()
-
 
         viewModel.recipes.observe(viewLifecycleOwner, {
             categoryRecipesAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -56,7 +52,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
         endIconObserver()
         adapterLoadStateListener()
         setToolbarTitle()
-
     }
 
     private fun setToolbarTitle() {
@@ -64,7 +59,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
             args.categoryTitle
                 .uppercase(Locale.forLanguageTag("tr"))
         )
-
     }
 
     private fun adapterLoadStateListener() {
@@ -91,10 +85,8 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
                 is UICategoryEvent.NavigateTo -> navigateTo(event.directions)
                 is UICategoryEvent.OpenDialog -> findNavController().navigate(event.actionId)
                 is UICategoryEvent.ShowMessage -> binding.root.snackbar(event.message)
-
             }
         })
-
     }
 
     private fun endIconObserver() {
@@ -107,7 +99,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
                 }
             })
         }
-
     }
 
     private fun navigateTo(directions: NavDirections) {

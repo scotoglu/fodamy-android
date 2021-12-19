@@ -5,7 +5,6 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Patterns
 
-
 fun String.spannableText(text: String = ""): SpannableString {
     val start = text.length
     val end = if (text.isEmpty()) this.length else text.length + this.length
@@ -18,7 +17,6 @@ fun String.spannableText(text: String = ""): SpannableString {
         SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
     )
     return spannable
-
 }
 
 fun String.spannableNum(start: Int, end: Int): SpannableString {

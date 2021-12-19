@@ -14,33 +14,32 @@ class CommentsAdapter : PagingDataAdapter<Comment, CommentsAdapter.ViewHolder>(c
 
     var onItemLongClicked: ((Comment) -> Unit)? = null
 
-
     inner class ViewHolder(val binding: UserCommentCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.apply {
-                tvComments.setOnLongClickListener(View.OnLongClickListener {
-                    if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                        val currentItem = getItem(bindingAdapterPosition)
-                        currentItem?.let {
-                            onItemLongClicked?.invoke(it)
+                tvComments.setOnLongClickListener(
+                    View.OnLongClickListener {
+                        if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                            val currentItem = getItem(bindingAdapterPosition)
+                            currentItem?.let {
+                                onItemLongClicked?.invoke(it)
+                            }
                         }
-                    }
 
-                    false
-                })
+                        false
+                    }
+                )
 
                 textView2.isVisible = false
                 divider2.isVisible = false
             }
-
         }
 
         fun bind(item: Comment) {
             binding.comment = item
             binding.executePendingBindings()
-
         }
     }
 
@@ -68,7 +67,6 @@ class CommentsAdapter : PagingDataAdapter<Comment, CommentsAdapter.ViewHolder>(c
 
             override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean =
                 oldItem == newItem
-
         }
     }
 }

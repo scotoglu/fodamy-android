@@ -17,7 +17,6 @@ class UnfollowDialog : BottomSheetDialogFragment() {
     private var _binding: DialogUnfollowBinding? = null
     private val binding: DialogUnfollowBinding get() = _binding!!
 
-
     var dialogAction: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +37,6 @@ class UnfollowDialog : BottomSheetDialogFragment() {
     ): View {
         _binding = DialogUnfollowBinding.inflate(inflater, container, false)
 
-
-
         binding.apply {
             btnCancel.onClick { dismiss() }
             btnUnfollow.onClick {
@@ -51,8 +48,6 @@ class UnfollowDialog : BottomSheetDialogFragment() {
                 findNavController().popBackStack()
             }
         }
-
-
 
         return binding.root
     }

@@ -12,12 +12,10 @@ import com.scoto.fodamy.ui.walkthrough.adapter.WalkThroughAdapter
 import com.scoto.fodamy.ui.walkthrough.model.Walkthrough
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(
     R.layout.fragment_walk_through
 ) {
-
 
     private var contentSize: Int? = null
 

@@ -14,12 +14,10 @@ interface RecipeService {
         @Query("page") page: Int
     ): RecipeResponse<List<Recipe>>
 
-
     @GET("recipe")
     suspend fun getLastAddedRecipes(
         @Query("page") page: Int
     ): RecipeResponse<List<Recipe>>
-
 
     @GET("recipe/{recipe_id}")
     suspend fun getRecipeById(
@@ -63,7 +61,6 @@ interface RecipeService {
         @Path("recipe_id") recipeId: Int
     ): BaseResponse
 
-
     //    Category and related recipes
     @GET("category-recipes")
     suspend fun getCategoriesWithRecipes(
@@ -75,6 +72,4 @@ interface RecipeService {
         @Path("category_id") categoryId: Int,
         @Query("page") page: Int
     ): RecipeResponse<List<Recipe>>
-
-
 }

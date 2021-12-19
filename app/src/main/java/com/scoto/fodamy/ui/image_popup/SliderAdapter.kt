@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.scoto.fodamy.databinding.ItemImageSliderBinding
-import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.network.models.Image
 import com.scoto.fodamy.network.models.ImageList
 
@@ -13,7 +12,6 @@ class SliderAdapter(private val images: ImageList) :
 
     inner class ViewHolder(val binding: ItemImageSliderBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
 
         fun bind(item: Image) {
             binding.image = item

@@ -27,7 +27,6 @@ class ProfileViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
-
     private val _user: MutableLiveData<User> = MutableLiveData()
     val user: MutableLiveData<User> get() = _user
     val event: SingleLiveEvent<UIProfileEvent> = SingleLiveEvent()
@@ -52,7 +51,6 @@ class ProfileViewModel @Inject constructor(
 
             event.value = UIProfileEvent.ShowMessage("Giriş Yapmalısınız...")
         }
-
     }
 
     suspend fun isLoginLiveData(): LiveData<String> =
@@ -69,10 +67,8 @@ class ProfileViewModel @Inject constructor(
                         UIProfileEvent.ShowMessage(response.exception.handleException())
                 }
             }
-
         } else {
             event.value = UIProfileEvent.NavigateTo(R.id.action_global_authDialog)
         }
-
     }
 }

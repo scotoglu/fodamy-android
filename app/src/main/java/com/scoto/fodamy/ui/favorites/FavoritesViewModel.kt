@@ -41,7 +41,6 @@ class FavoritesViewModel @Inject constructor(
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Error -> {
                     event.value = UIFavoritesEvent.ShowMessage(response.exception.handleException())
-
                 }
                 is NetworkResponse.Success -> {
                     event.value = UIFavoritesEvent.ShowMessage(response.data.message)
@@ -51,7 +50,6 @@ class FavoritesViewModel @Inject constructor(
             event.value =
                 UIFavoritesEvent.NavigateTo(FavoritesFragmentDirections.actionFavoritesFragmentToLoginFlow2())
         }
-
     }
 
     private fun getCategories() = viewModelScope.launch {
@@ -64,6 +62,4 @@ class FavoritesViewModel @Inject constructor(
 
     suspend fun isLoginLiveData(): LiveData<String> =
         dataStoreManager.isLoginLiveData()
-
-
 }

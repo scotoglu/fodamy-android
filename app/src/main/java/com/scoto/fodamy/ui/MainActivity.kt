@@ -15,18 +15,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding get() = _binding!!
-
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        //back to normal theme
+        // back to normal theme
         setTheme(R.style.Theme_Fodamy)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,17 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         navigationSetup()
 
-
         navControllerListener()
-
-
     }
 
     private fun navigationSetup() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
-
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -54,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        //prevents the adding bottom margin to bottomNavigationView after changing fullscreen to normal screen
+        // prevents the adding bottom margin to bottomNavigationView after changing fullscreen to normal screen
         binding.bottomNavigationView.setOnApplyWindowInsetsListener(null)
 
         binding.bottomNavigationView.setupWithNavController(navController)
@@ -86,19 +79,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun navAndToolbarVisibility(state: Boolean) {
         binding.apply {
             bottomNavigationView.isVisible = state
-
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration) ||
+            super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {
@@ -117,15 +108,14 @@ class MainActivity : AppCompatActivity() {
         *              to handle app finishing problem simply I wrote below code.
         * */
 
-        //TODO("App not finished using back button")
+        // TODO("App not finished using back button")
         if (navController.currentBackStackEntry?.destination?.id == R.id.homeFragment &&
-            navController.previousBackStackEntry?.destination?.id == R.id.splashFragment
-            || navController.previousBackStackEntry?.destination?.id == R.id.walkThroughFragment
+            navController.previousBackStackEntry?.destination?.id == R.id.splashFragment ||
+            navController.previousBackStackEntry?.destination?.id == R.id.walkThroughFragment
         ) {
 
             finish()
         }
         super.onBackPressed()
     }
-
 }

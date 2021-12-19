@@ -44,7 +44,7 @@ class DataStoreManager @Inject constructor(
     }
 
     suspend fun getToken(): String {
-        //first operator to get a single value and stop collection from the flow.
+        // first operator to get a single value and stop collection from the flow.
         return context.dataStore.data.map { it[AUTH_TOKEN] ?: "" }.first()
     }
 
@@ -53,7 +53,6 @@ class DataStoreManager @Inject constructor(
             it.remove(AUTH_TOKEN)
         }
     }
-
 
     suspend fun saveUserId(userId: Int) {
         context.dataStore.edit { preference ->
@@ -71,7 +70,6 @@ class DataStoreManager @Inject constructor(
         }
     }
 
-
     companion object {
 
         private const val FODAMY_LAUNCH_PREF = "FODAMY_LAUNCH_PREF"
@@ -79,7 +77,5 @@ class DataStoreManager @Inject constructor(
         private val AUTH_TOKEN = stringPreferencesKey("AUTH_TOKEN")
         private val USER_ID = intPreferencesKey("USER_ID")
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = FODAMY_LAUNCH_PREF)
-
-
     }
 }

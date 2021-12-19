@@ -11,9 +11,7 @@ class CategoryItemAdapter(
     private val recipes: List<Recipe>
 ) : RecyclerView.Adapter<CategoryItemAdapter.ViewHolder>() {
 
-
     var onCategoryItemClicked: ((Recipe) -> Unit)? = null
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -49,7 +47,6 @@ class CategoryItemAdapter(
                 recipe = item
                 executePendingBindings()
             }
-
         }
     }
 }

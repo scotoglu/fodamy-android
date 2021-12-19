@@ -21,7 +21,7 @@ interface UserService {
 
     @GET("user/{userId}/following")
     suspend fun getUserFollowing(
-        @Path("userId")userId:Int
+        @Path("userId")userId: Int
     )
     @GET("user/{user_id}")
     suspend fun getUserDetails(

@@ -14,14 +14,11 @@ import com.scoto.fodamy.databinding.DialogCommentBinding
 import com.scoto.fodamy.ext.onClick
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class CommentDialog : BottomSheetDialogFragment() {
 
-
     private var _binding: DialogCommentBinding? = null
     private val binding: DialogCommentBinding get() = _binding!!
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +45,6 @@ class CommentDialog : BottomSheetDialogFragment() {
                 "DELETE"
             )
             findNavController().popBackStack()
-
         }
         binding.btnEdit.onClick {
             findNavController().previousBackStackEntry?.savedStateHandle?.set(
@@ -61,7 +57,6 @@ class CommentDialog : BottomSheetDialogFragment() {
             dismiss()
         }
 
-
         return binding.root
     }
 
@@ -69,7 +64,6 @@ class CommentDialog : BottomSheetDialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
     companion object {
         private const val TAG = "CommentDialog"

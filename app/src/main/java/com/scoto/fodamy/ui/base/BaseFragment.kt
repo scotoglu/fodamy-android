@@ -9,13 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-
 abstract class BaseFragment<V : ViewDataBinding>(
     @LayoutRes val layoutId: Int
 ) : Fragment() {
 
     protected lateinit var binding: V
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,5 +34,4 @@ abstract class BaseFragment<V : ViewDataBinding>(
         super.onDestroyView()
         binding.unbind()
     }
-
 }

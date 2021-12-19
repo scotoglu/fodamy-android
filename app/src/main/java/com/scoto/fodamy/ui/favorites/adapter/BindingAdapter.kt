@@ -7,7 +7,6 @@ import androidx.databinding.BindingAdapter
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.spannableNum
 
-
 @BindingAdapter(value = ["comments", "likes"])
 fun setCommentAndLikeCount(tv: TextView, comments: Int?, likes: Int?) {
     tv.text = tv.context.resources.getString(
@@ -16,7 +15,6 @@ fun setCommentAndLikeCount(tv: TextView, comments: Int?, likes: Int?) {
         likes ?: 0
     )
 }
-
 
 @BindingAdapter("app:comments")
 fun setCommentsCount(tv: TextView, comments: Int?) {
@@ -42,5 +40,4 @@ fun setTimeOfRecipe(tv: TextView, timeOfRecipe: String?) {
     timeOfRecipe?.let {
         tv.text = tv.context.resources.getString(R.string.timeOfRecie, timeOfRecipe)
     }
-
 }

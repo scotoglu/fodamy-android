@@ -2,13 +2,11 @@ package com.scoto.fodamy.ui.home.adapter
 
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.loadCircleImageFromUrl
 import com.scoto.fodamy.ext.loadImageFromUrl
 import com.scoto.fodamy.util.CustomToolbar
-
 
 @BindingAdapter(value = ["app:recipeCount", "app:followerCount"])
 fun setRecipeAndFollowers(tv: TextView, recipes: Int?, followers: Int?) {
@@ -24,7 +22,6 @@ fun setCommentAndLike(tv: TextView, comments: Int?, likes: Int?) {
         R.string.comment_and_like_count,
         comments, likes
     )
-
 }
 
 @BindingAdapter("imageLoaderCircle")

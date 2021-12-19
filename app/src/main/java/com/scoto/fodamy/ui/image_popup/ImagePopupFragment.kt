@@ -25,7 +25,7 @@ class ImagePopupFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //hides statusbar and navigationbars
+        // hides statusbar and navigationbars
         (activity as AppCompatActivity).hideSystemUI(binding.root)
 
         val images = args.images
@@ -44,13 +44,11 @@ class ImagePopupFragment :
         binding.ivClose.onClick {
             findNavController().popBackStack()
         }
-
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
-        //shows statusbar and navigationbars
+        // shows statusbar and navigationbars
         (activity as AppCompatActivity).showSystemUI(binding.root)
     }
 }

@@ -30,22 +30,17 @@ class FavoritesFragment :
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-
-
         endIconObserver()
         eventObserver()
         categoryAdapter = CategoryPagingAdapter()
         setupRvCategory()
 
-
         viewModel.categories.observe(viewLifecycleOwner, {
             categoryAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
-
         adapterItemClicks()
         adapterLoadStateListener()
-
     }
 
     private fun adapterItemClicks() {
@@ -92,7 +87,6 @@ class FavoritesFragment :
                 }
             })
         }
-
     }
 
     private fun eventObserver() {
@@ -108,7 +102,6 @@ class FavoritesFragment :
         val navController = findNavController()
         navController.navigate(directions)
     }
-
 
     companion object {
         private const val TAG = "FavoritesFragment"

@@ -19,7 +19,6 @@ class PagesOfTabViewModel @Inject constructor(
     private val state: SavedStateHandle
 ) : ViewModel() {
 
-
     private var _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
 
@@ -41,7 +40,6 @@ class PagesOfTabViewModel @Inject constructor(
             _recipes.value = it
         }
     }
-
 
     companion object {
         private const val TAG = "PagesOfTabViewModel"

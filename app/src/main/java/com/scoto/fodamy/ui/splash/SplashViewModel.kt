@@ -14,10 +14,8 @@ class SplashViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
-
     val isFirstTime: LiveData<String>
         get() = dataStoreManager.isFirstTimeLaunch.asLiveData()
-
 
     fun saveFirstLaunch() {
         viewModelScope.launch {
@@ -25,4 +23,3 @@ class SplashViewModel @Inject constructor(
         }
     }
 }
-

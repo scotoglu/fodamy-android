@@ -7,7 +7,6 @@ import com.scoto.fodamy.network.models.responses.BaseResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 interface UserRepository {
     suspend fun followUser(followedId: Int): NetworkResponse<BaseResponse>
 

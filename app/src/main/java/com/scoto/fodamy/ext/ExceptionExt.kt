@@ -5,7 +5,6 @@ import com.scoto.fodamy.network.models.responses.ErrorResponse
 import retrofit2.HttpException
 import java.io.IOException
 
-
 fun Exception.handleException(): String {
     return when (this) {
         is HttpException -> {

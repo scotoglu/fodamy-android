@@ -13,7 +13,6 @@ import com.scoto.fodamy.network.models.Recipe
 class CategoryPagingAdapter() :
     PagingDataAdapter<Category, CategoryPagingAdapter.ViewHolder>(categoryComparator) {
 
-
     var onItemClicked: ((Category) -> Unit)? = null
     var onChildItemClicked: ((Recipe) -> Unit)? = null
 
@@ -65,12 +64,8 @@ class CategoryPagingAdapter() :
                 adapter = itemAdapter
                 setHasFixedSize(true)
             }
-
-
         }
-
     }
-
 
     companion object {
         val categoryComparator = object : DiffUtil.ItemCallback<Category>() {

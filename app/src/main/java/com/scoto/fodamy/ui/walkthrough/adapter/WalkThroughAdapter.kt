@@ -6,11 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scoto.fodamy.databinding.ItemWalkthroughBinding
 import com.scoto.fodamy.ui.walkthrough.model.Walkthrough
 
-
 class WalkThroughAdapter(
     private val content: List<Walkthrough>
 ) : RecyclerView.Adapter<WalkThroughAdapter.ViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

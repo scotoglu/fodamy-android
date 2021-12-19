@@ -37,17 +37,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         requiredFiledObserver()
         setSpannableText()
 
-
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
     }
-
 
     private fun setSpannableText() {
         binding.tvDontHaveAccount.text =
             getString(R.string.signup).spannableText(getString(R.string.dont_have_account))
-
     }
 
     private fun requiredFiledObserver() {
@@ -76,7 +72,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         }
     }
 
-
     private fun navigateTo(directions: NavDirections) {
         val navController = findNavController()
         navController.navigate(directions)
@@ -84,6 +79,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     companion object {
         private const val TAG = "LoginFragment"
-
     }
 }

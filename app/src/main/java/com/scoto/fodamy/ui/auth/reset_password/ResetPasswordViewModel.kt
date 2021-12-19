@@ -19,14 +19,12 @@ class ResetPasswordViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-
     val email = MutableLiveData("")
 
     val progressBarVisibility = MutableLiveData<Boolean>()
 
     private val _requiredFieldWarnings: MutableLiveData<InputErrorType> = MutableLiveData()
     val requiredFieldWarnings: LiveData<InputErrorType> get() = _requiredFieldWarnings
-
 
     private var _state = SingleLiveEvent<UIAuthEvent>()
     val state: SingleLiveEvent<UIAuthEvent>
@@ -50,9 +48,7 @@ class ResetPasswordViewModel @Inject constructor(
                     }
                 }
             }
-
         }
-
 
     private fun validateInputs(email: String): Boolean {
         return if (email.isBlank()) {
@@ -62,7 +58,6 @@ class ResetPasswordViewModel @Inject constructor(
             true
         }
     }
-
 
     private fun setProgressbarVisibility(state: Boolean) {
         progressBarVisibility.value = state

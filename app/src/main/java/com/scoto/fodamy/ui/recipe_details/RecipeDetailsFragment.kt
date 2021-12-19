@@ -49,11 +49,8 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
             includeUser.btnFollow.onClick { viewModel?.onFollowClick() }
         }
 
-
-
         eventObserver()
         dialogActionObserver()
-
     }
 
     private fun dialogActionObserver() {
@@ -64,7 +61,6 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
                 }
             }
     }
-
 
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->

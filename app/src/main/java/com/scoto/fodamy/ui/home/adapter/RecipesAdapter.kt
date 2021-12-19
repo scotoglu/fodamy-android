@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scoto.fodamy.databinding.ItemFoodCardBinding
 import com.scoto.fodamy.network.models.Recipe
 
-class RecipesAdapter(
-
-) : PagingDataAdapter<Recipe, RecipesAdapter.ViewHolder>(recipeComparator) {
+class RecipesAdapter() : PagingDataAdapter<Recipe, RecipesAdapter.ViewHolder>(recipeComparator) {
 
     var onItemClicked: ((Recipe) -> Unit)? = null
 
@@ -27,12 +25,11 @@ class RecipesAdapter(
         }
     }
 
-
     inner class ViewHolder(val binding: ItemFoodCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.clContainer.setOnClickListener {
-                
+
                 val currentItemPosition = bindingAdapterPosition
                 if (currentItemPosition != RecyclerView.NO_POSITION) {
                     val currentItem = getItem(bindingAdapterPosition)
@@ -49,7 +46,6 @@ class RecipesAdapter(
         }
     }
 
-
     companion object {
         private val recipeComparator = object : DiffUtil.ItemCallback<Recipe>() {
             override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean =
@@ -59,5 +55,4 @@ class RecipesAdapter(
                 oldItem == newItem
         }
     }
-
 }

@@ -18,7 +18,6 @@ import com.scoto.fodamy.util.FROM_RECIPES_BY_CATEGORY
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-
 interface RecipeRepository {
     fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>>
     fun getLastAdded(): Flow<PagingData<Recipe>>
@@ -66,7 +65,6 @@ class RecipeRepositoryImpl @Inject constructor(
         ),
         pagingSourceFactory = { RecipePagingSource(recipeService, FROM_LAST_ADDED, null) }
     ).flow
-
 
     override fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>> = Pager(
         config = PagingConfig(
@@ -181,6 +179,5 @@ class RecipeRepositoryImpl @Inject constructor(
         private const val NETWORK_PAGE_SIZE = 24
         private const val NETWORK_MAX_SIZE = 100
         private const val CATEGORY_NETWORK_PAGE_SIZE = 4
-
     }
 }

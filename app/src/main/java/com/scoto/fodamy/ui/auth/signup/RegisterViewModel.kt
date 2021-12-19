@@ -23,14 +23,11 @@ class RegisterViewModel @Inject constructor(
     val password = MutableLiveData("")
     val progressbarVisibility = MutableLiveData<Boolean>()
 
-
     private var _requiredFieldWarnings = MutableLiveData<InputErrorType>()
     val requiredFieldWarning: MutableLiveData<InputErrorType>
         get() = _requiredFieldWarnings
 
-
     val event = SingleLiveEvent<UIAuthEvent>()
-
 
     fun doRegisterRequest() =
         viewModelScope.launch {
@@ -38,7 +35,6 @@ class RegisterViewModel @Inject constructor(
             val username = username.value.toString()
             val email = email.value.toString()
             val password = password.value.toString()
-
 
             if (validateInputs(username, email, password)) {
                 setProgressbarVisibility(true)
@@ -92,11 +88,9 @@ class RegisterViewModel @Inject constructor(
 
     private fun setProgressbarVisibility(state: Boolean) {
         progressbarVisibility.value = state
-
     }
 
     companion object {
         private const val TAG = "RegisterViewModel"
     }
-
 }
