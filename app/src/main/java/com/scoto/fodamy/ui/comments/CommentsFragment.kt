@@ -2,6 +2,7 @@ package com.scoto.fodamy.ui.comments
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
@@ -10,6 +11,7 @@ import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCommentsBinding
 import com.scoto.fodamy.ext.hideSoftKeyboard
+import com.scoto.fodamy.ext.showIme
 import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.comments.adapter.CommentsAdapter
@@ -46,6 +48,8 @@ class CommentsFragment :
                 navigateTo(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog())
             }
         }
+
+        setFocusToAddCommentEdittext()
         getDialogAction()
         adapterLoadStateListener()
     }
@@ -120,6 +124,11 @@ class CommentsFragment :
             setHasFixedSize(true)
             adapter = commentsAdapter
         }
+    }
+
+    private fun setFocusToAddCommentEdittext() {
+        (activity as AppCompatActivity).showIme()
+        binding.etAddComment.requestFocus()
     }
 
     private fun navigateTo(directions: NavDirections) {

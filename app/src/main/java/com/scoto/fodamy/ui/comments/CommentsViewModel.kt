@@ -24,11 +24,12 @@ class CommentsViewModel @Inject constructor(
     private val _comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
     val comments: LiveData<PagingData<Comment>> get() = _comments
 
-    val event: MutableLiveData<UICommentEvent> = MutableLiveData()
+    val event: SingleLiveEvent<UICommentEvent> = SingleLiveEvent()
 
     var isUserComment: Boolean = false
 
     val editableComment: MutableLiveData<String> = MutableLiveData()
+
     val commentId: SingleLiveEvent<Int> = SingleLiveEvent()
 
     // Layout edittext text
@@ -90,6 +91,8 @@ class CommentsViewModel @Inject constructor(
                     event.value = UICommentEvent.CommentEdited(response.data.message)
                 }
             }
+        } else {
+            event.value = UICommentEvent.OpenDialog(R.id.action_global_authDialog)
         }
     }
 
