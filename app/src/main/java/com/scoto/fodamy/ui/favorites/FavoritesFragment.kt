@@ -93,7 +93,14 @@ class FavoritesFragment :
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UIFavoritesEvent.NavigateTo -> navigateTo(event.directions)
-                is UIFavoritesEvent.ShowMessage -> binding.root.snackbar(event.message)
+                is UIFavoritesEvent.ShowMessage.Success -> {
+                    val drawable =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_login)
+                    binding.customToolbar.setEndIcon(drawable)
+                    binding.root.snackbar(event.message)
+                }
+                is UIFavoritesEvent.ShowMessage.Error -> binding.root.snackbar(event.message)
+
             }
         })
     }

@@ -40,10 +40,11 @@ class FavoritesViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Error -> {
-                    event.value = UIFavoritesEvent.ShowMessage(response.exception.handleException())
+                    event.value =
+                        UIFavoritesEvent.ShowMessage.Error(response.exception.handleException())
                 }
                 is NetworkResponse.Success -> {
-                    event.value = UIFavoritesEvent.ShowMessage(response.data.message)
+                    event.value = UIFavoritesEvent.ShowMessage.Success(response.data.message)
                 }
             }
         } else {

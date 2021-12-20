@@ -88,7 +88,7 @@
                 android:fontFamily="@font/nunito_bold"
                 android:text="@{recipe.title}"
                 android:textColor="@color/cinder"
-                android:textSize="@dimen/text_size_20sp"
+                android:textSize="@dimen/text_size_18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
@@ -101,7 +101,7 @@
                 android:layout_marginStart="@dimen/size_margin_16dp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="@{recipe.category.name}"
-                android:textSize="@dimen/text_size_16sp"
+                android:textSize="@dimen/text_size_18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title"
                 tools:text="Hamur İşi" />
