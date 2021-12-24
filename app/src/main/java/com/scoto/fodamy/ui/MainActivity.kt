@@ -55,67 +55,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun navControllerListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.loginFragment -> {
-                    navAndToolbarVisibility(false)
+            binding.bottomNavigationView.isVisible =
+                when (destination.id) {
+                    R.id.loginFragment -> {
+                        false
+                    }
+                    R.id.registerFragment -> {
+                        false
+                    }
+                    R.id.resetPasswordFragment -> {
+                        false
+                    }
+                    R.id.walkThroughFragment -> {
+                        false
+                    }
+                    R.id.splashFragment -> {
+                        false
+                    }
+                    R.id.imagePopupFragment -> {
+                        false
+                    }
+                    else -> {
+                        true
+                    }
                 }
-                R.id.registerFragment -> {
-                    navAndToolbarVisibility(false)
-                }
-                R.id.resetPasswordFragment -> {
-                    navAndToolbarVisibility(false)
-                }
-                R.id.walkThroughFragment -> {
-                    navAndToolbarVisibility(false)
-                }
-                R.id.splashFragment -> {
-                    navAndToolbarVisibility(false)
-                }
-                R.id.imagePopupFragment -> {
-                    navAndToolbarVisibility(false)
-                }
-                else -> {
-                    navAndToolbarVisibility(true)
-                }
-            }
         }
     }
-
-    private fun navAndToolbarVisibility(state: Boolean) {
-        binding.apply {
-            bottomNavigationView.isVisible = state
-        }
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) ||
-            super.onSupportNavigateUp()
-    }
-
-    override fun onBackPressed() {
-        /*
-        *
-        * There is two scenario:
-        * the goal: https://www.youtube.com/watch?v=Covu3fPA1nQ
-        * navigation component release 2.4.0-alpha01
-        * Scenario 1 :
-        *              if we set the  app:popUpTo="@id/splashFragment or WalkThroughFragment" and popUpToInclusive="true"
-        *              bottom navigation multiple back stack doesn't work properly. When navigate to between fragment using bottomNav fragments doesn't save the state
-        *
-        * Scenario 2 :
-        *              if we set the  app:popUpTo="@id/splashFragment or WalkThroughFragment" app bottomNav working properly but back button is not finish the app
-        *              when user homeFragment(checked by currentBackStackEntry. Also previousBackStackEntry is SplashFragment or WalkthoroughFragment)
-        *              to handle app finishing problem simply I wrote below code.
-        * */
-
-        // TODO("App not finished using back button")
-        if (navController.currentBackStackEntry?.destination?.id == R.id.homeFragment &&
-            navController.previousBackStackEntry?.destination?.id == R.id.splashFragment ||
-            navController.previousBackStackEntry?.destination?.id == R.id.walkThroughFragment
-        ) {
-
-            finish()
-        }
-        super.onBackPressed()
+                super.onSupportNavigateUp()
     }
 }
