@@ -41,5 +41,8 @@
         <argument
             android:name="CategoryTitle"
             app:argType="string" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_login_flow"
+            app:destination="@id/login_flow" />
     </fragment>
 </navigation>

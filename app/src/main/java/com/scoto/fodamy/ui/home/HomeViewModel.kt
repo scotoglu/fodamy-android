@@ -1,6 +1,5 @@
 package com.scoto.fodamy.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scoto.fodamy.ext.handleException
@@ -14,34 +13,30 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _event: SingleLiveEvent<UIHomeEvent> = SingleLiveEvent()
-    val event: LiveData<UIHomeEvent> get() = _event
+    val event: SingleLiveEvent<UIHomeEvent> = SingleLiveEvent()
 
-    fun logout() = viewModelScope.launch {
-        if (dataStoreManager.isLogin()) {
 
-            when (val response = authRepository.logout()) {
-                is NetworkResponse.Success -> {
-                    _event.value = UIHomeEvent.ShowMessage.Success(response.data.message)
-                }
-                is NetworkResponse.Error -> {
-                    _event.value =
-                        UIHomeEvent.ShowMessage.Error(response.exception.handleException())
-                }
-            }
-        } else {
-
-            _event.value =
-                UIHomeEvent.NavigateTo(HomeFragmentDirections.actionHomeFragmentToLoginFlow())
-        }
+    fun isLogin() = viewModelScope.launch {
+        event.value = UIHomeEvent.IsLogin(dataStoreManager.isLogin())
     }
 
-    suspend fun isLoginLiveData(): LiveData<String> =
-        dataStoreManager.isLoginLiveData()
+    fun onEndClick() = viewModelScope.launch {
+        if (dataStoreManager.isLogin()) {
+            when (val response = authRepository.logout()) {
+                is NetworkResponse.Error -> {
+                    event.value =
+                        UIHomeEvent.ShowMessage.Error(response.exception.handleException())
+                }
+                is NetworkResponse.Success -> {
+                    event.value = UIHomeEvent.ShowMessage.Success(response.data.message)
+                }
+            }
+        }
+    }
 
     companion object {
         private const val TAG = "HomeViewModel"

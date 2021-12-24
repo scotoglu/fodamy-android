@@ -14,6 +14,7 @@ import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Category
 import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.network.repositories.RecipeRepository
+import com.scoto.fodamy.ui.home.UIHomeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -22,9 +23,9 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
+    private val authRepository: AuthRepository,
     private val dataStoreManager: DataStoreManager,
-    private val authRepository: AuthRepository
-) : ViewModel() {
+    ) : ViewModel() {
 
     private val _categories: MutableLiveData<PagingData<Category>> = MutableLiveData()
     val categories: LiveData<PagingData<Category>> get() = _categories
@@ -33,10 +34,14 @@ class FavoritesViewModel @Inject constructor(
 
     init {
         getCategories()
+        isLogin()
     }
 
-    fun onLogoutClick() = viewModelScope.launch {
+    fun isLogin() = viewModelScope.launch {
+        event.value = UIFavoritesEvent.IsLogin(dataStoreManager.isLogin())
+    }
 
+    fun onEndIconCLick() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Error -> {
@@ -47,9 +52,6 @@ class FavoritesViewModel @Inject constructor(
                     event.value = UIFavoritesEvent.ShowMessage.Success(response.data.message)
                 }
             }
-        } else {
-            event.value =
-                UIFavoritesEvent.NavigateTo(FavoritesFragmentDirections.actionFavoritesFragmentToLoginFlow2())
         }
     }
 
@@ -61,6 +63,4 @@ class FavoritesViewModel @Inject constructor(
         }
     }
 
-    suspend fun isLoginLiveData(): LiveData<String> =
-        dataStoreManager.isLoginLiveData()
 }

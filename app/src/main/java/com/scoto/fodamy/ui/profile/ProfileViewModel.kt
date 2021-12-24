@@ -48,7 +48,6 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         } else {
-
             event.value = UIProfileEvent.ShowMessage("Giriş Yapmalısınız...")
         }
     }

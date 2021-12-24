@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentProfileBinding
@@ -38,7 +39,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(
     }
 
     private fun eventObserver() {
-
         viewModel.event.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is UIProfileEvent.ShowMessage -> {
@@ -64,6 +64,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(
         }
     }
 
-    private fun navigateTo() {
+    private fun navigateTo(directions: NavDirections) {
+        val navController = findNavController()
+        navController.navigate(directions)
     }
 }

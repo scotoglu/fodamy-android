@@ -2,10 +2,8 @@ package com.scoto.fodamy.ui.favorites
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -30,10 +28,11 @@ class FavoritesFragment :
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        endIconObserver()
-        eventObserver()
         categoryAdapter = CategoryPagingAdapter()
+
+        eventObserver()
         setupRvCategory()
+
 
         viewModel.categories.observe(viewLifecycleOwner, {
             categoryAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -77,27 +76,15 @@ class FavoritesFragment :
         }
     }
 
-    private fun endIconObserver() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.isLoginLiveData().observe(viewLifecycleOwner, {
-                if (it.isNotBlank()) {
-                    val drawable =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_logout_2)
-                    binding.customToolbar.setEndIcon(drawable)
-                }
-            })
-        }
-    }
 
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UIFavoritesEvent.NavigateTo -> navigateTo(event.directions)
+                is UIFavoritesEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
                 is UIFavoritesEvent.ShowMessage.Success -> {
-                    val drawable =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_login)
-                    binding.customToolbar.setEndIcon(drawable)
                     binding.root.snackbar(event.message)
+                    binding.customToolbar.setEndIconVisibility(false)
                 }
                 is UIFavoritesEvent.ShowMessage.Error -> binding.root.snackbar(event.message)
 

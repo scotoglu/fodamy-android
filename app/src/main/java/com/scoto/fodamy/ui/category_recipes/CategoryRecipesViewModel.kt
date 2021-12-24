@@ -3,7 +3,6 @@ package com.scoto.fodamy.ui.category_recipes
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
@@ -23,7 +22,7 @@ class CategoryRecipesViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager,
     private val savedStateHandle: SavedStateHandle,
 
-) : ViewModel() {
+    ) : ViewModel() {
 
     private val id: Int = savedStateHandle.get<Int>("CategoryId") ?: 0
 
@@ -34,7 +33,13 @@ class CategoryRecipesViewModel @Inject constructor(
 
     init {
         getRecipesByCategory()
+        isLogin()
     }
+
+    private fun isLogin() = viewModelScope.launch {
+        event.value = UICategoryEvent.IsLogin(dataStoreManager.isLogin())
+    }
+
 
     private fun getRecipesByCategory() = viewModelScope.launch {
         recipeRepository.getRecipesByCategory(id).cachedIn(viewModelScope).collect {
@@ -51,15 +56,14 @@ class CategoryRecipesViewModel @Inject constructor(
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Error ->
                     event.value =
-                        UICategoryEvent.ShowMessage(response.exception.handleException())
+                        UICategoryEvent.ShowMessage.Error(response.exception.handleException())
                 is NetworkResponse.Success -> {
-                    event.value = UICategoryEvent.ShowMessage(response.data.message)
+                    event.value = UICategoryEvent.ShowMessage.Success(response.data.message)
                 }
             }
-        } else {
-            event.value = UICategoryEvent.OpenDialog(R.id.action_global_authDialog)
         }
     }
+
     suspend fun isLoginLiveData(): LiveData<String> =
         dataStoreManager.isLoginLiveData()
 

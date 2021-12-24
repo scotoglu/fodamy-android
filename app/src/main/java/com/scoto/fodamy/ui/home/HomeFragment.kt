@@ -2,9 +2,7 @@ package com.scoto.fodamy.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
@@ -27,9 +25,11 @@ class HomeFragment :
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        viewModel.isLogin()
+
         setupViewPagerAndTabLayout()
         eventObserver()
-        endIconObserver()
     }
 
     private fun setupViewPagerAndTabLayout() {
@@ -47,33 +47,16 @@ class HomeFragment :
         binding.tabLayout.addVerticalLineToTabs()
     }
 
-    private fun endIconObserver() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.isLoginLiveData().observe(viewLifecycleOwner, {
-                if (it.isNotBlank()) {
-                    val drawable =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_logout_2)
-                    binding.customToolbar.setEndIcon(drawable)
-                }
-            })
-        }
-    }
-
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
-                is UIHomeEvent.NavigateTo -> {
-                    navigateTo(event.direction)
-                }
+                is UIHomeEvent.NavigateTo -> navigateTo(event.direction)
+                is UIHomeEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
                 is UIHomeEvent.ShowMessage.Success -> {
-                    val drawable =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_login)
-                    binding.customToolbar.setEndIcon(drawable)
                     binding.root.snackbar(event.message)
+                    binding.customToolbar.setEndIconVisibility(false)
                 }
-                is UIHomeEvent.ShowMessage.Error -> {
-                    binding.root.snackbar(event.message)
-                }
+                is UIHomeEvent.ShowMessage.Error -> binding.root.snackbar(event.message)
             }
         })
     }

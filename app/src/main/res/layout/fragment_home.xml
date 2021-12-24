@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:endIconVisibility="true"
-            app:onEndIconListener="@{()->viewModel.logout()}" />
+            app:onEndIconListener="@{()->viewModel.onEndClick()}" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"

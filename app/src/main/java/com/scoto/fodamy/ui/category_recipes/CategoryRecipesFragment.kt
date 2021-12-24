@@ -2,10 +2,8 @@ package com.scoto.fodamy.ui.category_recipes
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -49,7 +47,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
         }
 
         eventObserver()
-        endIconObserver()
         adapterLoadStateListener()
         setToolbarTitle()
     }
@@ -83,23 +80,16 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
             when (event) {
                 is UICategoryEvent.BackTo -> findNavController().popBackStack()
                 is UICategoryEvent.NavigateTo -> navigateTo(event.directions)
-                is UICategoryEvent.OpenDialog -> findNavController().navigate(event.actionId)
-                is UICategoryEvent.ShowMessage -> binding.root.snackbar(event.message)
+                is UICategoryEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
+                is UICategoryEvent.ShowMessage.Success -> {
+                    binding.root.snackbar(event.message)
+                    binding.customToolbar.setEndIconVisibility(false)
+                }
+                is UICategoryEvent.ShowMessage.Error -> binding.root.snackbar(event.message)
             }
         })
     }
 
-    private fun endIconObserver() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.isLoginLiveData().observe(viewLifecycleOwner, {
-                if (it.isNotBlank()) {
-                    val drawable =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_logout_2)
-                    binding.customToolbar.setEndIcon(drawable)
-                }
-            })
-        }
-    }
 
     private fun navigateTo(directions: NavDirections) {
         val navController = findNavController()
