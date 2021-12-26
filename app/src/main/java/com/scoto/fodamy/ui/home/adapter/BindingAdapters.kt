@@ -15,7 +15,13 @@ fun setRecipeAndFollowers(tv: TextView, recipes: Int?, followers: Int?) {
         recipes, followers
     )
 }
-
+@BindingAdapter(value = ["app:followingCount", "app:followerCount"])
+fun setFollwingAndFollowers(tv: TextView, following: Int?, followers: Int?) {
+    tv.text = tv.context.resources.getString(
+        R.string.recipes_and_following_count,
+        following, followers
+    )
+}
 @BindingAdapter(value = ["app:commentCount", "app:likeCount"])
 fun setCommentAndLike(tv: TextView, comments: Int?, likes: Int?) {
     tv.text = tv.context.resources.getString(

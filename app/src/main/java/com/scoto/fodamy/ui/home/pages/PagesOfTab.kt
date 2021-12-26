@@ -73,10 +73,7 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
         }
     }
 
-    private fun navigateTo(directions: NavDirections) {
-        val navController = findNavController()
-        navController.navigate(directions)
-    }
+
 
     companion object {
         private const val TAG = "PagesOfTab"

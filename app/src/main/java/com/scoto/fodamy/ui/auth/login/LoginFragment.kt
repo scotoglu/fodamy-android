@@ -27,8 +27,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is UIAuthEvent.BackTo -> {
-                    findNavController().popBackStack()
                     view.snackbar(event.message)
+                    backTo()
                 }
                 is UIAuthEvent.NavigateTo -> event.directions?.let { navigateTo(it) }
             }
@@ -70,11 +70,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             text = fieldText
             visibility = View.VISIBLE
         }
-    }
-
-    private fun navigateTo(directions: NavDirections) {
-        val navController = findNavController()
-        navController.navigate(directions)
     }
 
     companion object {

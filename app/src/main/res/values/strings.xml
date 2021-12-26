@@ -65,6 +65,7 @@
     <string name="timeOfRecie">%1s dk</string>
     <string name="comment_and_like_count">%1d Yorum %1d Beğeni</string>
     <string name="recipes_and_following_count">%1d Tarif %1d Takipçi</string>
+    <string name="followed_and_following_count">%1d Takip Edilen %1d Takipçi</string>
 
     <!--    Menu items-->
     <string name="menu_home">Home</string>

@@ -47,11 +47,6 @@ class ResetPasswordFragment :
         })
     }
 
-//    private fun navigateTo(directions: NavDirections) {
-//        val navController = findNavController()
-//        navController.navigate(directions)
-//    }
-
     private fun showRequiredField(fieldText: String) {
         binding.included.tvRequiredField.apply {
             text = fieldText

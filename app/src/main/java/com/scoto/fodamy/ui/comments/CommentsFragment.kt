@@ -92,7 +92,7 @@ class CommentsFragment :
                     if (binding.editMode == true) {
                         binding.editMode = false
                     } else {
-                        findNavController().popBackStack()
+                        backTo()
                     }
                 }
                 is UICommentEvent.ShowMessage.SuccessMessage -> {
@@ -131,10 +131,6 @@ class CommentsFragment :
         binding.etAddComment.requestFocus()
     }
 
-    private fun navigateTo(directions: NavDirections) {
-        val navController = findNavController()
-        navController.navigate(directions)
-    }
 
     companion object {
         private const val TAG = "CommentsFragment"

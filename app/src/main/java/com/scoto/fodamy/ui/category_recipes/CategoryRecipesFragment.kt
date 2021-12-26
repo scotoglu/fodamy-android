@@ -78,7 +78,7 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
-                is UICategoryEvent.BackTo -> findNavController().popBackStack()
+                is UICategoryEvent.BackTo -> backTo()
                 is UICategoryEvent.NavigateTo -> navigateTo(event.directions)
                 is UICategoryEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
                 is UICategoryEvent.ShowMessage.Success -> {
@@ -88,12 +88,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
                 is UICategoryEvent.ShowMessage.Error -> binding.root.snackbar(event.message)
             }
         })
-    }
-
-
-    private fun navigateTo(directions: NavDirections) {
-        val navController = findNavController()
-        navController.navigate(directions)
     }
 
     companion object {

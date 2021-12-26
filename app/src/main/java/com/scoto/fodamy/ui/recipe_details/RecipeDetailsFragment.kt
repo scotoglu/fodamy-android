@@ -6,7 +6,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRecipeDetailsBinding
@@ -80,18 +79,13 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
                     binding.root.snackbar(event.message)
                 }
                 is UIRecipeEvent.BackTo -> {
-                    findNavController().popBackStack()
+                    backTo()
                 }
                 is UIRecipeEvent.OpenDialog -> {
                     findNavController().navigate(event.actionId)
                 }
             }
         })
-    }
-
-    private fun navigateTo(direction: NavDirections) {
-        val navController = findNavController()
-        navController.navigate(direction)
     }
 
     private fun setupFollowButton(isFollowing: Boolean) {

@@ -2,7 +2,6 @@ package com.scoto.fodamy.ui.walkthrough
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentWalkThroughBinding
@@ -25,37 +24,30 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(
         contentSize = Walkthrough.getPrePopulatedData().size
 
         val walkThroughAdapter = WalkThroughAdapter(Walkthrough.getPrePopulatedData())
-        binding.viewPager.adapter = walkThroughAdapter
-        binding.indicator.setViewPager2(binding.viewPager)
-
-        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                changeButtonText(position)
+        binding.apply {
+            viewPager.adapter = walkThroughAdapter
+            indicator.setViewPager2(viewPager)
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    changeButtonText(position)
+                }
+            })
+            ivClose.onClick {
+                navigateTo(WalkThroughFragmentDirections.actionWalkThroughFragmentToBottomNavHome())
             }
-        })
-
-        binding.ivClose.onClick {
-            navigateTo()
+            btnMoveNext.onClick {
+                moveToNext(binding.viewPager.currentItem)
+            }
         }
 
-        binding.btnMoveNext.onClick {
-            moveToNext(binding.viewPager.currentItem)
-        }
     }
 
     private fun moveToNext(position: Int) {
         if (position != contentSize?.minus(1)) {
             binding.viewPager.currentItem = position + 1
         } else {
-            navigateTo()
+            navigateTo(WalkThroughFragmentDirections.actionWalkThroughFragmentToBottomNavHome())
         }
-    }
-
-    private fun navigateTo() {
-        val navController = findNavController()
-        navController.navigate(
-            WalkThroughFragmentDirections.actionWalkThroughFragmentToBottomNavHome()
-        )
     }
 
     private fun changeButtonText(position: Int) {

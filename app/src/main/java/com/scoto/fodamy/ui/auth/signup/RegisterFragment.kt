@@ -70,11 +70,6 @@ class RegisterFragment :
         }
     }
 
-    private fun navigateTo(directions: NavDirections) {
-        val navController = findNavController()
-        navController.navigate(directions)
-    }
-
     private fun setSpannableText() {
         binding.tvHaveAccount.text =
             getString(R.string.login).spannableText(getString(R.string.have_account))
