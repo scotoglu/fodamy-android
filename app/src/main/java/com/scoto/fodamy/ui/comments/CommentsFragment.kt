@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
@@ -36,10 +35,18 @@ class CommentsFragment :
 
         binding.editMode = false
 
+
         viewModel.comments.observe(viewLifecycleOwner, {
             commentsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
+        adapterItemClicks()
+        setFocusToAddCommentEdittext()
+        getDialogAction()
+        adapterLoadStateListener()
+    }
+
+    private fun adapterItemClicks() {
         commentsAdapter.onItemLongClicked = { comment ->
             viewModel.isUserComment(comment.user.id)
             if (viewModel.isUserComment) {
@@ -48,16 +55,15 @@ class CommentsFragment :
                 navigateTo(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog())
             }
         }
-
-        setFocusToAddCommentEdittext()
-        getDialogAction()
-        adapterLoadStateListener()
     }
 
     private fun adapterLoadStateListener() {
         commentsAdapter.addLoadStateListener { loadState ->
-            binding.progressbar.isVisible = loadState.source.refresh is LoadState.Loading
-            binding.tvLoading.isVisible = loadState.source.refresh is LoadState.Loading
+            binding.apply {
+                customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
+                customStateView.setErrorState(loadState.source.refresh is LoadState.Error)
+                rvComments.isVisible = loadState.source.refresh is LoadState.NotLoading
+            }
         }
     }
 
@@ -120,6 +126,7 @@ class CommentsFragment :
 
     private fun setupRvComments() {
         commentsAdapter = CommentsAdapter()
+        binding.adapter = commentsAdapter
         binding.rvComments.apply {
             setHasFixedSize(true)
             adapter = commentsAdapter

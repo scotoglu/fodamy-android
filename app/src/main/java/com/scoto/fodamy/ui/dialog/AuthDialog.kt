@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
-import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.DialogAuthBinding
 import com.scoto.fodamy.ext.onClick
 
-class AuthDialog() : DialogFragment(R.layout.dialog_auth) {
+class AuthDialog : DialogFragment() {
 
     private var _binding: DialogAuthBinding? = null
     private val binding: DialogAuthBinding get() = _binding!!

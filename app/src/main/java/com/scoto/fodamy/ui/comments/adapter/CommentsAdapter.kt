@@ -19,18 +19,16 @@ class CommentsAdapter : PagingDataAdapter<Comment, CommentsAdapter.ViewHolder>(c
 
         init {
             binding.apply {
-                tvComments.setOnLongClickListener(
-                    View.OnLongClickListener {
-                        if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                            val currentItem = getItem(bindingAdapterPosition)
-                            currentItem?.let {
-                                onItemLongClicked?.invoke(it)
-                            }
+                tvComments.setOnLongClickListener {
+                    if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                        val currentItem = getItem(bindingAdapterPosition)
+                        currentItem?.let {
+                            onItemLongClicked?.invoke(it)
                         }
-
-                        false
                     }
-                )
+
+                    false
+                }
 
                 textView2.isVisible = false
                 divider2.isVisible = false

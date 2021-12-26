@@ -9,6 +9,7 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.loadCircleImageFromUrl
 import com.scoto.fodamy.ext.loadImageFromUrl
 import com.scoto.fodamy.ext.spannableNum
+import com.scoto.fodamy.util.CustomStateView
 import com.scoto.fodamy.util.CustomToolbar
 
 @BindingAdapter(value = ["app:recipeCount", "app:followerCount"])
@@ -18,6 +19,7 @@ fun setRecipeAndFollowers(tv: TextView, recipes: Int?, followers: Int?) {
         recipes, followers
     )
 }
+
 @BindingAdapter(value = ["app:followingCount", "app:followerCount"])
 fun setFollwingAndFollowers(tv: TextView, following: Int?, followers: Int?) {
     tv.text = tv.context.resources.getString(
@@ -25,6 +27,7 @@ fun setFollwingAndFollowers(tv: TextView, following: Int?, followers: Int?) {
         following, followers
     )
 }
+
 @BindingAdapter(value = ["app:commentCount", "app:likeCount"])
 fun setCommentAndLike(tv: TextView, comments: Int?, likes: Int?) {
     tv.text = tv.context.resources.getString(
@@ -52,6 +55,12 @@ fun setOnBackListener(toolbar: CustomToolbar, listener: CustomToolbar.OnBackList
 fun setOnEndIconListener(toolbar: CustomToolbar, listener: CustomToolbar.OnEndIconListener) {
     toolbar.onEndIconListener = listener
 }
+
+@BindingAdapter("app:onRetryClick")
+fun setOnRetryClick(stateView: CustomStateView, listener: CustomStateView.OnRetryClick) {
+    stateView.onRetryClick = listener
+}
+
 @BindingAdapter(value = ["comments", "likes"])
 fun setCommentAndLikeCount(tv: TextView, comments: Int?, likes: Int?) {
     tv.text = tv.context.resources.getString(
@@ -66,6 +75,7 @@ fun setCommentsCount(tv: TextView, comments: Int?) {
     val commentTxt = tv.context.resources.getString(R.string.comment, comments)
     tv.text = commentTxt.spannableNum(0, comments.toString().length)
 }
+
 @BindingAdapter("app:likes")
 fun setLikes(tv: TextView, likes: Int?) {
     likes?.let {
@@ -85,6 +95,7 @@ fun setTimeOfRecipe(tv: TextView, timeOfRecipe: String?) {
         tv.text = tv.context.resources.getString(R.string.timeOfRecie, timeOfRecipe)
     }
 }
+
 @BindingAdapter("progressbarState")
 fun setProgressbarState(view: View, state: Boolean) {
     view.isVisible = state

@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="adapter"
+            type="com.scoto.fodamy.ui.home.adapter.RecipesAdapter" />
+
+        <variable
             name="viewModel"
             type="com.scoto.fodamy.ui.category_recipes.CategoryRecipesViewModel" />
 
@@ -41,26 +45,16 @@
             app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
             tools:listitem="@layout/item_food_card" />
 
-        <ProgressBar
-            android:id="@+id/progressbar"
+
+        <com.scoto.fodamy.util.CustomStateView
+            android:id="@+id/custom_state_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_bold"
-            android:text="Yükleniyor..."
-            android:textSize="@dimen/text_size_20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressbar" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:onRetryClick="@{() ->adapter.retry()}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

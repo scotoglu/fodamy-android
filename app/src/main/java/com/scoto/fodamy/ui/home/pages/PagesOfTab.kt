@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentPagesOfTabBinding
-import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.home.HomeFragmentDirections
 import com.scoto.fodamy.ui.home.adapter.RecipesAdapter
@@ -26,53 +23,43 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapterLoadStateListener()
         setupRecyclerView()
+        adapterLoadStateListener()
 
         viewModel.recipes.observe(viewLifecycleOwner, {
             recipeAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
+        adapterItemClicks()
+    }
+
+    private fun adapterItemClicks() {
         recipeAdapter.onItemClicked = {
             navigateTo(HomeFragmentDirections.actionHomeFragmentToRecipeFlow(it))
         }
     }
 
     private fun adapterLoadStateListener() {
-
-        recipeAdapter = RecipesAdapter()
-
         recipeAdapter.addLoadStateListener { loadState ->
             binding.apply {
-                progressbar.isVisible = loadState.source.refresh is LoadState.Loading
+
+                customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
+                customStateView.setErrorState(loadState.source.refresh is LoadState.Error)
                 rvRecipes.isVisible = loadState.source.refresh is LoadState.NotLoading
-                btnRetry.isVisible = loadState.source.refresh is LoadState.Error
-                tvStateError.isVisible = loadState.source.refresh is LoadState.Error
 
-                btnRetry.onClick {
-                    recipeAdapter.retry()
-                }
 
-                if (loadState.source.refresh is LoadState.NotLoading &&
-                    loadState.append.endOfPaginationReached &&
-                    recipeAdapter.itemCount < 1
-                ) {
-                    rvRecipes.isVisible = false
-                    tvEmptyList.isVisible = true
-                } else {
-                    tvEmptyList.isVisible = false
-                }
             }
         }
     }
 
     private fun setupRecyclerView() {
+        recipeAdapter = RecipesAdapter()
+        binding.adapter = recipeAdapter
         binding.rvRecipes.apply {
             setHasFixedSize(true)
             adapter = recipeAdapter
         }
     }
-
 
 
     companion object {

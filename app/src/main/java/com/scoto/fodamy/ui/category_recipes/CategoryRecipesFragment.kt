@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
@@ -38,6 +36,14 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
             categoryRecipesAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
+
+        adapterItemClicks()
+        eventObserver()
+        adapterLoadStateListener()
+        setToolbarTitle()
+    }
+
+    private fun adapterItemClicks() {
         categoryRecipesAdapter.onItemClicked = {
             navigateTo(
                 CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToRecipeFlow(
@@ -45,10 +51,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
                 )
             )
         }
-
-        eventObserver()
-        adapterLoadStateListener()
-        setToolbarTitle()
     }
 
     private fun setToolbarTitle() {
@@ -61,14 +63,16 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
     private fun adapterLoadStateListener() {
         categoryRecipesAdapter.addLoadStateListener { loadState ->
             binding.apply {
-                progressbar.isVisible = loadState.source.refresh is LoadState.Loading
-                tvLoading.isVisible = loadState.source.refresh is LoadState.Loading
+                customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
+                customStateView.setErrorState(loadState.source.refresh is LoadState.Error)
+                rvCategoryRecipes.isVisible = loadState.source.refresh is LoadState.NotLoading
             }
         }
     }
 
     private fun setupRvCategoryRecipes() {
         categoryRecipesAdapter = RecipesAdapter()
+        binding.adapter = categoryRecipesAdapter
         binding.rvCategoryRecipes.apply {
             setHasFixedSize(true)
             adapter = categoryRecipesAdapter

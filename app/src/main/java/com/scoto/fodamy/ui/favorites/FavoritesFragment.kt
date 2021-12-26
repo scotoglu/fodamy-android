@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentFavoritesBinding
@@ -29,6 +27,7 @@ class FavoritesFragment :
         binding.lifecycleOwner = this
 
         categoryAdapter = CategoryPagingAdapter()
+
 
         eventObserver()
         setupRvCategory()
@@ -62,14 +61,15 @@ class FavoritesFragment :
     private fun adapterLoadStateListener() {
         categoryAdapter.addLoadStateListener { loadState ->
             binding.apply {
-                progressbar.isVisible = loadState.source.refresh is LoadState.Loading
-                tvLoading.isVisible = loadState.source.refresh is LoadState.Loading
+                customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
+                customStateView.setErrorState(loadState.source.refresh is LoadState.Error)
                 rvCategories.isVisible = loadState.source.refresh is LoadState.NotLoading
             }
         }
     }
 
     private fun setupRvCategory() {
+        binding.adapter = categoryAdapter
         binding.rvCategories.apply {
             setHasFixedSize(true)
             adapter = categoryAdapter

@@ -1,6 +1,5 @@
 package com.scoto.fodamy.ui.recipe_details
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -9,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRecipeDetailsBinding
+import com.scoto.fodamy.ext.colorStateList
 import com.scoto.fodamy.ext.onClick
 import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.base.BaseFragment
@@ -29,24 +29,19 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
         viewModel.recipe.observe(viewLifecycleOwner, {
             binding.apply {
                 recipe = it
-                ivLike.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        if (it.isLiked) R.color.red else R.color.black
-                    )
+                ivLike.imageTintList = requireContext().colorStateList(
+                    if (it.isLiked) R.color.red else R.color.black
                 )
                 includeUser.btnFollow.apply {
                     setupFollowButton(it.user.isFollowing)
                 }
+
+                ivLike.onClick { viewModel?.onLikeClick() }
+                includeUser.btnFollow.isVisible = true
+                includeUser.btnFollow.onClick { viewModel?.onFollowClick() }
             }
+
         })
-
-        binding.apply {
-            ivLike.onClick { viewModel?.onLikeClick() }
-
-            includeUser.btnFollow.isVisible = true
-            includeUser.btnFollow.onClick { viewModel?.onFollowClick() }
-        }
 
         eventObserver()
         dialogActionObserver()
@@ -92,14 +87,12 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
         binding.includeUser.btnFollow.apply {
             if (isFollowing) {
                 text = getString(R.string.btn_followed)
-                backgroundTintList =
-                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red))
+                backgroundTintList = requireContext().colorStateList(R.color.red)
                 setTextColor(ContextCompat.getColor(context, R.color.white))
             } else {
                 binding.includeUser.btnFollow.apply {
                     text = getString(R.string.btn_unfollowed)
-                    backgroundTintList =
-                        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.white))
+                    backgroundTintList = requireContext().colorStateList(R.color.white)
                     setTextColor(ContextCompat.getColor(context, R.color.red))
                 }
             }

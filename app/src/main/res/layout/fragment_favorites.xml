@@ -5,14 +5,18 @@
     <data>
 
         <variable
+            name="adapter"
+            type="com.scoto.fodamy.ui.favorites.adapter.CategoryPagingAdapter" />
+
+        <variable
             name="viewModel"
             type="com.scoto.fodamy.ui.favorites.FavoritesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/secondary_background"
         android:layout_height="match_parent"
+        android:background="@color/secondary_background"
         tools:context=".ui.favorites.FavoritesFragment">
 
         <com.scoto.fodamy.util.CustomToolbar
@@ -28,37 +32,24 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_categories"
             android:layout_width="match_parent"
-            tools:listitem="@layout/item_category"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
+            tools:listitem="@layout/item_category" />
 
-        <ProgressBar
-            android:id="@+id/progressbar"
+        <com.scoto.fodamy.util.CustomStateView
+            android:id="@+id/custom_state_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_margin_8dp"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/text_loading"
-            android:textColor="@color/cinder"
-            android:textSize="@dimen/text_size_20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressbar" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:onRetryClick="@{()->adapter.retry()}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

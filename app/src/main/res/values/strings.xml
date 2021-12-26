@@ -54,7 +54,7 @@
     <string name="btn_add_comment">Yorum Ekle</string>
     <string name="btn_move_next">İlerle</string>
     <string name="btn_start">Başla</string>
-    <string name="btn_reload">Yükle</string>
+    <string name="btn_reload">Yeniden Yükle</string>
 
 
     <!--With Params-->
@@ -101,4 +101,5 @@
     <string name="screen_title_comments">YORUMLAR</string>
     <string name="see_all_items">TÜMÜNÜ GÖR</string>
     <string name="text_loading">Yükleniyor...</string>
+    <string name="text_goes_wrong">Bir şeyler yanlış gitti!</string>
 </resources>
