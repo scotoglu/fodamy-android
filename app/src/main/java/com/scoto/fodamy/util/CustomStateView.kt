@@ -54,7 +54,6 @@ class CustomStateView @JvmOverloads constructor(
 
 
     fun setLoadingState(isLoading: Boolean) {
-        Log.d(TAG, "setLoadingState:$isLoading ")
         binding.apply {
             progressbar.isVisible = isLoading
             tvLoading.isVisible = isLoading

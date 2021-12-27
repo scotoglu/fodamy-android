@@ -9,11 +9,8 @@
         android:name="com.scoto.fodamy.ui.profile.ProfileFragment"
         android:label="ProfileFragment" >
         <action
-            android:id="@+id/action_profileFragment_to_authDialog2"
-            app:destination="@id/authDialog2" />
+            android:id="@+id/action_profileFragment_to_login_flow"
+            app:destination="@id/login_flow" />
     </fragment>
-    <dialog
-        android:id="@+id/authDialog2"
-        android:name="com.scoto.fodamy.ui.dialog.AuthDialog"
-        android:label="AuthDialog" />
+    <include app:graph="@navigation/login_flow" />
 </navigation>

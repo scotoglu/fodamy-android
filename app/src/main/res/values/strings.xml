@@ -102,4 +102,6 @@
     <string name="see_all_items">TÜMÜNÜ GÖR</string>
     <string name="text_loading">Yükleniyor...</string>
     <string name="text_goes_wrong">Bir şeyler yanlış gitti!</string>
+    <string name="text_recipes">Tarifler</string>
+    <string name="text_likes">Beğeniler</string>
 </resources>
