@@ -2,14 +2,12 @@ package com.scoto.fodamy.util
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.CustomStateViewBinding
 import com.scoto.fodamy.ext.onClick
-
 
 class CustomStateView @JvmOverloads constructor(
     context: Context,
@@ -37,7 +35,6 @@ class CustomStateView @JvmOverloads constructor(
         isErrorOccured =
             typedArray.getBoolean(R.styleable.CustomStateView_isErrorOccured, false)
 
-
         try {
 
             setLoadingState(
@@ -46,12 +43,10 @@ class CustomStateView @JvmOverloads constructor(
             setErrorState(
                 isErrorOccured
             )
-
         } finally {
             typedArray.recycle()
         }
     }
-
 
     fun setLoadingState(isLoading: Boolean) {
         binding.apply {
@@ -66,7 +61,6 @@ class CustomStateView @JvmOverloads constructor(
             tvGoesWrong.isVisible = isErrorOccured
             btnRetry.isVisible = isErrorOccured
             btnRetry.onClick { onRetryClick?.onClick() }
-
         }
     }
 

@@ -19,7 +19,6 @@ class HomeViewModel @Inject constructor(
 
     val event: SingleLiveEvent<UIHomeEvent> = SingleLiveEvent()
 
-
     fun isLogin() = viewModelScope.launch {
         event.value = UIHomeEvent.IsLogin(dataStoreManager.isLogin())
     }

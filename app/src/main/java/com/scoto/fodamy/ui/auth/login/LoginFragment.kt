@@ -3,8 +3,6 @@ package com.scoto.fodamy.ui.auth.login
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentLoginBinding
 import com.scoto.fodamy.ext.snackbar

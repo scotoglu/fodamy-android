@@ -40,7 +40,6 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
                 includeUser.btnFollow.isVisible = true
                 includeUser.btnFollow.onClick { viewModel?.onFollowClick() }
             }
-
         })
 
         eventObserver()

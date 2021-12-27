@@ -22,7 +22,7 @@ class CategoryRecipesViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager,
     private val savedStateHandle: SavedStateHandle,
 
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val id: Int = savedStateHandle.get<Int>("CategoryId") ?: 0
 
@@ -39,7 +39,6 @@ class CategoryRecipesViewModel @Inject constructor(
     private fun isLogin() = viewModelScope.launch {
         event.value = UICategoryEvent.IsLogin(dataStoreManager.isLogin())
     }
-
 
     private fun getRecipesByCategory() = viewModelScope.launch {
         recipeRepository.getRecipesByCategory(id).cachedIn(viewModelScope).collect {

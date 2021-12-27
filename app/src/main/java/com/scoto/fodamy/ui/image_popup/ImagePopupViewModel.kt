@@ -12,7 +12,6 @@ class ImagePopupViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-
     fun getImages(): ImageList {
         val images = savedStateHandle.get<ImageList>("images")
         val populatedImages = mutableListOf<Image>()

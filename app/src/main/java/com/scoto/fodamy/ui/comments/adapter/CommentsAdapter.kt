@@ -1,7 +1,6 @@
 package com.scoto.fodamy.ui.comments.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter

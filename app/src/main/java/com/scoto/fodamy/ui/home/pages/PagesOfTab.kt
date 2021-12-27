@@ -46,8 +46,6 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
                 customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
                 customStateView.setErrorState(loadState.source.refresh is LoadState.Error)
                 rvRecipes.isVisible = loadState.source.refresh is LoadState.NotLoading
-
-
             }
         }
     }
@@ -60,7 +58,6 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding>(
             adapter = recipeAdapter
         }
     }
-
 
     companion object {
         private const val TAG = "PagesOfTab"

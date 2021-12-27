@@ -36,7 +36,6 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
             categoryRecipesAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
 
-
         adapterItemClicks()
         eventObserver()
         adapterLoadStateListener()

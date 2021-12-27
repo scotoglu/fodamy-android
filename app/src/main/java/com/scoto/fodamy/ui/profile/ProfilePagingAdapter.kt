@@ -23,7 +23,6 @@ class ProfilePagingAdapter : PagingDataAdapter<Recipe, ProfilePagingAdapter.View
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             ItemCategoryRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)

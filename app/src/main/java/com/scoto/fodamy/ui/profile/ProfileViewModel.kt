@@ -35,7 +35,6 @@ class ProfileViewModel @Inject constructor(
     private val _user: MutableLiveData<User> = MutableLiveData()
     val user: LiveData<User> get() = _user
 
-
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
 
@@ -81,7 +80,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-
     suspend fun isLoginLiveData(): LiveData<String> = dataStoreManager.isLoginLiveData()
 
     fun onLoginClick() {
@@ -89,11 +87,9 @@ class ProfileViewModel @Inject constructor(
             UIProfileEvent.NavigateTo(direction = ProfileFragmentDirections.actionProfileFragmentToLoginFlow())
     }
 
-
     private fun getSomeData() = viewModelScope.launch {
         recipeRepository.getLastAdded().cachedIn(viewModelScope).collect { pagingData ->
             _recipes.value = pagingData
-
         }
     }
 }

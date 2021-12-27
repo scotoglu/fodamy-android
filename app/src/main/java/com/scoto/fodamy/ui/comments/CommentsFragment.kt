@@ -35,7 +35,6 @@ class CommentsFragment :
 
         binding.editMode = false
 
-
         viewModel.comments.observe(viewLifecycleOwner, {
             commentsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
@@ -137,7 +136,6 @@ class CommentsFragment :
         (activity as AppCompatActivity).showIme()
         binding.etAddComment.requestFocus()
     }
-
 
     companion object {
         private const val TAG = "CommentsFragment"

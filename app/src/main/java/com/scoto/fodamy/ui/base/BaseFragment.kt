@@ -36,7 +36,6 @@ abstract class BaseFragment<V : ViewDataBinding>(
         return binding.root
     }
 
-
     protected fun navigateTo(directions: NavDirections) {
         navController.navigate(directions)
     }

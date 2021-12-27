@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentImagePopupBinding
 import com.scoto.fodamy.ext.hideSystemUI
@@ -24,7 +22,6 @@ class ImagePopupFragment :
 
         // hides statusbar and navigationbars
         (activity as AppCompatActivity).hideSystemUI(binding.root)
-
 
         val sliderAdapter = SliderAdapter(viewModel.getImages())
         binding.viewpagerSlider.adapter = sliderAdapter

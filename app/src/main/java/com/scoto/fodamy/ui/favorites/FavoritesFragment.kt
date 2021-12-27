@@ -28,10 +28,8 @@ class FavoritesFragment :
 
         categoryAdapter = CategoryPagingAdapter()
 
-
         eventObserver()
         setupRvCategory()
-
 
         viewModel.categories.observe(viewLifecycleOwner, {
             categoryAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -76,7 +74,6 @@ class FavoritesFragment :
         }
     }
 
-
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
@@ -87,7 +84,6 @@ class FavoritesFragment :
                     binding.customToolbar.setEndIconVisibility(false)
                 }
                 is UIFavoritesEvent.ShowMessage.Error -> binding.root.snackbar(event.message)
-
             }
         })
     }

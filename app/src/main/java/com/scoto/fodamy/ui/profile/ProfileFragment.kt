@@ -73,7 +73,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(
             rvLikes.setHasFixedSize(true)
             rvLikes.adapter = profilePagingAdapter
         }
-
     }
 
     private fun eventObserver() {
@@ -100,6 +99,4 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(
             }
         }
     }
-
 }
-

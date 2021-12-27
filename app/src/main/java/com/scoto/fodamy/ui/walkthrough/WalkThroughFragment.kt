@@ -39,7 +39,6 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(
                 moveToNext(binding.viewPager.currentItem)
             }
         }
-
     }
 
     private fun moveToNext(position: Int) {

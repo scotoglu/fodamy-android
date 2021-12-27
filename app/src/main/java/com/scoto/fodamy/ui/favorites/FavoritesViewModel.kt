@@ -14,7 +14,6 @@ import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Category
 import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.network.repositories.RecipeRepository
-import com.scoto.fodamy.ui.home.UIHomeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -25,7 +24,7 @@ class FavoritesViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
     private val authRepository: AuthRepository,
     private val dataStoreManager: DataStoreManager,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _categories: MutableLiveData<PagingData<Category>> = MutableLiveData()
     val categories: LiveData<PagingData<Category>> get() = _categories
@@ -62,5 +61,4 @@ class FavoritesViewModel @Inject constructor(
             }
         }
     }
-
 }
