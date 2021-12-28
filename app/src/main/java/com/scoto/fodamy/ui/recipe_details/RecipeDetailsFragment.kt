@@ -26,6 +26,12 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.getRecipeComments()
+//            }
+//        }
+
         viewModel.recipe.observe(viewLifecycleOwner, {
             binding.apply {
                 recipe = it
@@ -41,6 +47,15 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
                 includeUser.btnFollow.onClick { viewModel?.onFollowClick() }
             }
         })
+
+        viewModel.comment.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.includeComment.isEmptyComment = false
+                binding.includeComment.comment = it
+            } else {
+                binding.includeComment.isEmptyComment = true
+            }
+        }
 
         eventObserver()
         dialogActionObserver()
@@ -58,14 +73,6 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
-                is UIRecipeEvent.CommentData -> {
-                    if (event.comment == null) {
-                        binding.includeComment.isEmptyComment = true
-                    } else {
-                        binding.includeComment.isEmptyComment = false
-                        binding.includeComment.comment = event.comment
-                    }
-                }
                 is UIRecipeEvent.NavigateTo -> {
                     navigateTo(event.directions)
                 }
@@ -89,11 +96,9 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
                 backgroundTintList = requireContext().colorStateList(R.color.red)
                 setTextColor(ContextCompat.getColor(context, R.color.white))
             } else {
-                binding.includeUser.btnFollow.apply {
-                    text = getString(R.string.btn_unfollowed)
-                    backgroundTintList = requireContext().colorStateList(R.color.white)
-                    setTextColor(ContextCompat.getColor(context, R.color.red))
-                }
+                text = getString(R.string.btn_unfollowed)
+                backgroundTintList = requireContext().colorStateList(R.color.white)
+                setTextColor(ContextCompat.getColor(context, R.color.red))
             }
         }
     }

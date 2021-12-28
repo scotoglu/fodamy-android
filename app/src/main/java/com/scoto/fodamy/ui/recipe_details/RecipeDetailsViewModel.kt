@@ -8,15 +8,13 @@ package com.scoto.fodamy.ui.recipe_details
 *
 * */
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.NetworkResponse
+import com.scoto.fodamy.network.models.Comment
 import com.scoto.fodamy.network.models.ImageList
 import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.network.repositories.RecipeRepository
@@ -37,6 +35,9 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private val _recipe = savedStateHandle.getLiveData<Recipe>("RECIPE")
     val recipe: LiveData<Recipe> get() = _recipe
+
+    private val _comment: MutableLiveData<Comment?> = MutableLiveData()
+    val comment: LiveData<Comment?> get() = _comment
 
     private val recipeId: Int = _recipe.value?.id!!
     private val followedUserId: Int = _recipe.value?.user?.id ?: 1
@@ -64,11 +65,10 @@ class RecipeDetailsViewModel @Inject constructor(
         _recipe.value?.let {
             when (val response = recipeRepository.getFirstComment(it.id)) {
                 is NetworkResponse.Success -> {
-                    event.value = UIRecipeEvent.CommentData(response.data)
+                    _comment.value = response.data
                 }
                 is NetworkResponse.Error -> {
-                    event.value = UIRecipeEvent.CommentData(null)
-                    //  UIRecipeEvent.ShowMessage(response.exception.handleException())
+                    event.value = UIRecipeEvent.ShowMessage(response.exception.handleException())
                 }
             }
         }
