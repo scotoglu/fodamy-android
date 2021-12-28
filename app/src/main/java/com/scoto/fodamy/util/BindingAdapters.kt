@@ -12,6 +12,11 @@ import com.scoto.fodamy.ext.spannableNum
 import com.scoto.fodamy.util.CustomStateView
 import com.scoto.fodamy.util.CustomToolbar
 
+@BindingAdapter("app:fieldVisibility")
+fun setFieldVisibility(view: View, isVisible: Boolean) {
+    view.isVisible = isVisible
+}
+
 @BindingAdapter(value = ["app:recipeCount", "app:followerCount"])
 fun setRecipeAndFollowers(tv: TextView, recipes: Int?, followers: Int?) {
     tv.text = tv.context.resources.getString(

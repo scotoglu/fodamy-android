@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.scoto.fodamy.ui.auth.login.LoginViewModel" />
@@ -17,10 +19,16 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.auth.login.LoginFragment">
 
-        <include
+        <TextView
             android:id="@+id/included"
-            layout="@layout/required_field_warning"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/RequiredFieldWarning"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            app:fieldVisibility="@{viewModel.isRequiredFieldVisible == viewModel.validation}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/required_field_email" />
 
 
         <TextView
@@ -78,36 +86,22 @@
                 android:text="@={viewModel.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <ProgressBar
-            android:id="@+id/progressbar"
-            progressbarState="@{viewModel.progressbarVisibility}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/red"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/guideline3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButton"
             style="@style/PrimaryButtonLarge.Filled"
-            progressbarState="@{!viewModel.progressbarVisibility}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_margin_16dp"
+            android:enabled="@{viewModel.validation}"
             android:letterSpacing="0"
-            android:onClick="@{()->viewModel.doLoginRequest()}"
+            android:onClick="@{()->viewModel.login()}"
             android:text="@string/login"
             android:textSize="@dimen/text_size_20sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guideline3"
-          />
+            app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
         <TextView
             android:id="@+id/tv_forgotten_password"
@@ -120,7 +114,7 @@
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/nunito_semibold"
-            android:onClick="@{()->viewModel.forgotPasswordOnClick()}"
+            android:onClick="@{()->viewModel.toForgotPassword()}"
             android:text="@string/forgotten_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -136,7 +130,7 @@
             android:layout_marginBottom="@dimen/size_margin_16dp"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{()->viewModel.registerOnClick()}"
+            android:onClick="@{()->viewModel.toRegister()}"
             android:text="@string/dont_have_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

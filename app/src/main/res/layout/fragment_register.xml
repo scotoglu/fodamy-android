@@ -18,15 +18,19 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.auth.signup.RegisterFragment">
 
-        <include
+        <TextView
             android:id="@+id/included"
-            layout="@layout/required_field_warning"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/RequiredFieldWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:fieldVisibility="@{viewModel.isRequiredFieldVisible == viewModel.validation}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/required_field_email" />
 
-        <!--        app:layout_goneMarginTop="size_margin_40dp" -->
 
         <TextView
-
             android:id="@+id/tv_signup"
             style="@style/AuthScreenTitles"
             android:layout_width="match_parent"
@@ -100,12 +104,12 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_signup"
             style="@style/PrimaryButtonLarge.Filled"
-            progressbarState="@{!viewModel.progressbarVisibility}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_margin_16dp"
+            android:enabled="@{viewModel.validation}"
             android:letterSpacing="0"
-            android:onClick="@{()->viewModel.doRegisterRequest()}"
+            android:onClick="@{()->viewModel.register()}"
             android:padding="@dimen/size_padding_15dp"
             android:text="@string/signup"
             android:textSize="@dimen/text_size_20sp"
@@ -113,15 +117,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
-        <ProgressBar
-            progressbarState="@{viewModel.progressbarVisibility}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/red"
-            app:layout_constraintBottom_toBottomOf="@+id/guideline6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
         <TextView
             android:id="@+id/tv_have_account"
@@ -131,7 +126,7 @@
             android:layout_marginBottom="@dimen/size_margin_16dp"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{()->viewModel.loginOnClick()}"
+            android:onClick="@{()->viewModel.toLogin()}"
             android:text="@string/have_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

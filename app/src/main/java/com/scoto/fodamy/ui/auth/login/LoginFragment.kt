@@ -2,41 +2,22 @@ package com.scoto.fodamy.ui.auth.login
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentLoginBinding
-import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ext.spannableText
 import com.scoto.fodamy.helper.states.InputErrorType
-import com.scoto.fodamy.ui.auth.UIAuthEvent
-import com.scoto.fodamy.ui.base.BaseFragment
+import com.scoto.fodamy.ui.base.BaseFragment_V2
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>(
+class LoginFragment : BaseFragment_V2<FragmentLoginBinding, LoginViewModel>(
     R.layout.fragment_login
 ) {
-
-    private val viewModel: LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.event.observe(viewLifecycleOwner, { event ->
-            when (event) {
-                is UIAuthEvent.BackTo -> {
-                    view.snackbar(event.message)
-                    backTo()
-                }
-                is UIAuthEvent.NavigateTo -> event.directions?.let { navigateTo(it) }
-            }
-        })
-
-        requiredFiledObserver()
         setSpannableText()
-
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
     }
 
     private fun setSpannableText() {
@@ -44,29 +25,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             getString(R.string.signup).spannableText(getString(R.string.dont_have_account))
     }
 
-    private fun requiredFiledObserver() {
+    override fun registerObservables() {
+        super.registerObservables()
         viewModel.requiredFieldWarning.observe(viewLifecycleOwner, { errorType ->
             when (errorType) {
-                is InputErrorType.Email -> {
+                InputErrorType.Username -> {
                     showRequiredField(getString(R.string.required_field_username))
                 }
-                is InputErrorType.Password -> {
+                InputErrorType.Password -> {
                     showRequiredField(getString(R.string.required_field_password))
-                }
-                is InputErrorType.ShowMessage -> {
-                    showRequiredField(errorType.message)
-                }
-                else -> {
-                    showRequiredField("")
                 }
             }
         })
     }
 
     private fun showRequiredField(fieldText: String) {
-        binding.included.tvRequiredField.apply {
+        binding.included.apply {
             text = fieldText
-            visibility = View.VISIBLE
         }
     }
 
