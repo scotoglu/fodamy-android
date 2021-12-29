@@ -8,7 +8,10 @@ package com.scoto.fodamy.ui.recipe_details
 *
 * */
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
@@ -19,6 +22,7 @@ import com.scoto.fodamy.network.models.ImageList
 import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.network.repositories.RecipeRepository
 import com.scoto.fodamy.network.repositories.UserRepository
+import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,7 +33,7 @@ class RecipeDetailsViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val savedStateHandle: SavedStateHandle,
     private val dataStoreManager: DataStoreManager
-) : ViewModel() {
+) : BaseViewModel() {
 
     val event: SingleLiveEvent<UIRecipeEvent> = SingleLiveEvent()
 
@@ -54,8 +58,7 @@ class RecipeDetailsViewModel @Inject constructor(
                     savedStateHandle.set("RECIPE", response.data)
                 }
                 is NetworkResponse.Error -> {
-                    event.value =
-                        UIRecipeEvent.ShowMessage(response.exception.handleException())
+                    showMessage(response.exception.handleException())
                 }
             }
         }
@@ -68,54 +71,52 @@ class RecipeDetailsViewModel @Inject constructor(
                     _comment.value = response.data
                 }
                 is NetworkResponse.Error -> {
-                    event.value = UIRecipeEvent.ShowMessage(response.exception.handleException())
+                    showMessage(response.exception.handleException())
                 }
             }
         }
     }
 
     fun onImageSlider() {
-        event.value = UIRecipeEvent.NavigateTo(
+        navigate(
             RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToImagePopupFragment(
                 ImageList(recipe.value!!.images)
             )
         )
     }
 
-    fun onCommentAddClick() {
-        event.value = UIRecipeEvent.NavigateTo(
+    fun onCommentAdd() {
+        navigate(
             RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToCommentsFragment(recipeId)
         )
     }
 
-    fun onShareClick() {
+    fun onShare() {
         Log.d(TAG, "onShareClick: Recipe will be shared")
     }
 
-    fun onBackClick() {
-        event.value = UIRecipeEvent.BackTo
+    fun onBack() {
+        backTo()
     }
 
-    fun onLikeClick() = viewModelScope.launch {
+    fun onLike() = viewModelScope.launch {
 
         if (dataStoreManager.isLogin()) {
             recipe.value!!.let {
                 if (it.isLiked) dislike() else like()
             }
         } else {
-            event.value =
-                UIRecipeEvent.OpenDialog(R.id.action_global_authDialog)
+            openDialog(R.id.action_global_authDialog)
         }
     }
 
     private fun like() = viewModelScope.launch {
         when (val response = recipeRepository.likeRecipe(recipeId)) {
             is NetworkResponse.Error -> {
-                event.value =
-                    UIRecipeEvent.ShowMessage(response.exception.handleException())
+                showMessage(response.exception.handleException())
             }
             is NetworkResponse.Success -> {
-                event.value = UIRecipeEvent.ShowMessage(response.data.message)
+                showMessage(response.data.message)
                 getRecipeById()
             }
         }
@@ -124,27 +125,24 @@ class RecipeDetailsViewModel @Inject constructor(
     private fun dislike() = viewModelScope.launch {
         when (val response = recipeRepository.dislikeRecipe(recipeId)) {
             is NetworkResponse.Error -> {
-                event.value =
-                    UIRecipeEvent.ShowMessage(response.exception.handleException())
+                showMessage(response.exception.handleException())
             }
             is NetworkResponse.Success -> {
-                event.value = UIRecipeEvent.ShowMessage(response.data.message)
+                showMessage(response.data.message)
                 getRecipeById()
             }
         }
     }
 
-    fun onFollowClick() = viewModelScope.launch {
+    fun onFollow() = viewModelScope.launch {
         if (recipe.value?.user?.isFollowing == true) {
-            event.value =
-                UIRecipeEvent.NavigateTo(
-                    RecipeDetailsFragmentDirections
-                        .actionRecipeDetailsFragmentToUnfollowDialog()
-                )
+            navigate(
+                RecipeDetailsFragmentDirections
+                    .actionRecipeDetailsFragmentToUnfollowDialog()
+            )
         } else {
             if (!dataStoreManager.isLogin()) {
-                event.value =
-                    UIRecipeEvent.OpenDialog(R.id.action_global_authDialog)
+                openDialog(R.id.action_global_authDialog)
             } else {
                 _recipe.value?.let {
                     follow()
@@ -153,16 +151,14 @@ class RecipeDetailsViewModel @Inject constructor(
         }
     }
 
-    fun unFollow() = viewModelScope.launch {
+    fun unfollow() = viewModelScope.launch {
         when (val response = userRepository.unFollowUser(followedUserId)) {
             is NetworkResponse.Success -> {
-                event.value =
-                    UIRecipeEvent.ShowMessage(response.data.message)
+                showMessage(response.data.message)
                 getRecipeById()
             }
             is NetworkResponse.Error -> {
-                event.value =
-                    UIRecipeEvent.ShowMessage(response.exception.handleException())
+                showMessage(response.exception.handleException())
             }
         }
     }
@@ -171,13 +167,11 @@ class RecipeDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = userRepository.followUser(followedUserId)) {
                 is NetworkResponse.Success -> {
-                    event.value =
-                        UIRecipeEvent.ShowMessage(response.data.message)
+                    showMessage(response.data.message)
                     getRecipeById()
                 }
                 is NetworkResponse.Error -> {
-                    event.value =
-                        UIRecipeEvent.ShowMessage(response.exception.handleException())
+                    showMessage(response.exception.handleException())
                 }
             }
         }

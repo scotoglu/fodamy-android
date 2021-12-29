@@ -2,7 +2,6 @@ package com.scoto.fodamy.ui.favorites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -12,8 +11,10 @@ import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Category
+import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.network.repositories.RecipeRepository
+import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -24,12 +25,12 @@ class FavoritesViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
     private val authRepository: AuthRepository,
     private val dataStoreManager: DataStoreManager,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _categories: MutableLiveData<PagingData<Category>> = MutableLiveData()
     val categories: LiveData<PagingData<Category>> get() = _categories
 
-    val event: SingleLiveEvent<UIFavoritesEvent> = SingleLiveEvent()
+    val viewState: SingleLiveEvent<FavoritesViewState> = SingleLiveEvent()
 
     init {
         getCategories()
@@ -37,18 +38,17 @@ class FavoritesViewModel @Inject constructor(
     }
 
     fun isLogin() = viewModelScope.launch {
-        event.value = UIFavoritesEvent.IsLogin(dataStoreManager.isLogin())
+        viewState.value = FavoritesViewState.IsLogin(dataStoreManager.isLogin())
     }
 
-    fun onEndIconCLick() = viewModelScope.launch {
+    fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Error -> {
-                    event.value =
-                        UIFavoritesEvent.ShowMessage.Error(response.exception.handleException())
+                    showMessage(response.exception.handleException())
                 }
                 is NetworkResponse.Success -> {
-                    event.value = UIFavoritesEvent.ShowMessage.Success(response.data.message)
+                    viewState.value = FavoritesViewState.Success(response.data.message)
                 }
             }
         }
@@ -60,5 +60,21 @@ class FavoritesViewModel @Inject constructor(
                 category.recipes?.size!! > 0
             }
         }
+    }
+
+    fun toSeeAll(category: Category) {
+        navigate(
+            FavoritesFragmentDirections.actionFavoritesFragmentToCategoryRecipesFragment(
+                category.id, category.name
+            )
+        )
+    }
+
+    fun toRecipeDetail(recipe: Recipe) {
+        navigate(
+            FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFlow2(
+                recipe
+            )
+        )
     }
 }

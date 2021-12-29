@@ -2,7 +2,6 @@ package com.scoto.fodamy.ui.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -15,6 +14,7 @@ import com.scoto.fodamy.network.models.User
 import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.network.repositories.RecipeRepository
 import com.scoto.fodamy.network.repositories.UserRepository
+import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -30,7 +30,7 @@ class ProfileViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val recipeRepository: RecipeRepository,
     private val dataStoreManager: DataStoreManager
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _user: MutableLiveData<User> = MutableLiveData()
     val user: LiveData<User> get() = _user
@@ -38,7 +38,7 @@ class ProfileViewModel @Inject constructor(
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
 
-    val event: SingleLiveEvent<UIProfileEvent> = SingleLiveEvent()
+    val viewState: SingleLiveEvent<ProfileViewState> = SingleLiveEvent()
 
     init {
         getUserDetails()
@@ -49,8 +49,7 @@ class ProfileViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             when (val response = userRepository.getUserDetails(dataStoreManager.getUserId())) {
                 is NetworkResponse.Error -> {
-                    event.value =
-                        UIProfileEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                    showMessage(response.exception.handleException())
                 }
                 is NetworkResponse.Success -> {
                     response.data.let {
@@ -60,31 +59,29 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         } else {
-            event.value = UIProfileEvent.ShowMessage.ErrorMessage("Giriş Yapmalısınız...")
+            showMessage("Giriş Yapmalısınız...")
         }
     }
 
     fun isLogin() = viewModelScope.launch {
-        event.value = UIProfileEvent.IsLogin(dataStoreManager.isLogin())
+        viewState.value = ProfileViewState.IsLogin(dataStoreManager.isLogin())
     }
 
-    fun onLogoutClick() = viewModelScope.launch {
+    fun logout() = viewModelScope.launch {
         when (val response = authRepository.logout()) {
             is NetworkResponse.Success -> {
-                event.value = UIProfileEvent.ShowMessage.SuccessMessage(response.data.message)
+                viewState.value = ProfileViewState.Success(response.data.message)
             }
             is NetworkResponse.Error -> {
-                event.value =
-                    UIProfileEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                showMessage(response.exception.handleException())
             }
         }
     }
 
     suspend fun isLoginLiveData(): LiveData<String> = dataStoreManager.isLoginLiveData()
 
-    fun onLoginClick() {
-        event.value =
-            UIProfileEvent.NavigateTo(direction = ProfileFragmentDirections.actionProfileFragmentToLoginFlow())
+    fun onLogin() {
+        navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFlow())
     }
 
     private fun getSomeData() = viewModelScope.launch {

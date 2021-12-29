@@ -1,16 +1,12 @@
 package com.scoto.fodamy.ui.profile
 
-import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentProfileBinding
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.ui.base.BaseFragment
+import com.scoto.fodamy.ui.base.BaseFragment_V2
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -18,30 +14,30 @@ import dagger.hilt.android.AndroidEntryPoint
  * Created 13.12.2021 at 14:15
  */
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment<FragmentProfileBinding>(
+class ProfileFragment : BaseFragment_V2<FragmentProfileBinding, ProfileViewModel>(
     R.layout.fragment_profile
 ) {
 
-    private val viewModel: ProfileViewModel by viewModels()
     private lateinit var profilePagingAdapter: ProfilePagingAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun registerObservables() {
+        super.registerObservables()
+        viewStateObserver()
+        userObserver()
+        recipeObserver()
+        tokenObserverForRefresh()
+    }
 
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        setupRvs()
-        viewModel.user.observe(viewLifecycleOwner, { user ->
-            binding.user = user
-        })
-
+    private fun recipeObserver() {
         viewModel.recipes.observe(viewLifecycleOwner) {
             profilePagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
+    }
 
-        tokenObserverForRefresh()
-        adapterLoadStateListener()
-        eventObserver()
+    private fun userObserver() {
+        viewModel.user.observe(viewLifecycleOwner, { user ->
+            binding.user = user
+        })
     }
 
     private fun tokenObserverForRefresh() {
@@ -54,7 +50,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(
         }
     }
 
-    private fun adapterLoadStateListener() {
+    override fun addAdapterLoadStateListener() {
+        super.addAdapterLoadStateListener()
         profilePagingAdapter.addLoadStateListener { loadState ->
             binding.apply {
                 customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
@@ -65,7 +62,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(
         }
     }
 
-    private fun setupRvs() {
+
+    override fun initViews() {
+        super.initViews()
         profilePagingAdapter = ProfilePagingAdapter()
         binding.apply {
             rvRecipes.setHasFixedSize(true)
@@ -75,25 +74,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(
         }
     }
 
-    private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner) { event ->
-            when (event) {
-                is UIProfileEvent.ShowMessage.SuccessMessage -> {
-                    view?.snackbar(event.message)
+
+    private fun viewStateObserver() {
+        viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
+            when (viewState) {
+                is ProfileViewState.Success -> {
+                    view?.snackbar(viewState.message)
                     binding.tvLogin.isVisible = true
                 }
-                is UIProfileEvent.ShowMessage.ErrorMessage -> {
-                    view?.snackbar(event.message)
-                }
-                is UIProfileEvent.NavigateTo -> {
-                    val navController = findNavController()
-                    event.actionId?.let { navController.navigate(it) }
-                    event.direction?.let { navigateTo(it) }
-                }
-                is UIProfileEvent.IsLogin -> {
+                is ProfileViewState.IsLogin -> {
                     binding.apply {
-                        customToolbar.setEndIconVisibility(event.isLogin)
-                        tvLogin.isVisible = !event.isLogin
+                        customToolbar.setEndIconVisibility(viewState.isLogin)
+                        tvLogin.isVisible = !viewState.isLogin
                     }
                 }
             }

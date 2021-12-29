@@ -1,37 +1,41 @@
 package com.scoto.fodamy.ui.recipe_details
 
-import android.os.Bundle
-import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRecipeDetailsBinding
 import com.scoto.fodamy.ext.colorStateList
+import com.scoto.fodamy.ext.getColorBy
 import com.scoto.fodamy.ext.onClick
-import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.ui.base.BaseFragment
+import com.scoto.fodamy.ui.base.BaseFragment_V2
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
-    R.layout.fragment_recipe_details
-) {
-    private val viewModel: RecipeDetailsViewModel by viewModels()
+class RecipeDetailsFragment :
+    BaseFragment_V2<FragmentRecipeDetailsBinding, RecipeDetailsViewModel>(
+        R.layout.fragment_recipe_details
+    ) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun registerObservables() {
+        super.registerObservables()
+        recipeObservable()
+        commentObservable()
+        dialogActionObserver()
+    }
 
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+    private fun commentObservable() {
+        viewModel.comment.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.includeComment.isEmptyComment = false
+                binding.includeComment.comment = it
+            } else {
+                binding.includeComment.isEmptyComment = true
+            }
+        }
 
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.getRecipeComments()
-//            }
-//        }
+    }
 
+    private fun recipeObservable() {
         viewModel.recipe.observe(viewLifecycleOwner, {
             binding.apply {
                 recipe = it
@@ -42,63 +46,33 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>(
                     setupFollowButton(it.user.isFollowing)
                 }
 
-                ivLike.onClick { viewModel?.onLikeClick() }
+                ivLike.onClick { viewModel?.onLike() }
                 includeUser.btnFollow.isVisible = true
-                includeUser.btnFollow.onClick { viewModel?.onFollowClick() }
+                includeUser.btnFollow.onClick { viewModel?.onFollow() }
             }
         })
-
-        viewModel.comment.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.includeComment.isEmptyComment = false
-                binding.includeComment.comment = it
-            } else {
-                binding.includeComment.isEmptyComment = true
-            }
-        }
-
-        eventObserver()
-        dialogActionObserver()
     }
 
     private fun dialogActionObserver() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("ACTION")
             ?.observe(viewLifecycleOwner) {
                 if (it.equals("unfollow")) {
-                    viewModel.unFollow()
+                    viewModel.unfollow()
                 }
             }
     }
 
-    private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner, { event ->
-            when (event) {
-                is UIRecipeEvent.NavigateTo -> {
-                    navigateTo(event.directions)
-                }
-                is UIRecipeEvent.ShowMessage -> {
-                    binding.root.snackbar(event.message)
-                }
-                is UIRecipeEvent.BackTo -> {
-                    backTo()
-                }
-                is UIRecipeEvent.OpenDialog -> {
-                    findNavController().navigate(event.actionId)
-                }
-            }
-        })
-    }
-
+    //TODO("xml, selector usage")
     private fun setupFollowButton(isFollowing: Boolean) {
         binding.includeUser.btnFollow.apply {
             if (isFollowing) {
                 text = getString(R.string.btn_followed)
                 backgroundTintList = requireContext().colorStateList(R.color.red)
-                setTextColor(ContextCompat.getColor(context, R.color.white))
+                setTextColor(requireContext().getColorBy(R.color.white))
             } else {
                 text = getString(R.string.btn_unfollowed)
                 backgroundTintList = requireContext().colorStateList(R.color.white)
-                setTextColor(ContextCompat.getColor(context, R.color.red))
+                setTextColor(requireContext().getColorBy(R.color.red))
             }
         }
     }

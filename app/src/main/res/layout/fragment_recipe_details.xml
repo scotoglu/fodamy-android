@@ -27,8 +27,8 @@
             app:backButtonVisible="true"
             app:endIcon="@drawable/ic_share"
             app:endIconVisibility="true"
-            app:onBackListener="@{()->viewModel.onBackClick()}"
-            app:onEndIconListener="@{()->viewModel.onShareClick()}"
+            app:onBackListener="@{()->viewModel.onBack()}"
+            app:onEndIconListener="@{()->viewModel.onShare()}"
             app:title="@{recipe.title}" />
 
         <ScrollView
@@ -368,7 +368,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="@dimen/size_margin_16dp"
                     android:layout_marginBottom="@dimen/size_margin_16dp"
-                    android:onClick="@{()->viewModel.onCommentAddClick()}"
+                    android:onClick="@{()->viewModel.onCommentAdd()}"
                     android:text="@string/btn_add_comment"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -4,13 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.scoto.fodamy.network.models.Image
 import com.scoto.fodamy.network.models.ImageList
+import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ImagePopupViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel() {
 
     fun getImages(): ImageList {
         val images = savedStateHandle.get<ImageList>("images")
@@ -23,5 +24,8 @@ class ImagePopupViewModel @Inject constructor(
         }
 
         return ImageList(populatedImages)
+    }
+    fun onBack(){
+        backTo()
     }
 }

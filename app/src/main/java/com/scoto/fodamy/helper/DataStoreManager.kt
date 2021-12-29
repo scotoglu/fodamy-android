@@ -73,7 +73,7 @@ class DataStoreManager @Inject constructor(
     companion object {
 
         private const val FODAMY_LAUNCH_PREF = "FODAMY_LAUNCH_PREF"
-        private val FIRST_LAUNCH = stringPreferencesKey("first_launched")
+        private val FIRST_LAUNCH = stringPreferencesKey("is_first_launched")
         private val AUTH_TOKEN = stringPreferencesKey("AUTH_TOKEN")
         private val USER_ID = intPreferencesKey("USER_ID")
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = FODAMY_LAUNCH_PREF)
