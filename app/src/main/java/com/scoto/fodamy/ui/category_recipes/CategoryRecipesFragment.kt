@@ -1,65 +1,43 @@
 package com.scoto.fodamy.ui.category_recipes
 
-import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCategoryRecipeBinding
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.ui.base.BaseFragment
+import com.scoto.fodamy.ui.base.BaseFragment_V2
 import com.scoto.fodamy.ui.home.adapter.RecipesAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
-class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
-    R.layout.fragment_category_recipe
-) {
-
-    private val viewModel: CategoryRecipesViewModel by viewModels()
-    private val args: CategoryRecipesFragmentArgs by navArgs()
+class CategoryRecipesFragment :
+    BaseFragment_V2<FragmentCategoryRecipeBinding, CategoryRecipesViewModel>(
+        R.layout.fragment_category_recipe
+    ) {
 
     private lateinit var categoryRecipesAdapter: RecipesAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun registerObservables() {
+        super.registerObservables()
+        recipeObserver()
+        viewStateObserver()
+    }
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-
-        setupRvCategoryRecipes()
-
+    private fun recipeObserver() {
         viewModel.recipes.observe(viewLifecycleOwner, {
             categoryRecipesAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         })
-
-        adapterItemClicks()
-        eventObserver()
-        adapterLoadStateListener()
-        setToolbarTitle()
     }
 
-    private fun adapterItemClicks() {
-        categoryRecipesAdapter.onItemClicked = {
-            navigateTo(
-                CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToRecipeFlow(
-                    it
-                )
-            )
+    override fun addItemClicks() {
+        super.addItemClicks()
+        categoryRecipesAdapter.onItemClicked = { recipe ->
+            viewModel.toRecipeDetails(recipe)
         }
     }
 
-    private fun setToolbarTitle() {
-        binding.customToolbar.setTitle(
-            args.categoryTitle
-                .uppercase(Locale.forLanguageTag("tr"))
-        )
-    }
-
-    private fun adapterLoadStateListener() {
+    override fun addAdapterLoadStateListener() {
+        super.addAdapterLoadStateListener()
         categoryRecipesAdapter.addLoadStateListener { loadState ->
             binding.apply {
                 customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
@@ -69,7 +47,8 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
         }
     }
 
-    private fun setupRvCategoryRecipes() {
+    override fun initViews() {
+        super.initViews()
         categoryRecipesAdapter = RecipesAdapter()
         binding.adapter = categoryRecipesAdapter
         binding.rvCategoryRecipes.apply {
@@ -78,17 +57,14 @@ class CategoryRecipesFragment : BaseFragment<FragmentCategoryRecipeBinding>(
         }
     }
 
-    private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner, { event ->
-            when (event) {
-                is UICategoryEvent.BackTo -> backTo()
-                is UICategoryEvent.NavigateTo -> navigateTo(event.directions)
-                is UICategoryEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
-                is UICategoryEvent.ShowMessage.Success -> {
-                    binding.root.snackbar(event.message)
+    private fun viewStateObserver() {
+        viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
+            when (viewState) {
+                is CategoryViewState.IsLogin -> binding.customToolbar.setEndIconVisibility(viewState.isLogin)
+                is CategoryViewState.Success -> {
+                    binding.root.snackbar(viewState.message)
                     binding.customToolbar.setEndIconVisibility(false)
                 }
-                is UICategoryEvent.ShowMessage.Error -> binding.root.snackbar(event.message)
             }
         })
     }

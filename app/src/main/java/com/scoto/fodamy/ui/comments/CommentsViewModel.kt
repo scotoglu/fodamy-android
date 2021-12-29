@@ -1,6 +1,9 @@
 package com.scoto.fodamy.ui.comments
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
@@ -9,6 +12,7 @@ import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Comment
 import com.scoto.fodamy.network.repositories.RecipeRepository
+import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -19,15 +23,16 @@ class CommentsViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
     private val dataStoreManager: DataStoreManager,
     private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
     val comments: LiveData<PagingData<Comment>> get() = _comments
 
-    val event: SingleLiveEvent<UICommentEvent> = SingleLiveEvent()
+    val viewState: SingleLiveEvent<CommentViewState> = SingleLiveEvent()
 
     var isUserComment: Boolean = false
 
+    //Holds the comment that will be edited.
     val editableComment: MutableLiveData<String> = MutableLiveData()
 
     val commentId: SingleLiveEvent<Int> = SingleLiveEvent()
@@ -53,28 +58,32 @@ class CommentsViewModel @Inject constructor(
         isUserComment = dataStoreManager.isUserComment(commentUserId)
     }
 
-    fun onSendClick() = viewModelScope.launch {
+    fun onSend() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             when (val response = recipeRepository.sendComment(recipeId, comment.value.toString())) {
                 is NetworkResponse.Success -> {
-                    event.value = UICommentEvent.ShowMessage.SuccessMessage("Yorum Eklendi")
+                    viewState.value = CommentViewState.Success("Yorum Eklendi")
                     comment.value = ""
                 }
                 is NetworkResponse.Error -> {
-                    event.value =
-                        UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                    showMessage(response.exception.handleException())
                 }
             }
         } else {
-            event.value = UICommentEvent.OpenDialog(R.id.action_global_authDialog)
+            openDialog(R.id.action_global_authDialog)
         }
     }
 
-    fun onBackClick() {
-        event.value = UICommentEvent.BackTo
+    fun onBack() {
+        //TODO("control edit mode")
+        backTo()
     }
 
-    fun onSaveClick() = viewModelScope.launch {
+    fun toCommentDialog() {
+        navigate(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog())
+    }
+
+    fun onSave() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             val response =
                 recipeRepository.editComment(
@@ -84,15 +93,14 @@ class CommentsViewModel @Inject constructor(
                 )
             when (response) {
                 is NetworkResponse.Error -> {
-                    event.value =
-                        UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                    showMessage(response.exception.handleException())
                 }
                 is NetworkResponse.Success -> {
-                    event.value = UICommentEvent.CommentEdited(response.data.message)
+                    viewState.value = CommentViewState.CommentEdited(response.data.message)
                 }
             }
         } else {
-            event.value = UICommentEvent.OpenDialog(R.id.action_global_authDialog)
+            openDialog(R.id.action_global_authDialog)
         }
     }
 
@@ -102,11 +110,10 @@ class CommentsViewModel @Inject constructor(
                 recipeRepository.deleteComment(recipeId = recipeId, commentId = commentId.value!!)
         ) {
             is NetworkResponse.Error -> {
-                event.value =
-                    UICommentEvent.ShowMessage.ErrorMessage(response.exception.handleException())
+                showMessage(response.exception.handleException())
             }
             is NetworkResponse.Success -> {
-                event.value = UICommentEvent.ShowMessage.SuccessMessage(response.data.message)
+                viewState.value = CommentViewState.Success(response.data.message)
             }
         }
     }

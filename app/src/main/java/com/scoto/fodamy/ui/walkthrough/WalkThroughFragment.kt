@@ -1,26 +1,23 @@
 package com.scoto.fodamy.ui.walkthrough
 
-import android.os.Bundle
-import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentWalkThroughBinding
 import com.scoto.fodamy.ext.onClick
-import com.scoto.fodamy.ui.base.BaseFragment
+import com.scoto.fodamy.ui.base.BaseFragment_V2
 import com.scoto.fodamy.ui.walkthrough.adapter.WalkThroughAdapter
 import com.scoto.fodamy.ui.walkthrough.model.Walkthrough
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(
+class WalkThroughFragment : BaseFragment_V2<FragmentWalkThroughBinding, WalkThroughViewModel>(
     R.layout.fragment_walk_through
 ) {
 
     private var contentSize: Int? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun initViews() {
+        super.initViews()
         contentSize = Walkthrough.getPrePopulatedData().size
 
         val walkThroughAdapter = WalkThroughAdapter(Walkthrough.getPrePopulatedData())
@@ -32,9 +29,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(
                     changeButtonText(position)
                 }
             })
-            ivClose.onClick {
-                navigateTo(WalkThroughFragmentDirections.actionWalkThroughFragmentToBottomNavHome())
-            }
+
             btnMoveNext.onClick {
                 moveToNext(binding.viewPager.currentItem)
             }
@@ -45,7 +40,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(
         if (position != contentSize?.minus(1)) {
             binding.viewPager.currentItem = position + 1
         } else {
-            navigateTo(WalkThroughFragmentDirections.actionWalkThroughFragmentToBottomNavHome())
+            viewModel.toHome()
         }
     }
 

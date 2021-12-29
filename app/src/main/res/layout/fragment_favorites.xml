@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:onEndIconListener="@{()->viewModel.onEndIconCLick()}" />
+            app:onEndIconListener="@{()->viewModel.logout()}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_categories"

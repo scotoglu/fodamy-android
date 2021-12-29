@@ -2,32 +2,24 @@ package com.scoto.fodamy.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentHomeBinding
 import com.scoto.fodamy.ext.addVerticalLineToTabs
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.ui.base.BaseFragment
+import com.scoto.fodamy.ui.base.BaseFragment_V2
 import com.scoto.fodamy.ui.home.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment :
-    BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
+    BaseFragment_V2<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
 
-    private val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-
-        viewModel.isLogin()
-
         setupViewPagerAndTabLayout()
-        eventObserver()
     }
 
     private fun setupViewPagerAndTabLayout() {
@@ -41,20 +33,20 @@ class HomeFragment :
             }
         }.attach()
 
+
         // adds vertical divider to beween tabs in tabLayout.
         binding.tabLayout.addVerticalLineToTabs()
     }
 
-    private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner, { event ->
-            when (event) {
-                is UIHomeEvent.NavigateTo -> navigateTo(event.direction)
-                is UIHomeEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
-                is UIHomeEvent.ShowMessage.Success -> {
-                    binding.root.snackbar(event.message)
+    override fun registerObservables() {
+        super.registerObservables()
+        viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
+            when (viewState) {
+                is HomeViewState.IsLogin -> binding.customToolbar.setEndIconVisibility(viewState.isLogin)
+                is HomeViewState.Success -> {
+                    binding.root.snackbar(viewState.message)
                     binding.customToolbar.setEndIconVisibility(false)
                 }
-                is UIHomeEvent.ShowMessage.Error -> binding.root.snackbar(event.message)
             }
         })
     }

@@ -1,6 +1,9 @@
 package com.scoto.fodamy.ui.category_recipes
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.scoto.fodamy.ext.handleException
@@ -10,6 +13,7 @@ import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.network.repositories.RecipeRepository
+import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,15 +25,15 @@ class CategoryRecipesViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val dataStoreManager: DataStoreManager,
     private val savedStateHandle: SavedStateHandle,
-
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val id: Int = savedStateHandle.get<Int>("CategoryId") ?: 0
+    val title: String = savedStateHandle.get<String>("CategoryTitle") ?: ""
 
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
 
-    val event: SingleLiveEvent<UICategoryEvent> = SingleLiveEvent()
+    val viewState: SingleLiveEvent<CategoryViewState> = SingleLiveEvent()
 
     init {
         getRecipesByCategory()
@@ -37,7 +41,7 @@ class CategoryRecipesViewModel @Inject constructor(
     }
 
     private fun isLogin() = viewModelScope.launch {
-        event.value = UICategoryEvent.IsLogin(dataStoreManager.isLogin())
+        viewState.value = CategoryViewState.IsLogin(dataStoreManager.isLogin())
     }
 
     private fun getRecipesByCategory() = viewModelScope.launch {
@@ -46,21 +50,28 @@ class CategoryRecipesViewModel @Inject constructor(
         }
     }
 
-    fun onBackClick() {
-        event.value = UICategoryEvent.BackTo
+    fun onBack() {
+        backTo()
     }
 
-    fun onLogoutClick() = viewModelScope.launch {
+    fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Error ->
-                    event.value =
-                        UICategoryEvent.ShowMessage.Error(response.exception.handleException())
+                    showMessage(response.exception.handleException())
                 is NetworkResponse.Success -> {
-                    event.value = UICategoryEvent.ShowMessage.Success(response.data.message)
+                    viewState.value = CategoryViewState.Success(response.data.message)
                 }
             }
         }
+    }
+
+    fun toRecipeDetails(recipe: Recipe) {
+        navigate(
+            CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToRecipeFlow(
+                recipe
+            )
+        )
     }
 
     suspend fun isLoginLiveData(): LiveData<String> =

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -12,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.scoto.fodamy.BR
+import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.util.findGenericSuperclass
 
@@ -27,6 +30,7 @@ abstract class BaseFragment_V2<VB : ViewDataBinding, VM : BaseViewModel>(
     lateinit var binding: VB
     lateinit var viewModel: VM
     private lateinit var navController: NavController
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     @Suppress("UNCHECKED_CAST")
     val viewModelClass: Class<VM>
@@ -44,7 +48,9 @@ abstract class BaseFragment_V2<VB : ViewDataBinding, VM : BaseViewModel>(
         viewModel = ViewModelProvider(this).get(viewModelClass)
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         navController = findNavController()
-
+        bottomNavigationView =
+            (activity as AppCompatActivity).findViewById(R.id.bottom_navigation_view)
+        initViews()
         viewStateObservables()
         registerObservables()
         addAdapterLoadStateListener()
@@ -58,6 +64,7 @@ abstract class BaseFragment_V2<VB : ViewDataBinding, VM : BaseViewModel>(
         return binding.root
     }
 
+    protected open fun initViews() {}
     protected open fun registerObservables() {}
     protected open fun addItemClicks() {}
     protected open fun addAdapterLoadStateListener() {}
@@ -74,7 +81,7 @@ abstract class BaseFragment_V2<VB : ViewDataBinding, VM : BaseViewModel>(
         when (event) {
             BaseViewState.BackTo -> navController.popBackStack()
             is BaseViewState.NavigateTo -> navController.navigate(event.directions)
-            is BaseViewState.ShowMessage -> requireView().snackbar(event.message)
+            is BaseViewState.ShowMessage -> snackbar(event.message, bottomNavigationView)
             is BaseViewState.OpenDialog -> navController.navigate(event.actionId)
         }
     }

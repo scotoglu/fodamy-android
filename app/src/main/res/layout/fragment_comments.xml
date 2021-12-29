@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:onBackListener="@{()->viewModel.onBackClick()}"
+            app:onBackListener="@{()->viewModel.onBack()}"
             app:title="@string/screen_title_comments" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -52,7 +52,6 @@
             tools:listitem="@layout/user_comment_card" />
 
         <EditText
-
             android:id="@+id/et_add_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -75,7 +74,7 @@
             android:background="@drawable/bg_send_button"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{()->viewModel.onSendClick()}"
+            android:onClick="@{()->viewModel.onSend()}"
             android:src="@drawable/ic_send"
             android:visibility="@{editMode ? View.GONE :View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/et_add_comment"
@@ -101,7 +100,7 @@
             style="@style/PrimaryButtonSmall.Filled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.onSaveClick()}"
+            android:onClick="@{()->viewModel.onSave()}"
             android:text="@string/btn_save"
             android:visibility="@{editMode ? View.VISIBLE :View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
