@@ -5,13 +5,13 @@ import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentFavoritesBinding
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.favorites.adapter.CategoryPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoritesFragment :
-    BaseFragment_V2<FragmentFavoritesBinding, FavoritesViewModel>(R.layout.fragment_favorites) {
+    BaseFragment<FragmentFavoritesBinding, FavoritesViewModel>(R.layout.fragment_favorites) {
 
     private lateinit var categoryAdapter: CategoryPagingAdapter
 

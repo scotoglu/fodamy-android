@@ -5,12 +5,12 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentImagePopupBinding
 import com.scoto.fodamy.ext.hideSystemUI
 import com.scoto.fodamy.ext.showSystemUI
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ImagePopupFragment :
-    BaseFragment_V2<FragmentImagePopupBinding, ImagePopupViewModel>(R.layout.fragment_image_popup) {
+    BaseFragment<FragmentImagePopupBinding, ImagePopupViewModel>(R.layout.fragment_image_popup) {
 
     override fun initViews() {
         super.initViews()

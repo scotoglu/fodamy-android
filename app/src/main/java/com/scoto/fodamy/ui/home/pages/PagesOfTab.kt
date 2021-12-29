@@ -1,17 +1,15 @@
 package com.scoto.fodamy.ui.home.pages
 
-import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentPagesOfTabBinding
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.home.adapter.RecipesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PagesOfTab : BaseFragment_V2<FragmentPagesOfTabBinding, PagesOfTabViewModel>(
+class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding, PagesOfTabViewModel>(
     R.layout.fragment_pages_of_tab
 ) {
 

@@ -6,11 +6,11 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentLoginBinding
 import com.scoto.fodamy.ext.spannableText
 import com.scoto.fodamy.helper.states.InputErrorType
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment_V2<FragmentLoginBinding, LoginViewModel>(
+class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
     R.layout.fragment_login
 ) {
 

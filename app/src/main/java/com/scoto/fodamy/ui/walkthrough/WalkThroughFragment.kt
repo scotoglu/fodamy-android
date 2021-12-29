@@ -4,13 +4,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentWalkThroughBinding
 import com.scoto.fodamy.ext.onClick
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.walkthrough.adapter.WalkThroughAdapter
 import com.scoto.fodamy.ui.walkthrough.model.Walkthrough
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WalkThroughFragment : BaseFragment_V2<FragmentWalkThroughBinding, WalkThroughViewModel>(
+class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding, WalkThroughViewModel>(
     R.layout.fragment_walk_through
 ) {
 

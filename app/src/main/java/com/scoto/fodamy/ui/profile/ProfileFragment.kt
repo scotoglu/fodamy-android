@@ -6,7 +6,7 @@ import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentProfileBinding
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * Created 13.12.2021 at 14:15
  */
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment_V2<FragmentProfileBinding, ProfileViewModel>(
+class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
     R.layout.fragment_profile
 ) {
 

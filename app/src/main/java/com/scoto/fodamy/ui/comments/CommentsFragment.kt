@@ -11,13 +11,13 @@ import com.scoto.fodamy.databinding.FragmentCommentsBinding
 import com.scoto.fodamy.ext.hideSoftKeyboard
 import com.scoto.fodamy.ext.showIme
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.comments.adapter.CommentsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CommentsFragment :
-    BaseFragment_V2<FragmentCommentsBinding, CommentsViewModel>(R.layout.fragment_comments) {
+    BaseFragment<FragmentCommentsBinding, CommentsViewModel>(R.layout.fragment_comments) {
 
 
     private lateinit var commentsAdapter: CommentsAdapter

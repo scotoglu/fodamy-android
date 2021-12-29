@@ -3,12 +3,12 @@ package com.scoto.fodamy.ui.auth.reset_password
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentResetPasswordBinding
 import com.scoto.fodamy.helper.states.InputErrorType
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ResetPasswordFragment :
-    BaseFragment_V2<FragmentResetPasswordBinding, ResetPasswordViewModel>(R.layout.fragment_reset_password) {
+    BaseFragment<FragmentResetPasswordBinding, ResetPasswordViewModel>(R.layout.fragment_reset_password) {
 
     override fun registerObservables() {
         super.registerObservables()

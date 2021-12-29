@@ -7,13 +7,13 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentHomeBinding
 import com.scoto.fodamy.ext.addVerticalLineToTabs
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.home.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment :
-    BaseFragment_V2<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
+    BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

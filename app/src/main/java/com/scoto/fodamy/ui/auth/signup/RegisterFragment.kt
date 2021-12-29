@@ -6,12 +6,12 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRegisterBinding
 import com.scoto.fodamy.ext.spannableText
 import com.scoto.fodamy.helper.states.InputErrorType
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment :
-    BaseFragment_V2<FragmentRegisterBinding, RegisterViewModel>(R.layout.fragment_register) {
+    BaseFragment<FragmentRegisterBinding, RegisterViewModel>(R.layout.fragment_register) {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -7,12 +7,12 @@ import com.scoto.fodamy.databinding.FragmentRecipeDetailsBinding
 import com.scoto.fodamy.ext.colorStateList
 import com.scoto.fodamy.ext.getColorBy
 import com.scoto.fodamy.ext.onClick
-import com.scoto.fodamy.ui.base.BaseFragment_V2
+import com.scoto.fodamy.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RecipeDetailsFragment :
-    BaseFragment_V2<FragmentRecipeDetailsBinding, RecipeDetailsViewModel>(
+    BaseFragment<FragmentRecipeDetailsBinding, RecipeDetailsViewModel>(
         R.layout.fragment_recipe_details
     ) {
 
