@@ -30,16 +30,19 @@ class CommentsViewModel @Inject constructor(
 
     val viewState: SingleLiveEvent<CommentViewState> = SingleLiveEvent()
 
-    var isUserComment: Boolean = false
-
-    //Holds the comment that will be edited.
+    // Holds the comment that will be edited.
     val editableComment: MutableLiveData<String> = MutableLiveData()
 
-    val commentId: SingleLiveEvent<Int> = SingleLiveEvent()
+    // Checks the edit mode available or not
+    val editMode = MutableLiveData(false)
 
-    // Layout edittext text
+    // used in delete
+    private val commentId: SingleLiveEvent<Int> = SingleLiveEvent()
+
+    // Holds the comment that user will be add
     val comment = MutableLiveData<String>()
 
+    // gets passed arguments from recipe details fragment
     private val recipeId: Int = savedStateHandle.get<Int>("RECIPE_ID") ?: 0
 
     init {
@@ -52,10 +55,6 @@ class CommentsViewModel @Inject constructor(
                 _comments.value = pagingData
             }
         }
-    }
-
-    fun isUserComment(commentUserId: Int) = viewModelScope.launch {
-        isUserComment = dataStoreManager.isUserComment(commentUserId)
     }
 
     fun onSend() = viewModelScope.launch {
@@ -75,15 +74,25 @@ class CommentsViewModel @Inject constructor(
     }
 
     fun onBack() {
-        //TODO("control edit mode")
-        backTo()
+        if (editMode.value == true)
+            editMode.value = false
+        else
+            backTo()
     }
 
-    fun toCommentDialog() {
-        navigate(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog())
+    fun onEdit(comment: Comment) = viewModelScope.launch {
+        if (dataStoreManager.isUserComment(comment.user.id)) {
+            navigate(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog())
+            editableComment.value = comment.text
+            commentId.value = comment.id
+        }
     }
 
-    fun onSave() = viewModelScope.launch {
+    fun setEditMode(isEditMode: Boolean) {
+        editMode.value = isEditMode
+    }
+
+    fun onUpdate() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             val response =
                 recipeRepository.editComment(
@@ -97,6 +106,7 @@ class CommentsViewModel @Inject constructor(
                 }
                 is NetworkResponse.Success -> {
                     viewState.value = CommentViewState.CommentEdited(response.data.message)
+                    setEditMode(false)
                 }
             }
         } else {

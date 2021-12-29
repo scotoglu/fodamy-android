@@ -24,8 +24,6 @@ class CommentsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Default edit mode closed.
-        binding.editMode = false
 
         setFocusToAddCommentEdittext()
         getDialogAction()
@@ -46,12 +44,7 @@ class CommentsFragment :
     override fun addItemClicks() {
         super.addItemClicks()
         commentsAdapter.onItemLongClicked = { comment ->
-            viewModel.isUserComment(comment.user.id)
-            if (viewModel.isUserComment) {
-                viewModel.editableComment.value = comment.text
-                viewModel.commentId.value = comment.id
-                viewModel.toCommentDialog()
-            }
+            viewModel.onEdit(comment)
         }
     }
 
@@ -71,7 +64,7 @@ class CommentsFragment :
             ?.observe(viewLifecycleOwner) { action ->
                 when (action) {
                     "EDIT" -> {
-                        binding.editMode = true
+                        viewModel.setEditMode(true)
                     }
                     "DELETE" -> {
                         deleteComment()
@@ -98,13 +91,6 @@ class CommentsFragment :
     private fun viewStateObserver() {
         viewModel.viewState.observe(viewLifecycleOwner, { event ->
             when (event) {
-                is CommentViewState.EditModeAndBack -> {
-                    if (binding.editMode == true) {
-                        binding.editMode = false
-                    } else {
-                        viewModel.backTo()
-                    }
-                }
                 is CommentViewState.Success -> {
                     view?.snackbar(event.message)
                     context?.hideSoftKeyboard(binding.root)
@@ -117,7 +103,6 @@ class CommentsFragment :
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()
                     commentsAdapter.refresh()
-                    binding.editMode = false
                 }
             }
         })

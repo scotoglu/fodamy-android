@@ -21,23 +21,14 @@ import javax.inject.Inject
 interface RecipeRepository {
     fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>>
     fun getLastAdded(): Flow<PagingData<Recipe>>
-
     suspend fun getRecipeById(recipeId: Int): NetworkResponse<Recipe>
-
     fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
     suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment>
-    suspend fun editComment(
-        recipeId: Int,
-        commentId: Int,
-        text: String
-    ): NetworkResponse<BaseResponse>
-
+    suspend fun editComment(recipeId: Int, commentId: Int, text: String): NetworkResponse<BaseResponse>
     suspend fun deleteComment(recipeId: Int, commentId: Int): NetworkResponse<BaseResponse>
-
     suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
     suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
-
     fun getCategoriesWithRecipes(): Flow<PagingData<Category>>
     fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>>
 }
