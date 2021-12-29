@@ -13,8 +13,10 @@ fun View.onClick(it: (View) -> Unit) {
 }
 
 fun View.snackbar(message: String) {
-    this.let {
-        Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+    this.let { view ->
+        val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+        snackbar.setAction(R.string.text_action) { snackbar.dismiss() }
+        snackbar.show()
     }
 }
 

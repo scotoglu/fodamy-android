@@ -29,6 +29,7 @@
     <string name="dont_have_account">Hesabın yok mu?\u0020</string>
     <!--Required Fields-->
     <string name="required_field_password">Şifre alanı boş bırakılamaz.</string>
+    <string name="required_field_password_length">Şifre en az karakter olmalıdır.</string>
     <string name="required_field_email">Email alanı boş bırakılamaz.</string>
     <string name="required_field_username">Kullanıcı adı alanı boş bırakılamaz.</string>
     <string name="required_auth">Giriş yapmanız gereklidir.</string>
@@ -104,4 +105,5 @@
     <string name="text_goes_wrong">Bir şeyler yanlış gitti!</string>
     <string name="text_recipes">Tarifler</string>
     <string name="text_likes">Beğeniler</string>
+    <string name="text_action">OK</string>
 </resources>
