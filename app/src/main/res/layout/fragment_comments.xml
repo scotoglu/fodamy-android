@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:onBackListener="@{()->viewModel.onBack()}"
+            app:onBackListener="@{()->viewModel.backTo() }"
             app:title="@string/screen_title_comments" />
 
         <androidx.recyclerview.widget.RecyclerView

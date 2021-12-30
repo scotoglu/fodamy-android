@@ -1,7 +1,6 @@
 package com.scoto.fodamy.ui.image_popup
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import com.scoto.fodamy.network.models.Image
 import com.scoto.fodamy.network.models.ImageList
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -24,8 +23,5 @@ class ImagePopupViewModel @Inject constructor(
         }
 
         return ImageList(populatedImages)
-    }
-    fun onBack(){
-        backTo()
     }
 }

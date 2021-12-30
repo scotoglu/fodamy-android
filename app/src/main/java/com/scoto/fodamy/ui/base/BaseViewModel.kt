@@ -16,7 +16,7 @@ abstract class BaseViewModel : ViewModel() {
         baseEvent.value = BaseViewEvent.NavigateTo(directions)
     }
 
-    fun backTo() {
+     open fun backTo() {
         baseEvent.value = BaseViewEvent.BackTo
     }
 

@@ -73,11 +73,12 @@ class CommentsViewModel @Inject constructor(
         }
     }
 
-    fun onBack() {
+    override fun backTo() {
         if (editMode.value == true)
             editMode.value = false
         else
-            backTo()
+            super.backTo()
+
     }
 
     fun onEdit(comment: Comment) = viewModelScope.launch {

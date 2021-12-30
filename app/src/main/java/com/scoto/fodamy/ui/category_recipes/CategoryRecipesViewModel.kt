@@ -50,10 +50,6 @@ class CategoryRecipesViewModel @Inject constructor(
         }
     }
 
-    fun onBack() {
-        backTo()
-    }
-
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             when (val response = authRepository.logout()) {

@@ -33,7 +33,7 @@ class RecipeDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val dataStoreManager: DataStoreManager
 ) : BaseViewModel() {
-    
+
     private val _recipe = savedStateHandle.getLiveData<Recipe>("RECIPE")
     val recipe: LiveData<Recipe> get() = _recipe
 
@@ -90,10 +90,6 @@ class RecipeDetailsViewModel @Inject constructor(
 
     fun onShare() {
         Log.d(TAG, "onShareClick: Recipe will be shared")
-    }
-
-    fun onBack() {
-        backTo()
     }
 
     fun onLike() = viewModelScope.launch {
