@@ -20,7 +20,7 @@ class CategoryRecipesFragment :
     override fun registerObservables() {
         super.registerObservables()
         recipeObserver()
-        viewStateObserver()
+        eventObserver()
     }
 
     private fun recipeObserver() {
@@ -57,12 +57,12 @@ class CategoryRecipesFragment :
         }
     }
 
-    private fun viewStateObserver() {
-        viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
-            when (viewState) {
-                is CategoryViewState.IsLogin -> binding.customToolbar.setEndIconVisibility(viewState.isLogin)
-                is CategoryViewState.Success -> {
-                    binding.root.snackbar(viewState.message)
+    private fun eventObserver() {
+        viewModel.event.observe(viewLifecycleOwner, { even ->
+            when (even) {
+                is CategoryEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(even.isLogin)
+                is CategoryEvent.Success -> {
+                    binding.root.snackbar(even.message)
                     binding.customToolbar.setEndIconVisibility(false)
                 }
             }

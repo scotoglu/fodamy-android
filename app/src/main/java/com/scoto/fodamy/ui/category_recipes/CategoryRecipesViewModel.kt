@@ -33,7 +33,7 @@ class CategoryRecipesViewModel @Inject constructor(
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
 
-    val viewState: SingleLiveEvent<CategoryViewState> = SingleLiveEvent()
+    val event: SingleLiveEvent<CategoryEvent> = SingleLiveEvent()
 
     init {
         getRecipesByCategory()
@@ -41,7 +41,7 @@ class CategoryRecipesViewModel @Inject constructor(
     }
 
     private fun isLogin() = viewModelScope.launch {
-        viewState.value = CategoryViewState.IsLogin(dataStoreManager.isLogin())
+        event.value = CategoryEvent.IsLogin(dataStoreManager.isLogin())
     }
 
     private fun getRecipesByCategory() = viewModelScope.launch {
@@ -60,7 +60,7 @@ class CategoryRecipesViewModel @Inject constructor(
                 is NetworkResponse.Error ->
                     showMessage(response.exception.handleException())
                 is NetworkResponse.Success -> {
-                    viewState.value = CategoryViewState.Success(response.data.message)
+                    event.value = CategoryEvent.Success(response.data.message)
                 }
             }
         }

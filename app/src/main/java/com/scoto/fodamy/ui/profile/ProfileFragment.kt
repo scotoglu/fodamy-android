@@ -22,7 +22,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 
     override fun registerObservables() {
         super.registerObservables()
-        viewStateObserver()
+        eventObserver()
         userObserver()
         recipeObserver()
         tokenObserverForRefresh()
@@ -75,17 +75,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
     }
 
 
-    private fun viewStateObserver() {
-        viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
-            when (viewState) {
-                is ProfileViewState.Success -> {
-                    view?.snackbar(viewState.message)
+    private fun eventObserver() {
+        viewModel.event.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is ProfileEvent.Success -> {
+                    view?.snackbar(event.message)
                     binding.tvLogin.isVisible = true
                 }
-                is ProfileViewState.IsLogin -> {
+                is ProfileEvent.IsLogin -> {
                     binding.apply {
-                        customToolbar.setEndIconVisibility(viewState.isLogin)
-                        tvLogin.isVisible = !viewState.isLogin
+                        customToolbar.setEndIconVisibility(event.isLogin)
+                        tvLogin.isVisible = !event.isLogin
                     }
                 }
             }

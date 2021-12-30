@@ -40,11 +40,11 @@ class HomeFragment :
 
     override fun registerObservables() {
         super.registerObservables()
-        viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
-            when (viewState) {
-                is HomeViewState.IsLogin -> binding.customToolbar.setEndIconVisibility(viewState.isLogin)
-                is HomeViewState.Success -> {
-                    binding.root.snackbar(viewState.message)
+        viewModel.event.observe(viewLifecycleOwner, { event ->
+            when (event) {
+                is HomeViewEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
+                is HomeViewEvent.Success -> {
+                    binding.root.snackbar(event.message)
                     binding.customToolbar.setEndIconVisibility(false)
                 }
             }

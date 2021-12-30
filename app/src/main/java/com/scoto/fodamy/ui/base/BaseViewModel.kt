@@ -10,22 +10,22 @@ import com.scoto.fodamy.helper.SingleLiveEvent
  */
 abstract class BaseViewModel : ViewModel() {
 
-    val baseEvent: SingleLiveEvent<BaseViewState> = SingleLiveEvent()
+    val baseEvent: SingleLiveEvent<BaseViewEvent> = SingleLiveEvent()
 
     fun navigate(directions: NavDirections) {
-        baseEvent.value = BaseViewState.NavigateTo(directions)
+        baseEvent.value = BaseViewEvent.NavigateTo(directions)
     }
 
     fun backTo() {
-        baseEvent.value = BaseViewState.BackTo
+        baseEvent.value = BaseViewEvent.BackTo
     }
 
     fun showMessage(message: String?) {
         if (message.isNullOrBlank()) return
-        baseEvent.value = BaseViewState.ShowMessage(message)
+        baseEvent.value = BaseViewEvent.ShowMessage(message)
     }
 
     fun openDialog(actionId: Int) {
-        baseEvent.value = BaseViewState.OpenDialog(actionId)
+        baseEvent.value = BaseViewEvent.OpenDialog(actionId)
     }
 }

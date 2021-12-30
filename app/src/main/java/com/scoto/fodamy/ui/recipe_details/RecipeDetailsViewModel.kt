@@ -15,7 +15,6 @@ import androidx.lifecycle.viewModelScope
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
-import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.models.Comment
 import com.scoto.fodamy.network.models.ImageList
@@ -34,9 +33,7 @@ class RecipeDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val dataStoreManager: DataStoreManager
 ) : BaseViewModel() {
-
-    val event: SingleLiveEvent<UIRecipeEvent> = SingleLiveEvent()
-
+    
     private val _recipe = savedStateHandle.getLiveData<Recipe>("RECIPE")
     val recipe: LiveData<Recipe> get() = _recipe
 

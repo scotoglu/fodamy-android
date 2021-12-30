@@ -30,7 +30,7 @@ class FavoritesViewModel @Inject constructor(
     private val _categories: MutableLiveData<PagingData<Category>> = MutableLiveData()
     val categories: LiveData<PagingData<Category>> get() = _categories
 
-    val viewState: SingleLiveEvent<FavoritesViewState> = SingleLiveEvent()
+    val event: SingleLiveEvent<FavoritesEvent> = SingleLiveEvent()
 
     init {
         getCategories()
@@ -38,7 +38,7 @@ class FavoritesViewModel @Inject constructor(
     }
 
     fun isLogin() = viewModelScope.launch {
-        viewState.value = FavoritesViewState.IsLogin(dataStoreManager.isLogin())
+        event.value = FavoritesEvent.IsLogin(dataStoreManager.isLogin())
     }
 
     fun logout() = viewModelScope.launch {
@@ -48,7 +48,7 @@ class FavoritesViewModel @Inject constructor(
                     showMessage(response.exception.handleException())
                 }
                 is NetworkResponse.Success -> {
-                    viewState.value = FavoritesViewState.Success(response.data.message)
+                    event.value = FavoritesEvent.Success(response.data.message)
                 }
             }
         }
