@@ -27,8 +27,8 @@ class CategoryRecipesViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
-    private val id: Int = savedStateHandle.get<Int>("CategoryId") ?: 0
-    val title: String = savedStateHandle.get<String>("CategoryTitle") ?: ""
+    private val id: Int = savedStateHandle.get<Int>(CATEGORY_ID) ?: 0
+    val title: String = savedStateHandle.get<String>(CATEGORY_TITLE) ?: ""
 
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
@@ -75,5 +75,7 @@ class CategoryRecipesViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "CategoryRecipesViewMode"
+        private const val CATEGORY_ID = "CategoryId"
+        private const val CATEGORY_TITLE = "CategoryTitle"
     }
 }
