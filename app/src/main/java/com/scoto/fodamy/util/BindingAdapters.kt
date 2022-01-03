@@ -9,12 +9,42 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.loadCircleImageFromUrl
 import com.scoto.fodamy.ext.loadImageFromUrl
 import com.scoto.fodamy.ext.spannableNum
+import com.scoto.fodamy.ext.spannableText
+import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.util.CustomStateView
 import com.scoto.fodamy.util.CustomToolbar
+import com.scoto.fodamy.util.SpannableType
+
 
 @BindingAdapter("app:fieldVisibility")
 fun setFieldVisibility(view: View, isVisible: Boolean) {
     view.isVisible = isVisible
+}
+
+@BindingAdapter("app:warningFieldText")
+fun setWarningFieldText(view: TextView, event: InputErrorType?) {
+    when (event) {
+        InputErrorType.Email -> view.text = view.context.getString(R.string.required_field_email)
+        InputErrorType.Password -> view.text =
+            view.context.getString(R.string.required_field_password_length)
+        InputErrorType.Username -> view.text =
+            view.context.getString(R.string.required_field_username)
+        else -> {}
+    }
+}
+
+@BindingAdapter("app:spannableText")
+fun setSpannableText(view: TextView, type: SpannableType) {
+    when (type) {
+        SpannableType.REGISTER -> {
+            view.text = view.context.getString(R.string.have_account)
+                .spannableText(view.context.getString(R.string.login))
+        }
+        SpannableType.LOGIN -> {
+            view.text = view.context.getString(R.string.dont_have_account)
+                .spannableText(view.context.getString(R.string.signup))
+        }
+    }
 }
 
 @BindingAdapter(value = ["app:recipeCount", "app:followerCount"])
@@ -87,11 +117,6 @@ fun setLikes(tv: TextView, likes: Int?) {
         val likesTxt = tv.context.resources.getString(R.string.like, likes)
         tv.text = likesTxt.spannableNum(0, likes.toString().length)
     }
-}
-
-@BindingAdapter("app:emptyComment")
-fun setVisibilityEmptyComment(view: View, visibility: Boolean) {
-    view.isVisible = visibility
 }
 
 @BindingAdapter("app:timeOfRecipe")

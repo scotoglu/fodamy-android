@@ -6,6 +6,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.scoto.fodamy.util.SpannableType" />
+
         <variable
             name="viewModel"
             type="com.scoto.fodamy.ui.auth.login.LoginViewModel" />
@@ -28,6 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:warningFieldText="@{viewModel.requiredFieldWarning}"
             tools:text="@string/required_field_email" />
 
 
@@ -131,10 +134,10 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{()->viewModel.toRegister()}"
-            android:text="@string/dont_have_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:spannableText="@{SpannableType.LOGIN}" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"

@@ -72,7 +72,7 @@ class RegisterViewModel @Inject constructor(
         }
 
         fun validatePassword(): Boolean {
-            return if (password.value?.isBlank() == true && password.value?.length!! > 6) {
+            return if (password.value?.isBlank() == true && password.value?.length!! < 6) {
                 requiredFieldWarning.value = InputErrorType.Password
                 false
             } else {
