@@ -21,6 +21,7 @@ class CommentsFragment :
 
 
     private lateinit var commentsAdapter: CommentsAdapter
+    override val isSharedViewModel: Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,7 +33,7 @@ class CommentsFragment :
     override fun registerObservables() {
         super.registerObservables()
         commentObserver()
-        viewStateObserver()
+        eventObserver()
     }
 
     private fun commentObserver() {
@@ -88,17 +89,17 @@ class CommentsFragment :
         }
     }
 
-    private fun viewStateObserver() {
-        viewModel.viewState.observe(viewLifecycleOwner, { event ->
+    private fun eventObserver() {
+        viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
-                is CommentViewState.Success -> {
+                is CommentEvent.Success -> {
                     view?.snackbar(event.message)
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()
                     commentsAdapter.refresh()
                 }
 
-                is CommentViewState.CommentEdited -> {
+                is CommentEvent.CommentEdited -> {
                     view?.snackbar(event.message)
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()

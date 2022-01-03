@@ -27,7 +27,7 @@
             app:backButtonVisible="true"
             app:endIcon="@drawable/ic_share"
             app:endIconVisibility="true"
-            app:onBackListener="@{()->viewModel.onBack()}"
+            app:onBackListener="@{()->viewModel.backTo()}"
             app:onEndIconListener="@{()->viewModel.onShare()}"
             app:title="@{recipe.title}" />
 

@@ -29,6 +29,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
 
     lateinit var binding: VB
     lateinit var viewModel: VM
+    open val isSharedViewModel = false
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -45,13 +46,19 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(viewModelClass)
+        viewModel = ViewModelProvider(
+            if (isSharedViewModel) {
+                requireActivity()
+            } else {
+                this
+            }
+        )[viewModelClass]
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         navController = findNavController()
         bottomNavigationView =
             (activity as AppCompatActivity).findViewById(R.id.bottom_navigation_view)
         initViews()
-        viewStateObservables()
+        eventObserver()
         registerObservables()
         addAdapterLoadStateListener()
         addItemClicks()
@@ -69,7 +76,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     protected open fun addItemClicks() {}
     protected open fun addAdapterLoadStateListener() {}
 
-    private fun viewStateObservables() {
+    private fun eventObserver() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.baseEvent.observe(viewLifecycleOwner) { event ->
                 eventHandler(event)
@@ -77,12 +84,12 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         }
     }
 
-    private fun eventHandler(event: BaseViewState) {
+    private fun eventHandler(event: BaseViewEvent) {
         when (event) {
-            BaseViewState.BackTo -> navController.popBackStack()
-            is BaseViewState.NavigateTo -> navController.navigate(event.directions)
-            is BaseViewState.ShowMessage -> snackbar(event.message, bottomNavigationView)
-            is BaseViewState.OpenDialog -> navController.navigate(event.actionId)
+            BaseViewEvent.BackTo -> navController.popBackStack()
+            is BaseViewEvent.NavigateTo -> navController.navigate(event.directions)
+            is BaseViewEvent.ShowMessage -> snackbar(event.message, bottomNavigationView)
+            is BaseViewEvent.OpenDialog -> navController.navigate(event.actionId)
         }
     }
 }

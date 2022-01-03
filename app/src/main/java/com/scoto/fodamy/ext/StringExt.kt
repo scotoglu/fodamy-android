@@ -5,11 +5,11 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Patterns
 
-fun String.spannableText(text: String = ""): SpannableString {
-    val start = text.length
-    val end = if (text.isEmpty()) this.length else text.length + this.length
+fun String.spannableText(text: String): SpannableString {
+    val start = this.length
+    val end = start + text.length
 
-    val spannable = SpannableString(text + this)
+    val spannable = SpannableString(this + text)
     spannable.setSpan(
         ForegroundColorSpan(Color.RED),
         start,

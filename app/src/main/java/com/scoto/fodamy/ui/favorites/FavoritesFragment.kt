@@ -15,10 +15,13 @@ class FavoritesFragment :
 
     private lateinit var categoryAdapter: CategoryPagingAdapter
 
+    override val isSharedViewModel: Boolean
+        get() = true
+
     override fun registerObservables() {
         super.registerObservables()
         categoryObserver()
-        viewStateObserver()
+        eventObserver()
     }
 
     private fun categoryObserver() {
@@ -58,12 +61,12 @@ class FavoritesFragment :
         }
     }
 
-    private fun viewStateObserver() {
-        viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
-            when (viewState) {
-                is FavoritesViewState.IsLogin -> binding.customToolbar.setEndIconVisibility(viewState.isLogin)
-                is FavoritesViewState.Success -> {
-                    binding.root.snackbar(viewState.message)
+    private fun eventObserver() {
+        viewModel.event.observe(viewLifecycleOwner, { event ->
+            when (event) {
+                is FavoritesEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
+                is FavoritesEvent.Success -> {
+                    binding.root.snackbar(event.message)
                     binding.customToolbar.setEndIconVisibility(false)
                 }
             }

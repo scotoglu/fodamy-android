@@ -27,13 +27,13 @@ class CategoryRecipesViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
-    private val id: Int = savedStateHandle.get<Int>("CategoryId") ?: 0
-    val title: String = savedStateHandle.get<String>("CategoryTitle") ?: ""
+    private val id: Int = savedStateHandle.get<Int>(CATEGORY_ID) ?: 0
+    val title: String = savedStateHandle.get<String>(CATEGORY_TITLE) ?: ""
 
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
 
-    val viewState: SingleLiveEvent<CategoryViewState> = SingleLiveEvent()
+    val event: SingleLiveEvent<CategoryEvent> = SingleLiveEvent()
 
     init {
         getRecipesByCategory()
@@ -41,7 +41,7 @@ class CategoryRecipesViewModel @Inject constructor(
     }
 
     private fun isLogin() = viewModelScope.launch {
-        viewState.value = CategoryViewState.IsLogin(dataStoreManager.isLogin())
+        event.value = CategoryEvent.IsLogin(dataStoreManager.isLogin())
     }
 
     private fun getRecipesByCategory() = viewModelScope.launch {
@@ -50,17 +50,13 @@ class CategoryRecipesViewModel @Inject constructor(
         }
     }
 
-    fun onBack() {
-        backTo()
-    }
-
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             when (val response = authRepository.logout()) {
                 is NetworkResponse.Error ->
                     showMessage(response.exception.handleException())
                 is NetworkResponse.Success -> {
-                    viewState.value = CategoryViewState.Success(response.data.message)
+                    event.value = CategoryEvent.Success(response.data.message)
                 }
             }
         }
@@ -79,5 +75,7 @@ class CategoryRecipesViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "CategoryRecipesViewMode"
+        private const val CATEGORY_ID = "CategoryId"
+        private const val CATEGORY_TITLE = "CategoryTitle"
     }
 }

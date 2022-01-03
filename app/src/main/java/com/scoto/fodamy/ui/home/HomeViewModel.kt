@@ -17,14 +17,14 @@ class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : BaseViewModel() {
 
-    val viewState: SingleLiveEvent<HomeViewState> = SingleLiveEvent()
+    val event: SingleLiveEvent<HomeViewEvent> = SingleLiveEvent()
 
     init {
         isLogin()
     }
 
     private fun isLogin() = viewModelScope.launch {
-        viewState.value = HomeViewState.IsLogin(dataStoreManager.isLogin())
+        event.value = HomeViewEvent.IsLogin(dataStoreManager.isLogin())
     }
 
     fun logout() = viewModelScope.launch {
@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
                     showMessage(response.exception.handleException())
                 }
                 is NetworkResponse.Success -> {
-                    viewState.value = HomeViewState.Success(response.data.message)
+                    event.value = HomeViewEvent.Success(response.data.message)
                 }
             }
         }

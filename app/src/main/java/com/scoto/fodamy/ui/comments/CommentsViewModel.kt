@@ -28,7 +28,7 @@ class CommentsViewModel @Inject constructor(
     private val _comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
     val comments: LiveData<PagingData<Comment>> get() = _comments
 
-    val viewState: SingleLiveEvent<CommentViewState> = SingleLiveEvent()
+    val event: SingleLiveEvent<CommentEvent> = SingleLiveEvent()
 
     // Holds the comment that will be edited.
     val editableComment: MutableLiveData<String> = MutableLiveData()
@@ -61,7 +61,7 @@ class CommentsViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             when (val response = recipeRepository.sendComment(recipeId, comment.value.toString())) {
                 is NetworkResponse.Success -> {
-                    viewState.value = CommentViewState.Success("Yorum Eklendi")
+                    event.value = CommentEvent.Success("Yorum Eklendi")
                     comment.value = ""
                 }
                 is NetworkResponse.Error -> {
@@ -73,11 +73,12 @@ class CommentsViewModel @Inject constructor(
         }
     }
 
-    fun onBack() {
+    override fun backTo() {
         if (editMode.value == true)
             editMode.value = false
         else
-            backTo()
+            super.backTo()
+
     }
 
     fun onEdit(comment: Comment) = viewModelScope.launch {
@@ -105,7 +106,7 @@ class CommentsViewModel @Inject constructor(
                     showMessage(response.exception.handleException())
                 }
                 is NetworkResponse.Success -> {
-                    viewState.value = CommentViewState.CommentEdited(response.data.message)
+                    event.value = CommentEvent.CommentEdited(response.data.message)
                     setEditMode(false)
                 }
             }
@@ -123,7 +124,7 @@ class CommentsViewModel @Inject constructor(
                 showMessage(response.exception.handleException())
             }
             is NetworkResponse.Success -> {
-                viewState.value = CommentViewState.Success(response.data.message)
+                event.value = CommentEvent.Success(response.data.message)
             }
         }
     }

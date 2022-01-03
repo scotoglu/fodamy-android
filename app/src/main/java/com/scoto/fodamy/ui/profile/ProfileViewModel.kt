@@ -38,7 +38,7 @@ class ProfileViewModel @Inject constructor(
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
 
-    val viewState: SingleLiveEvent<ProfileViewState> = SingleLiveEvent()
+    val event: SingleLiveEvent<ProfileEvent> = SingleLiveEvent()
 
     init {
         getUserDetails()
@@ -64,13 +64,13 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun isLogin() = viewModelScope.launch {
-        viewState.value = ProfileViewState.IsLogin(dataStoreManager.isLogin())
+        event.value = ProfileEvent.IsLogin(dataStoreManager.isLogin())
     }
 
     fun logout() = viewModelScope.launch {
         when (val response = authRepository.logout()) {
             is NetworkResponse.Success -> {
-                viewState.value = ProfileViewState.Success(response.data.message)
+                event.value = ProfileEvent.Success(response.data.message)
             }
             is NetworkResponse.Error -> {
                 showMessage(response.exception.handleException())
