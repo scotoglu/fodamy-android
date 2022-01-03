@@ -10,9 +10,6 @@ import com.scoto.fodamy.network.models.Recipe
 import com.scoto.fodamy.network.repositories.RecipeRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
 import com.scoto.fodamy.ui.home.HomeFragmentDirections
-import com.scoto.fodamy.ui.home.adapter.ViewPagerAdapter.Companion.REQUEST_TYPE
-import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
-import com.scoto.fodamy.util.FROM_LAST_ADDED
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -28,21 +25,27 @@ class PagesOfTabViewModel @Inject constructor(
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
 
     init {
-        when (state.get<String>(REQUEST_TYPE)) {
-            FROM_EDITOR_CHOICE -> getEditorChoices()
-            FROM_LAST_ADDED -> getLastAdded()
+//        when (state.get<String>(REQUEST_TYPE)) {
+//            FROM_EDITOR_CHOICE -> getEditorChoices()
+//            FROM_LAST_ADDED -> getLastAdded()
+//        }
+    }
+
+    fun getEditorChoices() = viewModelScope.launch {
+        if (state.get<String>(EDITOR_CHOICE) == null) {
+            recipeRepository.getEditorChoiceRecipes().cachedIn(viewModelScope).collect {
+                _recipes.value = it
+                state.set(EDITOR_CHOICE, "fetched")
+            }
         }
     }
 
-    private fun getEditorChoices() = viewModelScope.launch {
-        recipeRepository.getEditorChoiceRecipes().cachedIn(viewModelScope).collect {
-            _recipes.value = it
-        }
-    }
-
-    private fun getLastAdded() = viewModelScope.launch {
-        recipeRepository.getLastAdded().cachedIn(viewModelScope).collect {
-            _recipes.value = it
+    fun getLastAdded() = viewModelScope.launch {
+        if (state.get<String>(LAST_ADDED) == null) {
+            recipeRepository.getLastAdded().cachedIn(viewModelScope).collect {
+                _recipes.value = it
+                state.set(LAST_ADDED, "fetched")
+            }
         }
     }
 
@@ -52,5 +55,7 @@ class PagesOfTabViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "PagesOfTabViewModel"
+        private const val EDITOR_CHOICE = "editor_choice"
+        private const val LAST_ADDED = "last_added"
     }
 }

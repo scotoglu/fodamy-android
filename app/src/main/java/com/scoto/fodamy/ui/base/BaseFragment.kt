@@ -29,6 +29,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
 
     lateinit var binding: VB
     lateinit var viewModel: VM
+    open val isSharedViewModel = false
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -45,7 +46,13 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(viewModelClass)
+        viewModel = ViewModelProvider(
+            if (isSharedViewModel) {
+                requireActivity()
+            } else {
+                this
+            }
+        )[viewModelClass]
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         navController = findNavController()
         bottomNavigationView =

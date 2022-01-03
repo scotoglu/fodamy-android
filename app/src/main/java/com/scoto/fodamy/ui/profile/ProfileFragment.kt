@@ -19,6 +19,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 ) {
 
     private lateinit var profilePagingAdapter: ProfilePagingAdapter
+    override val isSharedViewModel: Boolean = true
 
     override fun registerObservables() {
         super.registerObservables()

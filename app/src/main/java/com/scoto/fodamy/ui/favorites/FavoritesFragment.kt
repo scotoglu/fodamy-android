@@ -15,6 +15,9 @@ class FavoritesFragment :
 
     private lateinit var categoryAdapter: CategoryPagingAdapter
 
+    override val isSharedViewModel: Boolean
+        get() = true
+
     override fun registerObservables() {
         super.registerObservables()
         categoryObserver()
