@@ -5,6 +5,20 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.scoto.fodamy.ui.recipe_details.RecipeDetailsViewModel" />
+
+        <variable
+            name="isFollowing"
+            type="Boolean" />
+
+        <variable
+            name="isVisible"
+            type="Boolean" />
+
         <variable
             name="user"
             type="com.scoto.fodamy.network.models.User" />
@@ -62,9 +76,12 @@
             style="@style/PrimaryButtonSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="@dimen/size_margin_16dp"
-            android:text="@string/btn_unfollowed"
+            android:backgroundTint="@{isFollowing ? @color/red : @color/white}"
+            android:onClick="@{()-> vm.onFollow()}"
+            android:text="@{isFollowing ? @string/btn_followed :@string/btn_unfollowed}"
+            android:textColor="@{isFollowing ? @color/white : @color/red}"
+            android:visibility="@{isVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

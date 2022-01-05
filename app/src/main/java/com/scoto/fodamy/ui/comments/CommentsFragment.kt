@@ -21,7 +21,6 @@ class CommentsFragment :
 
 
     private lateinit var commentsAdapter: CommentsAdapter
-    override val isSharedViewModel: Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

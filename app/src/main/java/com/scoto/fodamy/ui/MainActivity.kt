@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         navigationSetup()
-
         navControllerListener()
     }
 
@@ -49,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
         // prevents the adding bottom margin to bottomNavigationView after changing fullscreen to normal screen
         binding.bottomNavigationView.setOnApplyWindowInsetsListener(null)
-
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
@@ -57,22 +55,13 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.bottomNavigationView.isVisible =
                 when (destination.id) {
-                    R.id.loginFragment -> {
-                        false
-                    }
-                    R.id.registerFragment -> {
-                        false
-                    }
-                    R.id.resetPasswordFragment -> {
-                        false
-                    }
-                    R.id.walkThroughFragment -> {
-                        false
-                    }
-                    R.id.splashFragment -> {
-                        false
-                    }
-                    R.id.imagePopupFragment -> {
+                    R.id.loginFragment,
+                    R.id.registerFragment,
+                    R.id.resetPasswordFragment,
+                    R.id.walkThroughFragment,
+                    R.id.splashFragment,
+                    R.id.imagePopupFragment,
+                    R.id.commentsFragment -> {
                         false
                     }
                     else -> {
@@ -81,8 +70,9 @@ class MainActivity : AppCompatActivity() {
                 }
         }
     }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) ||
-            super.onSupportNavigateUp()
+                super.onSupportNavigateUp()
     }
 }

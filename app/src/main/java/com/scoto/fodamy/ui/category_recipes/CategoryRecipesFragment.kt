@@ -16,7 +16,6 @@ class CategoryRecipesFragment :
     ) {
 
     private lateinit var categoryRecipesAdapter: RecipesAdapter
-    override val isSharedViewModel: Boolean = true
 
     override fun registerObservables() {
         super.registerObservables()

@@ -25,10 +25,15 @@ interface RecipeRepository {
     fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
     suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment>
-    suspend fun editComment(recipeId: Int, commentId: Int, text: String): NetworkResponse<BaseResponse>
-    suspend fun deleteComment(recipeId: Int, commentId: Int): NetworkResponse<BaseResponse>
-    suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
-    suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
+    suspend fun editComment(
+        recipeId: Int,
+        commentId: Int,
+        text: String
+    ): NetworkResponse<BaseResponse<Any>>
+
+    suspend fun deleteComment(recipeId: Int, commentId: Int): NetworkResponse<BaseResponse<Any>>
+    suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse<Any>>
+    suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse<Any>>
     fun getCategoriesWithRecipes(): Flow<PagingData<Category>>
     fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>>
 }
@@ -71,6 +76,8 @@ class RecipeRepositoryImpl @Inject constructor(
             val response = recipeService.getRecipeComments(recipeId, 1)
             val comment = response.data[0]
             NetworkResponse.Success(comment)
+        } catch (ex: IndexOutOfBoundsException) {
+            NetworkResponse.IndexOutOfEx(ex)
         } catch (e: Exception) {
             NetworkResponse.Error(e)
         }
@@ -89,7 +96,7 @@ class RecipeRepositoryImpl @Inject constructor(
         recipeId: Int,
         commentId: Int,
         text: String
-    ): NetworkResponse<BaseResponse> {
+    ): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = recipeService.editComment(recipeId, commentId, text)
             NetworkResponse.Success(response)
@@ -101,7 +108,7 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun deleteComment(
         recipeId: Int,
         commentId: Int
-    ): NetworkResponse<BaseResponse> {
+    ): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = recipeService.deleteComment(recipeId, commentId)
             NetworkResponse.Success(response)
@@ -119,7 +126,7 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse> {
+    override suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = recipeService.likeRecipe(recipeId)
             NetworkResponse.Success(response)
@@ -128,7 +135,7 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse> {
+    override suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = recipeService.dislikeRecipe(recipeId)
             NetworkResponse.Success(response)

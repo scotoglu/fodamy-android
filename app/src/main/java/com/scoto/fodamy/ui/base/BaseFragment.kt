@@ -27,7 +27,9 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layoutId: Int
 ) : Fragment() {
 
-    lateinit var binding: VB
+    private var _binding: VB? = null
+    val binding: VB get() = _binding!!
+
     lateinit var viewModel: VM
     open val isSharedViewModel = false
     private lateinit var navController: NavController
@@ -53,7 +55,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
                 this
             }
         )[viewModelClass]
-        binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         navController = findNavController()
         bottomNavigationView =
             (activity as AppCompatActivity).findViewById(R.id.bottom_navigation_view)
@@ -91,5 +93,10 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
             is BaseViewEvent.ShowMessage -> snackbar(event.message, bottomNavigationView)
             is BaseViewEvent.OpenDialog -> navController.navigate(event.actionId)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
