@@ -29,7 +29,7 @@
             app:endIconVisibility="true"
             app:onBackListener="@{()->viewModel.backTo()}"
             app:onEndIconListener="@{()->viewModel.onShare()}"
-            app:title="@{recipe.title}" />
+            app:title="@{viewModel.recipe.title}" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
 
                     <ImageView
                         android:id="@+id/iv_food_image"
-                        imageLoaderNormal="@{recipe.images.get(0).url}"
+                        imageLoaderNormal="@{viewModel.recipe.images.get(0).url}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -72,7 +72,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="@{recipe.title}"
+                        android:text="@{viewModel.recipe.title}"
                         android:textColor="@color/cinder"
                         android:textSize="@dimen/text_size_16sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_semibold"
-                        android:text="@{recipe.category.name}"
+                        android:text="@{viewModel.recipe.category.name}"
                         android:textSize="@dimen/text_size_16sp"
                         app:layout_constraintBottom_toTopOf="@id/divider3"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title"
@@ -100,7 +100,7 @@
                         android:layout_marginEnd="@dimen/size_margin_16dp"
                         android:layout_marginBottom="16dp"
                         android:fontFamily="@font/nunito_semibold"
-                        android:text="@{recipe.difference}"
+                        android:text="@{viewModel.recipe.difference}"
                         android:textSize="@dimen/text_size_16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_category"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +123,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_margin_16dp"
                         android:layout_marginBottom="@dimen/size_margin_16dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
+                        android:onClick="@{()->viewModel.onCommentAdd()}"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/linear_layout_like"
@@ -142,7 +145,7 @@
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/nunito_semibold"
                             android:textSize="@dimen/text_size_16sp"
-                            app:comments="@{recipe.commentCount}"
+                            app:comments="@{viewModel.recipe.commentCount}"
                             tools:text="1 Yorum" />
                     </LinearLayout>
 
@@ -152,18 +155,22 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_margin_16dp"
                         android:layout_marginBottom="@dimen/size_margin_16dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
+                        android:onClick="@{()->viewModel.onLike()}"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/linear_layout_comment"
                         app:layout_constraintTop_toBottomOf="@id/divider3">
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/iv_like"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_heart" />
+                            android:src="@drawable/ic_heart"
+                            android:tint="@{viewModel.recipe.isLiked ? @color/red : @color/black}" />
 
                         <TextView
                             android:id="@+id/tv_like_count"
@@ -172,7 +179,7 @@
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/nunito_semibold"
                             android:textSize="@dimen/text_size_16sp"
-                            app:likes="@{recipe.likeCount}"
+                            app:likes="@{viewModel.recipe.likeCount}"
                             tools:text="1 Beğeni" />
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -183,10 +190,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_margin_16dp"
+                    app:isFollowing="@{viewModel.recipe.user.isFollowing}"
+                    app:isVisible="@{true}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-                    app:user="@{recipe.user}" />
+                    app:user="@{viewModel.recipe.user}"
+                    app:vm="@{viewModel}" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -232,7 +242,7 @@
                         android:layout_marginEnd="@dimen/size_margin_16dp"
                         android:fontFamily="@font/nunito_semibold"
                         android:padding="@dimen/size_padding_4dp"
-                        android:text="@{recipe.numberOfPerson.text}"
+                        android:text="@{viewModel.recipe.numberOfPerson.text}"
                         android:textSize="@dimen/text_size_16sp"
                         app:layout_constraintBottom_toTopOf="@id/divider4"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -257,7 +267,7 @@
                         android:layout_marginEnd="@dimen/size_margin_16dp"
                         android:layout_marginBottom="@dimen/size_margin_8dp"
                         android:fontFamily="@font/nunito_semibold"
-                        android:text="@{recipe.ingredients}"
+                        android:text="@{viewModel.recipe.ingredients}"
                         android:textSize="@dimen/text_size_16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -318,7 +328,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/imageView2"
                         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                        app:timeOfRecipe="@{recipe.timeOfRecipe.text}"
+                        app:timeOfRecipe="@{viewModel.recipe.timeOfRecipe.text}"
                         tools:text="20 dk" />
 
                     <View
@@ -337,7 +347,7 @@
                         android:layout_marginTop="@dimen/size_margin_8dp"
                         android:layout_marginEnd="@dimen/size_margin_16dp"
                         android:layout_marginBottom="8dp"
-                        android:text="@{recipe.directions}"
+                        android:text="@{viewModel.recipe.directions}"
                         android:textSize="@dimen/text_size_16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -355,6 +365,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_margin_16dp"
+                    app:comment="@{viewModel.comment}"
+                    app:isEmptyComment="@{viewModel.comment != null ? false :true }"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
