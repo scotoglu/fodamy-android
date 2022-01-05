@@ -25,7 +25,12 @@ interface RecipeRepository {
     fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getFirstComment(recipeId: Int): NetworkResponse<Comment>
     suspend fun sendComment(recipeId: Int, text: String): NetworkResponse<Comment>
-    suspend fun editComment(recipeId: Int, commentId: Int, text: String): NetworkResponse<BaseResponse>
+    suspend fun editComment(
+        recipeId: Int,
+        commentId: Int,
+        text: String
+    ): NetworkResponse<BaseResponse>
+
     suspend fun deleteComment(recipeId: Int, commentId: Int): NetworkResponse<BaseResponse>
     suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
     suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
@@ -71,6 +76,8 @@ class RecipeRepositoryImpl @Inject constructor(
             val response = recipeService.getRecipeComments(recipeId, 1)
             val comment = response.data[0]
             NetworkResponse.Success(comment)
+        } catch (ex: IndexOutOfBoundsException) {
+            NetworkResponse.IndexOutOfEx(ex)
         } catch (e: Exception) {
             NetworkResponse.Error(e)
         }

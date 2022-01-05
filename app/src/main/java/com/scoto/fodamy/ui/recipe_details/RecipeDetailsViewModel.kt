@@ -70,6 +70,9 @@ class RecipeDetailsViewModel @Inject constructor(
                 is NetworkResponse.Error -> {
                     showMessage(response.exception.handleException())
                 }
+                is NetworkResponse.IndexOutOfEx -> {
+                    _comment.value = null
+                }
             }
         }
     }
