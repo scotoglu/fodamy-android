@@ -31,5 +31,5 @@ interface AuthService {
     ): Response<AuthResponse>
 
     @POST("auth/logout")
-    suspend fun logout(): BaseResponse
+    suspend fun logout(): BaseResponse<Any>
 }

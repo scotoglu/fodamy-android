@@ -8,9 +8,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface UserRepository {
-    suspend fun followUser(followedId: Int): NetworkResponse<BaseResponse>
+    suspend fun followUser(followedId: Int): NetworkResponse<BaseResponse<Any>>
 
-    suspend fun unFollowUser(followedId: Int): NetworkResponse<BaseResponse>
+    suspend fun unFollowUser(followedId: Int): NetworkResponse<BaseResponse<Any>>
 
     suspend fun getUserDetails(userId: Int): NetworkResponse<User>
 }
@@ -20,7 +20,7 @@ class UserRepositoryImpl @Inject constructor(
     private val userService: UserService
 ) : UserRepository {
 
-    override suspend fun followUser(followedId: Int): NetworkResponse<BaseResponse> {
+    override suspend fun followUser(followedId: Int): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = userService.followUser(followedId)
             NetworkResponse.Success(response)
@@ -29,7 +29,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun unFollowUser(followedId: Int): NetworkResponse<BaseResponse> {
+    override suspend fun unFollowUser(followedId: Int): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = userService.unFollowUser(followedId)
             NetworkResponse.Success(response)

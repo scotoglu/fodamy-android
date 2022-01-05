@@ -12,19 +12,20 @@ interface UserService {
     @POST("user/{followedId}/following")
     suspend fun followUser(
         @Path("followedId") followedId: Int
-    ): BaseResponse
+    ): BaseResponse<Any>
 
     @DELETE("user/{followedId}/following")
     suspend fun unFollowUser(
         @Path("followedId") followedId: Int
-    ): BaseResponse
+    ): BaseResponse<Any>
 
     @GET("user/{userId}/following")
     suspend fun getUserFollowing(
-        @Path("userId")userId: Int
+        @Path("userId") userId: Int
     )
+
     @GET("user/{user_id}")
     suspend fun getUserDetails(
-        @Path("user_id")userId: Int
+        @Path("user_id") userId: Int
     ): User
 }

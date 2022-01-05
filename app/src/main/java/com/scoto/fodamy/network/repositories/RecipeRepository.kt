@@ -29,11 +29,11 @@ interface RecipeRepository {
         recipeId: Int,
         commentId: Int,
         text: String
-    ): NetworkResponse<BaseResponse>
+    ): NetworkResponse<BaseResponse<Any>>
 
-    suspend fun deleteComment(recipeId: Int, commentId: Int): NetworkResponse<BaseResponse>
-    suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
-    suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse>
+    suspend fun deleteComment(recipeId: Int, commentId: Int): NetworkResponse<BaseResponse<Any>>
+    suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse<Any>>
+    suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse<Any>>
     fun getCategoriesWithRecipes(): Flow<PagingData<Category>>
     fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>>
 }
@@ -96,7 +96,7 @@ class RecipeRepositoryImpl @Inject constructor(
         recipeId: Int,
         commentId: Int,
         text: String
-    ): NetworkResponse<BaseResponse> {
+    ): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = recipeService.editComment(recipeId, commentId, text)
             NetworkResponse.Success(response)
@@ -108,7 +108,7 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun deleteComment(
         recipeId: Int,
         commentId: Int
-    ): NetworkResponse<BaseResponse> {
+    ): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = recipeService.deleteComment(recipeId, commentId)
             NetworkResponse.Success(response)
@@ -126,7 +126,7 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse> {
+    override suspend fun likeRecipe(recipeId: Int): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = recipeService.likeRecipe(recipeId)
             NetworkResponse.Success(response)
@@ -135,7 +135,7 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse> {
+    override suspend fun dislikeRecipe(recipeId: Int): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = recipeService.dislikeRecipe(recipeId)
             NetworkResponse.Success(response)

@@ -10,7 +10,7 @@ interface AuthRepository {
     suspend fun login(username: String, password: String): NetworkResponse<String>
     suspend fun register(username: String, email: String, password: String): NetworkResponse<String>
     suspend fun forgot(email: String): NetworkResponse<String>
-    suspend fun logout(): NetworkResponse<BaseResponse>
+    suspend fun logout(): NetworkResponse<BaseResponse<Any>>
 }
 
 class AuthRepositoryImpl @Inject constructor(
@@ -54,7 +54,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun logout(): NetworkResponse<BaseResponse> {
+    override suspend fun logout(): NetworkResponse<BaseResponse<Any>> {
         return try {
             val response = authService.logout()
             removeUserId()
