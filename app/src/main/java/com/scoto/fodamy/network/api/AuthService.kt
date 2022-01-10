@@ -28,7 +28,7 @@ interface AuthService {
     @POST("auth/forgot")
     suspend fun forgot(
         @Field("email") email: String
-    ): Response<AuthResponse>
+    ): AuthResponse
 
     @POST("auth/logout")
     suspend fun logout(): BaseResponse<Any>

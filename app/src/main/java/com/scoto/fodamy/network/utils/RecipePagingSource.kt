@@ -57,7 +57,6 @@ class RecipePagingSource(
     }
 
     companion object {
-        private const val TAG = "RecipePagingSource"
         private const val RECIPE_STARTING_INDEX = 1
     }
 }
