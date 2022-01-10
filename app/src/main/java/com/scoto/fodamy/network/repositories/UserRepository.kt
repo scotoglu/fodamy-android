@@ -9,41 +9,26 @@ import javax.inject.Singleton
 
 interface UserRepository {
     suspend fun followUser(followedId: Int): NetworkResponse<BaseResponse<Any>>
-
     suspend fun unFollowUser(followedId: Int): NetworkResponse<BaseResponse<Any>>
-
     suspend fun getUserDetails(userId: Int): NetworkResponse<User>
 }
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(
     private val userService: UserService
-) : UserRepository {
+) : UserRepository, BaseRepositoryImpl() {
 
-    override suspend fun followUser(followedId: Int): NetworkResponse<BaseResponse<Any>> {
-        return try {
-            val response = userService.followUser(followedId)
-            NetworkResponse.Success(response)
-        } catch (e: Exception) {
-            NetworkResponse.Error(e)
-        }
+    override suspend fun followUser(followedId: Int): NetworkResponse<BaseResponse<Any>> = execute {
+        userService.followUser(followedId)
     }
 
-    override suspend fun unFollowUser(followedId: Int): NetworkResponse<BaseResponse<Any>> {
-        return try {
-            val response = userService.unFollowUser(followedId)
-            NetworkResponse.Success(response)
-        } catch (e: Exception) {
-            NetworkResponse.Error(e)
+    override suspend fun unFollowUser(followedId: Int): NetworkResponse<BaseResponse<Any>> =
+        execute {
+            userService.unFollowUser(followedId)
         }
-    }
 
-    override suspend fun getUserDetails(userId: Int): NetworkResponse<User> {
-        return try {
-            val response = userService.getUserDetails(userId)
-            NetworkResponse.Success(response)
-        } catch (e: Exception) {
-            NetworkResponse.Error(e)
+    override suspend fun getUserDetails(userId: Int): NetworkResponse<User> =
+        execute {
+            userService.getUserDetails(userId)
         }
-    }
 }

@@ -3,66 +3,51 @@ package com.scoto.fodamy.network.repositories
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.states.NetworkResponse
 import com.scoto.fodamy.network.api.AuthService
+import com.scoto.fodamy.network.models.responses.AuthResponse
 import com.scoto.fodamy.network.models.responses.BaseResponse
 import javax.inject.Inject
 
 interface AuthRepository {
-    suspend fun login(username: String, password: String): NetworkResponse<String>
-    suspend fun register(username: String, email: String, password: String): NetworkResponse<String>
-    suspend fun forgot(email: String): NetworkResponse<String>
+    suspend fun register(username: String,email: String, password: String): NetworkResponse<AuthResponse>
+    suspend fun forgot(email: String): NetworkResponse<AuthResponse>
     suspend fun logout(): NetworkResponse<BaseResponse<Any>>
+    suspend fun login(username: String, password: String): NetworkResponse<AuthResponse>
 }
 
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val dataStoreManager: DataStoreManager
-) : AuthRepository {
-    //
+) : AuthRepository, BaseRepositoryImpl() {
 
-    override suspend fun login(username: String, password: String): NetworkResponse<String> {
-        return try {
+    override suspend fun login(
+        username: String,
+        password: String
+    ): NetworkResponse<AuthResponse> =
+        execute {
             val response = authService.login(username, password)
-            val token = response.token
-            val userID = response.user.id
-            saveUserId(userID)
-            saveAuth(token)
-            NetworkResponse.Success("response")
-        } catch (e: Exception) {
-            NetworkResponse.Error(e)
+            saveUserId(response.user.id)
+            saveAuth(response.token)
+            response
         }
-    }
 
     override suspend fun register(
         username: String,
         email: String,
         password: String
-    ): NetworkResponse<String> {
-        return try {
+    ): NetworkResponse<AuthResponse> =
+        execute {
             authService.register(username, email, password)
-            NetworkResponse.Success("")
-        } catch (e: Exception) {
-            NetworkResponse.Error(e)
         }
-    }
 
-    override suspend fun forgot(email: String): NetworkResponse<String> {
-        return try {
+    override suspend fun forgot(email: String): NetworkResponse<AuthResponse> =
+        execute {
             authService.forgot(email)
-            NetworkResponse.Success("")
-        } catch (e: Exception) {
-            NetworkResponse.Error(e)
         }
-    }
 
-    override suspend fun logout(): NetworkResponse<BaseResponse<Any>> {
-        return try {
-            val response = authService.logout()
-            removeUserId()
-            removeAuth()
-            NetworkResponse.Success(response)
-        } catch (e: Exception) {
-            NetworkResponse.Error(e)
-        }
+    override suspend fun logout(): NetworkResponse<BaseResponse<Any>> = execute {
+        removeUserId()
+        removeAuth()
+        authService.logout()
     }
 
     private suspend fun saveUserId(userId: Int) {
