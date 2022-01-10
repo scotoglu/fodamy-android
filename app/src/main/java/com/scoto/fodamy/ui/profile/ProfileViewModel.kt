@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
@@ -59,7 +60,7 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         } else {
-            showMessage("Giriş Yapmalısınız...")
+            showMessageWithRes(R.string.required_auth)
         }
     }
 

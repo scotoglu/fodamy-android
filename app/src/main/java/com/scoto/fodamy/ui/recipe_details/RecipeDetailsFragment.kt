@@ -14,11 +14,18 @@ class RecipeDetailsFragment :
 
     override fun registerObservables() {
         super.registerObservables()
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("ACTION")
+        findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<String>(DIALOG_ACTION)
             ?.observe(viewLifecycleOwner) {
-                if (it.equals("unfollow")) {
+                if (it.equals(UNFOLLOW)) {
                     viewModel.unfollow()
                 }
             }
+    }
+    companion object {
+        private const val DIALOG_ACTION = "DialogAction"
+        private const val UNFOLLOW = "Unfollow"
     }
 }

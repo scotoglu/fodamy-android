@@ -68,8 +68,4 @@ class CategoryRecipesFragment :
             }
         })
     }
-
-    companion object {
-        private const val TAG = "CategoryRecipesFragment"
-    }
 }

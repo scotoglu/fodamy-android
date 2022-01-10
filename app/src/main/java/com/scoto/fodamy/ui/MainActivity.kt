@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.walkThroughFragment,
                     R.id.splashFragment,
                     R.id.imagePopupFragment,
-                    R.id.commentsFragment -> {
+                    R.id.commentsFragment,
+                    R.id.recipeDetailsFragment -> {
                         false
                     }
                     else -> {

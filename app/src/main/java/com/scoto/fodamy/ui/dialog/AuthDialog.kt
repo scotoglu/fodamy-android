@@ -44,8 +44,4 @@ class AuthDialog : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    companion object {
-        private const val TAG = "AuthDialog"
-    }
 }

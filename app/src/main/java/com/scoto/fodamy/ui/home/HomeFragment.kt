@@ -50,8 +50,4 @@ class HomeFragment :
             }
         })
     }
-
-    companion object {
-        private const val TAG = "HomeFragment"
-    }
 }

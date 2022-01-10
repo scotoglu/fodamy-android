@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
@@ -43,15 +44,15 @@ class CommentsViewModel @Inject constructor(
     val comment = MutableLiveData<String>()
 
     // gets passed arguments from recipe details fragment
-    private val recipeId: Int = savedStateHandle.get<Int>("RECIPE_ID") ?: 0
+    private val recipeId: Int = savedStateHandle.get<Int>(RECIPE_ID) ?: 0
 
-    init {
-        getComments()
-    }
+//    init {
+//        getComments()
+//    }
 
-    private fun getComments() = viewModelScope.launch {
+    fun getComments() = viewModelScope.launch {
         recipeId.let {
-            recipeRepository.getRecipeComments(it).collect { pagingData ->
+            recipeRepository.getRecipeComments(it).cachedIn(viewModelScope).collect { pagingData ->
                 _comments.value = pagingData
             }
         }
@@ -61,8 +62,9 @@ class CommentsViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             when (val response = recipeRepository.sendComment(recipeId, comment.value.toString())) {
                 is NetworkResponse.Success -> {
-                    event.value = CommentEvent.Success("Yorum Eklendi")
+                    event.value = CommentEvent.Success
                     comment.value = ""
+                    showMessageWithRes(R.string.success_comment_add)
                 }
                 is NetworkResponse.Error -> {
                     showMessage(response.exception.handleException())
@@ -106,6 +108,7 @@ class CommentsViewModel @Inject constructor(
                 }
                 is NetworkResponse.Success -> {
                     event.value = CommentEvent.CommentEdited(response.data.message)
+                    showMessageWithRes(R.string.success_comment_edit)
                     setEditMode(false)
                 }
             }
@@ -123,12 +126,13 @@ class CommentsViewModel @Inject constructor(
                 showMessage(response.exception.handleException())
             }
             is NetworkResponse.Success -> {
-                event.value = CommentEvent.Success(response.data.message)
+                event.value = CommentEvent.Success
+                showMessageWithRes(R.string.success_comment_delete)
             }
         }
     }
 
     companion object {
-        private const val TAG = "CommentsViewModel"
+        private const val RECIPE_ID = "RECIPE_ID"
     }
 }

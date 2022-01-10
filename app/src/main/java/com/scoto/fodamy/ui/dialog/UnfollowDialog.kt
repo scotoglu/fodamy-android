@@ -43,7 +43,7 @@ class UnfollowDialog : BottomSheetDialogFragment() {
                 findNavController()
                     .previousBackStackEntry
                     ?.savedStateHandle
-                    ?.set("ACTION", "unfollow")
+                    ?.set(DIALOG_ACTION, UNFOLLOW)
 
                 findNavController().popBackStack()
             }
@@ -58,6 +58,7 @@ class UnfollowDialog : BottomSheetDialogFragment() {
     }
 
     companion object {
-        private const val TAG = "UnfollowDialog"
+        private const val DIALOG_ACTION = "DialogAction"
+        private const val UNFOLLOW = "Unfollow"
     }
 }

@@ -3,6 +3,7 @@ package com.scoto.fodamy.ui.auth.signup
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
@@ -36,7 +37,7 @@ class RegisterViewModel @Inject constructor(
                 when (val response = authRepository.register(username, email, password)) {
                     is NetworkResponse.Success -> {
                         // Api response is consist of token and user, doesn't contain any messages.
-                        showMessage("Kullanıcı kaydedildi.Giriş yapabilirsiniz.")
+                        showMessageWithRes(R.string.success_register)
                         toLogin()
                         resetInputFields()
                     }
@@ -90,9 +91,5 @@ class RegisterViewModel @Inject constructor(
         username.value = ""
         email.value = ""
         password.value = ""
-    }
-
-    companion object {
-        private const val TAG = "RegisterViewModel"
     }
 }

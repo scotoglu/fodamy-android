@@ -70,11 +70,7 @@ class CategoryRecipesViewModel @Inject constructor(
         )
     }
 
-    suspend fun isLoginLiveData(): LiveData<String> =
-        dataStoreManager.isLoginLiveData()
-
     companion object {
-        private const val TAG = "CategoryRecipesViewMode"
         private const val CATEGORY_ID = "CategoryId"
         private const val CATEGORY_TITLE = "CategoryTitle"
     }

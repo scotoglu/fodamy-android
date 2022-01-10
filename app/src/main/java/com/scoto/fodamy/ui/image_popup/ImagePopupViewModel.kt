@@ -13,7 +13,7 @@ class ImagePopupViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     fun getImages(): ImageList {
-        val images = savedStateHandle.get<ImageList>("images")
+        val images = savedStateHandle.get<ImageList>(IMAGES)
         val populatedImages = mutableListOf<Image>()
         if (images?.images?.size == 1) {
             val image = images.images[0]
@@ -23,5 +23,9 @@ class ImagePopupViewModel @Inject constructor(
         }
 
         return ImageList(populatedImages)
+    }
+
+    companion object {
+        private const val IMAGES = "images"
     }
 }

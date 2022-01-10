@@ -89,6 +89,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
             is BaseViewEvent.NavigateTo -> navController.navigate(event.directions)
             is BaseViewEvent.ShowMessage -> snackbar(event.message, bottomNavigationView)
             is BaseViewEvent.OpenDialog -> navController.navigate(event.actionId)
+            is BaseViewEvent.ShowMessageRes -> snackbar(getString(event.messageId), bottomNavigationView)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.scoto.fodamy.ui.base
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.scoto.fodamy.helper.SingleLiveEvent
@@ -27,5 +28,9 @@ abstract class BaseViewModel : ViewModel() {
 
     fun openDialog(actionId: Int) {
         baseEvent.value = BaseViewEvent.OpenDialog(actionId)
+    }
+
+    fun showMessageWithRes(@StringRes messageId: Int) {
+        baseEvent.value = BaseViewEvent.ShowMessageRes(messageId)
     }
 }

@@ -39,8 +39,4 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
-    companion object {
-        private const val TAG = "HomeViewModel"
-    }
 }

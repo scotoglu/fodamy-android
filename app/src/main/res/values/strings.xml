@@ -107,4 +107,11 @@
     <string name="text_recipes">Tarifler</string>
     <string name="text_likes">Beğeniler</string>
     <string name="text_action">OK</string>
+    <string name="text_sharing">Tarif paylaşımı yakında aktif olucak</string>
+
+    <string name="success_comment_add">Yorum Eklendi.</string>
+    <string name="success_comment_delete">Yorum Silindi.</string>
+    <string name="success_comment_edit">Yorum Düzenlendi.</string>
+    <string name="success_register">Kullanıcı kaydedildi.Giriş yapabilirsiniz.</string>
+    <string name="success_login">Giriş Başarılı.</string>
 </resources>

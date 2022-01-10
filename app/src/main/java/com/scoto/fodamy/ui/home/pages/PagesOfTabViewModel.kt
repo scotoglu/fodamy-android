@@ -35,8 +35,10 @@ class PagesOfTabViewModel @Inject constructor(
         if (state.get<String>(EDITOR_CHOICE) == null) {
             recipeRepository.getEditorChoiceRecipes().cachedIn(viewModelScope).collect {
                 _recipes.value = it
-                state.set(EDITOR_CHOICE, "fetched")
+                state.set(EDITOR_CHOICE, FETCHED)
             }
+        } else {
+            _recipes = state.getLiveData(EDITOR_CHOICE)
         }
     }
 
@@ -44,8 +46,10 @@ class PagesOfTabViewModel @Inject constructor(
         if (state.get<String>(LAST_ADDED) == null) {
             recipeRepository.getLastAdded().cachedIn(viewModelScope).collect {
                 _recipes.value = it
-                state.set(LAST_ADDED, "fetched")
+                state.set(LAST_ADDED, FETCHED)
             }
+        } else {
+            _recipes = state.getLiveData(LAST_ADDED)
         }
     }
 
@@ -54,8 +58,8 @@ class PagesOfTabViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "PagesOfTabViewModel"
         private const val EDITOR_CHOICE = "editor_choice"
         private const val LAST_ADDED = "last_added"
+        private const val FETCHED = "fetched"
     }
 }

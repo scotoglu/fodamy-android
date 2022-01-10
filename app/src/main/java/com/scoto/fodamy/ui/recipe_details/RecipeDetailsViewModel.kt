@@ -7,7 +7,6 @@ package com.scoto.fodamy.ui.recipe_details
 * TODO("Fix this")
 *
 * */
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -68,12 +67,11 @@ class RecipeDetailsViewModel @Inject constructor(
                     _comment.value = response.data
                 }
                 is NetworkResponse.Error -> {
-                    if (response.exception is IndexOutOfBoundsException){
+                    if (response.exception is IndexOutOfBoundsException) {
                         _comment.value = null
-                    }else{
+                    } else {
                         showMessage(response.exception.handleException())
                     }
-
                 }
             }
         }
@@ -94,7 +92,7 @@ class RecipeDetailsViewModel @Inject constructor(
     }
 
     fun onShare() {
-        Log.d(TAG, "onShareClick: Recipe will be shared")
+        showMessageWithRes(R.string.text_sharing)
     }
 
     fun onLike() = viewModelScope.launch {

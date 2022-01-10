@@ -10,7 +10,6 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCommentsBinding
 import com.scoto.fodamy.ext.hideSoftKeyboard
 import com.scoto.fodamy.ext.showIme
-import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.comments.adapter.CommentsAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +22,9 @@ class CommentsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // After comment add/edit/delete, sends request again to update
+        viewModel.getComments()
 
         setFocusToAddCommentEdittext()
         getDialogAction()
@@ -59,21 +61,19 @@ class CommentsFragment :
     }
 
     private fun getDialogAction() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("DialogAction")
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
+            DIALOG_ACTION
+        )
             ?.observe(viewLifecycleOwner) { action ->
                 when (action) {
-                    "EDIT" -> {
+                    EDIT -> {
                         viewModel.setEditMode(true)
                     }
-                    "DELETE" -> {
-                        deleteComment()
+                    DELETE -> {
+                        viewModel.onDelete()
                     }
                 }
             }
-    }
-
-    private fun deleteComment() {
-        viewModel.onDelete()
     }
 
     override fun initViews() {
@@ -90,14 +90,12 @@ class CommentsFragment :
         viewModel.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 is CommentEvent.Success -> {
-                    view?.snackbar(event.message)
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()
                     commentsAdapter.refresh()
                 }
 
                 is CommentEvent.CommentEdited -> {
-                    view?.snackbar(event.message)
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()
                     commentsAdapter.refresh()
@@ -112,6 +110,8 @@ class CommentsFragment :
     }
 
     companion object {
-        private const val TAG = "CommentsFragment"
+        private const val DIALOG_ACTION = "DialogAction"
+        private const val EDIT = "EDIT"
+        private const val DELETE = "DELETE"
     }
 }

@@ -63,8 +63,4 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding, PagesOfTabViewModel>(
             }
         }
     }
-
-    companion object {
-        private const val TAG = "PagesOfTab"
-    }
 }

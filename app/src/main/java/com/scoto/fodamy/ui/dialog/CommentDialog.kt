@@ -40,17 +40,23 @@ class CommentDialog : BottomSheetDialogFragment() {
 
         binding.btnDelete.onClick {
 
-            findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                "DialogAction",
-                "DELETE"
-            )
+            findNavController()
+                .previousBackStackEntry
+                ?.savedStateHandle
+                ?.set(
+                    DIALOG_ACTION,
+                    DELETE
+                )
             findNavController().popBackStack()
         }
         binding.btnEdit.onClick {
-            findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                "DialogAction",
-                "EDIT"
-            )
+            findNavController()
+                .previousBackStackEntry
+                ?.savedStateHandle
+                ?.set(
+                    DIALOG_ACTION,
+                    DELETE
+                )
             findNavController().popBackStack()
         }
         binding.btnCancel.onClick {
@@ -66,6 +72,8 @@ class CommentDialog : BottomSheetDialogFragment() {
     }
 
     companion object {
-        private const val TAG = "CommentDialog"
+        private const val DIALOG_ACTION = "DialogAction"
+        private const val EDIT = "EDIT"
+        private const val DELETE = "DELETE"
     }
 }

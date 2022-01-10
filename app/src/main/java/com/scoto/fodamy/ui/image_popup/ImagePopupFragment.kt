@@ -24,8 +24,8 @@ class ImagePopupFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         // shows statusbar and navigationbars
         (activity as AppCompatActivity).showSystemUI(binding.root)
+        super.onDestroyView()
     }
 }

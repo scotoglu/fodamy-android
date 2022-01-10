@@ -72,8 +72,4 @@ class FavoritesFragment :
             }
         })
     }
-
-    companion object {
-        private const val TAG = "FavoritesFragment"
-    }
 }

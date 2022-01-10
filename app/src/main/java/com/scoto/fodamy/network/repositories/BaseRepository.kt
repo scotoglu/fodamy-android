@@ -11,7 +11,7 @@ interface BaseRepository {
     suspend fun <T : Any> execute(request: suspend () -> T): NetworkResponse<T>
 }
 
-abstract class BaseRepositoryImpl : BaseRepository {
+open class BaseRepositoryImpl : BaseRepository {
     override suspend fun <T : Any> execute(request: suspend () -> T): NetworkResponse<T> {
         return try {
             NetworkResponse.Success(request.invoke())
