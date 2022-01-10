@@ -63,7 +63,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         }
     }
 
-
     override fun initViews() {
         super.initViews()
         profilePagingAdapter = ProfilePagingAdapter()
@@ -74,7 +73,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             rvLikes.adapter = profilePagingAdapter
         }
     }
-
 
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner) { event ->

@@ -15,10 +15,8 @@ abstract class BaseRepositoryImpl : BaseRepository {
     override suspend fun <T : Any> execute(request: suspend () -> T): NetworkResponse<T> {
         return try {
             NetworkResponse.Success(request.invoke())
-        } catch (indexOutOf: IndexOutOfBoundsException) {
-            NetworkResponse.Error(indexOutOf)
         } catch (ex: Exception) {
-            NetworkResponse.IndexOutOfEx(ex)
+            NetworkResponse.Error(ex)
         }
     }
 }

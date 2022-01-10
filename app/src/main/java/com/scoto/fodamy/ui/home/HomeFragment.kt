@@ -34,7 +34,6 @@ class HomeFragment :
             }
         }.attach()
 
-
         // adds vertical divider to beween tabs in tabLayout.
         binding.tabLayout.addVerticalLineToTabs()
     }

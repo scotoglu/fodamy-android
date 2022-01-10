@@ -8,7 +8,7 @@ import com.scoto.fodamy.network.models.responses.BaseResponse
 import javax.inject.Inject
 
 interface AuthRepository {
-    suspend fun register(username: String,email: String, password: String): NetworkResponse<AuthResponse>
+    suspend fun register(username: String, email: String, password: String): NetworkResponse<AuthResponse>
     suspend fun forgot(email: String): NetworkResponse<AuthResponse>
     suspend fun logout(): NetworkResponse<BaseResponse<Any>>
     suspend fun login(username: String, password: String): NetworkResponse<AuthResponse>

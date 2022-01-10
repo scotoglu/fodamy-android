@@ -26,7 +26,6 @@ class RegisterViewModel @Inject constructor(
     val requiredFieldWarning: SingleLiveEvent<InputErrorType> = SingleLiveEvent()
     val isRequiredFieldVisible = MutableLiveData<Boolean>()
 
-
     fun register() =
         viewModelScope.launch {
             val username = username.value.toString()
@@ -34,7 +33,6 @@ class RegisterViewModel @Inject constructor(
             val password = password.value.toString()
 
             if (validation.value == true) {
-
                 when (val response = authRepository.register(username, email, password)) {
                     is NetworkResponse.Success -> {
                         // Api response is consist of token and user, doesn't contain any messages.
@@ -58,7 +56,6 @@ class RegisterViewModel @Inject constructor(
                 isRequiredFieldVisible.value = false
                 true
             }
-
         }
 
         fun validateEmail(): Boolean {
@@ -83,20 +80,17 @@ class RegisterViewModel @Inject constructor(
         addSource(username) { value = validateUsername() }
         addSource(email) { value = validateEmail() }
         addSource(password) { value = validatePassword() }
-
     }
 
     fun toLogin() {
         navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
     }
 
-
     private fun resetInputFields() {
         username.value = ""
         email.value = ""
         password.value = ""
     }
-
 
     companion object {
         private const val TAG = "RegisterViewModel"

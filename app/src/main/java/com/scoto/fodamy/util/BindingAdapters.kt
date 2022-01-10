@@ -15,7 +15,6 @@ import com.scoto.fodamy.util.CustomStateView
 import com.scoto.fodamy.util.CustomToolbar
 import com.scoto.fodamy.util.SpannableType
 
-
 @BindingAdapter("app:fieldVisibility")
 fun setFieldVisibility(view: View, isVisible: Boolean) {
     view.isVisible = isVisible
@@ -25,11 +24,15 @@ fun setFieldVisibility(view: View, isVisible: Boolean) {
 fun setWarningFieldText(view: TextView, event: InputErrorType?) {
     when (event) {
         InputErrorType.Email -> view.text = view.context.getString(R.string.required_field_email)
-        InputErrorType.Password -> view.text =
-            view.context.getString(R.string.required_field_password_length)
-        InputErrorType.Username -> view.text =
-            view.context.getString(R.string.required_field_username)
-        else -> {}
+        InputErrorType.Password ->
+            view.text =
+                view.context.getString(R.string.required_field_password_length)
+        InputErrorType.Username ->
+            view.text =
+                view.context.getString(R.string.required_field_username)
+        else -> {
+            view.text = view.context.getString(R.string.empty_field)
+        }
     }
 }
 

@@ -42,7 +42,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
             ?.getOrNull(1) as? Class<VM>
             ?: throw IllegalStateException("viewModelClass does not equal Class<VM>")
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,8 +63,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         registerObservables()
         addAdapterLoadStateListener()
         addItemClicks()
-
-
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.setVariable(BR.viewModel, viewModel)

@@ -51,5 +51,4 @@ class ResetPasswordViewModel @Inject constructor(
         }
         addSource(email) { value = validateEmail() }
     }
-
 }

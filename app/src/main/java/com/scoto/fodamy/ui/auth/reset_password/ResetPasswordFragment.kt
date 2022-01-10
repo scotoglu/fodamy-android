@@ -8,6 +8,3 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ResetPasswordFragment :
     BaseFragment<FragmentResetPasswordBinding, ResetPasswordViewModel>(R.layout.fragment_reset_password)
-
-
-

@@ -78,7 +78,6 @@ class CommentsViewModel @Inject constructor(
             editMode.value = false
         else
             super.backTo()
-
     }
 
     fun onEdit(comment: Comment) = viewModelScope.launch {

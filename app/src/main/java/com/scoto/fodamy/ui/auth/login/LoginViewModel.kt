@@ -51,7 +51,6 @@ class LoginViewModel @Inject constructor(
                 isRequiredFieldVisible.value = false
                 true
             }
-
         }
 
         fun validatePassword(): Boolean {
@@ -66,7 +65,6 @@ class LoginViewModel @Inject constructor(
 
         addSource(username) { value = validateUsername() }
         addSource(password) { value = validatePassword() }
-
     }
 
     fun toRegister() {
@@ -76,7 +74,6 @@ class LoginViewModel @Inject constructor(
     fun toForgotPassword() {
         navigate(LoginFragmentDirections.actionLoginFragmentToResetPasswordFragment())
     }
-
 
     companion object {
         private const val TAG = "LoginViewModel"

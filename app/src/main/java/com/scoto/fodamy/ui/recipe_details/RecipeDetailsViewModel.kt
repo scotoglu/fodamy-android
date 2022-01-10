@@ -68,10 +68,12 @@ class RecipeDetailsViewModel @Inject constructor(
                     _comment.value = response.data
                 }
                 is NetworkResponse.Error -> {
-                    showMessage(response.exception.handleException())
-                }
-                is NetworkResponse.IndexOutOfEx -> {
-                    _comment.value = null
+                    if (response.exception is IndexOutOfBoundsException){
+                        _comment.value = null
+                    }else{
+                        showMessage(response.exception.handleException())
+                    }
+
                 }
             }
         }
@@ -109,10 +111,10 @@ class RecipeDetailsViewModel @Inject constructor(
     private fun like() = viewModelScope.launch {
         when (val response = recipeRepository.likeRecipe(recipeId)) {
             is NetworkResponse.Error -> {
-               showMessage(response.exception.handleException())
+                showMessage(response.exception.handleException())
             }
             is NetworkResponse.Success -> {
-               // showMessage(response.data.message)
+                // showMessage(response.data.message)
                 getRecipeById()
             }
         }
@@ -124,7 +126,7 @@ class RecipeDetailsViewModel @Inject constructor(
                 showMessage(response.exception.handleException())
             }
             is NetworkResponse.Success -> {
-               // showMessage(response.data.message)
+                // showMessage(response.data.message)
                 getRecipeById()
             }
         }
@@ -150,7 +152,7 @@ class RecipeDetailsViewModel @Inject constructor(
     fun unfollow() = viewModelScope.launch {
         when (val response = userRepository.unFollowUser(followedUserId)) {
             is NetworkResponse.Success -> {
-               // showMessage(response.data.message)
+                // showMessage(response.data.message)
                 getRecipeById()
             }
             is NetworkResponse.Error -> {
@@ -163,7 +165,7 @@ class RecipeDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = userRepository.followUser(followedUserId)) {
                 is NetworkResponse.Success -> {
-                    //showMessage(response.data.message)
+                    // showMessage(response.data.message)
                     getRecipeById()
                 }
                 is NetworkResponse.Error -> {

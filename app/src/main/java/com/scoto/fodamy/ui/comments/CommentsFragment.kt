@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class CommentsFragment :
     BaseFragment<FragmentCommentsBinding, CommentsViewModel>(R.layout.fragment_comments) {
 
-
     private lateinit var commentsAdapter: CommentsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +68,6 @@ class CommentsFragment :
                     "DELETE" -> {
                         deleteComment()
                     }
-                    else -> {}
                 }
             }
     }
@@ -107,7 +105,6 @@ class CommentsFragment :
             }
         })
     }
-
 
     private fun setFocusToAddCommentEdittext() {
         (activity as AppCompatActivity).showIme()
