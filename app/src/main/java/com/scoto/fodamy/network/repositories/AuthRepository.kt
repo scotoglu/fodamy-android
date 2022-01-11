@@ -63,6 +63,6 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     private suspend fun removeAuth() {
-        dataStoreManager.removeAuth()
+        dataStoreManager.removeToken()
     }
 }
