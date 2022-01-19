@@ -104,25 +104,6 @@ fun PaginationResponse.toDomainModel(): Pagination =
         total = this.total
     )
 
-fun BaseResponse<List<RecipeResponse>>.toDomainModel(): Base<List<Recipe>> {
-    return Base(
-        data = this.data.map { it.toDomainModel() },
-        pagination = this.pagination.toDomainModel()
-    )
-}
-
-@JvmName("toDomainModelCommentResponse")
-fun BaseResponse<List<CommentResponse>>.toDomainModel(): Base<List<Comment>> {
-    return Base(
-        data = this.data.map { it.toDomainModel() },
-        pagination = this.pagination.toDomainModel()
-    )
-}
-
-@JvmName("toDomainModelCategoryResponse")
-fun BaseResponse<List<CategoryResponse>>.toDomainModel(): Base<List<Category>> {
-    return Base(
-        data = this.data.map { it.toDomainModel() },
-        pagination = this.pagination.toDomainModel()
-    )
+fun RecipePagingResponse.toDomainModel(): List<Recipe> {
+    return this.data.map { it.toDomainModel() }
 }

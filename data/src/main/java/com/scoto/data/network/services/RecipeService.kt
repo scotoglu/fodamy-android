@@ -12,12 +12,12 @@ interface RecipeService {
     @GET("editor-choices")
     suspend fun getEditorChoiceRecipes(
         @Query("page") page: Int
-    ): BaseResponse<List<RecipeResponse>>
+    ): RecipePagingResponse
 
     @GET("recipe")
     suspend fun getLastAddedRecipes(
         @Query("page") page: Int
-    ): BaseResponse<List<RecipeResponse>>
+    ): RecipePagingResponse
 
     @GET("recipe/{recipe_id}")
     suspend fun getRecipeById(
@@ -29,7 +29,7 @@ interface RecipeService {
     suspend fun getRecipeComments(
         @Path("recipe_id") recipeId: Int,
         @Query("page") page: Int
-    ): BaseResponse<List<CommentResponse>>
+    ): CommentPagingResponse
 
     @POST("recipe/{recipe_id}/comment")
     suspend fun sendComment(
@@ -43,6 +43,7 @@ interface RecipeService {
         @Path("comment_id") commentId: Int,
         @Query("text") text: String
     ): CommonResponse
+
     @DELETE("recipe/{recipe_id}/comment/{comment_id}")
     suspend fun deleteComment(
         @Path("recipe_id") recipeId: Int,
@@ -64,11 +65,11 @@ interface RecipeService {
     @GET("category-recipes")
     suspend fun getCategoriesWithRecipes(
         @Query("page") page: Int
-    ): BaseResponse<List<CategoryResponse>>
+    ): CategoryPagingResponse
 
     @GET("category/{category_id}/recipe")
     suspend fun getRecipesByCategory(
         @Path("category_id") categoryId: Int,
         @Query("page") page: Int
-    ): BaseResponse<List<RecipeResponse>>
+    ): RecipePagingResponse
 }
