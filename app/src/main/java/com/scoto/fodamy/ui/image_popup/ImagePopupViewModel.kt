@@ -1,8 +1,8 @@
 package com.scoto.fodamy.ui.image_popup
 
 import androidx.lifecycle.SavedStateHandle
-import com.scoto.fodamy.network.models.Image
-import com.scoto.fodamy.network.models.ImageList
+import com.scoto.domain.models.Image
+import com.scoto.domain.models.ImageList
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

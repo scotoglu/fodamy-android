@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.scoto.domain.models.Category
+import com.scoto.domain.models.Recipe
 import com.scoto.fodamy.databinding.ItemCategoryBinding
 import com.scoto.fodamy.ext.onClick
-import com.scoto.fodamy.network.models.Category
-import com.scoto.fodamy.network.models.Recipe
 
 class CategoryPagingAdapter() :
     PagingDataAdapter<Category, CategoryPagingAdapter.ViewHolder>(categoryComparator) {

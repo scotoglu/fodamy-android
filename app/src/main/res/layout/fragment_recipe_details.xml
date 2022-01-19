@@ -11,7 +11,7 @@
 
         <variable
             name="recipe"
-            type="com.scoto.fodamy.network.models.Recipe" />
+            type="com.scoto.domain.models.Recipe" />
 
     </data>
 

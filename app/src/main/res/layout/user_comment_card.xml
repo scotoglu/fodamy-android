@@ -13,7 +13,7 @@
 
         <variable
             name="comment"
-            type="com.scoto.fodamy.network.models.Comment" />
+            type="com.scoto.domain.models.Comment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

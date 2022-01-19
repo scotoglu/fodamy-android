@@ -11,15 +11,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.scoto.domain.models.Comment
+import com.scoto.domain.models.ImageList
+import com.scoto.domain.models.Recipe
+import com.scoto.domain.repositories.RecipeRepository
+import com.scoto.domain.repositories.UserRepository
 import com.scoto.fodamy.R
-import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
-import com.scoto.fodamy.helper.states.NetworkResponse
-import com.scoto.fodamy.network.models.Comment
-import com.scoto.fodamy.network.models.ImageList
-import com.scoto.fodamy.network.models.Recipe
-import com.scoto.fodamy.network.repositories.RecipeRepository
-import com.scoto.fodamy.network.repositories.UserRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -49,31 +47,31 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun getRecipeById() = viewModelScope.launch {
         _recipe.value?.let {
-            when (val response = recipeRepository.getRecipeById(it.id)) {
-                is NetworkResponse.Success -> {
-                    savedStateHandle.set("RECIPE", response.data)
-                }
-                is NetworkResponse.Error -> {
-                    showMessage(response.exception.handleException())
-                }
-            }
+//            when (val response = recipeRepository.getRecipeById(it.id)) {
+//                is NetworkResponse.Success -> {
+//                    savedStateHandle.set("RECIPE", response.data)
+//                }
+//                is NetworkResponse.Error -> {
+//                    showMessage(response.exception.handleException())
+//                }
+//            }
         }
     }
 
     private fun getRecipeComments() = viewModelScope.launch {
         _recipe.value?.let {
-            when (val response = recipeRepository.getFirstComment(it.id)) {
-                is NetworkResponse.Success -> {
-                    _comment.value = response.data
-                }
-                is NetworkResponse.Error -> {
-                    if (response.exception is IndexOutOfBoundsException) {
-                        _comment.value = null
-                    } else {
-                        showMessage(response.exception.handleException())
-                    }
-                }
-            }
+//            when (val response = recipeRepository.getFirstComment(it.id)) {
+//                is NetworkResponse.Success -> {
+//                    _comment.value = response.data
+//                }
+//                is NetworkResponse.Error -> {
+//                    if (response.exception is IndexOutOfBoundsException) {
+//                        _comment.value = null
+//                    } else {
+//                        showMessage(response.exception.handleException())
+//                    }
+//                }
+//            }
         }
     }
 
@@ -107,27 +105,27 @@ class RecipeDetailsViewModel @Inject constructor(
     }
 
     private fun like() = viewModelScope.launch {
-        when (val response = recipeRepository.likeRecipe(recipeId)) {
-            is NetworkResponse.Error -> {
-                showMessage(response.exception.handleException())
-            }
-            is NetworkResponse.Success -> {
-                // showMessage(response.data.message)
-                getRecipeById()
-            }
-        }
+//        when (val response = recipeRepository.likeRecipe(recipeId)) {
+//            is NetworkResponse.Error -> {
+//                showMessage(response.exception.handleException())
+//            }
+//            is NetworkResponse.Success -> {
+//                // showMessage(response.data.message)
+//                getRecipeById()
+//            }
+//        }
     }
 
     private fun dislike() = viewModelScope.launch {
-        when (val response = recipeRepository.dislikeRecipe(recipeId)) {
-            is NetworkResponse.Error -> {
-                showMessage(response.exception.handleException())
-            }
-            is NetworkResponse.Success -> {
-                // showMessage(response.data.message)
-                getRecipeById()
-            }
-        }
+//        when (val response = recipeRepository.dislikeRecipe(recipeId)) {
+//            is NetworkResponse.Error -> {
+//                showMessage(response.exception.handleException())
+//            }
+//            is NetworkResponse.Success -> {
+//                // showMessage(response.data.message)
+//                getRecipeById()
+//            }
+//        }
     }
 
     fun onFollow() = viewModelScope.launch {
@@ -148,28 +146,28 @@ class RecipeDetailsViewModel @Inject constructor(
     }
 
     fun unfollow() = viewModelScope.launch {
-        when (val response = userRepository.unFollowUser(followedUserId)) {
-            is NetworkResponse.Success -> {
-                // showMessage(response.data.message)
-                getRecipeById()
-            }
-            is NetworkResponse.Error -> {
-                showMessage(response.exception.handleException())
-            }
-        }
+//        when (val response = userRepository.unFollowUser(followedUserId)) {
+//            is NetworkResponse.Success -> {
+//                // showMessage(response.data.message)
+//                getRecipeById()
+//            }
+//            is NetworkResponse.Error -> {
+//                showMessage(response.exception.handleException())
+//            }
+//        }
     }
 
     private fun follow() =
         viewModelScope.launch {
-            when (val response = userRepository.followUser(followedUserId)) {
-                is NetworkResponse.Success -> {
-                    // showMessage(response.data.message)
-                    getRecipeById()
-                }
-                is NetworkResponse.Error -> {
-                    showMessage(response.exception.handleException())
-                }
-            }
+//            when (val response = userRepository.followUser(followedUserId)) {
+//                is NetworkResponse.Success -> {
+//                    // showMessage(response.data.message)
+//                    getRecipeById()
+//                }
+//                is NetworkResponse.Error -> {
+//                    showMessage(response.exception.handleException())
+//                }
+//            }
         }
 
     companion object {

@@ -42,12 +42,12 @@ fun UserResponse.toDomainModel(): User =
         image = this.image.toDomainModel(),
         name = this.name,
         username = this.username,
-        favoritesCount = this.favoritesCount.toString(),
-        followingCount = this.followingCount.toString(),
-        followedCount = this.followedCount.toString(),
+        favoritesCount = this.favoritesCount,
+        followingCount = this.followingCount,
+        followedCount = this.followedCount,
         isFollowing = this.isFollowing,
-        likesCount = this.likesCount.toString(),
-        recipeCount = this.recipeCount.toString()
+        likesCount = this.likesCount,
+        recipeCount = this.recipeCount
     )
 
 fun TimeOfRecipeResponse.toDomainModel(): TimeOfRecipe =

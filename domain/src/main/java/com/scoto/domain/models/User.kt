@@ -13,10 +13,10 @@ data class User(
     val image: Image,
     val name: String,
     val username: String,
-    val favoritesCount: String,
-    val followedCount: String,
-    val followingCount: String,
+    val favoritesCount: Int,
+    val followedCount: Int,
+    val followingCount: Int,
     val isFollowing: Boolean,
-    val likesCount: String,
-    val recipeCount: String
+    val likesCount: Int,
+    val recipeCount: Int
 ) : Parcelable

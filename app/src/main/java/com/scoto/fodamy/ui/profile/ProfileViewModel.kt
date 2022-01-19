@@ -4,20 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.scoto.fodamy.R
-import com.scoto.fodamy.ext.handleException
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
-import com.scoto.fodamy.helper.states.NetworkResponse
-import com.scoto.fodamy.network.models.Recipe
-import com.scoto.fodamy.network.models.User
-import com.scoto.fodamy.network.repositories.AuthRepository
-import com.scoto.fodamy.network.repositories.RecipeRepository
-import com.scoto.fodamy.network.repositories.UserRepository
+import com.scoto.domain.models.Recipe
+import com.scoto.domain.models.User
+import com.scoto.domain.repositories.AuthRepository
+import com.scoto.domain.repositories.RecipeRepository
+import com.scoto.domain.repositories.UserRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,17 +44,17 @@ class ProfileViewModel @Inject constructor(
 
     fun getUserDetails() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            when (val response = userRepository.getUserDetails(dataStoreManager.getUserId())) {
-                is NetworkResponse.Error -> {
-                    showMessage(response.exception.handleException())
-                }
-                is NetworkResponse.Success -> {
-                    response.data.let {
-                        _user.value = it
-                    }
-                    getSomeData()
-                }
-            }
+//            when (val response = userRepository.getUserDetails(dataStoreManager.getUserId())) {
+//                is NetworkResponse.Error -> {
+//                    showMessage(response.exception.handleException())
+//                }
+//                is NetworkResponse.Success -> {
+//                    response.data.let {
+//                        _user.value = it
+//                    }
+//                    getSomeData()
+//                }
+//            }
         } else {
             showMessageWithRes(R.string.required_auth)
         }
@@ -69,14 +65,14 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun logout() = viewModelScope.launch {
-        when (val response = authRepository.logout()) {
-            is NetworkResponse.Success -> {
-                event.value = ProfileEvent.Success(response.data.message)
-            }
-            is NetworkResponse.Error -> {
-                showMessage(response.exception.handleException())
-            }
-        }
+//        when (val response = authRepository.logout()) {
+//            is NetworkResponse.Success -> {
+//                event.value = ProfileEvent.Success(response.data.message)
+//            }
+//            is NetworkResponse.Error -> {
+//                showMessage(response.exception.handleException())
+//            }
+//        }
     }
 
     suspend fun isLoginLiveData(): LiveData<String> = dataStoreManager.isLoginLiveData()
@@ -86,8 +82,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getSomeData() = viewModelScope.launch {
-        recipeRepository.getLastAdded().cachedIn(viewModelScope).collect { pagingData ->
-            _recipes.value = pagingData
-        }
+//        recipeRepository.getLastAdded().cachedIn(viewModelScope).collect { pagingData ->
+//            _recipes.value = pagingData
+//        }
     }
 }

@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.google.gson.Gson
+import com.scoto.domain.models.ErrorControl
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
-import com.scoto.fodamy.network.models.responses.ErrorResponse
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -62,7 +62,7 @@ abstract class BaseViewModel : ViewModel() {
             is HttpException -> {
                 val message = Gson().fromJson(
                     ex.response()?.errorBody()?.charStream(),
-                    ErrorResponse::class.java
+                    ErrorControl::class.java
                 )
                 showMessage(message.error)
             }

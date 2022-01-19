@@ -4,19 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.filter
-import com.scoto.fodamy.ext.handleException
+import com.scoto.domain.models.Category
+import com.scoto.domain.models.Recipe
+import com.scoto.domain.repositories.AuthRepository
+import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.fodamy.helper.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
-import com.scoto.fodamy.helper.states.NetworkResponse
-import com.scoto.fodamy.network.models.Category
-import com.scoto.fodamy.network.models.Recipe
-import com.scoto.fodamy.network.repositories.AuthRepository
-import com.scoto.fodamy.network.repositories.RecipeRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,23 +38,23 @@ class FavoritesViewModel @Inject constructor(
 
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            when (val response = authRepository.logout()) {
-                is NetworkResponse.Error -> {
-                    showMessage(response.exception.handleException())
-                }
-                is NetworkResponse.Success -> {
-                    event.value = FavoritesEvent.Success(response.data.message)
-                }
-            }
+//            when (val response = authRepository.logout()) {
+//                is NetworkResponse.Error -> {
+//                    showMessage(response.exception.handleException())
+//                }
+//                is NetworkResponse.Success -> {
+//                    event.value = FavoritesEvent.Success(response.data.message)
+//                }
+//            }
         }
     }
 
     private fun getCategories() = viewModelScope.launch {
-        recipeRepository.getCategoriesWithRecipes().cachedIn(viewModelScope).collect { pagingData ->
-            _categories.value = pagingData.filter { category ->
-                category.recipes?.size!! > 0
-            }
-        }
+//        recipeRepository.getCategoriesWithRecipes().cachedIn(viewModelScope).collect { pagingData ->
+//            _categories.value = pagingData.filter { category ->
+//                category.recipes?.size!! > 0
+//            }
+//        }
     }
 
     fun toSeeAll(category: Category) {

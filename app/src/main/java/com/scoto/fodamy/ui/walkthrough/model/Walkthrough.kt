@@ -1,11 +1,20 @@
 package com.scoto.fodamy.ui.walkthrough.model
 
+import androidx.annotation.StringRes
 import com.scoto.fodamy.R
 
 /**
  * @author Sefa ÇOTOĞLU
  * Created 17.12.2021 at 10:51
  */
+
+//TODO("Use below model and bind with layout")
+//data class Walkthrough1(
+//    @StringRes val title: Int,
+//    @StringRes val description: Int,
+//    val image: Int
+//)
+
 data class Walkthrough(
     val title: String,
     val description: String,
@@ -35,6 +44,6 @@ data class Walkthrough(
                     R.drawable.walkthrough4
                 ),
 
-            )
+                )
     }
 }

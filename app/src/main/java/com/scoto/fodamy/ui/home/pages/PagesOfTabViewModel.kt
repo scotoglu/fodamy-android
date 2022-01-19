@@ -5,13 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.scoto.fodamy.network.models.Recipe
-import com.scoto.fodamy.network.repositories.RecipeRepository
+import com.scoto.domain.models.Recipe
+import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
 import com.scoto.fodamy.ui.home.HomeFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,10 +31,10 @@ class PagesOfTabViewModel @Inject constructor(
 
     fun getEditorChoices() = viewModelScope.launch {
         if (state.get<String>(EDITOR_CHOICE) == null) {
-            recipeRepository.getEditorChoiceRecipes().cachedIn(viewModelScope).collect {
-                _recipes.value = it
-                state.set(EDITOR_CHOICE, FETCHED)
-            }
+//            recipeRepository.getEditorChoiceRecipes().cachedIn(viewModelScope).collect {
+//                _recipes.value = it
+//                state.set(EDITOR_CHOICE, FETCHED)
+//            }
         } else {
             _recipes = state.getLiveData(EDITOR_CHOICE)
         }
@@ -44,10 +42,10 @@ class PagesOfTabViewModel @Inject constructor(
 
     fun getLastAdded() = viewModelScope.launch {
         if (state.get<String>(LAST_ADDED) == null) {
-            recipeRepository.getLastAdded().cachedIn(viewModelScope).collect {
-                _recipes.value = it
-                state.set(LAST_ADDED, FETCHED)
-            }
+//            recipeRepository.getLastAdded().cachedIn(viewModelScope).collect {
+//                _recipes.value = it
+//                state.set(LAST_ADDED, FETCHED)
+//            }
         } else {
             _recipes = state.getLiveData(LAST_ADDED)
         }

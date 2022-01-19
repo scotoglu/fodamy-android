@@ -11,7 +11,7 @@
 
         <variable
             name="user"
-            type="com.scoto.fodamy.network.models.User" />
+            type="com.scoto.domain.models.User" />
     </data>
 
     <ScrollView

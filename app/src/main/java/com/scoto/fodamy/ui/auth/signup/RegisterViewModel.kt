@@ -3,12 +3,9 @@ package com.scoto.fodamy.ui.auth.signup
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.scoto.fodamy.R
-import com.scoto.fodamy.ext.handleException
+import com.scoto.domain.repositories.AuthRepository
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
-import com.scoto.fodamy.helper.states.NetworkResponse
-import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -34,17 +31,17 @@ class RegisterViewModel @Inject constructor(
             val password = password.value.toString()
 
             if (validation.value == true) {
-                when (val response = authRepository.register(username, email, password)) {
-                    is NetworkResponse.Success -> {
-                        // Api response is consist of token and user, doesn't contain any messages.
-                        showMessageWithRes(R.string.success_register)
-                        toLogin()
-                        resetInputFields()
-                    }
-                    is NetworkResponse.Error -> {
-                        showMessage(response.exception.handleException())
-                    }
-                }
+//                when (val response = authRepository.register(username, email, password)) {
+//                    is NetworkResponse.Success -> {
+//                        // Api response is consist of token and user, doesn't contain any messages.
+//                        showMessageWithRes(R.string.success_register)
+//                        toLogin()
+//                        resetInputFields()
+//                    }
+//                    is NetworkResponse.Error -> {
+//                        showMessage(response.exception.handleException())
+//                    }
+//                }
             }
         }
 
