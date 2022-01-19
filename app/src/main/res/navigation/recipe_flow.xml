@@ -18,7 +18,7 @@
             app:destination="@id/unfollowDialog" />
         <argument
             android:name="RECIPE"
-            app:argType="com.scoto.fodamy.network.models.Recipe" />
+            app:argType="com.scoto.domain.models.Recipe" />
     </fragment>
     <fragment
         android:id="@+id/commentsFragment"

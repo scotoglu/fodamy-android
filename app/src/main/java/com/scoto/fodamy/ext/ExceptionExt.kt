@@ -1,7 +1,7 @@
 package com.scoto.fodamy.ext
 
 import com.google.gson.Gson
-import com.scoto.fodamy.network.models.responses.ErrorResponse
+import com.scoto.domain.models.ErrorControl
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -10,7 +10,7 @@ fun Exception.handleException(): String {
         is HttpException -> {
             val message = Gson().fromJson(
                 this.response()?.errorBody()?.charStream(),
-                ErrorResponse::class.java
+                ErrorControl::class.java
             )
             message.error
         }
