@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 rootProject.name = "Fodamy"
 include(":app")
 include(":data")
+include(":domain")
