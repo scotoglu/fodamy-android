@@ -12,4 +12,5 @@ object Plugins {
     const val NAVIGATION_SAFE_ARGS = "androidx.navigation.safeargs"
     const val DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
     const val ANDROID_LIBRARY = "com.android.library"
+    const val BASE_GRADLE ="base-android-library"
 }

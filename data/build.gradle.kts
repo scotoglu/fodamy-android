@@ -1,6 +1,7 @@
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
+    id(Plugins.KOTLIN_KAPT)
 }
 
 android {
@@ -22,6 +23,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debug") {
+            buildConfigField("String","BASE_URL","\"https://fodamy.mobillium.com/api/\"")
+        }
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_1_8
             targetCompatibility = JavaVersion.VERSION_1_8
@@ -32,4 +36,13 @@ android {
             }
         }
     }
+}
+dependencies {
+    implementation(project(Modules.DOMAIN))
+    implementation(Dependencies.RETROFIT2)
+    implementation(Dependencies.GSON)
+    implementation(Dependencies.GSON_CONVERTER)
+    implementation(Dependencies.PAGING_RUNTIME)
+    implementation(Dependencies.DAGGER_HILT)
+    kapt(Dependencies.DAGGER_HILT_COMPILER)
 }

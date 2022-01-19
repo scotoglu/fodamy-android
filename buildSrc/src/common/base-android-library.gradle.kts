@@ -1,7 +1,6 @@
 plugins {
-    id(Plugins.ANDROID_LIBRARY)
-    id(Plugins.KOTLIN_ANDROID)
-    id(Plugins.KOTLIN_PARCELIZE)
+    id("com.android.library")
+    id("kotlin-android")
 }
 
 android {
@@ -33,7 +32,4 @@ android {
             }
         }
     }
-}
-dependencies{
-    implementation(Dependencies.PAGING_RUNTIME)
 }
