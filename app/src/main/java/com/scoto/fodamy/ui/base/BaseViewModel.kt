@@ -2,8 +2,15 @@ package com.scoto.fodamy.ui.base
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.google.gson.Gson
+import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
+import com.scoto.fodamy.network.models.responses.ErrorResponse
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -32,5 +39,40 @@ abstract class BaseViewModel : ViewModel() {
 
     fun showMessageWithRes(@StringRes messageId: Int) {
         baseEvent.value = BaseViewEvent.ShowMessageRes(messageId)
+    }
+
+    fun <T> sendRequest(
+        success: suspend () -> T,
+        error: (() -> Unit)? = null
+    ) {
+        viewModelScope.launch {
+            try {
+                success.invoke()
+            } catch (ex: Exception) {
+                if (error == null)
+                    parseException(ex)
+                else
+                    error.invoke()
+            }
+        }
+    }
+
+    private fun parseException(ex: Exception) {
+        when (ex) {
+            is HttpException -> {
+                val message = Gson().fromJson(
+                    ex.response()?.errorBody()?.charStream(),
+                    ErrorResponse::class.java
+                )
+                showMessage(message.error)
+            }
+            is IOException -> {
+                showMessageWithRes(R.string.check_internet_connection)
+            }
+            else -> {
+                ex.message.toString()
+            }
+        }
+
     }
 }

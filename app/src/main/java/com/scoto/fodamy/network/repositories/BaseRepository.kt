@@ -20,3 +20,9 @@ open class BaseRepositoryImpl : BaseRepository {
         }
     }
 }
+
+abstract class Base {
+    suspend fun <T : Any> makeCall(request: suspend () -> T): T {
+        return request.invoke()
+    }
+}

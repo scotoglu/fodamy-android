@@ -7,4 +7,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Fodamy"
-include ':app'
+include(":app")
+include(":data")
