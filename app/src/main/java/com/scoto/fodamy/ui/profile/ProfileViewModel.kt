@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.scoto.fodamy.R
-import com.scoto.fodamy.helper.DataStoreManager
-import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.models.User
 import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.repositories.UserRepository
+import com.scoto.domain.utils.DataStoreManager
+import com.scoto.fodamy.R
+import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -44,17 +44,10 @@ class ProfileViewModel @Inject constructor(
 
     fun getUserDetails() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-//            when (val response = userRepository.getUserDetails(dataStoreManager.getUserId())) {
-//                is NetworkResponse.Error -> {
-//                    showMessage(response.exception.handleException())
-//                }
-//                is NetworkResponse.Success -> {
-//                    response.data.let {
-//                        _user.value = it
-//                    }
-//                    getSomeData()
-//                }
-//            }
+            sendRequest(success = {
+                val response = userRepository.getUserDetails(dataStoreManager.getUserId())
+                _user.value = response
+            })
         } else {
             showMessageWithRes(R.string.required_auth)
         }
@@ -65,6 +58,13 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun logout() = viewModelScope.launch {
+        sendRequest(success = {
+            val response = authRepository.logout()
+            event.value = ProfileEvent.Success(response.message)
+        },
+        error = {
+            ""
+        })
 //        when (val response = authRepository.logout()) {
 //            is NetworkResponse.Success -> {
 //                event.value = ProfileEvent.Success(response.data.message)

@@ -27,16 +27,12 @@ class LoginViewModel @Inject constructor(
             val password = password.value.toString()
 
             if (validation.value == true) {
-//                when (val response = authRepository.login(username, password)) {
-//                    is NetworkResponse.Success -> {
-//                        // Api response is consist of token and user, doesn't contain any messages.
-//                        showMessageWithRes(R.string.success_login)
-//                        backTo()
-//                    }
-//                    is NetworkResponse.Error -> {
-//                        showMessage(response.exception.handleException())
-//                    }
-//                }
+                sendRequest(success = {
+                    val response = authRepository.login(username, password)
+                    if (response.token.isNotBlank()){
+                        showMessage("User Login")
+                    }
+                })
             }
         }
 

@@ -1,6 +1,7 @@
-package com.scoto.fodamy.helper
+package com.scoto.data.utils
 
 import android.content.Context
+import android.system.Os.remove
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -9,30 +10,22 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import com.scoto.domain.utils.DataStoreManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-interface DataStoreManager {
-    suspend fun isLogin(): Boolean
-    suspend fun isUserComment(commentUserId: Int): Boolean
-    suspend fun isLoginLiveData(): LiveData<String>
-    val isFirstTimeLaunch: Flow<String>
-    val token: Flow<String>
-    suspend fun saveFirstTimeLaunched(value: String = "launched")
-    suspend fun saveToken(token: String)
-    suspend fun getToken(): String
-    suspend fun removeToken()
-    suspend fun saveUserId(userId: Int)
-    suspend fun getUserId(): Int
-    suspend fun removeUserId()
-}
+/**
+ * @author Sefa ÇOTOĞLU
+ * Created 20.01.2022 at 09:52
+ */
 
 @Singleton
 class DataStoreManagerImpl @Inject constructor(
-    private val context: Context
+    @ApplicationContext val context: Context
 ) : DataStoreManager {
 
     override suspend fun isLogin(): Boolean = getToken().isNotBlank()

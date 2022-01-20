@@ -1,4 +1,4 @@
-package com.scoto.data.paging_source
+package com.scoto.data.network.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -43,7 +43,7 @@ class RecipePagingSource(
                 }
             }
 
-            val recipes = response?.data?.map { it.toDomainModel() } ?: emptyList()
+            val recipes = response?.toDomainModel()?.data ?: emptyList()
             LoadResult.Page(
                 data = recipes,
                 prevKey = if (currentPage == RECIPE_STARTING_INDEX) null else currentPage - 1,

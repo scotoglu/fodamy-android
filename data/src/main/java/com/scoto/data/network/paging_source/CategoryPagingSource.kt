@@ -1,4 +1,4 @@
-package com.scoto.data.paging_source
+package com.scoto.data.network.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

@@ -3,7 +3,7 @@ package com.scoto.fodamy.ui.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

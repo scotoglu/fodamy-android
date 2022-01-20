@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
-import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

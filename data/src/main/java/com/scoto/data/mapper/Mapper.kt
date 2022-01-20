@@ -104,6 +104,8 @@ fun PaginationResponse.toDomainModel(): Pagination =
         total = this.total
     )
 
-fun RecipePagingResponse.toDomainModel(): List<Recipe> {
-    return this.data.map { it.toDomainModel() }
-}
+fun RecipePagingResponse.toDomainModel(): RecipePaging =
+    RecipePaging(
+        data = this.data.map { it.toDomainModel() },
+        pagination = this.pagination.toDomainModel()
+    )

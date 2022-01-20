@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation(project(Modules.DATA))
     implementation(project(Modules.DOMAIN))
     implementation(Dependencies.ANDROIDX_CORE)
     implementation(Dependencies.APPCOMPAT)

@@ -45,4 +45,6 @@ dependencies {
     implementation(Dependencies.PAGING_RUNTIME)
     implementation(Dependencies.DAGGER_HILT)
     kapt(Dependencies.DAGGER_HILT_COMPILER)
+    implementation(Dependencies.DATASTORE_PREFERENCES)
+    implementation(Dependencies.LOGGING_INTERCEPTOR)
 }

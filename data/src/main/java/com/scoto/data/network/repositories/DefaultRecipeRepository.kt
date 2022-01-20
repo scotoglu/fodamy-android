@@ -5,9 +5,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.network.services.RecipeService
-import com.scoto.data.paging_source.CategoryPagingSource
-import com.scoto.data.paging_source.CommentPagingSource
-import com.scoto.data.paging_source.RecipePagingSource
+import com.scoto.data.network.paging_source.CategoryPagingSource
+import com.scoto.data.network.paging_source.CommentPagingSource
+import com.scoto.data.network.paging_source.RecipePagingSource
 import com.scoto.data.utils.FROM_EDITOR_CHOICE
 import com.scoto.data.utils.FROM_LAST_ADDED
 import com.scoto.data.utils.FROM_RECIPES_BY_CATEGORY

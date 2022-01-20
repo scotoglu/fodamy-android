@@ -17,7 +17,7 @@ import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.repositories.UserRepository
 import com.scoto.fodamy.R
-import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

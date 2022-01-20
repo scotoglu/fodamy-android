@@ -2,7 +2,7 @@ package com.scoto.fodamy.ui.home
 
 import androidx.lifecycle.viewModelScope
 import com.scoto.domain.repositories.AuthRepository
-import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

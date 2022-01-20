@@ -4,11 +4,13 @@ import com.scoto.data.BuildConfig
 import com.scoto.data.network.services.AuthService
 import com.scoto.data.network.services.RecipeService
 import com.scoto.data.network.services.UserService
+import com.scoto.data.utils.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -21,6 +23,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ServiceModule {
+    @Provides
+    fun provideInterceptor(authInterceptor: AuthInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .addInterceptor(HttpLoggingInterceptor())
+            .build()
+    }
 
     @Provides
     @Singleton
@@ -31,6 +40,7 @@ object ServiceModule {
             .client(okHttpClient)
             .build()
     }
+
     // Services
     @Provides
     @Singleton

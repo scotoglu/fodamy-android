@@ -1,7 +1,7 @@
-package com.scoto.fodamy.network.utils
+package com.scoto.data.utils
 
-import com.scoto.fodamy.di.modules.ApplicationScope
-import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.data.di.ApplicationScope
+import com.scoto.domain.utils.DataStoreManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
@@ -9,6 +9,10 @@ import okhttp3.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * @author Sefa ÇOTOĞLU
+ * Created 20.01.2022 at 10:14
+ */
 @Singleton
 class AuthInterceptor @Inject constructor(
     private val dataStoreManager: DataStoreManager,

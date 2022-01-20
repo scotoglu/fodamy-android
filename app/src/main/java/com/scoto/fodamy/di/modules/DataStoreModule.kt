@@ -1,22 +1,18 @@
 package com.scoto.fodamy.di.modules
 
-import android.content.Context
-import com.scoto.fodamy.helper.DataStoreManager
-import com.scoto.fodamy.helper.DataStoreManagerImpl
+import com.scoto.data.utils.DataStoreManagerImpl
+import com.scoto.domain.utils.DataStoreManager
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataStoreModule {
+abstract class DataStoreModule {
 
-    @Provides
-    @Singleton
-    fun provideDataStoreManager(
-        @ApplicationContext context: Context
-    ): DataStoreManager = DataStoreManagerImpl(context)
+    @Binds
+    abstract fun provideDataStoreManager(
+        dataStoreManagerImpl: DataStoreManagerImpl
+    ): DataStoreManager
 }

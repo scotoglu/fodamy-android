@@ -19,7 +19,7 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding, PagesOfTabViewModel>(
 ) {
 
     private lateinit var recipeAdapter: RecipesAdapter
-    override val isSharedViewModel: Boolean = true
+//    override val isSharedViewModel: Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
