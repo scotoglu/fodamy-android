@@ -29,6 +29,8 @@ class DefaultAuthRepository @Inject constructor(
     override suspend fun logout(): Common =
         execute {
             val response = authService.logout().toDomainModel()
+            dataStoreManager.removeUserId()
+            dataStoreManager.removeToken()
             response
         }
 

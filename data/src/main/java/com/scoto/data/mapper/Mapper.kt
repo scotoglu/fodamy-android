@@ -29,17 +29,18 @@ fun RecipeResponse.toDomainModel(): Recipe =
         }
     )
 
-fun ImageResponse.toDomainModel(): Image =
-    Image(
+fun ImageResponse.toDomainModel(): Image {
+    return Image(
         width = this.width,
         height = this.height,
         url = this.url
     )
+}
 
 fun UserResponse.toDomainModel(): User =
     User(
         id = this.id,
-        image = this.image.toDomainModel(),
+        image = this.image?.toDomainModel(),
         name = this.name,
         username = this.username,
         favoritesCount = this.favoritesCount,
@@ -89,9 +90,9 @@ fun AuthResponse.toDomainModel(): Auth =
 
 fun CommonResponse.toDomainModel(): Common =
     Common(
-        code = this.code,
-        message = this.message,
-        error = this.error
+        code = this.code ?: "",
+        message = this.message ?: "",
+        error = this.error ?: ""
     )
 
 fun PaginationResponse.toDomainModel(): Pagination =

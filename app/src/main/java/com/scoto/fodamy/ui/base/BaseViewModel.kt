@@ -70,7 +70,7 @@ abstract class BaseViewModel : ViewModel() {
                 showMessageWithRes(R.string.check_internet_connection)
             }
             else -> {
-                ex.message.toString()
+                showMessage(ex.message.toString())
             }
         }
 

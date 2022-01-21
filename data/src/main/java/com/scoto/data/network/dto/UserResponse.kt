@@ -22,7 +22,7 @@ data class UserResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("image")
-    val image: ImageResponse,
+    val image: ImageResponse?,
     @SerializedName("instagram_url")
     val instagramUrl: String,
     @SerializedName("is_following")
