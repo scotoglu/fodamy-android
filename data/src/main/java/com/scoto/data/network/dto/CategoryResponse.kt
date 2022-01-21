@@ -10,13 +10,13 @@ data class CategoryResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("image")
-    val image: ImageResponse,
+    val image: ImageResponse?,
     @SerializedName("language")
-    val language: String,
+    val language: String?,
     @SerializedName("main_category_id")
-    val mainCategoryId: Int,
+    val mainCategoryId: Int?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("recipes")
     val recipes: List<RecipeResponse>?
 )

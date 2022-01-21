@@ -34,7 +34,7 @@ data class RecipeResponse(
     @SerializedName("is_owner")
     val isOwner: Boolean,
     @SerializedName("language")
-    val language: String,
+    val language: String?,
     @SerializedName("like_count")
     val likeCount: Int,
     @SerializedName("number_of_favorite_count")
@@ -44,13 +44,13 @@ data class RecipeResponse(
     @SerializedName("time_of_recipe")
     val timeOfRecipe: TimeOfRecipeResponse,
     @SerializedName("title")
-    val title: String,
+    val title: String?,
     @SerializedName("user")
     val user: UserResponse,
     @SerializedName("view_count")
-    val viewCount: Int,
+    val viewCount: Int?,
     @SerializedName("youtube_image")
-    val youtubeImage: ImageResponse,
+    val youtubeImage: ImageResponse?,
     @SerializedName("youtube_url")
-    val youtubeUrl: String
+    val youtubeUrl: String?
 )

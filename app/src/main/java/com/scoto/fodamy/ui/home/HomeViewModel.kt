@@ -27,14 +27,12 @@ class HomeViewModel @Inject constructor(
 
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-//            when (val response = authRepository.logout()) {
-//                is NetworkResponse.Error -> {
-//                    showMessage(response.exception.handleException())
-//                }
-//                is NetworkResponse.Success -> {
-//                    event.value = HomeViewEvent.Success(response.data.message)
-//                }
-//            }
+            sendRequest(
+                success = {
+                    val res = authRepository.logout()
+                    showMessage(res.message)
+                }
+            )
         }
     }
 }

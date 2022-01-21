@@ -11,7 +11,7 @@ import com.scoto.domain.models.*
 fun RecipeResponse.toDomainModel(): Recipe =
     Recipe(
         id = this.id,
-        title = this.title,
+        title = this.title ?: "",
         definition = this.definition,
         ingredients = this.ingredients,
         directions = this.directions,
@@ -41,14 +41,14 @@ fun UserResponse.toDomainModel(): User =
     User(
         id = this.id,
         image = this.image?.toDomainModel(),
-        name = this.name,
-        username = this.username,
-        favoritesCount = this.favoritesCount,
-        followingCount = this.followingCount,
-        followedCount = this.followedCount,
+        name = this.name ?: "",
+        username = this.username ?: "",
+        favoritesCount = this.favoritesCount ?: 0,
+        followingCount = this.followingCount ?: 0,
+        followedCount = this.followedCount ?: 0,
         isFollowing = this.isFollowing,
-        likesCount = this.likesCount,
-        recipeCount = this.recipeCount
+        likesCount = this.likesCount ?: 0,
+        recipeCount = this.recipeCount ?: 0
     )
 
 fun TimeOfRecipeResponse.toDomainModel(): TimeOfRecipe =
@@ -66,8 +66,8 @@ fun NumberOfPersonResponse.toDomainModel(): NumberOfPerson =
 fun CategoryResponse.toDomainModel(): Category =
     Category(
         id = this.id,
-        name = this.name,
-        image = image.toDomainModel(),
+        name = this.name ?: "",
+        image = image?.toDomainModel(),
         recipes = recipes?.map {
             it.toDomainModel()
         }

@@ -1,9 +1,11 @@
 package com.scoto.fodamy.ui.auth.login
 
+import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.scoto.domain.repositories.AuthRepository
+import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -28,10 +30,9 @@ class LoginViewModel @Inject constructor(
 
             if (validation.value == true) {
                 sendRequest(success = {
-                    val response = authRepository.login(username, password)
-                    if (response.token.isNotBlank()){
-                        showMessage("User Login")
-                    }
+                    authRepository.login(username, password)
+                    showMessageWithRes(R.string.success_login)
+                    backTo()
                 })
             }
         }

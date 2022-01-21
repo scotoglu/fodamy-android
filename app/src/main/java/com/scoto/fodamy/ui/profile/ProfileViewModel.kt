@@ -49,7 +49,7 @@ class ProfileViewModel @Inject constructor(
             sendRequest(success = {
                 val response = userRepository.getUserDetails(dataStoreManager.getUserId())
                 _user.value = response
-                getSomeData()
+//                getSomeData()
             })
         } else {
             showMessageWithRes(R.string.required_auth)
@@ -73,9 +73,9 @@ class ProfileViewModel @Inject constructor(
         navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFlow())
     }
 
-    private fun getSomeData() = viewModelScope.launch {
-        recipeRepository.getLastAdded().cachedIn(viewModelScope).collect { pagingData ->
-            _recipes.value = pagingData
-        }
-    }
+//    private fun getSomeData() = viewModelScope.launch {
+//        recipeRepository.getLastAdded().cachedIn(viewModelScope).collect { pagingData ->
+//            _recipes.value = pagingData
+//        }
+//    }
 }

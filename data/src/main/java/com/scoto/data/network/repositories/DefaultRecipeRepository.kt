@@ -1,22 +1,13 @@
 package com.scoto.data.network.repositories
 
-import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.network.services.RecipeService
-import com.scoto.data.network.paging_source.CategoryPagingSource
-import com.scoto.data.network.paging_source.CommentPagingSource
-import com.scoto.data.network.paging_source.RecipePagingSource
-import com.scoto.data.utils.FROM_EDITOR_CHOICE
-import com.scoto.data.utils.FROM_LAST_ADDED
-import com.scoto.data.utils.FROM_RECIPES_BY_CATEGORY
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Common
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.RecipeRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -27,31 +18,27 @@ class DefaultRecipeRepository @Inject constructor(
     private val recipeService: RecipeService
 ) : RecipeRepository, BaseRepository() {
 
-    override fun getEditorChoiceRecipes(): Flow<PagingData<Recipe>> = Pager(
-        config = pageConfig,
-        pagingSourceFactory = {
-            RecipePagingSource(recipeService, FROM_EDITOR_CHOICE, null)
+    override suspend fun getEditorChoiceRecipes(page: Int): List<Recipe> =
+        execute {
+            recipeService.getEditorChoiceRecipes(page).data.map {
+                it.toDomainModel()
+            }
         }
-    ).flow
 
-    override fun getLastAdded(): Flow<PagingData<Recipe>> = Pager(
-        config = pageConfig,
-        pagingSourceFactory = {
-            RecipePagingSource(recipeService, FROM_LAST_ADDED, null)
+    override suspend fun getLastAdded(page: Int): List<Recipe> =
+        execute {
+            recipeService.getLastAddedRecipes(page).data.map { it.toDomainModel() }
         }
-    ).flow
 
     override suspend fun getRecipeById(recipeId: Int): Recipe =
         execute {
             recipeService.getRecipeById(recipeId).toDomainModel()
         }
 
-    override fun getRecipeComments(recipeId: Int): Flow<PagingData<Comment>> = Pager(
-        config = pageConfig,
-        pagingSourceFactory = {
-            CommentPagingSource(recipeService, recipeId)
+    override suspend fun getRecipeComments(recipeId: Int, page: Int): List<Comment> =
+        execute {
+            recipeService.getRecipeComments(recipeId, page).data.map { it.toDomainModel() }
         }
-    ).flow
 
     override suspend fun getFirstComment(recipeId: Int): Comment =
         execute {
@@ -83,19 +70,15 @@ class DefaultRecipeRepository @Inject constructor(
             recipeService.dislikeRecipe(recipeId).toDomainModel()
         }
 
-    override fun getCategoriesWithRecipes(): Flow<PagingData<Category>> = Pager(
-        config = pageConfig,
-        pagingSourceFactory = {
-            CategoryPagingSource(recipeService)
+    override suspend fun getCategoriesWithRecipes(page: Int): List<Category> =
+        execute {
+            recipeService.getCategoriesWithRecipes(page).data.map { it.toDomainModel() }
         }
-    ).flow
 
-    override fun getRecipesByCategory(categoryId: Int): Flow<PagingData<Recipe>> = Pager(
-        config = pageConfig,
-        pagingSourceFactory = {
-            RecipePagingSource(recipeService, FROM_RECIPES_BY_CATEGORY, categoryId)
+    override suspend fun getRecipesByCategory(categoryId: Int, page: Int): List<Recipe> =
+        execute {
+            recipeService.getRecipesByCategory(categoryId, page).data.map { it.toDomainModel() }
         }
-    ).flow
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 24

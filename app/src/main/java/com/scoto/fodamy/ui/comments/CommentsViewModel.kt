@@ -4,15 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.scoto.domain.models.Comment
 import com.scoto.domain.repositories.RecipeRepository
-import com.scoto.fodamy.R
 import com.scoto.domain.utils.DataStoreManager
+import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
+import com.scoto.fodamy.util.paging_sources.CommentPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,18 +45,24 @@ class CommentsViewModel @Inject constructor(
     val comment = MutableLiveData<String>()
 
     // gets passed arguments from recipe details fragment
-    private val recipeId: Int = savedStateHandle.get<Int>(RECIPE_ID) ?: 0
+    private val recipeId: Int = savedStateHandle.get<Int>(RECIPE_ID) ?: 1
 
-//    init {
-//        getComments()
-//    }
+    init {
+        getComments()
+    }
 
     fun getComments() = viewModelScope.launch {
-        recipeId.let {
-//            recipeRepository.getRecipeComments(it).cachedIn(viewModelScope).collect { pagingData ->
-//                _comments.value = pagingData
-//            }
-        }
+
+        sendRequest(
+            success = {
+                val pager = Pager(
+                    config = pageConfig,
+                    pagingSourceFactory = { CommentPagingSource(recipeRepository, 26) }).flow
+                pager.cachedIn(viewModelScope).collect{
+                    _comments.value = it
+                }
+            }
+        )
     }
 
     fun onSend() = viewModelScope.launch {
@@ -129,6 +140,11 @@ class CommentsViewModel @Inject constructor(
     }
 
     companion object {
+        private val pageConfig = PagingConfig(
+            pageSize = 24,
+            maxSize = 100,
+            enablePlaceholders = false
+        )
         private const val RECIPE_ID = "RECIPE_ID"
     }
 }

@@ -8,43 +8,43 @@ import com.google.gson.annotations.SerializedName
  */
 data class UserResponse(
     @SerializedName("cover")
-    val cover: String,
+    val cover: String?,
     @SerializedName("definition")
-    val definition: String,
+    val definition: String?,
     @SerializedName("facebook_url")
-    val facebookUrl: String,
+    val facebookUrl: String?,
     @SerializedName("favorites_count")
-    val favoritesCount: Int,
+    val favoritesCount: Int?,
     @SerializedName("followed_count")
-    val followedCount: Int,
+    val followedCount: Int?,
     @SerializedName("following_count")
-    val followingCount: Int,
+    val followingCount: Int?,
     @SerializedName("id")
     val id: Int,
     @SerializedName("image")
     val image: ImageResponse?,
     @SerializedName("instagram_url")
-    val instagramUrl: String,
+    val instagramUrl: String?,
     @SerializedName("is_following")
     val isFollowing: Boolean,
     @SerializedName("is_top_user_choice")
     val isTopUserChoice: Boolean,
     @SerializedName("is_trusted")
-    val isTrusted: Int,
+    val isTrusted: Int?,
     @SerializedName("language")
-    val language: String,
+    val language: String?,
     @SerializedName("likes_count")
-    val likesCount: Int,
+    val likesCount: Int?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("recipe_count")
-    val recipeCount: Int,
+    val recipeCount: Int?,
     @SerializedName("surname")
-    val surname: String,
+    val surname: String?,
     @SerializedName("twitter_url")
-    val twitterUrl: String,
+    val twitterUrl: String?,
     @SerializedName("username")
-    val username: String,
+    val username: String?,
     @SerializedName("youtube_url")
-    val youtubeUrl: String
+    val youtubeUrl: String?
 )
