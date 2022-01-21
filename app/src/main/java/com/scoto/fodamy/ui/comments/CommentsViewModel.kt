@@ -51,13 +51,15 @@ class CommentsViewModel @Inject constructor(
         getComments()
     }
 
+
+
     fun getComments() = viewModelScope.launch {
 
         sendRequest(
             success = {
                 val pager = Pager(
                     config = pageConfig,
-                    pagingSourceFactory = { CommentPagingSource(recipeRepository, 26) }).flow
+                    pagingSourceFactory = { CommentPagingSource(recipeRepository, recipeId) }).flow
                 pager.cachedIn(viewModelScope).collect{
                     _comments.value = it
                 }
