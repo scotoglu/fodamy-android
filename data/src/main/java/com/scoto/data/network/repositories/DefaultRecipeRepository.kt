@@ -72,22 +72,13 @@ class DefaultRecipeRepository @Inject constructor(
 
     override suspend fun getCategoriesWithRecipes(page: Int): List<Category> =
         execute {
-            recipeService.getCategoriesWithRecipes(page).data.map { it.toDomainModel() }
+            recipeService.getCategoriesWithRecipes(page).data
+                .map { it.toDomainModel() }
+                .filter { it.recipes?.size!! > 0 }
         }
 
     override suspend fun getRecipesByCategory(categoryId: Int, page: Int): List<Recipe> =
         execute {
             recipeService.getRecipesByCategory(categoryId, page).data.map { it.toDomainModel() }
         }
-
-    companion object {
-        private const val NETWORK_PAGE_SIZE = 24
-        private const val NETWORK_MAX_SIZE = 100
-        private const val CATEGORY_NETWORK_PAGE_SIZE = 4
-        private val pageConfig = PagingConfig(
-            pageSize = NETWORK_PAGE_SIZE,
-            maxSize = NETWORK_MAX_SIZE,
-            enablePlaceholders = false
-        )
-    }
 }
