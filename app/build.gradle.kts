@@ -58,11 +58,6 @@ dependencies {
 
     implementation(Dependencies.MATERIAL_DESIGN)
 
-    //Retrofit
-    implementation(Dependencies.RETROFIT2)
-    implementation(Dependencies.GSON_CONVERTER)
-    implementation(Dependencies.GSON)
-    implementation(Dependencies.LOGGING_INTERCEPTOR)
     //Glide
     implementation(Dependencies.GLIDE)
     annotationProcessor(Dependencies.GLIDE_COMPILER)
@@ -72,12 +67,10 @@ dependencies {
     implementation(Dependencies.LIFECYCLE_VIEWMODEL)
     implementation(Dependencies.LIFECYCLE_RUNTIME)
 
-
     //Paging
     implementation(Dependencies.PAGING_RUNTIME)
 
-    //DataStore
-    implementation(Dependencies.DATASTORE_PREFERENCES)
+    
     //Navigation Component
     implementation(Dependencies.NAVIGATION_COMPONENT)
     implementation(Dependencies.NAVIGATION_UI)
