@@ -35,5 +35,5 @@ android {
     }
 }
 dependencies{
-    implementation(Dependencies.PAGING_RUNTIME)
+    implementation(Dependencies.LIFECYCLE_LIVEDATA)
 }
