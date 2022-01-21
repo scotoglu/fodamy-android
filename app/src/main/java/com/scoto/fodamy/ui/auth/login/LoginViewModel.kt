@@ -1,6 +1,5 @@
 package com.scoto.fodamy.ui.auth.login
 
-import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -20,8 +19,14 @@ class LoginViewModel @Inject constructor(
 
     val username = MutableLiveData("scoto")
     val password = MutableLiveData("123456**")
+
     val requiredFieldWarning: SingleLiveEvent<InputErrorType> = SingleLiveEvent()
     val isRequiredFieldVisible = MutableLiveData<Boolean>()
+
+    val validation: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(username) { value = validateUsername() }
+        addSource(password) { value = validatePassword() }
+    }
 
     fun login() =
         viewModelScope.launch {
@@ -37,29 +42,24 @@ class LoginViewModel @Inject constructor(
             }
         }
 
-    val validation: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>().apply {
-        fun validateUsername(): Boolean {
-            return if (username.value?.isBlank() == true) {
-                requiredFieldWarning.value = InputErrorType.Username
-                false
-            } else {
-                isRequiredFieldVisible.value = false
-                true
-            }
+    private fun validateUsername(): Boolean {
+        return if (username.value?.isBlank() == true) {
+            requiredFieldWarning.value = InputErrorType.Username
+            false
+        } else {
+            isRequiredFieldVisible.value = false
+            true
         }
+    }
 
-        fun validatePassword(): Boolean {
-            return if (password.value?.isBlank() == true) {
-                requiredFieldWarning.value = InputErrorType.Password
-                false
-            } else {
-                isRequiredFieldVisible.value = false
-                true
-            }
+    private fun validatePassword(): Boolean {
+        return if (password.value?.isBlank() == true) {
+            requiredFieldWarning.value = InputErrorType.Password
+            false
+        } else {
+            isRequiredFieldVisible.value = false
+            true
         }
-
-        addSource(username) { value = validateUsername() }
-        addSource(password) { value = validatePassword() }
     }
 
     fun toRegister() {
@@ -68,9 +68,5 @@ class LoginViewModel @Inject constructor(
 
     fun toForgotPassword() {
         navigate(LoginFragmentDirections.actionLoginFragmentToResetPasswordFragment())
-    }
-
-    companion object {
-        private const val TAG = "LoginViewModel"
     }
 }

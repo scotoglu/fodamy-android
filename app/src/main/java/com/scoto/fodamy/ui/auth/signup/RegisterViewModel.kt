@@ -4,6 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.scoto.domain.repositories.AuthRepository
+import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -19,10 +20,16 @@ class RegisterViewModel @Inject constructor(
     val username = MutableLiveData("")
     val email = MutableLiveData("")
     val password = MutableLiveData("")
-    val progressbarVisibility = MutableLiveData<Boolean>()
 
     val requiredFieldWarning: SingleLiveEvent<InputErrorType> = SingleLiveEvent()
+
     val isRequiredFieldVisible = MutableLiveData<Boolean>()
+
+    val validation: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(username) { value = validateUsername() }
+        addSource(email) { value = validateEmail() }
+        addSource(password) { value = validatePassword() }
+    }
 
     fun register() =
         viewModelScope.launch {
@@ -31,53 +38,46 @@ class RegisterViewModel @Inject constructor(
             val password = password.value.toString()
 
             if (validation.value == true) {
-//                when (val response = authRepository.register(username, email, password)) {
-//                    is NetworkResponse.Success -> {
-//                        // Api response is consist of token and user, doesn't contain any messages.
-//                        showMessageWithRes(R.string.success_register)
-//                        toLogin()
-//                        resetInputFields()
-//                    }
-//                    is NetworkResponse.Error -> {
-//                        showMessage(response.exception.handleException())
-//                    }
-//                }
+                sendRequest(
+                    success = {
+                        authRepository.register(username, email, password)
+                        showMessageWithRes(R.string.success_register)
+                        resetInputFields()
+                        toLogin()
+                    }
+                )
             }
         }
 
-    val validation: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>().apply {
-        fun validateUsername(): Boolean {
-            return if (username.value?.isBlank() == true) {
-                requiredFieldWarning.value = InputErrorType.Username
-                false
-            } else {
-                isRequiredFieldVisible.value = false
-                true
-            }
-        }
 
-        fun validateEmail(): Boolean {
-            return if (email.value?.isBlank() == true) {
-                requiredFieldWarning.value = InputErrorType.Email
-                false
-            } else {
-                isRequiredFieldVisible.value = false
-                true
-            }
+    private fun validateUsername(): Boolean {
+        return if (username.value?.isBlank() == true) {
+            requiredFieldWarning.value = InputErrorType.Username
+            false
+        } else {
+            isRequiredFieldVisible.value = false
+            true
         }
+    }
 
-        fun validatePassword(): Boolean {
-            return if (password.value?.isBlank() == true && password.value?.length!! < 6) {
-                requiredFieldWarning.value = InputErrorType.Password
-                false
-            } else {
-                isRequiredFieldVisible.value = false
-                true
-            }
+    private fun validateEmail(): Boolean {
+        return if (email.value?.isBlank() == true) {
+            requiredFieldWarning.value = InputErrorType.Email
+            false
+        } else {
+            isRequiredFieldVisible.value = false
+            true
         }
-        addSource(username) { value = validateUsername() }
-        addSource(email) { value = validateEmail() }
-        addSource(password) { value = validatePassword() }
+    }
+
+    private fun validatePassword(): Boolean {
+        return if (password.value?.isBlank() == true && password.value?.length!! < 6) {
+            requiredFieldWarning.value = InputErrorType.Password
+            false
+        } else {
+            isRequiredFieldVisible.value = false
+            true
+        }
     }
 
     fun toLogin() {

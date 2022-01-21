@@ -47,7 +47,6 @@ class CategoryRecipesViewModel @Inject constructor(
     }
 
     private fun getRecipesByCategory() = viewModelScope.launch {
-
         sendRequest(
             success = {
                 val pager = Pager(
@@ -72,6 +71,7 @@ class CategoryRecipesViewModel @Inject constructor(
             sendRequest(
                 success = {
                     val res = authRepository.logout()
+                    event.value = CategoryEvent.Success
                     showMessage(res.message)
                 }
             )

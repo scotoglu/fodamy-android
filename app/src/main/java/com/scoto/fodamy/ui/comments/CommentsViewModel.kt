@@ -16,8 +16,8 @@ import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
 import com.scoto.fodamy.util.paging_sources.CommentPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,16 +51,13 @@ class CommentsViewModel @Inject constructor(
         getComments()
     }
 
-
-
     fun getComments() = viewModelScope.launch {
-
         sendRequest(
             success = {
                 val pager = Pager(
                     config = pageConfig,
                     pagingSourceFactory = { CommentPagingSource(recipeRepository, recipeId) }).flow
-                pager.cachedIn(viewModelScope).collect{
+                pager.cachedIn(viewModelScope).collect {
                     _comments.value = it
                 }
             }
@@ -69,16 +66,13 @@ class CommentsViewModel @Inject constructor(
 
     fun onSend() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-//            when (val response = recipeRepository.sendComment(recipeId, comment.value.toString())) {
-//                is NetworkResponse.Success -> {
-//                    event.value = CommentEvent.Success
-//                    comment.value = ""
-//                    showMessageWithRes(R.string.success_comment_add)
-//                }
-//                is NetworkResponse.Error -> {
-//                    showMessage(response.exception.handleException())
-//                }
-//            }
+            sendRequest(
+                success = {
+                    recipeRepository.sendComment(recipeId, comment.value.toString())
+                    comment.value = ""
+                    showMessageWithRes(R.string.success_comment_add)
+                }
+            )
         } else {
             openDialog(R.id.action_global_authDialog)
         }
@@ -105,40 +99,29 @@ class CommentsViewModel @Inject constructor(
 
     fun onUpdate() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-//            val response =
-//                recipeRepository.editComment(
-//                    recipeId = recipeId,
-//                    commentId = commentId.value!!,
-//                    text = editableComment.value!!
-//                )
-//            when (response) {
-//                is NetworkResponse.Error -> {
-//                    showMessage(response.exception.handleException())
-//                }
-//                is NetworkResponse.Success -> {
-//                    event.value = CommentEvent.CommentEdited(response.data.message)
-//                    showMessageWithRes(R.string.success_comment_edit)
-//                    setEditMode(false)
-//                }
-//            }
+            sendRequest(
+                success = {
+                    recipeRepository.editComment(
+                        recipeId = recipeId,
+                        commentId = commentId.value!!,
+                        text = editableComment.value.toString()
+                    )
+                    setEditMode(false)
+                    showMessageWithRes(R.string.success_comment_edit)
+                }
+            )
         } else {
             openDialog(R.id.action_global_authDialog)
         }
     }
 
     fun onDelete() = viewModelScope.launch {
-//        when (
-//            val response =
-//                recipeRepository.deleteComment(recipeId = recipeId, commentId = commentId.value!!)
-//        ) {
-//            is NetworkResponse.Error -> {
-//                showMessage(response.exception.handleException())
-//            }
-//            is NetworkResponse.Success -> {
-//                event.value = CommentEvent.Success
-//                showMessageWithRes(R.string.success_comment_delete)
-//            }
-//        }
+        sendRequest(
+            success = {
+                recipeRepository.deleteComment(recipeId, commentId.value!!)
+                showMessageWithRes(R.string.success_comment_delete)
+            }
+        )
     }
 
     companion object {

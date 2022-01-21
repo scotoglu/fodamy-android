@@ -47,8 +47,10 @@ class MainActivity : AppCompatActivity() {
         )
 
         // prevents the adding bottom margin to bottomNavigationView after changing fullscreen to normal screen
-        binding.bottomNavigationView.setOnApplyWindowInsetsListener(null)
-        binding.bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNavigationView.apply {
+            setOnApplyWindowInsetsListener(null)
+            setupWithNavController(navController)
+        }
     }
 
     private fun navControllerListener() {
@@ -74,6 +76,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) ||
-            super.onSupportNavigateUp()
+                super.onSupportNavigateUp()
     }
 }

@@ -4,7 +4,6 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentFavoritesBinding
-import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.favorites.adapter.CategoryPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,13 +62,12 @@ class FavoritesFragment :
 
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
-            when (event) {
-                is FavoritesEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
-                is FavoritesEvent.Success -> {
-                    binding.root.snackbar(event.message)
-                    binding.customToolbar.setEndIconVisibility(false)
+            binding.customToolbar.setEndIconVisibility(
+                when (event) {
+                    is FavoritesEvent.IsLogin -> event.isLogin
+                    FavoritesEvent.Success -> false
                 }
-            }
+            )
         })
     }
 }

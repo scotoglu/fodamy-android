@@ -60,6 +60,7 @@ class CommentsFragment :
         }
     }
 
+    // TODO("handle in BaseFragment")
     private fun getDialogAction() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
             DIALOG_ACTION

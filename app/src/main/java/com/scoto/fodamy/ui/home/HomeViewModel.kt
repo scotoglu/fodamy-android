@@ -30,6 +30,7 @@ class HomeViewModel @Inject constructor(
             sendRequest(
                 success = {
                     val res = authRepository.logout()
+                    event.value = HomeViewEvent.Success
                     showMessage(res.message)
                 }
             )

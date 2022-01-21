@@ -14,6 +14,7 @@ import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
+import com.scoto.fodamy.ui.home.HomeViewEvent
 import com.scoto.fodamy.util.paging_sources.CategoryPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -46,6 +47,7 @@ class FavoritesViewModel @Inject constructor(
             sendRequest(
                 success = {
                     val res = authRepository.logout()
+                    event.value = FavoritesEvent.Success
                     showMessage(res.message)
                 }
             )
@@ -53,7 +55,6 @@ class FavoritesViewModel @Inject constructor(
     }
 
     private fun getCategories() = viewModelScope.launch {
-
         sendRequest(
             success = {
                 val pager = Pager(
@@ -65,7 +66,6 @@ class FavoritesViewModel @Inject constructor(
                 }
             }
         )
-
     }
 
     fun toSeeAll(category: Category) {
@@ -83,6 +83,7 @@ class FavoritesViewModel @Inject constructor(
             )
         )
     }
+
     companion object{
         private val pageConfig = PagingConfig(
             pageSize = 24,

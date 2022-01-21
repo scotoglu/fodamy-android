@@ -3,6 +3,8 @@ package com.scoto.fodamy.ui.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.scoto.domain.models.Recipe
@@ -14,9 +16,11 @@ import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
+import com.scoto.fodamy.util.FROM_LAST_ADDED
+import com.scoto.fodamy.util.paging_sources.RecipePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -49,7 +53,7 @@ class ProfileViewModel @Inject constructor(
             sendRequest(success = {
                 val response = userRepository.getUserDetails(dataStoreManager.getUserId())
                 _user.value = response
-//                getSomeData()
+                getSomeData()
             })
         } else {
             showMessageWithRes(R.string.required_auth)
@@ -63,7 +67,8 @@ class ProfileViewModel @Inject constructor(
     fun logout() = viewModelScope.launch {
         sendRequest(success = {
             val response = authRepository.logout()
-            event.value = ProfileEvent.Success(response.message)
+            event.value = ProfileEvent.Success
+            showMessage(response.message)
         })
     }
 
@@ -73,9 +78,31 @@ class ProfileViewModel @Inject constructor(
         navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFlow())
     }
 
-//    private fun getSomeData() = viewModelScope.launch {
-//        recipeRepository.getLastAdded().cachedIn(viewModelScope).collect { pagingData ->
-//            _recipes.value = pagingData
-//        }
-//    }
+    private fun getSomeData() = viewModelScope.launch {
+        sendRequest(
+            success = {
+                val pager = Pager(
+                    config = pageConfig,
+                    pagingSourceFactory = {
+                        RecipePagingSource(
+                            recipeRepository,
+                            FROM_LAST_ADDED,
+                            null
+                        )
+                    }
+                ).flow
+                pager.cachedIn(viewModelScope).collect {
+                    _recipes.value = it
+                }
+            }
+        )
+    }
+
+    companion object {
+        private val pageConfig = PagingConfig(
+            pageSize = 24,
+            maxSize = 100,
+            enablePlaceholders = false
+        )
+    }
 }
