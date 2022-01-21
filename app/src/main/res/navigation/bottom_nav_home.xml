@@ -13,7 +13,7 @@
             app:destination="@id/recipe_flow">
             <argument
                 android:name="RECIPE"
-                app:argType="com.scoto.fodamy.network.models.Recipe" />
+                app:argType="com.scoto.domain.models.Recipe" />
         </action>
         <action
             android:id="@+id/action_homeFragment_to_login_flow"

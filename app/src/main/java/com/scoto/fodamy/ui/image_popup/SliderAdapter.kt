@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.scoto.fodamy.databinding.ItemImageSliderBinding
-import com.scoto.fodamy.network.models.Image
-import com.scoto.fodamy.network.models.ImageList
+import com.scoto.domain.models.Image
+import com.scoto.domain.models.ImageList
 
 class SliderAdapter(private val images: ImageList) :
     RecyclerView.Adapter<SliderAdapter.ViewHolder>() {

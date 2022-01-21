@@ -18,7 +18,7 @@
             app:destination="@id/unfollowDialog" />
         <argument
             android:name="RECIPE"
-            app:argType="com.scoto.fodamy.network.models.Recipe" />
+            app:argType="com.scoto.domain.models.Recipe" />
     </fragment>
     <fragment
         android:id="@+id/commentsFragment"
@@ -37,7 +37,7 @@
         android:label="ImagePopupFragment" >
         <argument
             android:name="images"
-            app:argType="com.scoto.fodamy.network.models.ImageList" />
+            app:argType="com.scoto.domain.models.ImageList" />
     </fragment>
     <dialog
         android:id="@+id/unfollowDialog"

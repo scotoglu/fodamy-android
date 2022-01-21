@@ -3,10 +3,12 @@ package com.scoto.fodamy.ui.home.pages
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentPagesOfTabBinding
 import com.scoto.fodamy.ui.base.BaseFragment
+import com.scoto.fodamy.ui.home.HomeFragmentDirections
 import com.scoto.fodamy.ui.home.adapter.RecipesAdapter
 import com.scoto.fodamy.ui.home.adapter.ViewPagerAdapter.Companion.REQUEST_TYPE
 import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
@@ -19,7 +21,7 @@ class PagesOfTab : BaseFragment<FragmentPagesOfTabBinding, PagesOfTabViewModel>(
 ) {
 
     private lateinit var recipeAdapter: RecipesAdapter
-    override val isSharedViewModel: Boolean = true
+//    override val isSharedViewModel: Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

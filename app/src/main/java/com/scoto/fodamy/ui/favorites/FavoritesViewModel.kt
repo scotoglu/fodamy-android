@@ -3,21 +3,21 @@ package com.scoto.fodamy.ui.favorites
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.filter
-import com.scoto.fodamy.ext.handleException
-import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.domain.models.Category
+import com.scoto.domain.models.Recipe
+import com.scoto.domain.repositories.AuthRepository
+import com.scoto.domain.repositories.RecipeRepository
+import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
-import com.scoto.fodamy.helper.states.NetworkResponse
-import com.scoto.fodamy.network.models.Category
-import com.scoto.fodamy.network.models.Recipe
-import com.scoto.fodamy.network.repositories.AuthRepository
-import com.scoto.fodamy.network.repositories.RecipeRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
+import com.scoto.fodamy.util.paging_sources.CategoryPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,23 +43,29 @@ class FavoritesViewModel @Inject constructor(
 
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            when (val response = authRepository.logout()) {
-                is NetworkResponse.Error -> {
-                    showMessage(response.exception.handleException())
+            sendRequest(
+                success = {
+                    val res = authRepository.logout()
+                    showMessage(res.message)
                 }
-                is NetworkResponse.Success -> {
-                    event.value = FavoritesEvent.Success(response.data.message)
-                }
-            }
+            )
         }
     }
 
     private fun getCategories() = viewModelScope.launch {
-        recipeRepository.getCategoriesWithRecipes().cachedIn(viewModelScope).collect { pagingData ->
-            _categories.value = pagingData.filter { category ->
-                category.recipes?.size!! > 0
+
+        sendRequest(
+            success = {
+                val pager = Pager(
+                    config = pageConfig,
+                    pagingSourceFactory = {CategoryPagingSource(recipeRepository)}
+                ).flow
+                pager.cachedIn(viewModelScope).collect{
+                    _categories.value = it
+                }
             }
-        }
+        )
+
     }
 
     fun toSeeAll(category: Category) {
@@ -75,6 +81,13 @@ class FavoritesViewModel @Inject constructor(
             FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFlow2(
                 recipe
             )
+        )
+    }
+    companion object{
+        private val pageConfig = PagingConfig(
+            pageSize = 24,
+            maxSize = 100,
+            enablePlaceholders = false
         )
     }
 }

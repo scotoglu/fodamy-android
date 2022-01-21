@@ -19,7 +19,7 @@
             app:destination="@id/recipe_flow">
             <argument
                 android:name="RECIPE"
-                app:argType="com.scoto.fodamy.network.models.Recipe" />
+                app:argType="com.scoto.domain.models.Recipe" />
         </action>
     </fragment>
     <include app:graph="@navigation/login_flow" />
@@ -33,7 +33,7 @@
             app:destination="@id/recipe_flow">
             <argument
                 android:name="RECIPE"
-                app:argType="com.scoto.fodamy.network.models.Recipe" />
+                app:argType="com.scoto.domain.models.Recipe" />
         </action>
         <argument
             android:name="CategoryId"

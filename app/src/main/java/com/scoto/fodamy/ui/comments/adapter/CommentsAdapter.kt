@@ -6,8 +6,8 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.scoto.domain.models.Comment
 import com.scoto.fodamy.databinding.UserCommentCardBinding
-import com.scoto.fodamy.network.models.Comment
 
 class CommentsAdapter : PagingDataAdapter<Comment, CommentsAdapter.ViewHolder>(commentComparator) {
 

@@ -1,8 +1,8 @@
 package com.scoto.fodamy.di.modules
 
 import android.content.Context
-import com.scoto.fodamy.helper.DataStoreManager
-import com.scoto.fodamy.helper.DataStoreManagerImpl
+import com.scoto.data.utils.DataStoreManagerImpl
+import com.scoto.domain.utils.DataStoreManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +18,7 @@ object DataStoreModule {
     @Singleton
     fun provideDataStoreManager(
         @ApplicationContext context: Context
-    ): DataStoreManager = DataStoreManagerImpl(context)
+    ): DataStoreManager {
+        return DataStoreManagerImpl(context)
+    }
 }

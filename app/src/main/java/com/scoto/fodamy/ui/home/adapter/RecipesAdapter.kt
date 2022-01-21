@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.scoto.domain.models.Recipe
 import com.scoto.fodamy.databinding.ItemFoodCardBinding
-import com.scoto.fodamy.network.models.Recipe
+
 
 class RecipesAdapter() : PagingDataAdapter<Recipe, RecipesAdapter.ViewHolder>(recipeComparator) {
 

@@ -1,11 +1,9 @@
 package com.scoto.fodamy.ui.home
 
 import androidx.lifecycle.viewModelScope
-import com.scoto.fodamy.ext.handleException
-import com.scoto.fodamy.helper.DataStoreManager
+import com.scoto.domain.repositories.AuthRepository
+import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
-import com.scoto.fodamy.helper.states.NetworkResponse
-import com.scoto.fodamy.network.repositories.AuthRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -29,14 +27,12 @@ class HomeViewModel @Inject constructor(
 
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            when (val response = authRepository.logout()) {
-                is NetworkResponse.Error -> {
-                    showMessage(response.exception.handleException())
+            sendRequest(
+                success = {
+                    val res = authRepository.logout()
+                    showMessage(res.message)
                 }
-                is NetworkResponse.Success -> {
-                    event.value = HomeViewEvent.Success(response.data.message)
-                }
-            }
+            )
         }
     }
 }
