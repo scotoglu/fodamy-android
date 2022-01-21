@@ -1,20 +1,19 @@
-package com.scoto.data.network.paging_source
+package com.scoto.fodamy.util.paging_sources
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.scoto.data.mapper.toDomainModel
-import com.scoto.data.network.services.RecipeService
-import com.scoto.data.utils.FROM_EDITOR_CHOICE
-import com.scoto.data.utils.FROM_LAST_ADDED
-import com.scoto.data.utils.FROM_RECIPES_BY_CATEGORY
 import com.scoto.domain.models.Recipe
+import com.scoto.domain.repositories.RecipeRepository
+import com.scoto.fodamy.util.FROM_EDITOR_CHOICE
+import com.scoto.fodamy.util.FROM_LAST_ADDED
+import com.scoto.fodamy.util.FROM_RECIPES_BY_CATEGORY
 
 /**
  * @author Sefa ÇOTOĞLU
  * Created 19.01.2022 at 22:09
  */
 class RecipePagingSource(
-    private val recipeService: RecipeService,
+    private val recipeRepository: RecipeRepository,
     private val fetchedFrom: String,
     private val categoryId: Int?
 ) : PagingSource<Int, Recipe>() {
@@ -25,25 +24,25 @@ class RecipePagingSource(
         return try {
             val response = when (fetchedFrom) {
                 FROM_EDITOR_CHOICE -> {
-                    recipeService.getEditorChoiceRecipes(currentPage)
+                    recipeRepository.getEditorChoiceRecipes(currentPage)
                 }
                 FROM_LAST_ADDED -> {
-                    recipeService.getLastAddedRecipes(currentPage)
+                    recipeRepository.getLastAdded(currentPage)
                 }
                 FROM_RECIPES_BY_CATEGORY -> {
                     if (categoryId != null) {
-                        recipeService.getRecipesByCategory(
+                        recipeRepository.getRecipesByCategory(
                             categoryId,
                             currentPage
                         )
                     } else null
                 }
                 else -> {
-                    recipeService.getEditorChoiceRecipes(currentPage)
+                    recipeRepository.getEditorChoiceRecipes(currentPage)
                 }
             }
 
-            val recipes = response?.toDomainModel()?.data ?: emptyList()
+            val recipes = response ?: emptyList()
             LoadResult.Page(
                 data = recipes,
                 prevKey = if (currentPage == RECIPE_STARTING_INDEX) null else currentPage - 1,
