@@ -4,7 +4,6 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCategoryRecipeBinding
-import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.home.adapter.RecipesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,14 +57,13 @@ class CategoryRecipesFragment :
     }
 
     private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner, { even ->
-            when (even) {
-                is CategoryEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(even.isLogin)
-                is CategoryEvent.Success -> {
-                    binding.root.snackbar(even.message)
-                    binding.customToolbar.setEndIconVisibility(false)
+        viewModel.event.observe(viewLifecycleOwner, { event ->
+            binding.customToolbar.setEndIconVisibility(
+                when (event) {
+                    is CategoryEvent.IsLogin -> event.isLogin
+                    CategoryEvent.Success -> false
                 }
-            }
+            )
         })
     }
 }

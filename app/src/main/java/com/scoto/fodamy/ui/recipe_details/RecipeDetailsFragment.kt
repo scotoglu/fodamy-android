@@ -12,6 +12,7 @@ class RecipeDetailsFragment :
         R.layout.fragment_recipe_details
     ) {
 
+    // TODO("handle in BaseFragment")
     override fun registerObservables() {
         super.registerObservables()
         findNavController()
@@ -24,6 +25,7 @@ class RecipeDetailsFragment :
                 }
             }
     }
+
     companion object {
         private const val DIALOG_ACTION = "DialogAction"
         private const val UNFOLLOW = "Unfollow"

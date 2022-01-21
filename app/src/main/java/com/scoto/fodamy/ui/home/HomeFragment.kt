@@ -6,7 +6,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentHomeBinding
 import com.scoto.fodamy.ext.addVerticalLineToTabs
-import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.home.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,13 +40,13 @@ class HomeFragment :
     override fun registerObservables() {
         super.registerObservables()
         viewModel.event.observe(viewLifecycleOwner, { event ->
-            when (event) {
-                is HomeViewEvent.IsLogin -> binding.customToolbar.setEndIconVisibility(event.isLogin)
-                is HomeViewEvent.Success -> {
-                    binding.root.snackbar(event.message)
-                    binding.customToolbar.setEndIconVisibility(false)
+            binding.customToolbar.setEndIconVisibility(
+                when(event){
+                    is HomeViewEvent.IsLogin -> event.isLogin
+                    HomeViewEvent.Success -> false
                 }
-            }
+            )
+
         })
     }
 }
