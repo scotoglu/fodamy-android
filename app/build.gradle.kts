@@ -5,6 +5,7 @@ plugins {
     id(Plugins.DAGGER_HILT_ANDROID)
     id(Plugins.NAVIGATION_SAFE_ARGS)
     id(Plugins.KOTLIN_PARCELIZE)
+    id(Plugins.KTLINT)
 }
 
 android {
@@ -16,7 +17,6 @@ android {
         targetSdk = ConfigData.TARGET_SDK_VERSION
         versionCode = ConfigData.VERSION_CODE
         versionName = ConfigData.VERSION_NAME
-
     }
     buildFeatures {
         dataBinding = true
@@ -52,47 +52,45 @@ dependencies {
     androidTestImplementation(Dependencies.EXT_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO_CORE)
 
-    //Dagger Hilt
+    // Dagger Hilt
     implementation(Dependencies.DAGGER_HILT)
     kapt(Dependencies.DAGGER_HILT_COMPILER)
 
     implementation(Dependencies.MATERIAL_DESIGN)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.RETROFIT2)
     implementation(Dependencies.GSON_CONVERTER)
     implementation(Dependencies.GSON)
 
-    //Glide
+    // Glide
     implementation(Dependencies.GLIDE)
     annotationProcessor(Dependencies.GLIDE_COMPILER)
 
-    //Coroutine - Lifecycle-aware
+    // Coroutine - Lifecycle-aware
     implementation(Dependencies.LIFECYCLE_LIVEDATA)
     implementation(Dependencies.LIFECYCLE_VIEWMODEL)
     implementation(Dependencies.LIFECYCLE_RUNTIME)
 
-
-    //Paging
+    // Paging
     implementation(Dependencies.PAGING_RUNTIME)
 
-
-    //Navigation Component
+    // Navigation Component
     implementation(Dependencies.NAVIGATION_COMPONENT)
     implementation(Dependencies.NAVIGATION_UI)
 
-    //ConstraintLayout 2
+    // ConstraintLayout 2
     implementation(Dependencies.CONTRAINT_LAYOUT)
 
-    //Fragment ktx
+    // Fragment ktx
     implementation(Dependencies.FRAGMENT_KTX)
 
-    //RecyclerView
+    // RecyclerView
     implementation(Dependencies.RECYCLERVIEW)
 
-    //SavedState
+    // SavedState
     implementation(Dependencies.SAVEDSTATE)
-    //DotsIndicator
+    // DotsIndicator
     implementation(Dependencies.DOTSINDICATOR)
 
     implementation(Dependencies.CIRCLE_IMAGEVIEW)

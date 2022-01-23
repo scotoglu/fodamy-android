@@ -39,6 +39,8 @@ android {
 }
 dependencies {
     implementation(project(Modules.DOMAIN))
+    testImplementation(Dependencies.JUNIT)
+    androidTestImplementation(Dependencies.EXT_JUNIT)
     implementation(Dependencies.RETROFIT2)
     implementation(Dependencies.GSON)
     implementation(Dependencies.GSON_CONVERTER)

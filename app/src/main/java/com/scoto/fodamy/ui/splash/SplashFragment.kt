@@ -12,13 +12,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     override fun registerObservables() {
         super.registerObservables()
-        viewModel.isFirstTime.observe(viewLifecycleOwner, { isFirstTime ->
-            if (isFirstTime.isBlank()) {
-                viewModel.toWalkthrough()
-                viewModel.saveFirstLaunch()
-            } else {
-                viewModel.toHome()
-            }
-        })
+        viewModel.splash()
     }
 }

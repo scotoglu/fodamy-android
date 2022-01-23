@@ -8,42 +8,34 @@ import com.scoto.fodamy.R
  * Created 17.12.2021 at 10:51
  */
 
-//TODO("Use below model and bind with layout")
-//data class Walkthrough1(
-//    @StringRes val title: Int,
-//    @StringRes val description: Int,
-//    val image: Int
-//)
-
 data class Walkthrough(
-    val title: String,
-    val description: String,
+    @StringRes val title: Int,
+    @StringRes val description: Int,
     val image: Int
 ) {
     companion object {
         fun getPrePopulatedData(): List<Walkthrough> =
             listOf(
                 Walkthrough(
-                    "Welcom to Fodamy Network!",
-                    "Fodamy is the best place to find your favorite recipes in all around the word.",
+                    R.string.walkthrough_title_1,
+                    R.string.walkthrough_descriptions_1,
                     R.drawable.walkthrough1
                 ),
                 Walkthrough(
-                    "Finding recipes were not that easy.",
-                    "Fodamy is the best place to find your favorite recipes in all around the word.",
+                    R.string.walkthrough_title_2,
+                    R.string.walkthrough_descriptions_2,
                     R.drawable.walkthrough2
                 ),
                 Walkthrough(
-                    "Add new recipe.",
-                    "Fodamy is the best place to find your favorite recipes in all around the word.",
+                    R.string.walkthrough_title_3,
+                    R.string.walkthrough_descriptions_3,
                     R.drawable.walkthrough3
                 ),
                 Walkthrough(
-                    "Share recipes with others.",
-                    "Fodamy is the best place to find your favorite recipes in all around the word.",
+                    R.string.walkthrough_title_4,
+                    R.string.walkthrough_descriptions_4,
                     R.drawable.walkthrough4
                 ),
-
-                )
+            )
     }
 }

@@ -1,7 +1,5 @@
 package com.scoto.fodamy.ui.splash
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -14,20 +12,27 @@ class SplashViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : BaseViewModel() {
 
-    val isFirstTime: LiveData<String>
-        get() = dataStoreManager.isFirstTimeLaunch.asLiveData()
-
-    fun saveFirstLaunch() {
+    fun splash(){
+        viewModelScope.launch {
+            if (dataStoreManager.isFirstTimeLaunch()) {
+                toWalkthrough()
+                saveFirstLaunch()
+            } else {
+                toHome()
+            }
+        }
+    }
+    private fun saveFirstLaunch() {
         viewModelScope.launch {
             dataStoreManager.saveFirstTimeLaunched()
         }
     }
 
-    fun toHome() {
+    private fun toHome() {
         navigate(SplashFragmentDirections.actionSplashFragmentToBottomNavHome())
     }
 
-    fun toWalkthrough() {
+    private fun toWalkthrough() {
         navigate(SplashFragmentDirections.actionSplashFragmentToWalkThroughFragment())
     }
 }

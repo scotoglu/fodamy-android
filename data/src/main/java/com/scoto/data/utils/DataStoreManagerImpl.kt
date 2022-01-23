@@ -1,9 +1,9 @@
 package com.scoto.data.utils
 
 import android.content.Context
-import android.system.Os.remove
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -28,22 +28,22 @@ class DataStoreManagerImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : DataStoreManager {
 
+    override val token: Flow<String>
+        get() = context.dataStore.data.map { pref -> pref[AUTH_TOKEN] ?: "" }
+
     override suspend fun isLogin(): Boolean = getToken().isNotBlank()
 
     override suspend fun isUserComment(commentUserId: Int): Boolean = getUserId() == commentUserId
 
     override suspend fun isLoginLiveData(): LiveData<String> = token.asLiveData()
 
-    override val isFirstTimeLaunch: Flow<String>
-        get() = context.dataStore.data.map { pref -> pref[FIRST_LAUNCH] ?: "" }
+    override suspend fun isFirstTimeLaunch(): Boolean {
+        return context.dataStore.data.map { it[FIRST_LAUNCH] ?: true }.first()
+    }
 
-    override val token: Flow<String>
-        get() = context.dataStore.data.map { pref -> pref[AUTH_TOKEN] ?: "" }
 
-    override suspend fun saveFirstTimeLaunched(value: String) {
-        context.dataStore.edit { pref ->
-            pref[FIRST_LAUNCH] = value
-        }
+    override suspend fun saveFirstTimeLaunched() {
+        context.dataStore.edit { it[FIRST_LAUNCH] = false }
     }
 
     override suspend fun saveToken(token: String) {
@@ -77,7 +77,7 @@ class DataStoreManagerImpl @Inject constructor(
     companion object {
 
         private const val FODAMY_LAUNCH_PREF = "FODAMY_LAUNCH_PREF"
-        private val FIRST_LAUNCH = stringPreferencesKey("is_first_launched")
+        private val FIRST_LAUNCH = booleanPreferencesKey("IS_FIRST_LAUNCHED")
         private val AUTH_TOKEN = stringPreferencesKey("AUTH_TOKEN")
         private val USER_ID = intPreferencesKey("USER_ID")
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = FODAMY_LAUNCH_PREF)

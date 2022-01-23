@@ -36,4 +36,6 @@ android {
 }
 dependencies{
     implementation(Dependencies.LIFECYCLE_LIVEDATA)
+    testImplementation(Dependencies.JUNIT)
+    androidTestImplementation(Dependencies.EXT_JUNIT)
 }

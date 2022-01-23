@@ -2,19 +2,16 @@
     <string name="app_name">Fodamy</string>
 
     <!--Walkthrough Contents-->
-    <string-array name="walkthrouh_title">
-        <item>Welcome to Fodamy Network!</item>
-        <item>Finding recipes were not that easy.</item>
-        <item>Add new recipe.</item>
-        <item>Share recipes with others.</item>
-    </string-array>
+    <string name="walkthrough_title_1">Welcome to Fodamy Network!</string>
+    <string name="walkthrough_title_2">Finding recipes were not that easy.</string>
+    <string name="walkthrough_title_3">Add new recipe.</string>
+    <string name="walkthrough_title_4">Share recipes with others.</string>
 
-    <string-array name="walkthrouhg_descriptions">
-        <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
-        <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
-        <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
-        <item>Fodamy is the best place to find your favorite recipes in all around the word.</item>
-    </string-array>
+    <string name="walkthrough_descriptions_1">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="walkthrough_descriptions_2">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="walkthrough_descriptions_3">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="walkthrough_descriptions_4">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+
 
     <!--  Auth-->
     <string name="username">Kullanıcı Adı</string>

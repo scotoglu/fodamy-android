@@ -78,7 +78,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         viewModel.event.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is ProfileEvent.Success -> {
-                    view?.snackbar(event.message)
                     binding.tvLogin.isVisible = true
                 }
                 is ProfileEvent.IsLogin -> {

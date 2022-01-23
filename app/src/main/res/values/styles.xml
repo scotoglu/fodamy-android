@@ -62,7 +62,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:padding">4dp</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/text_size_18sp</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
     </style>
 
     <style name="WalkThroughContent" parent="TextAppearance.AppCompat.Title">

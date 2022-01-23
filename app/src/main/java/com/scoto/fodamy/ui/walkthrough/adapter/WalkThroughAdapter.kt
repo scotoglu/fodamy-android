@@ -30,8 +30,8 @@ class WalkThroughAdapter(
 
         fun bind(item: Walkthrough) {
             binding.apply {
-                tvWalkthroughTitle.text = item.title
-                tvWalkthroughDescription.text = item.description
+                tvWalkthroughTitle.text = this.root.context.getString(item.title)
+                tvWalkthroughDescription.text = this.root.context.getString(item.description)
                 ivWalkthrough.setImageResource(item.image)
             }
         }

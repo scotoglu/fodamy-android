@@ -11,9 +11,9 @@ interface DataStoreManager {
     suspend fun isLogin(): Boolean
     suspend fun isUserComment(commentUserId: Int): Boolean
     suspend fun isLoginLiveData(): LiveData<String>
-    val isFirstTimeLaunch: Flow<String>
+    suspend fun isFirstTimeLaunch(): Boolean
     val token: Flow<String>
-    suspend fun saveFirstTimeLaunched(value: String = "launched")
+    suspend fun saveFirstTimeLaunched()
     suspend fun saveToken(token: String)
     suspend fun getToken(): String
     suspend fun removeToken()
