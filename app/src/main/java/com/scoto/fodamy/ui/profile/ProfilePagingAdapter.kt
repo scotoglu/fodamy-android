@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scoto.domain.models.Recipe
 import com.scoto.fodamy.databinding.ItemCategoryRecipeBinding
 
-
 /**
  * @author Sefa ÇOTOĞLU
  * Created 27.12.2021 at 10:19

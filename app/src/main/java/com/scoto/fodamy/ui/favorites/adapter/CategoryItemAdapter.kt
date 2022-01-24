@@ -7,7 +7,6 @@ import com.scoto.domain.models.Recipe
 import com.scoto.fodamy.databinding.ItemCategoryRecipeBinding
 import com.scoto.fodamy.ext.onClick
 
-
 class CategoryItemAdapter(
     private val recipes: List<Recipe>
 ) : RecyclerView.Adapter<CategoryItemAdapter.ViewHolder>() {

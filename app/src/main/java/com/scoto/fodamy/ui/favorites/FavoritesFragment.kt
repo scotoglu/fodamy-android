@@ -62,12 +62,11 @@ class FavoritesFragment :
 
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
-            binding.customToolbar.setEndIconVisibility(
-                when (event) {
-                    is FavoritesEvent.IsLogin -> event.isLogin
-                    FavoritesEvent.Success -> false
-                }
-            )
+            val logoutIconVisibility: Boolean = when (event) {
+                is FavoritesEvent.IsLogin -> event.isLogin
+                FavoritesEvent.Success -> false
+            }
+            binding.customToolbar.setEndIconVisibility(logoutIconVisibility)
         })
     }
 }

@@ -14,11 +14,10 @@ import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
-import com.scoto.fodamy.ui.home.HomeViewEvent
 import com.scoto.fodamy.util.paging_sources.CategoryPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,6 +44,7 @@ class FavoritesViewModel @Inject constructor(
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             sendRequest(
+                loading = true,
                 success = {
                     val res = authRepository.logout()
                     event.value = FavoritesEvent.Success
@@ -59,9 +59,9 @@ class FavoritesViewModel @Inject constructor(
             success = {
                 val pager = Pager(
                     config = pageConfig,
-                    pagingSourceFactory = {CategoryPagingSource(recipeRepository)}
+                    pagingSourceFactory = { CategoryPagingSource(recipeRepository) }
                 ).flow
-                pager.cachedIn(viewModelScope).collect{
+                pager.cachedIn(viewModelScope).collect {
                     _categories.value = it
                 }
             }
@@ -84,7 +84,7 @@ class FavoritesViewModel @Inject constructor(
         )
     }
 
-    companion object{
+    companion object {
         private val pageConfig = PagingConfig(
             pageSize = 24,
             maxSize = 100,

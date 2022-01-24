@@ -65,11 +65,14 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun logout() = viewModelScope.launch {
-        sendRequest(success = {
-            val response = authRepository.logout()
-            event.value = ProfileEvent.Success
-            showMessage(response.message)
-        })
+        sendRequest(
+            loading = true,
+            success = {
+                val response = authRepository.logout()
+                event.value = ProfileEvent.Success
+                showMessage(response.message)
+            }
+        )
     }
 
     suspend fun isLoginLiveData(): LiveData<String> = dataStoreManager.isLoginLiveData()

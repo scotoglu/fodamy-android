@@ -24,6 +24,7 @@ class ResetPasswordViewModel @Inject constructor(
         val email = email.value.toString()
         if (validateEmail()) {
             sendRequest(
+                loading = true,
                 success = {
                     authRepository.forgot(email)
                     showMessageWithRes(R.string.success_reset_password)

@@ -38,6 +38,7 @@ object Dependencies {
 
     const val DOTSINDICATOR="com.tbuonomo:dotsindicator:${Versions.DOTSINDICATOR}"
     const val CIRCLE_IMAGEVIEW="de.hdodenhof:circleimageview:${Versions.CIRCLE_IMAGEVIEW}"
+    const val LOTTIE_ANIMATION="com.airbnb.android:lottie:${Versions.LOTTIE_ANIMATION}"
 
     //classpath
     const val TOOLS_BUILD_GRADLE="com.android.tools.build:gradle:${Versions.TOOLS_BUILD_GRADLE}"
