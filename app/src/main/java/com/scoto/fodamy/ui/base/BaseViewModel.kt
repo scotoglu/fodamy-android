@@ -41,18 +41,31 @@ abstract class BaseViewModel : ViewModel() {
         baseEvent.value = BaseViewEvent.ShowMessageRes(messageId)
     }
 
+    fun showDialog() {
+        baseEvent.value = BaseViewEvent.ShowLoading
+    }
+
+    fun hideDialog() {
+        baseEvent.value = BaseViewEvent.HideLoading
+    }
+
     fun <T> sendRequest(
+        loading: Boolean = false,
         success: suspend () -> T,
         error: (() -> Unit)? = null
     ) {
         viewModelScope.launch {
+            if (loading) showDialog()
             try {
                 success.invoke()
+                hideDialog()
             } catch (ex: Exception) {
-                if (error == null)
+                hideDialog()
+                if (error == null) {
                     parseException(ex)
-                else
+                } else {
                     error.invoke()
+                }
             }
         }
     }
