@@ -1,5 +1,6 @@
 package com.scoto.fodamy.ui.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,8 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
 
+    private lateinit var dialog: Dialog
+
     @Suppress("UNCHECKED_CAST")
     val viewModelClass: Class<VM>
         get() = findGenericSuperclass<BaseFragment<VB, VM>>()
@@ -58,6 +61,12 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         navController = findNavController()
         bottomNavigationView =
             (activity as AppCompatActivity).findViewById(R.id.bottom_navigation_view)
+
+        dialog = Dialog(requireActivity())
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.progress_custom_dialog)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
         initViews()
         eventObserver()
         registerObservables()
@@ -89,7 +98,12 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
             is BaseViewEvent.NavigateTo -> navController.navigate(event.directions)
             is BaseViewEvent.ShowMessage -> snackbar(event.message, bottomNavigationView)
             is BaseViewEvent.OpenDialog -> navController.navigate(event.actionId)
-            is BaseViewEvent.ShowMessageRes -> snackbar(getString(event.messageId), bottomNavigationView)
+            is BaseViewEvent.ShowMessageRes -> snackbar(
+                getString(event.messageId),
+                bottomNavigationView
+            )
+            BaseViewEvent.ShowDialog -> dialog.show()
+            BaseViewEvent.HideDialog -> dialog.dismiss()
         }
     }
 
