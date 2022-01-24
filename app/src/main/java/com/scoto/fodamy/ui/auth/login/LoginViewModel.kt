@@ -34,11 +34,14 @@ class LoginViewModel @Inject constructor(
             val password = password.value.toString()
 
             if (validation.value == true) {
-                sendRequest(success = {
-                    authRepository.login(username, password)
-                    showMessageWithRes(R.string.success_login)
-                    backTo()
-                })
+                sendRequest(
+                    loading = true,
+                    success = {
+                        authRepository.login(username, password)
+                        showMessageWithRes(R.string.success_login)
+                        backTo()
+                    }
+                )
             }
         }
 

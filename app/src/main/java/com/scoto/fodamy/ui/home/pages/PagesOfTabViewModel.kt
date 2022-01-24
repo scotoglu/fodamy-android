@@ -37,21 +37,23 @@ class PagesOfTabViewModel @Inject constructor(
     }
 
     fun getEditorChoices() = viewModelScope.launch {
-        sendRequest(success = {
-            val pager = Pager(
-                config = pageConfig,
-                pagingSourceFactory = {
-                    RecipePagingSource(
-                        recipeRepository,
-                        FROM_EDITOR_CHOICE,
-                        null
-                    )
+        sendRequest(
+            success = {
+                val pager = Pager(
+                    config = pageConfig,
+                    pagingSourceFactory = {
+                        RecipePagingSource(
+                            recipeRepository,
+                            FROM_EDITOR_CHOICE,
+                            null
+                        )
+                    }
+                ).flow
+                pager.cachedIn(viewModelScope).collect {
+                    _recipes.value = it
                 }
-            ).flow
-            pager.cachedIn(viewModelScope).collect {
-                _recipes.value = it
             }
-        })
+        )
     }
 
     fun getLastAdded() = viewModelScope.launch {

@@ -40,13 +40,11 @@ class HomeFragment :
     override fun registerObservables() {
         super.registerObservables()
         viewModel.event.observe(viewLifecycleOwner, { event ->
-            binding.customToolbar.setEndIconVisibility(
-                when(event){
-                    is HomeViewEvent.IsLogin -> event.isLogin
-                    HomeViewEvent.Success -> false
-                }
-            )
-
+            val logoutIconVisibility: Boolean = when (event) {
+                is HomeViewEvent.IsLogin -> event.isLogin
+                HomeViewEvent.Success -> false
+            }
+            binding.customToolbar.setEndIconVisibility(logoutIconVisibility)
         })
     }
 }

@@ -58,7 +58,8 @@ class RecipeDetailsViewModel @Inject constructor(
             success = {
                 val res = recipeRepository.getFirstComment(recipeId)
                 _comment.value = res
-            })
+            }
+        )
     }
 
     fun onImageSlider() {

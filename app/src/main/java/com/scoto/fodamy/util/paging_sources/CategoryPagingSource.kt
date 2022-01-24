@@ -2,8 +2,6 @@ package com.scoto.fodamy.util.paging_sources
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.scoto.data.mapper.toDomainModel
-import com.scoto.data.network.services.RecipeService
 import com.scoto.domain.models.Category
 import com.scoto.domain.repositories.RecipeRepository
 

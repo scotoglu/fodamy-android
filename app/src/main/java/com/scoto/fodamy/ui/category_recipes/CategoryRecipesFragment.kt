@@ -58,12 +58,11 @@ class CategoryRecipesFragment :
 
     private fun eventObserver() {
         viewModel.event.observe(viewLifecycleOwner, { event ->
-            binding.customToolbar.setEndIconVisibility(
-                when (event) {
-                    is CategoryEvent.IsLogin -> event.isLogin
-                    CategoryEvent.Success -> false
-                }
-            )
+            val logoutIconVisibility: Boolean = when (event) {
+                is CategoryEvent.IsLogin -> event.isLogin
+                CategoryEvent.Success -> false
+            }
+            binding.customToolbar.setEndIconVisibility(logoutIconVisibility)
         })
     }
 }

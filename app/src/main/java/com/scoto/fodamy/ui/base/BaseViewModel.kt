@@ -73,6 +73,5 @@ abstract class BaseViewModel : ViewModel() {
                 showMessage(ex.message.toString())
             }
         }
-
     }
 }

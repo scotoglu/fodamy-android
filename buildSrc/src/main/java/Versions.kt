@@ -24,6 +24,7 @@ object Versions {
     const val KTLINT_VERSION="10.2.0"
     const val TOOLS_BUILD_GRADLE="7.0.4"
     const val KOTLIN_GRADLE_PLUGIN="1.6.10"
+    const val LOTTIE_ANIMATION ="3.4.0"
 
     //test
     const val JUNIT = "4.13.1"

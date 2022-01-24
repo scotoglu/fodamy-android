@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scoto.domain.models.Recipe
 import com.scoto.fodamy.databinding.ItemFoodCardBinding
 
-
 class RecipesAdapter() : PagingDataAdapter<Recipe, RecipesAdapter.ViewHolder>(recipeComparator) {
 
     var onItemClicked: ((Recipe) -> Unit)? = null

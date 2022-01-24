@@ -39,6 +39,7 @@ class RegisterViewModel @Inject constructor(
 
             if (validation.value == true) {
                 sendRequest(
+                    loading = true,
                     success = {
                         authRepository.register(username, email, password)
                         showMessageWithRes(R.string.success_register)
@@ -48,7 +49,6 @@ class RegisterViewModel @Inject constructor(
                 )
             }
         }
-
 
     private fun validateUsername(): Boolean {
         return if (username.value?.isBlank() == true) {

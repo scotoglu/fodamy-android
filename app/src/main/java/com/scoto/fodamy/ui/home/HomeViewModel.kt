@@ -28,6 +28,7 @@ class HomeViewModel @Inject constructor(
     fun logout() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             sendRequest(
+                loading = true,
                 success = {
                     val res = authRepository.logout()
                     event.value = HomeViewEvent.Success
