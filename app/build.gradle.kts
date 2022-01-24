@@ -94,8 +94,6 @@ dependencies {
     implementation(Dependencies.DOTSINDICATOR)
 
     implementation(Dependencies.CIRCLE_IMAGEVIEW)
-
-    implementation(Dependencies.LOTTIE_ANIMATION)
 }
 kapt {
     correctErrorTypes = true

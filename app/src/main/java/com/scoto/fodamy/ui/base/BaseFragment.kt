@@ -1,6 +1,5 @@
 package com.scoto.fodamy.ui.base
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +32,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
 
     lateinit var viewModel: VM
     open val isSharedViewModel = false
-    private lateinit var dialog: Dialog
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -60,13 +58,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         navController = findNavController()
         bottomNavigationView =
             (activity as AppCompatActivity).findViewById(R.id.bottom_navigation_view)
-
-
-        dialog = Dialog(requireActivity())
-        dialog.setCancelable(true)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.setContentView(R.layout.progress_custom_dialog)
-
         initViews()
         eventObserver()
         registerObservables()
@@ -99,8 +90,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
             is BaseViewEvent.ShowMessage -> snackbar(event.message, bottomNavigationView)
             is BaseViewEvent.OpenDialog -> navController.navigate(event.actionId)
             is BaseViewEvent.ShowMessageRes -> snackbar(getString(event.messageId), bottomNavigationView)
-            BaseViewEvent.HideLoading -> dialog.dismiss()
-            BaseViewEvent.ShowLoading -> dialog.show()
         }
     }
 
