@@ -5,6 +5,6 @@ package com.scoto.domain.models
  * Created 20.01.2022 at 10:41
  */
 data class RecipePaging(
-    val data:List<Recipe>,
+    val data: List<Recipe>,
     val pagination: Pagination
 )

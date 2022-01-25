@@ -1,7 +1,27 @@
 package com.scoto.data.mapper
 
-import com.scoto.data.network.dto.*
-import com.scoto.domain.models.*
+import com.scoto.data.network.dto.AuthResponse
+import com.scoto.data.network.dto.CategoryResponse
+import com.scoto.data.network.dto.CommentResponse
+import com.scoto.data.network.dto.CommonResponse
+import com.scoto.data.network.dto.ImageResponse
+import com.scoto.data.network.dto.NumberOfPersonResponse
+import com.scoto.data.network.dto.PaginationResponse
+import com.scoto.data.network.dto.RecipePagingResponse
+import com.scoto.data.network.dto.RecipeResponse
+import com.scoto.data.network.dto.TimeOfRecipeResponse
+import com.scoto.data.network.dto.UserResponse
+import com.scoto.domain.models.Auth
+import com.scoto.domain.models.Category
+import com.scoto.domain.models.Comment
+import com.scoto.domain.models.Common
+import com.scoto.domain.models.Image
+import com.scoto.domain.models.NumberOfPerson
+import com.scoto.domain.models.Pagination
+import com.scoto.domain.models.Recipe
+import com.scoto.domain.models.RecipePaging
+import com.scoto.domain.models.TimeOfRecipe
+import com.scoto.domain.models.User
 
 /**
  * @author Sefa ÇOTOĞLU

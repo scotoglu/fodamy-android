@@ -1,6 +1,5 @@
 package com.scoto.data.network.repositories
 
-import androidx.paging.PagingConfig
 import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.network.services.RecipeService
 import com.scoto.domain.models.Category

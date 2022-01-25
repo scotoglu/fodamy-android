@@ -1,7 +1,9 @@
+
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KOTLIN_PARCELIZE)
+    id(Plugins.KTLINT)
 }
 
 android {
@@ -11,8 +13,6 @@ android {
 
         minSdk = ConfigData.MIN_SDK_VERSION
         targetSdk = ConfigData.TARGET_SDK_VERSION
-
-
     }
 
     buildTypes {
@@ -34,7 +34,7 @@ android {
         }
     }
 }
-dependencies{
+dependencies {
     implementation(Dependencies.LIFECYCLE_LIVEDATA)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.EXT_JUNIT)

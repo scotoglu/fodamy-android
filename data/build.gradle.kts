@@ -4,6 +4,7 @@ plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KOTLIN_KAPT)
+    id(Plugins.KTLINT)
 }
 
 android {
@@ -13,8 +14,6 @@ android {
 
         minSdk = ConfigData.MIN_SDK_VERSION
         targetSdk = ConfigData.TARGET_SDK_VERSION
-
-
     }
 
     buildTypes {

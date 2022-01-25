@@ -1,7 +1,17 @@
 package com.scoto.data.network.services
 
-import com.scoto.data.network.dto.*
-import retrofit2.http.*
+import com.scoto.data.network.dto.CategoryPagingResponse
+import com.scoto.data.network.dto.CommentPagingResponse
+import com.scoto.data.network.dto.CommentResponse
+import com.scoto.data.network.dto.CommonResponse
+import com.scoto.data.network.dto.RecipePagingResponse
+import com.scoto.data.network.dto.RecipeResponse
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * @author Sefa ÇOTOĞLU
