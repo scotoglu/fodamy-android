@@ -16,7 +16,7 @@ class DefaultAuthRepository @Inject constructor(
     private val authService: AuthService,
     private val dataStoreManager: DataStoreManager
 ) : AuthRepository, BaseRepository() {
-    override suspend fun register(username: String, email: String, password: String): Auth =
+    override suspend fun register(username: String, email: String, password: String): Unit =
         execute {
             authService.register(username, email, password).toDomainModel()
         }
@@ -34,11 +34,10 @@ class DefaultAuthRepository @Inject constructor(
             response
         }
 
-    override suspend fun login(username: String, password: String): Auth =
+    override suspend fun login(username: String, password: String): Unit =
         execute {
             val response = authService.login(username, password).toDomainModel()
             dataStoreManager.saveToken(response.token)
             dataStoreManager.saveUserId(response.user.id)
-            response
         }
 }

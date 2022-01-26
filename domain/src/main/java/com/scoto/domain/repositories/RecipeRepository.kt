@@ -15,9 +15,9 @@ interface RecipeRepository {
     suspend fun getRecipeById(recipeId: Int): Recipe
     suspend fun getRecipeComments(recipeId: Int, page: Int = 1): List<Comment>
     suspend fun getFirstComment(recipeId: Int): Comment
-    suspend fun sendComment(recipeId: Int, text: String): Comment
-    suspend fun editComment(recipeId: Int, commentId: Int, text: String): Common
-    suspend fun deleteComment(recipeId: Int, commentId: Int): Common
+    suspend fun sendComment(recipeId: Int, text: String)
+    suspend fun editComment(recipeId: Int, commentId: Int, text: String)
+    suspend fun deleteComment(recipeId: Int, commentId: Int)
     suspend fun likeRecipe(recipeId: Int): Common
     suspend fun dislikeRecipe(recipeId: Int): Common
     suspend fun getCategoriesWithRecipes(page: Int = 1): List<Category>
