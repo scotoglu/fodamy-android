@@ -10,6 +10,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.ActivityMainBinding
+import com.scoto.fodamy.ext.isDeviceHasConnection
+import com.scoto.fodamy.ext.showMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +33,10 @@ class MainActivity : AppCompatActivity() {
 
         navigationSetup()
         navControllerListener()
+
+        if (!isDeviceHasConnection()) {
+            showMessage(R.string.no_connection)
+        }
     }
 
     private fun navigationSetup() {
