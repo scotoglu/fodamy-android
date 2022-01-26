@@ -10,6 +10,7 @@ import com.scoto.data.network.exceptions.GettingEmptyListItem
 import com.scoto.domain.models.ErrorControl
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -53,20 +54,21 @@ abstract class BaseViewModel : ViewModel() {
 
     fun <T> sendRequest(
         loading: Boolean = false,
-        success: suspend () -> T,
-        error: (() -> Unit)? = null
-    ) {
-        viewModelScope.launch {
+        request: suspend () -> T,
+        success: ((T) -> Unit)? = null,
+        error: ((Exception) -> Unit)? = null
+    ): Job {
+        return viewModelScope.launch {
             if (loading) showDialog()
             try {
-                success.invoke()
+                val response = request.invoke()
+                success?.invoke(response)
                 hideDialog()
             } catch (ex: Exception) {
                 hideDialog()
                 if (error == null)
                     parseException(ex)
-                else
-                    error.invoke()
+                else error.invoke(ex)
             }
         }
     }

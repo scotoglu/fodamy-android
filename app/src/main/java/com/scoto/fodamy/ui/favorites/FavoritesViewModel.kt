@@ -45,24 +45,28 @@ class FavoritesViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             sendRequest(
                 loading = true,
+                request = { authRepository.logout() },
                 success = {
-                    val res = authRepository.logout()
                     event.value = FavoritesEvent.Success
-                    showMessage(res.message)
+                    showMessage(it.message)
                 }
             )
         }
     }
 
-    private fun getCategories() = viewModelScope.launch {
+    private fun getCategories() {
         sendRequest(
-            success = {
-                val pager = Pager(
+            request = {
+                Pager(
                     config = pageConfig,
                     pagingSourceFactory = { CategoryPagingSource(recipeRepository) }
                 ).flow
-                pager.cachedIn(viewModelScope).collect {
-                    _categories.value = it
+            },
+            success = {
+                viewModelScope.launch {
+                    it.cachedIn(viewModelScope).collect {
+                        _categories.value = it
+                    }
                 }
             }
         )

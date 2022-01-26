@@ -25,12 +25,17 @@ abstract class BaseRepository {
     private fun parseException(ex: HttpException): Exception {
         // cast HttpException here.
         return when (ex.response()?.code()) {
-            401 -> Unauthorized()
-            403 -> Authentication()
+            CODE_UNAUTHORIZIED -> Unauthorized()
+            CODE_AUTHENTICATION -> Authentication()
             else -> {
                 // The other HttpException  will be handled in base viewmodel.
                 ex
             }
         }
+    }
+
+    companion object {
+        private const val CODE_AUTHENTICATION = 403
+        private const val CODE_UNAUTHORIZIED = 401
     }
 }

@@ -1,14 +1,12 @@
 package com.scoto.fodamy.ui.auth.reset_password
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.scoto.domain.repositories.AuthRepository
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,13 +18,13 @@ class ResetPasswordViewModel @Inject constructor(
     val requiredFieldWarning: SingleLiveEvent<InputErrorType> = SingleLiveEvent()
     val isRequiredFieldVisible = MutableLiveData<Boolean>(false)
 
-    fun resetPassword() = viewModelScope.launch {
+    fun resetPassword() {
         val email = email.value.toString()
         if (validateEmail()) {
             sendRequest(
                 loading = true,
+                request = { authRepository.forgot(email) },
                 success = {
-                    authRepository.forgot(email)
                     showMessageWithRes(R.string.success_reset_password)
                 }
             )

@@ -53,13 +53,17 @@ class CommentsViewModel @Inject constructor(
 
     fun getComments() = viewModelScope.launch {
         sendRequest(
-            success = {
-                val pager = Pager(
+            request = {
+                Pager(
                     config = pageConfig,
                     pagingSourceFactory = { CommentPagingSource(recipeRepository, recipeId) }
                 ).flow
-                pager.cachedIn(viewModelScope).collect {
-                    _comments.value = it
+            },
+            success = {
+                viewModelScope.launch {
+                    it.cachedIn(viewModelScope).collect {
+                        _comments.value = it
+                    }
                 }
             }
         )
@@ -68,8 +72,8 @@ class CommentsViewModel @Inject constructor(
     fun onSend() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             sendRequest(
+                request = { recipeRepository.sendComment(recipeId, comment.value.toString()) },
                 success = {
-                    recipeRepository.sendComment(recipeId, comment.value.toString())
                     comment.value = ""
                     showMessageWithRes(R.string.success_comment_add)
                 }
@@ -101,12 +105,14 @@ class CommentsViewModel @Inject constructor(
     fun onUpdate() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             sendRequest(
-                success = {
+                request = {
                     recipeRepository.editComment(
                         recipeId = recipeId,
                         commentId = commentId.value!!,
                         text = editableComment.value.toString()
                     )
+                },
+                success = {
                     setEditMode(false)
                     showMessageWithRes(R.string.success_comment_edit)
                 }
@@ -118,8 +124,8 @@ class CommentsViewModel @Inject constructor(
 
     fun onDelete() = viewModelScope.launch {
         sendRequest(
+            request = { recipeRepository.deleteComment(recipeId, commentId.value!!) },
             success = {
-                recipeRepository.deleteComment(recipeId, commentId.value!!)
                 showMessageWithRes(R.string.success_comment_delete)
             }
         )

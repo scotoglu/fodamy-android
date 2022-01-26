@@ -2,14 +2,12 @@ package com.scoto.fodamy.ui.auth.login
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.scoto.domain.repositories.AuthRepository
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,22 +26,21 @@ class LoginViewModel @Inject constructor(
         addSource(password) { value = validatePassword() }
     }
 
-    fun login() =
-        viewModelScope.launch {
-            val username = username.value.toString()
-            val password = password.value.toString()
+    fun login() {
+        val username = username.value.toString()
+        val password = password.value.toString()
 
-            if (validation.value == true) {
-                sendRequest(
-                    loading = true,
-                    success = {
-                        authRepository.login(username, password)
-                        showMessageWithRes(R.string.success_login)
-                        backTo()
-                    }
-                )
-            }
+        if (validation.value == true) {
+            sendRequest(
+                loading = true,
+                request = { authRepository.login(username, password) },
+                success = {
+                    showMessageWithRes(R.string.success_login)
+                    backTo()
+                }
+            )
         }
+    }
 
     private fun validateUsername(): Boolean {
         return if (username.value?.isBlank() == true) {

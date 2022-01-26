@@ -50,11 +50,13 @@ class ProfileViewModel @Inject constructor(
 
     fun getUserDetails() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            sendRequest(success = {
-                val response = userRepository.getUserDetails(dataStoreManager.getUserId())
-                _user.value = response
-                getSomeData()
-            })
+            sendRequest(
+                request = { userRepository.getUserDetails(dataStoreManager.getUserId()) },
+                success = {
+                    _user.value = it
+                    getSomeData()
+                }
+            )
         } else {
             showMessageWithRes(R.string.required_auth)
         }
@@ -64,27 +66,27 @@ class ProfileViewModel @Inject constructor(
         event.value = ProfileEvent.IsLogin(dataStoreManager.isLogin())
     }
 
-    fun logout() = viewModelScope.launch {
+    fun logout() {
         sendRequest(
             loading = true,
+            request = { authRepository.logout() },
             success = {
-                val response = authRepository.logout()
                 event.value = ProfileEvent.Success
-                showMessage(response.message)
+                showMessage(it.message)
             }
         )
     }
 
     suspend fun isLoginLiveData(): LiveData<String> = dataStoreManager.isLoginLiveData()
 
-    fun onLogin() {
+    fun toLogin() {
         navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFlow())
     }
 
-    private fun getSomeData() = viewModelScope.launch {
+    private fun getSomeData() {
         sendRequest(
-            success = {
-                val pager = Pager(
+            request = {
+                Pager(
                     config = pageConfig,
                     pagingSourceFactory = {
                         RecipePagingSource(
@@ -94,8 +96,12 @@ class ProfileViewModel @Inject constructor(
                         )
                     }
                 ).flow
-                pager.cachedIn(viewModelScope).collect {
-                    _recipes.value = it
+            },
+            success = {
+                viewModelScope.launch {
+                    it.cachedIn(viewModelScope).collect {
+                        _recipes.value = it
+                    }
                 }
             }
         )

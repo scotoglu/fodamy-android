@@ -2,14 +2,12 @@ package com.scoto.fodamy.ui.auth.signup
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.scoto.domain.repositories.AuthRepository
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.helper.states.InputErrorType
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,24 +29,22 @@ class RegisterViewModel @Inject constructor(
         addSource(password) { value = validatePassword() }
     }
 
-    fun register() =
-        viewModelScope.launch {
-            val username = username.value.toString()
-            val email = email.value.toString()
-            val password = password.value.toString()
-
-            if (validation.value == true) {
-                sendRequest(
-                    loading = true,
-                    success = {
-                        authRepository.register(username, email, password)
-                        showMessageWithRes(R.string.success_register)
-                        resetInputFields()
-                        toLogin()
-                    }
-                )
-            }
+    fun register() {
+        val username = username.value.toString()
+        val email = email.value.toString()
+        val password = password.value.toString()
+        if (validation.value == true) {
+            sendRequest(
+                loading = true,
+                request = { authRepository.register(username, email, password) },
+                success = {
+                    showMessageWithRes(R.string.success_register)
+                    resetInputFields()
+                    toLogin()
+                }
+            )
         }
+    }
 
     private fun validateUsername(): Boolean {
         return if (username.value?.isBlank() == true) {

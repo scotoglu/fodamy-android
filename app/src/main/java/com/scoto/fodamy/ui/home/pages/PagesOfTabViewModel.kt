@@ -36,10 +36,10 @@ class PagesOfTabViewModel @Inject constructor(
 //        }
     }
 
-    fun getEditorChoices() = viewModelScope.launch {
+    fun getEditorChoices() {
         sendRequest(
-            success = {
-                val pager = Pager(
+            request = {
+                Pager(
                     config = pageConfig,
                     pagingSourceFactory = {
                         RecipePagingSource(
@@ -49,29 +49,39 @@ class PagesOfTabViewModel @Inject constructor(
                         )
                     }
                 ).flow
-                pager.cachedIn(viewModelScope).collect {
-                    _recipes.value = it
+            },
+            success = {
+                viewModelScope.launch {
+                    it.cachedIn(viewModelScope).collect {
+                        _recipes.value = it
+                    }
                 }
             }
         )
     }
 
-    fun getLastAdded() = viewModelScope.launch {
-        sendRequest(success = {
-            val pager = Pager(
-                config = pageConfig,
-                pagingSourceFactory = {
-                    RecipePagingSource(
-                        recipeRepository,
-                        FROM_LAST_ADDED,
-                        null
-                    )
+    fun getLastAdded() {
+        sendRequest(
+            request = {
+                Pager(
+                    config = pageConfig,
+                    pagingSourceFactory = {
+                        RecipePagingSource(
+                            recipeRepository,
+                            FROM_LAST_ADDED,
+                            null
+                        )
+                    }
+                ).flow
+            },
+            success = {
+                viewModelScope.launch {
+                    it.cachedIn(viewModelScope).collect {
+                        _recipes.value = it
+                    }
                 }
-            ).flow
-            pager.cachedIn(viewModelScope).collect {
-                _recipes.value = it
             }
-        })
+        )
     }
 
     fun toRecipeDetails(recipe: Recipe) {

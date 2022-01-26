@@ -12,20 +12,17 @@ class SplashViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : BaseViewModel() {
 
-    fun splash() {
-        viewModelScope.launch {
-            if (dataStoreManager.isFirstTimeLaunch()) {
-                toWalkthrough()
-                saveFirstLaunch()
-            } else {
-                toHome()
-            }
+    fun splash() = viewModelScope.launch {
+        if (dataStoreManager.isFirstTimeLaunch()) {
+            toWalkthrough()
+            saveFirstLaunch()
+        } else {
+            toHome()
         }
     }
-    private fun saveFirstLaunch() {
-        viewModelScope.launch {
-            dataStoreManager.saveFirstTimeLaunched()
-        }
+
+    private fun saveFirstLaunch() = viewModelScope.launch {
+        dataStoreManager.saveFirstTimeLaunched()
     }
 
     private fun toHome() {
