@@ -41,7 +41,6 @@ class DataStoreManagerImpl @Inject constructor(
         return context.dataStore.data.map { it[FIRST_LAUNCH] ?: true }.first()
     }
 
-
     override suspend fun saveFirstTimeLaunched() {
         context.dataStore.edit { it[FIRST_LAUNCH] = false }
     }

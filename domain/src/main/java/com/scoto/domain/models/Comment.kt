@@ -1,3 +1,4 @@
+
 package com.scoto.domain.models
 
 import android.os.Parcelable

@@ -115,4 +115,6 @@
 
     <!--    Warnings-->
     <string name="check_internet_connection">İnternet bağlantınızı kontrol edin</string>
+    <string name="try_to_login">Bu işlemi yapabilmek için, giriş yapmalısınız.</string>
+    <string name="no_comment_in_list">Tarife ait henüz yorum eklenmemiş.</string>
 </resources>

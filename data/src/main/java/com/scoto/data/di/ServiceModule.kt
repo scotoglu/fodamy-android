@@ -59,5 +59,4 @@ object ServiceModule {
     fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
-
 }

@@ -1,7 +1,10 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KOTLIN_KAPT)
+    id(Plugins.KTLINT)
 }
 
 android {
@@ -11,12 +14,10 @@ android {
 
         minSdk = ConfigData.MIN_SDK_VERSION
         targetSdk = ConfigData.TARGET_SDK_VERSION
-
-
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -24,7 +25,7 @@ android {
             )
         }
         getByName("debug") {
-            buildConfigField("String","BASE_URL","\"https://fodamy.mobillium.com/api/\"")
+            buildConfigField("String", "BASE_URL", getSecretKey("BASE_URL"))
         }
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,6 +38,12 @@ android {
         }
     }
 }
+
+fun getSecretKey(key: String): String {
+    return gradleLocalProperties(rootDir)
+        .getProperty(key)
+}
+
 dependencies {
     implementation(project(Modules.DOMAIN))
     testImplementation(Dependencies.JUNIT)

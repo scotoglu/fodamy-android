@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.google.gson.Gson
+import com.scoto.data.network.exceptions.Authentication
+import com.scoto.data.network.exceptions.GettingEmptyListItem
 import com.scoto.domain.models.ErrorControl
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
@@ -41,11 +43,11 @@ abstract class BaseViewModel : ViewModel() {
         baseEvent.value = BaseViewEvent.ShowMessageRes(messageId)
     }
 
-    fun showDialog() {
+    private fun showDialog() {
         baseEvent.value = BaseViewEvent.ShowDialog
     }
 
-    fun hideDialog() {
+    private fun hideDialog() {
         baseEvent.value = BaseViewEvent.HideDialog
     }
 
@@ -71,6 +73,9 @@ abstract class BaseViewModel : ViewModel() {
 
     private fun parseException(ex: Exception) {
         when (ex) {
+            is Authentication -> showMessageWithRes(R.string.try_to_login)
+            is IOException -> showMessageWithRes(R.string.check_internet_connection)
+            is GettingEmptyListItem -> showMessageWithRes(R.string.no_comment_in_list)
             is HttpException -> {
                 val message = Gson().fromJson(
                     ex.response()?.errorBody()?.charStream(),
@@ -78,12 +83,7 @@ abstract class BaseViewModel : ViewModel() {
                 )
                 showMessage(message.error)
             }
-            is IOException -> {
-                showMessageWithRes(R.string.check_internet_connection)
-            }
-            else -> {
-                showMessage(ex.message.toString())
-            }
+            else -> showMessage(ex.message.toString())
         }
     }
 }
