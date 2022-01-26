@@ -1,8 +1,12 @@
 package com.scoto.data.network.repositories
 
+import com.google.gson.Gson
 import com.scoto.data.network.exceptions.Authentication
+import com.scoto.data.network.exceptions.BaseException
 import com.scoto.data.network.exceptions.GettingEmptyListItem
+import com.scoto.data.network.exceptions.SimpleHttpException
 import com.scoto.data.network.exceptions.Unauthorized
+import com.scoto.domain.models.ErrorControl
 import retrofit2.HttpException
 
 /**
@@ -14,23 +18,29 @@ abstract class BaseRepository {
         try {
             return request.invoke()
         } catch (ex: Exception) {
-            when (ex) {
-                is HttpException -> throw parseException(ex)
-                is IndexOutOfBoundsException -> throw GettingEmptyListItem()
-                else -> throw ex
-            }
+            throw parseException(ex)
         }
     }
 
-    private fun parseException(ex: HttpException): Exception {
-        // cast HttpException here.
-        return when (ex.response()?.code()) {
-            CODE_UNAUTHORIZIED -> Unauthorized()
-            CODE_AUTHENTICATION -> Authentication()
-            else -> {
-                // The other HttpException  will be handled in base viewmodel.
-                ex
+    private fun parseException(ex: Exception): Exception {
+
+        return when (ex) {
+            // cast HttpException here.
+            is HttpException -> {
+                when (ex.response()?.code()) {
+                    CODE_UNAUTHORIZIED -> Unauthorized()
+                    CODE_AUTHENTICATION -> Authentication()
+                    else -> {
+                        val response = Gson().fromJson(
+                            ex.response()?.errorBody()?.charStream(),
+                            ErrorControl::class.java
+                        )
+                        SimpleHttpException(response.code, response.error)
+                    }
+                }
             }
+            is IndexOutOfBoundsException -> GettingEmptyListItem()
+            else -> BaseException(ex.message.toString())
         }
     }
 

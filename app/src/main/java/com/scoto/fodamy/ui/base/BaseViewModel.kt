@@ -4,15 +4,14 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
-import com.google.gson.Gson
 import com.scoto.data.network.exceptions.Authentication
+import com.scoto.data.network.exceptions.BaseException
 import com.scoto.data.network.exceptions.GettingEmptyListItem
-import com.scoto.domain.models.ErrorControl
+import com.scoto.data.network.exceptions.SimpleHttpException
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import java.io.IOException
 
 /**
@@ -67,25 +66,19 @@ abstract class BaseViewModel : ViewModel() {
             } catch (ex: Exception) {
                 hideDialog()
                 if (error == null)
-                    parseException(ex)
+                    handleException(ex)
                 else error.invoke(ex)
             }
         }
     }
 
-    private fun parseException(ex: Exception) {
+    private fun handleException(ex: Exception) {
         when (ex) {
             is Authentication -> showMessageWithRes(R.string.try_to_login)
             is IOException -> showMessageWithRes(R.string.check_internet_connection)
             is GettingEmptyListItem -> showMessageWithRes(R.string.no_comment_in_list)
-            is HttpException -> {
-                val message = Gson().fromJson(
-                    ex.response()?.errorBody()?.charStream(),
-                    ErrorControl::class.java
-                )
-                showMessage(message.error)
-            }
-            else -> showMessage(ex.message.toString())
+            is SimpleHttpException -> showMessage(ex.friendlyMessage)
+            is BaseException -> showMessage(ex.exMessage)
         }
     }
 }
