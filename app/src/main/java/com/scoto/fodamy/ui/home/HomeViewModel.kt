@@ -29,10 +29,10 @@ class HomeViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             sendRequest(
                 loading = true,
+                request = { authRepository.logout() },
                 success = {
-                    val res = authRepository.logout()
                     event.value = HomeViewEvent.Success
-                    showMessage(res.message)
+                    showMessage(it.message)
                 }
             )
         }

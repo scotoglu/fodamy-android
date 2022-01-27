@@ -45,19 +45,21 @@ class RecipeDetailsViewModel @Inject constructor(
         getRecipeComments()
     }
 
-    private fun getRecipeById() = viewModelScope.launch {
-        sendRequest(success = {
-            val res = recipeRepository.getRecipeById(recipeId)
-            savedStateHandle.set(RECIPE, res)
-            _recipe.value = res
-        })
+    private fun getRecipeById() {
+        sendRequest(
+            request = { recipeRepository.getRecipeById(recipeId) },
+            success = {
+                savedStateHandle.set(RECIPE, it)
+                _recipe.value = it
+            }
+        )
     }
 
-    private fun getRecipeComments() = viewModelScope.launch {
+    private fun getRecipeComments() {
         sendRequest(
+            request = { recipeRepository.getFirstComment(recipeId) },
             success = {
-                val res = recipeRepository.getFirstComment(recipeId)
-                _comment.value = res
+                _comment.value = it
             }
         )
     }
@@ -90,21 +92,21 @@ class RecipeDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun like() = viewModelScope.launch {
+    private fun like() {
         sendRequest(
+            request = { recipeRepository.likeRecipe(recipeId) },
             success = {
-                val res = recipeRepository.likeRecipe(recipeId)
-                showMessage(res.message)
+                showMessage(it.message)
                 getRecipeById()
             }
         )
     }
 
-    private fun dislike() = viewModelScope.launch {
+    private fun dislike() {
         sendRequest(
+            request = { recipeRepository.dislikeRecipe(recipeId) },
             success = {
-                val res = recipeRepository.dislikeRecipe(recipeId)
-                showMessage(res.message)
+                showMessage(it.message)
                 getRecipeById()
             }
         )
@@ -127,26 +129,25 @@ class RecipeDetailsViewModel @Inject constructor(
         }
     }
 
-    fun unfollow() = viewModelScope.launch {
+    fun unfollow() {
         sendRequest(
+            request = { userRepository.unFollowUser(followedUserId) },
             success = {
-                val res = userRepository.unFollowUser(followedUserId)
-                showMessage(res.message)
+                showMessage(it.message)
                 getRecipeById()
             }
         )
     }
 
-    private fun follow() =
-        viewModelScope.launch {
-            sendRequest(
-                success = {
-                    val res = userRepository.followUser(followedUserId)
-                    showMessage(res.message)
-                    getRecipeById()
-                }
-            )
-        }
+    private fun follow() {
+        sendRequest(
+            request = { userRepository.followUser(followedUserId) },
+            success = {
+                showMessage(it.message)
+                getRecipeById()
+            }
+        )
+    }
 
     companion object {
         private const val RECIPE = "RECIPE"

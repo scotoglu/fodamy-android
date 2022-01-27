@@ -20,7 +20,13 @@ buildscript {
 plugins {
     id(Plugins.KTLINT) version Versions.KTLINT_VERSION
 }
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+tasks {
+    register("clean", Delete::class) {
+        delete(rootProject.buildDir)
+    }
+    register("installGitHook", Copy::class) {
+        from(File(rootProject.rootDir, "scripts/pre-commit"))
+        into(File(rootProject.rootDir, ".git/hooks"))
+        fileMode = 777
+    }
 }

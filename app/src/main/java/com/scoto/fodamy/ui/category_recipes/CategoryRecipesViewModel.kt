@@ -46,10 +46,10 @@ class CategoryRecipesViewModel @Inject constructor(
         event.value = CategoryEvent.IsLogin(dataStoreManager.isLogin())
     }
 
-    private fun getRecipesByCategory() = viewModelScope.launch {
+    private fun getRecipesByCategory() {
         sendRequest(
-            success = {
-                val pager = Pager(
+            request = {
+                Pager(
                     config = pageConfig,
                     pagingSourceFactory = {
                         RecipePagingSource(
@@ -59,8 +59,12 @@ class CategoryRecipesViewModel @Inject constructor(
                         )
                     }
                 ).flow
-                pager.cachedIn(viewModelScope).collect {
-                    _recipes.value = it
+            },
+            success = {
+                viewModelScope.launch {
+                    it.cachedIn(viewModelScope).collect {
+                        _recipes.value = it
+                    }
                 }
             }
         )
@@ -70,10 +74,10 @@ class CategoryRecipesViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             sendRequest(
                 loading = true,
+                request = { authRepository.logout() },
                 success = {
-                    val res = authRepository.logout()
                     event.value = CategoryEvent.Success
-                    showMessage(res.message)
+                    showMessage(it.message)
                 }
             )
         }

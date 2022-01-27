@@ -44,17 +44,17 @@ class DefaultRecipeRepository @Inject constructor(
             recipeService.getRecipeComments(recipeId, 1).data.get(0).toDomainModel()
         }
 
-    override suspend fun sendComment(recipeId: Int, text: String): Comment =
+    override suspend fun sendComment(recipeId: Int, text: String): Unit =
         execute {
             recipeService.sendComment(recipeId, text).toDomainModel()
         }
 
-    override suspend fun editComment(recipeId: Int, commentId: Int, text: String): Common =
+    override suspend fun editComment(recipeId: Int, commentId: Int, text: String): Unit =
         execute {
             recipeService.editComment(recipeId, commentId, text).toDomainModel()
         }
 
-    override suspend fun deleteComment(recipeId: Int, commentId: Int): Common =
+    override suspend fun deleteComment(recipeId: Int, commentId: Int): Unit =
         execute {
             recipeService.deleteComment(recipeId, commentId).toDomainModel()
         }
