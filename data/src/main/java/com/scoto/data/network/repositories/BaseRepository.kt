@@ -8,6 +8,7 @@ import com.scoto.data.network.exceptions.SimpleHttpException
 import com.scoto.data.network.exceptions.Unauthorized
 import com.scoto.domain.models.ErrorControl
 import retrofit2.HttpException
+import java.io.IOException
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -39,6 +40,7 @@ abstract class BaseRepository {
                     }
                 }
             }
+            is IOException -> IOException()
             is IndexOutOfBoundsException -> GettingEmptyListItem()
             else -> BaseException(ex.message.toString())
         }
