@@ -19,10 +19,14 @@
             android:id="@+id/action_homeFragment_to_login_flow"
             app:destination="@id/login_flow" />
     </fragment>
-    <fragment
-        android:id="@+id/pagesOfTab"
-        android:name="com.scoto.fodamy.ui.home.pages.PagesOfTab"
-        android:label="PagesOfTab" />
     <include app:graph="@navigation/recipe_flow" />
     <include app:graph="@navigation/login_flow" />
+    <fragment
+        android:id="@+id/editorChoiceFragment"
+        android:name="com.scoto.fodamy.ui.home.editor_choices.EditorChoiceFragment"
+        android:label="EditorChoiceFragment" />
+    <fragment
+        android:id="@+id/lastAddedFragment"
+        android:name="com.scoto.fodamy.ui.home.last_added.LastAddedFragment"
+        android:label="LastAddedFragment" />
 </navigation>

@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
+    id(Plugins.KOTLIN_KAPT)
     id(Plugins.KOTLIN_PARCELIZE)
     id(Plugins.KTLINT)
 }
@@ -38,4 +40,6 @@ dependencies {
     implementation(Dependencies.LIFECYCLE_LIVEDATA)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.EXT_JUNIT)
+    implementation(Dependencies.DAGGER_HILT)
+    kapt(Dependencies.DAGGER_HILT_COMPILER)
 }
