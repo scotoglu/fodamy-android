@@ -9,8 +9,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.scoto.domain.models.Recipe
-import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
+import com.scoto.domain.usecase.LogoutUseCase
+import com.scoto.domain.usecase.params.NoParams
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -24,9 +25,9 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoryRecipesViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val authRepository: AuthRepository,
     private val dataStoreManager: DataStoreManager,
     private val savedStateHandle: SavedStateHandle,
+    private val logoutUseCase: LogoutUseCase
 ) : BaseViewModel() {
 
     private val id: Int = savedStateHandle.get<Int>(CATEGORY_ID) ?: 0
@@ -74,7 +75,7 @@ class CategoryRecipesViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             sendRequest(
                 loading = true,
-                request = { authRepository.logout() },
+                request = { logoutUseCase.invoke(NoParams(Any())) },
                 success = {
                     event.value = CategoryEvent.Success
                     showMessage(it.message)

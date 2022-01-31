@@ -25,7 +25,6 @@ object Coroutine {
     @Provides
     @UseCaseScope
     fun provideScope(): CoroutineScope = CoroutineScope(SupervisorJob() + provideDispatcher())
-
 }
 
 @Retention(AnnotationRetention.RUNTIME)

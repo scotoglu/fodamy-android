@@ -1,7 +1,8 @@
 package com.scoto.fodamy.ui.home
 
 import androidx.lifecycle.viewModelScope
-import com.scoto.domain.repositories.AuthRepository
+import com.scoto.domain.usecase.LogoutUseCase
+import com.scoto.domain.usecase.params.NoParams
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -12,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager,
-    private val authRepository: AuthRepository
+    private val logoutUseCase: LogoutUseCase
 ) : BaseViewModel() {
 
     val event: SingleLiveEvent<HomeViewEvent> = SingleLiveEvent()
@@ -29,7 +30,7 @@ class HomeViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             sendRequest(
                 loading = true,
-                request = { authRepository.logout() },
+                request = { logoutUseCase.invoke(NoParams(Any())) },
                 success = {
                     event.value = HomeViewEvent.Success
                     showMessage(it.message)

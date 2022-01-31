@@ -37,9 +37,9 @@ class CommentsFragment :
     }
 
     private fun commentObserver() {
-        viewModel.comments.observe(viewLifecycleOwner, {
+        viewModel.comments.observe(viewLifecycleOwner) {
             commentsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        })
+        }
     }
 
     override fun addItemClicks() {
@@ -88,21 +88,15 @@ class CommentsFragment :
     }
 
     private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner, { event ->
+        viewModel.event.observe(viewLifecycleOwner) { event ->
             when (event) {
-                is CommentEvent.Success -> {
-                    context?.hideSoftKeyboard(binding.root)
-                    requireView().clearFocus()
-                    commentsAdapter.refresh()
-                }
-
-                is CommentEvent.CommentEdited -> {
+                CommentEvent.Success -> {
                     context?.hideSoftKeyboard(binding.root)
                     requireView().clearFocus()
                     commentsAdapter.refresh()
                 }
             }
-        })
+        }
     }
 
     private fun setFocusToAddCommentEdittext() {

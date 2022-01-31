@@ -5,7 +5,6 @@ import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.repositories.UserRepository
 import com.scoto.domain.usecase.base.UseCase
 import com.scoto.domain.usecase.params.FollowParams
-import com.scoto.domain.usecase.params.RecipeParams
 import javax.inject.Inject
 
 /**

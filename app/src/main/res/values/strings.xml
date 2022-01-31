@@ -112,7 +112,10 @@
     <string name="success_register">Kullanıcı kaydedildi.Giriş yapabilirsiniz.</string>
     <string name="success_login">Giriş Başarılı.</string>
     <string name="success_reset_password">Emaili kontrol edin.</string>
-
+    <string name="success_like">Tarif beğenildi.</string>
+    <string name="success_dislike">Tarif beğeni kaldırıldı.</string>
+    <string name="success_follow">Takip edildi.</string>
+    <string name="success_unfollow">Takip edilme kaldırıldı.</string>
     <!--    Warnings-->
     <string name="check_internet_connection">İnternet bağlantınızı kontrol edin</string>
     <string name="try_to_login">Bu işlemi yapabilmek için, giriş yapmalısınız.</string>

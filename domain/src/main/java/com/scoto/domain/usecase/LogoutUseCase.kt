@@ -6,7 +6,6 @@ import com.scoto.domain.usecase.base.UseCase
 import com.scoto.domain.usecase.params.NoParams
 import javax.inject.Inject
 
-
 /**
  * @author Sefa ÇOTOĞLU
  * Created 31.01.2022 at 11:49

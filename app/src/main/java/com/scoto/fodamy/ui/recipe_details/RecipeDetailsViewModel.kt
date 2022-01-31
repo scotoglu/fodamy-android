@@ -15,7 +15,12 @@ import com.scoto.domain.models.Comment
 import com.scoto.domain.models.ImageList
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.RecipeRepository
-import com.scoto.domain.repositories.UserRepository
+import com.scoto.domain.usecase.DislikeUseCase
+import com.scoto.domain.usecase.FollowUseCase
+import com.scoto.domain.usecase.LikeUseCase
+import com.scoto.domain.usecase.UnfollowUseCase
+import com.scoto.domain.usecase.params.FollowParams
+import com.scoto.domain.usecase.params.RecipeParams
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -26,9 +31,12 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeDetailsViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val userRepository: UserRepository,
     private val savedStateHandle: SavedStateHandle,
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    private val likeUseCase: LikeUseCase,
+    private val dislikeUseCase: DislikeUseCase,
+    private val followUseCase: FollowUseCase,
+    private val unfollowUseCase: UnfollowUseCase
 ) : BaseViewModel() {
 
     private val _recipe = savedStateHandle.getLiveData<Recipe>(RECIPE)
@@ -47,10 +55,10 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun getRecipeById() {
         sendRequest(
+            loading = true,
             request = { recipeRepository.getRecipeById(recipeId) },
             success = {
-                savedStateHandle.set(RECIPE, it)
-                _recipe.value = it
+                setSavedStateAndValue(it)
             }
         )
     }
@@ -94,20 +102,20 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun like() {
         sendRequest(
-            request = { recipeRepository.likeRecipe(recipeId) },
+            request = { likeUseCase.invoke(RecipeParams(recipeId)) },
             success = {
-                showMessage(it.message)
-                getRecipeById()
+                showMessageWithRes(R.string.success_like)
+                setSavedStateAndValue(it)
             }
         )
     }
 
     private fun dislike() {
         sendRequest(
-            request = { recipeRepository.dislikeRecipe(recipeId) },
+            request = { dislikeUseCase.invoke(RecipeParams(recipeId)) },
             success = {
-                showMessage(it.message)
-                getRecipeById()
+                showMessageWithRes(R.string.success_dislike)
+                setSavedStateAndValue(it)
             }
         )
     }
@@ -131,22 +139,27 @@ class RecipeDetailsViewModel @Inject constructor(
 
     fun unfollow() {
         sendRequest(
-            request = { userRepository.unFollowUser(followedUserId) },
+            request = { unfollowUseCase.invoke(FollowParams(followedUserId, recipeId)) },
             success = {
-                showMessage(it.message)
-                getRecipeById()
+                showMessageWithRes(R.string.success_unfollow)
+                setSavedStateAndValue(it)
             }
         )
     }
 
     private fun follow() {
         sendRequest(
-            request = { userRepository.followUser(followedUserId) },
+            request = { followUseCase.invoke(FollowParams(followedUserId, recipeId)) },
             success = {
-                showMessage(it.message)
-                getRecipeById()
+                showMessageWithRes(R.string.success_follow)
+                setSavedStateAndValue(it)
             }
         )
+    }
+
+    private fun setSavedStateAndValue(recipe: Recipe) {
+        _recipe.value = recipe
+        savedStateHandle.set(RECIPE, recipe)
     }
 
     companion object {
