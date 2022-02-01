@@ -53,7 +53,7 @@ class RecipeDetailsViewModel @Inject constructor(
         getRecipeComments()
     }
 
-    private fun getRecipeById() {
+     fun getRecipeById() {
         sendRequest(
             loading = true,
             request = { recipeRepository.getRecipeById(recipeId) },
@@ -124,7 +124,7 @@ class RecipeDetailsViewModel @Inject constructor(
         if (recipe.value?.user?.isFollowing == true) {
             navigate(
                 RecipeDetailsFragmentDirections
-                    .actionRecipeDetailsFragmentToUnfollowDialog()
+                    .actionRecipeDetailsFragmentToUnfollowDialog(followedUserId)
             )
         } else {
             if (!dataStoreManager.isLogin()) {
