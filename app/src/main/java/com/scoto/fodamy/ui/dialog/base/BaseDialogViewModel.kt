@@ -39,8 +39,8 @@ abstract class BaseDialogViewModel : ViewModel() {
         }
     }
 
-    fun setExtras(key:String,value:Any){
-        event.value  = BaseDialogEvent.Extras(key,value)
+    fun setExtras(key: String, value: Any) {
+        event.value = BaseDialogEvent.Extras(key, value)
     }
 
     fun showMessageWithRes(@StringRes message: Int) {
@@ -53,7 +53,7 @@ abstract class BaseDialogViewModel : ViewModel() {
         }
         event.value = BaseDialogEvent.ShowMessage(message)
     }
-    fun close(){
+    fun close() {
         event.value = BaseDialogEvent.Close
     }
 
@@ -67,4 +67,3 @@ abstract class BaseDialogViewModel : ViewModel() {
         }
     }
 }
-

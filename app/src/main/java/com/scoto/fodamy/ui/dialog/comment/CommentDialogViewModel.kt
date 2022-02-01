@@ -23,7 +23,7 @@ class CommentDialogViewModel @Inject constructor(
     private val recipeId = savedStateHandle.get<Int>(RECIPE_ID) ?: 1
 
     fun edit() {
-        setExtras(KEY_COMMENT_EDIT,true)
+        setExtras(KEY_COMMENT_EDIT, true)
         close()
     }
     fun delete() {

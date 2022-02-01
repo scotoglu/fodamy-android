@@ -8,7 +8,7 @@ const val FROM_EDITOR_CHOICE = "FROM_EDITOR_CHOICE"
 const val FROM_LAST_ADDED = "FROM_LAST_ADDED"
 const val FROM_RECIPES_BY_CATEGORY = "FROM_RECIPES_BY_CATEGORY"
 
-//Dialog Constants
+// Dialog Constants
 
 const val REQUEST_KEY = "DialogAction"
 const val KEY_UNFOLLOW_COMPLETED = "unfollow_completed"

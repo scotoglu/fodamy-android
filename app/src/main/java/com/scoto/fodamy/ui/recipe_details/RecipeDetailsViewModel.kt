@@ -53,7 +53,7 @@ class RecipeDetailsViewModel @Inject constructor(
         getRecipeComments()
     }
 
-     fun getRecipeById() {
+    fun getRecipeById() {
         sendRequest(
             loading = true,
             request = { recipeRepository.getRecipeById(recipeId) },

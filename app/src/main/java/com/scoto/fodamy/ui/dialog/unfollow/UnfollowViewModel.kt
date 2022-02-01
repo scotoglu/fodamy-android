@@ -24,7 +24,7 @@ class UnfollowViewModel @Inject constructor(
             request = { userRepository.unFollowUser(userId) },
             success = {
                 showMessageWithRes(R.string.success_unfollow)
-                setExtras(KEY_UNFOLLOW_COMPLETED,true)
+                setExtras(KEY_UNFOLLOW_COMPLETED, true)
                 close()
             }
         )
