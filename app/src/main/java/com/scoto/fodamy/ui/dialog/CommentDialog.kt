@@ -55,7 +55,7 @@ class CommentDialog : BottomSheetDialogFragment() {
                 ?.savedStateHandle
                 ?.set(
                     DIALOG_ACTION,
-                    DELETE
+                    EDIT
                 )
             findNavController().popBackStack()
         }

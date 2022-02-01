@@ -9,8 +9,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Recipe
-import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
+import com.scoto.domain.usecase.LogoutUseCase
+import com.scoto.domain.usecase.params.NoParams
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -23,8 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val authRepository: AuthRepository,
     private val dataStoreManager: DataStoreManager,
+    private val logoutUseCase: LogoutUseCase
 ) : BaseViewModel() {
 
     private val _categories: MutableLiveData<PagingData<Category>> = MutableLiveData()
@@ -45,7 +46,7 @@ class FavoritesViewModel @Inject constructor(
         if (dataStoreManager.isLogin()) {
             sendRequest(
                 loading = true,
-                request = { authRepository.logout() },
+                request = { logoutUseCase.invoke(NoParams(Any())) },
                 success = {
                     event.value = FavoritesEvent.Success
                     showMessage(it.message)

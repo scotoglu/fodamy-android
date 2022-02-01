@@ -9,9 +9,10 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.models.User
-import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.repositories.UserRepository
+import com.scoto.domain.usecase.LogoutUseCase
+import com.scoto.domain.usecase.params.NoParams
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
@@ -30,9 +31,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    private val authRepository: AuthRepository,
     private val recipeRepository: RecipeRepository,
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    private val logoutUseCase: LogoutUseCase
 ) : BaseViewModel() {
 
     private val _user: MutableLiveData<User> = MutableLiveData()
@@ -69,7 +70,7 @@ class ProfileViewModel @Inject constructor(
     fun logout() {
         sendRequest(
             loading = true,
-            request = { authRepository.logout() },
+            request = { logoutUseCase.invoke(NoParams(Any())) },
             success = {
                 event.value = ProfileEvent.Success
                 showMessage(it.message)

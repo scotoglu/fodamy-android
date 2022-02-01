@@ -45,11 +45,8 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
             ?.getOrNull(1) as? Class<VM>
             ?: throw IllegalStateException("viewModelClass does not equal Class<VM>")
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(
             if (isSharedViewModel) {
                 requireActivity()
@@ -57,6 +54,14 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
                 this
             }
         )[viewModelClass]
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
         _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         navController = findNavController()
         bottomNavigationView =

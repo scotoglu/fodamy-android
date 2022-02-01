@@ -54,7 +54,7 @@ abstract class BaseViewModel : ViewModel() {
     fun <T> sendRequest(
         loading: Boolean = false,
         request: suspend () -> T,
-        success: ((T) -> Unit)? = null,
+        success: (suspend (T) -> Unit)? = null,
         error: ((Exception) -> Unit)? = null
     ): Job {
         return viewModelScope.launch {

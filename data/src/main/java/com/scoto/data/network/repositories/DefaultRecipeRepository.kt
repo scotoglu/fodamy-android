@@ -4,7 +4,6 @@ import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.network.services.RecipeService
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
-import com.scoto.domain.models.Common
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.RecipeRepository
 import javax.inject.Inject
@@ -59,14 +58,14 @@ class DefaultRecipeRepository @Inject constructor(
             recipeService.deleteComment(recipeId, commentId).toDomainModel()
         }
 
-    override suspend fun likeRecipe(recipeId: Int): Common =
+    override suspend fun likeRecipe(recipeId: Int): Unit =
         execute {
-            recipeService.likeRecipe(recipeId).toDomainModel()
+            recipeService.likeRecipe(recipeId)
         }
 
-    override suspend fun dislikeRecipe(recipeId: Int): Common =
+    override suspend fun dislikeRecipe(recipeId: Int): Unit =
         execute {
-            recipeService.dislikeRecipe(recipeId).toDomainModel()
+            recipeService.dislikeRecipe(recipeId)
         }
 
     override suspend fun getCategoriesWithRecipes(page: Int): List<Category> =

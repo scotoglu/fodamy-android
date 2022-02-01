@@ -76,6 +76,7 @@ class CommentsViewModel @Inject constructor(
                 success = {
                     comment.value = ""
                     showMessageWithRes(R.string.success_comment_add)
+                    event.value = CommentEvent.Success
                 }
             )
         } else {
@@ -114,6 +115,7 @@ class CommentsViewModel @Inject constructor(
                 },
                 success = {
                     setEditMode(false)
+                    event.value = CommentEvent.Success
                     showMessageWithRes(R.string.success_comment_edit)
                 }
             )
@@ -127,6 +129,7 @@ class CommentsViewModel @Inject constructor(
             request = { recipeRepository.deleteComment(recipeId, commentId.value!!) },
             success = {
                 showMessageWithRes(R.string.success_comment_delete)
+                event.value = CommentEvent.Success
             }
         )
     }

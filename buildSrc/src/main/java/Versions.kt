@@ -2,7 +2,7 @@ object Versions {
     const val ANDROIDX_CORE = "1.7.0"
     const val APPCOMPAT = "1.3.1"
     const val ANDROIDX_LEGACY_SUPPORT = "1.0.0"
-    const val NAVIGATION_COMPONENT = "2.4.0-rc01"
+    const val NAVIGATION_COMPONENT = "2.4.0"
     const val CONSTRAINT_LAYOUT = "2.1.2"
     const val DATASTORE_PREFERENCES = "1.0.0"
     const val PAGING = "3.1.0"

@@ -2,7 +2,6 @@ package com.scoto.domain.repositories
 
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
-import com.scoto.domain.models.Common
 import com.scoto.domain.models.Recipe
 
 /**
@@ -18,8 +17,8 @@ interface RecipeRepository {
     suspend fun sendComment(recipeId: Int, text: String)
     suspend fun editComment(recipeId: Int, commentId: Int, text: String)
     suspend fun deleteComment(recipeId: Int, commentId: Int)
-    suspend fun likeRecipe(recipeId: Int): Common
-    suspend fun dislikeRecipe(recipeId: Int): Common
+    suspend fun likeRecipe(recipeId: Int)
+    suspend fun dislikeRecipe(recipeId: Int)
     suspend fun getCategoriesWithRecipes(page: Int = 1): List<Category>
     suspend fun getRecipesByCategory(categoryId: Int, page: Int = 1): List<Recipe>
 }
