@@ -6,7 +6,9 @@ plugins {
     id(Plugins.KOTLIN_KAPT)
     id(Plugins.KTLINT)
 }
+
 val BASE_URL: String by project
+
 android {
     compileSdk = ConfigData.COMPILE_SDK_VERSION
 
