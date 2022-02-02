@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_margin_16dp"
             android:backgroundTint="@color/white"
-            android:onClick="@{()->vm.close()}"
+            android:onClick="@{()->vm.backTo()}"
             android:text="@string/btn_cancel"
             android:textColor="@color/dialog_btn_text_blue"
             android:textSize="@dimen/text_size_20sp" />

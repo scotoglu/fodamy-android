@@ -3,7 +3,7 @@ package com.scoto.fodamy.ui.dialog.unfollow
 import androidx.lifecycle.SavedStateHandle
 import com.scoto.domain.repositories.UserRepository
 import com.scoto.fodamy.R
-import com.scoto.fodamy.ui.dialog.base.BaseDialogViewModel
+import com.scoto.fodamy.ui.base.BaseViewModel
 import com.scoto.fodamy.util.KEY_UNFOLLOW_COMPLETED
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,16 +16,18 @@ import javax.inject.Inject
 class UnfollowViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val savedStateHandle: SavedStateHandle
-) : BaseDialogViewModel() {
+) : BaseViewModel() {
 
     private val userId = savedStateHandle.get<Int>(USER_ID) ?: 0
+
     fun unfollow() {
         sendRequest(
+            loading = true,
             request = { userRepository.unFollowUser(userId) },
             success = {
                 showMessageWithRes(R.string.success_unfollow)
                 setExtras(KEY_UNFOLLOW_COMPLETED, true)
-                close()
+                backTo()
             }
         )
     }

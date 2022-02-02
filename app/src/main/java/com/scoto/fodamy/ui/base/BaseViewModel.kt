@@ -26,6 +26,10 @@ abstract class BaseViewModel : ViewModel() {
         baseEvent.value = BaseViewEvent.NavigateTo(directions)
     }
 
+    fun setExtras(key: String, value: Any) {
+        baseEvent.value = BaseViewEvent.Extras(key, value)
+    }
+
     open fun backTo() {
         baseEvent.value = BaseViewEvent.BackTo
     }

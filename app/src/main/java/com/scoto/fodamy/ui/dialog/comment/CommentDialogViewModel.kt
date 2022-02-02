@@ -3,7 +3,7 @@ package com.scoto.fodamy.ui.dialog.comment
 import androidx.lifecycle.SavedStateHandle
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.fodamy.R
-import com.scoto.fodamy.ui.dialog.base.BaseDialogViewModel
+import com.scoto.fodamy.ui.base.BaseViewModel
 import com.scoto.fodamy.util.KEY_COMMENT_DELETE
 import com.scoto.fodamy.util.KEY_COMMENT_EDIT
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,17 +17,19 @@ import javax.inject.Inject
 class CommentDialogViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
     private val savedStateHandle: SavedStateHandle
-) : BaseDialogViewModel() {
+) : BaseViewModel() {
 
     private val commentId = savedStateHandle.get<Int>(COMMENT_ID) ?: 1
     private val recipeId = savedStateHandle.get<Int>(RECIPE_ID) ?: 1
 
     fun edit() {
         setExtras(KEY_COMMENT_EDIT, true)
-        close()
+        backTo()
     }
+
     fun delete() {
         sendRequest(
+            loading = true,
             request = {
                 recipeRepository.deleteComment(
                     recipeId = recipeId,
@@ -37,7 +39,7 @@ class CommentDialogViewModel @Inject constructor(
             success = {
                 showMessageWithRes(R.string.success_comment_delete)
                 setExtras(KEY_COMMENT_DELETE, true)
-                close()
+                backTo()
             }
         )
     }

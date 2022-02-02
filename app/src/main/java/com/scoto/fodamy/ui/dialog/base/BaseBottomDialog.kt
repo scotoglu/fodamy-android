@@ -18,13 +18,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.scoto.fodamy.BR
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.snackbar
+import com.scoto.fodamy.ui.base.BaseViewEvent
+import com.scoto.fodamy.ui.base.BaseViewModel
 import com.scoto.fodamy.util.findGenericSuperclass
 
 /**
  * @author Sefa ÇOTOĞLU
  * Created 1.02.2022 at 00:09
  */
-abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseDialogViewModel>(
+abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layoutId: Int
 ) : BottomSheetDialogFragment() {
 
@@ -32,6 +34,8 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseDialogViewModel>(
     val binding: VB get() = _binding!!
 
     lateinit var viewModel: VM
+
+    private lateinit var loadingDialog: Dialog
 
     @Suppress("UNCHECKED_CAST")
     val viewModelClass: Class<VM>
@@ -59,23 +63,36 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseDialogViewModel>(
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         eventObserver()
+
+        loadingDialog = Dialog(requireActivity())
+        loadingDialog.setCancelable(true)
+        loadingDialog.setContentView(R.layout.progress_custom_dialog)
+        loadingDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
         binding.setVariable(BR.vm, viewModel)
         binding.lifecycleOwner = this
         return binding.root
     }
 
     private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner) { event ->
+        viewModel.baseEvent.observe(viewLifecycleOwner) { event ->
             eventHandler(event)
         }
     }
 
-    private fun eventHandler(event: BaseDialogEvent) {
+    private fun eventHandler(event: BaseViewEvent) {
         when (event) {
-            BaseDialogEvent.Close -> findNavController().popBackStack()
-            is BaseDialogEvent.ShowMessage -> snackbar(event.message, null)
-            is BaseDialogEvent.ShowMessageWithRes -> snackbar(getString(event.message), null)
-            is BaseDialogEvent.Extras -> setFragmentResult(REQUEST_KEY, bundleOf(event.key to event.value))
+            BaseViewEvent.BackTo -> findNavController().popBackStack()
+            is BaseViewEvent.ShowMessage -> snackbar(event.message, null)
+            is BaseViewEvent.ShowMessageRes -> snackbar(getString(event.messageId), null)
+            is BaseViewEvent.Extras -> setFragmentResult(
+                REQUEST_KEY,
+                bundleOf(event.key to event.value)
+            )
+            BaseViewEvent.HideDialog -> loadingDialog.dismiss()
+            is BaseViewEvent.NavigateTo -> return
+            is BaseViewEvent.OpenDialog -> return
+            BaseViewEvent.ShowDialog -> loadingDialog.show()
         }
     }
 

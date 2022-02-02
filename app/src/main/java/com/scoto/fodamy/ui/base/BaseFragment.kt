@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -16,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.BR
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.snackbar
+import com.scoto.fodamy.util.REQUEST_KEY
 import com.scoto.fodamy.util.findGenericSuperclass
 
 /**
@@ -102,6 +105,10 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
             )
             BaseViewEvent.ShowDialog -> dialog.show()
             BaseViewEvent.HideDialog -> dialog.dismiss()
+            is BaseViewEvent.Extras -> setFragmentResult(
+                REQUEST_KEY,
+                bundleOf(event.key to event.value)
+            )
         }
     }
 
