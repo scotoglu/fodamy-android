@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.setFragmentResultListener
 import androidx.paging.LoadState
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentCommentsBinding
@@ -12,6 +12,9 @@ import com.scoto.fodamy.ext.hideSoftKeyboard
 import com.scoto.fodamy.ext.showIme
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.comments.adapter.CommentsAdapter
+import com.scoto.fodamy.util.KEY_COMMENT_DELETE
+import com.scoto.fodamy.util.KEY_COMMENT_EDIT
+import com.scoto.fodamy.util.REQUEST_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,11 +26,18 @@ class CommentsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // After comment add/edit/delete, sends request again to update
-        viewModel.getComments()
-
         setFocusToAddCommentEdittext()
-        getDialogAction()
+
+        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
+            val resultDelete = bundle.get(KEY_COMMENT_DELETE)
+            val resultEdit = bundle.get(KEY_COMMENT_EDIT)
+            if (resultDelete != null && resultDelete as Boolean) {
+                commentsAdapter.refresh()
+            }
+            if (resultEdit != null && resultEdit as Boolean) {
+                viewModel.setEditMode(true)
+            }
+        }
     }
 
     override fun registerObservables() {
@@ -58,23 +68,6 @@ class CommentsFragment :
                 rvComments.isVisible = loadState.source.refresh is LoadState.NotLoading
             }
         }
-    }
-
-    // TODO("handle in BaseFragment")
-    private fun getDialogAction() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
-            DIALOG_ACTION
-        )
-            ?.observe(viewLifecycleOwner) { action ->
-                when (action) {
-                    EDIT -> {
-                        viewModel.setEditMode(true)
-                    }
-                    DELETE -> {
-                        viewModel.onDelete()
-                    }
-                }
-            }
     }
 
     override fun initViews() {

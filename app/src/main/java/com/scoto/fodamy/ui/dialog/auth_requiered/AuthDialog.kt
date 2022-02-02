@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.dialog
+package com.scoto.fodamy.ui.dialog.auth_requiered
 
 import android.os.Bundle
 import android.view.LayoutInflater
