@@ -1,9 +1,13 @@
 package com.scoto.fodamy.ui.recipe_details
 
-import androidx.navigation.fragment.findNavController
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.setFragmentResultListener
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRecipeDetailsBinding
 import com.scoto.fodamy.ui.base.BaseFragment
+import com.scoto.fodamy.util.KEY_UNFOLLOW_COMPLETED
+import com.scoto.fodamy.util.REQUEST_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -12,18 +16,14 @@ class RecipeDetailsFragment :
         R.layout.fragment_recipe_details
     ) {
 
-    // TODO("handle in BaseFragment")
-    override fun registerObservables() {
-        super.registerObservables()
-        findNavController()
-            .currentBackStackEntry
-            ?.savedStateHandle
-            ?.getLiveData<String>(DIALOG_ACTION)
-            ?.observe(viewLifecycleOwner) {
-                if (it.equals(UNFOLLOW)) {
-                    viewModel.unfollow()
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
+            val result = bundle.get(KEY_UNFOLLOW_COMPLETED)
+            if (result as Boolean) {
+                viewModel.getRecipeById()
             }
+        }
     }
 
     companion object {

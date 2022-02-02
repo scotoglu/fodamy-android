@@ -1,4 +1,4 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 
 plugins {
     id(Plugins.ANDROID_LIBRARY)
@@ -6,7 +6,7 @@ plugins {
     id(Plugins.KOTLIN_KAPT)
     id(Plugins.KTLINT)
 }
-
+val BASE_URL: String by project
 android {
     compileSdk = ConfigData.COMPILE_SDK_VERSION
 
@@ -25,7 +25,7 @@ android {
             )
         }
         getByName("debug") {
-            buildConfigField("String", "BASE_URL", getSecretKey("BASE_URL"))
+            buildConfigField("String", "BASE_URL", BASE_URL)
         }
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,11 +37,6 @@ android {
             }
         }
     }
-}
-
-fun getSecretKey(key: String): String {
-    return gradleLocalProperties(rootDir)
-        .getProperty(key)
 }
 
 dependencies {

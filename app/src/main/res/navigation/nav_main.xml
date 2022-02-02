@@ -32,7 +32,7 @@
     <include app:graph="@navigation/bottom_nav_favorites" />
     <dialog
         android:id="@+id/authDialog"
-        android:name="com.scoto.fodamy.ui.dialog.AuthDialog"
+        android:name="com.scoto.fodamy.ui.dialog.auth_requiered.AuthDialog"
         android:label="AuthDialog" >
         <action
             android:id="@+id/action_authDialog_to_login_flow"

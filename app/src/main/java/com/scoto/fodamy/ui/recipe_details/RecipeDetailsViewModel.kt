@@ -18,7 +18,6 @@ import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.usecase.DislikeUseCase
 import com.scoto.domain.usecase.FollowUseCase
 import com.scoto.domain.usecase.LikeUseCase
-import com.scoto.domain.usecase.UnfollowUseCase
 import com.scoto.domain.usecase.params.FollowParams
 import com.scoto.domain.usecase.params.RecipeParams
 import com.scoto.domain.utils.DataStoreManager
@@ -36,7 +35,6 @@ class RecipeDetailsViewModel @Inject constructor(
     private val likeUseCase: LikeUseCase,
     private val dislikeUseCase: DislikeUseCase,
     private val followUseCase: FollowUseCase,
-    private val unfollowUseCase: UnfollowUseCase
 ) : BaseViewModel() {
 
     private val _recipe = savedStateHandle.getLiveData<Recipe>(RECIPE)
@@ -53,7 +51,7 @@ class RecipeDetailsViewModel @Inject constructor(
         getRecipeComments()
     }
 
-    private fun getRecipeById() {
+    fun getRecipeById() {
         sendRequest(
             loading = true,
             request = { recipeRepository.getRecipeById(recipeId) },
@@ -124,7 +122,7 @@ class RecipeDetailsViewModel @Inject constructor(
         if (recipe.value?.user?.isFollowing == true) {
             navigate(
                 RecipeDetailsFragmentDirections
-                    .actionRecipeDetailsFragmentToUnfollowDialog()
+                    .actionRecipeDetailsFragmentToUnfollowDialog(followedUserId)
             )
         } else {
             if (!dataStoreManager.isLogin()) {
@@ -135,16 +133,6 @@ class RecipeDetailsViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun unfollow() {
-        sendRequest(
-            request = { unfollowUseCase.invoke(FollowParams(followedUserId, recipeId)) },
-            success = {
-                showMessageWithRes(R.string.success_unfollow)
-                setSavedStateAndValue(it)
-            }
-        )
     }
 
     private fun follow() {

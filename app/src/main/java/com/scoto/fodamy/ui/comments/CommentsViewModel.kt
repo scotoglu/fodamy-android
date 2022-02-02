@@ -93,7 +93,7 @@ class CommentsViewModel @Inject constructor(
 
     fun onEdit(comment: Comment) = viewModelScope.launch {
         if (dataStoreManager.isUserComment(comment.user.id)) {
-            navigate(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog())
+            navigate(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog(comment.id, recipeId))
             editableComment.value = comment.text
             commentId.value = comment.id
         }
