@@ -14,6 +14,4 @@ sealed class BaseViewEvent {
     data class ShowMessageRes(@StringRes val messageId: Int) : BaseViewEvent()
     data class Extras(val key: String, val value: Any) : BaseViewEvent()
     object BackTo : BaseViewEvent()
-    object ShowDialog : BaseViewEvent()
-    object HideDialog : BaseViewEvent()
 }

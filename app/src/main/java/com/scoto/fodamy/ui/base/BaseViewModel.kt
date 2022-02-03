@@ -1,6 +1,8 @@
 package com.scoto.fodamy.ui.base
 
 import androidx.annotation.StringRes
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
@@ -21,6 +23,9 @@ import java.io.IOException
 abstract class BaseViewModel : ViewModel() {
 
     val baseEvent: SingleLiveEvent<BaseViewEvent> = SingleLiveEvent()
+
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loading: LiveData<Boolean> get() = _loading
 
     fun navigate(directions: NavDirections) {
         baseEvent.value = BaseViewEvent.NavigateTo(directions)
@@ -48,11 +53,11 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     private fun showDialog() {
-        baseEvent.value = BaseViewEvent.ShowDialog
+        _loading.value = true
     }
 
     private fun hideDialog() {
-        baseEvent.value = BaseViewEvent.HideDialog
+        _loading.value = false
     }
 
     fun <T> sendRequest(

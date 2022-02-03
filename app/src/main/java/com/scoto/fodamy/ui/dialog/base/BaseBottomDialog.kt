@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.scoto.fodamy.BR
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.snackbar
+import com.scoto.fodamy.ui.MainActivity
 import com.scoto.fodamy.ui.base.BaseViewEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
 import com.scoto.fodamy.util.findGenericSuperclass
@@ -34,8 +35,6 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
     val binding: VB get() = _binding!!
 
     lateinit var viewModel: VM
-
-    private lateinit var loadingDialog: Dialog
 
     @Suppress("UNCHECKED_CAST")
     val viewModelClass: Class<VM>
@@ -62,16 +61,20 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
         savedInstanceState: Bundle?
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+
         eventObserver()
-
-        loadingDialog = Dialog(requireActivity())
-        loadingDialog.setCancelable(true)
-        loadingDialog.setContentView(R.layout.progress_custom_dialog)
-        loadingDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
+        dialogObserver()
         binding.setVariable(BR.vm, viewModel)
         binding.lifecycleOwner = this
         return binding.root
+    }
+
+    private fun dialogObserver() {
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            val activity = (requireActivity() as MainActivity)
+            if (isLoading) activity.showDialog()
+            else activity.hideDialog()
+        }
     }
 
     private fun eventObserver() {
@@ -89,10 +92,8 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
                 REQUEST_KEY,
                 bundleOf(event.key to event.value)
             )
-            BaseViewEvent.HideDialog -> loadingDialog.dismiss()
             is BaseViewEvent.NavigateTo -> return
             is BaseViewEvent.OpenDialog -> return
-            BaseViewEvent.ShowDialog -> loadingDialog.show()
         }
     }
 
