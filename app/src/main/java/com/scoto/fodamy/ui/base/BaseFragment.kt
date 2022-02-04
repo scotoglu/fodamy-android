@@ -53,7 +53,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         )[viewModelClass]
 
         arguments?.let(::fetchExtras)
-
     }
 
     override fun onCreateView(

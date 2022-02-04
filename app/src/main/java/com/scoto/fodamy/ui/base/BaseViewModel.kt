@@ -32,14 +32,13 @@ abstract class BaseViewModel : ViewModel(), FetchExtras {
 
     @CallSuper
     override fun fetchExtras(bundle: Bundle?) {
-
     }
 
     fun navigate(directions: NavDirections) {
         baseEvent.value = BaseViewEvent.NavigateTo(directions)
     }
 
-    fun setExtras(params:ResultListenerParams) {
+    fun setExtras(params: ResultListenerParams) {
         baseEvent.value = BaseViewEvent.Extras(params)
     }
 
