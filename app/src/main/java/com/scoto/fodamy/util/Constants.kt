@@ -10,7 +10,7 @@ const val FROM_RECIPES_BY_CATEGORY = "FROM_RECIPES_BY_CATEGORY"
 
 // Dialog Constants
 
-const val REQUEST_KEY = "DialogAction"
+const val DIALOG_ACTION = "DialogAction"
 const val KEY_UNFOLLOW_COMPLETED = "unfollow_completed"
 const val KEY_COMMENT_EDIT = "comment_edit_mode"
 const val KEY_COMMENT_DELETE = "comment_delete"

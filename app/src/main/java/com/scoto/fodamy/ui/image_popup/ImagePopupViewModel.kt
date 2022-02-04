@@ -1,6 +1,6 @@
 package com.scoto.fodamy.ui.image_popup
 
-import androidx.lifecycle.SavedStateHandle
+import android.os.Bundle
 import com.scoto.domain.models.Image
 import com.scoto.domain.models.ImageList
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -8,14 +8,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ImagePopupViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle
-) : BaseViewModel() {
+class ImagePopupViewModel @Inject constructor() : BaseViewModel() {
+
+    private lateinit var images: ImageList
+    override fun fetchExtras(bundle: Bundle?) {
+        super.fetchExtras(bundle)
+        images = bundle?.getParcelable(IMAGES) ?: ImageList(emptyList())
+    }
 
     fun getImages(): ImageList {
-        val images = savedStateHandle.get<ImageList>(IMAGES)
         val populatedImages = mutableListOf<Image>()
-        if (images?.images?.size == 1) {
+        if (images.images.size == 1) {
             val image = images.images[0]
             for (i in 0 until 4) {
                 populatedImages.add(image)

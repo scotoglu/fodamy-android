@@ -1,15 +1,8 @@
 package com.scoto.fodamy.ui.recipe_details
-/*
-* like/unLike and follow/unFollow operations send request per each call.
-* To update the like count we should update the recipe also.
-* So each successful request send two request, 1-Operation (like,unlike vs) request 2-getRecipeById request for update recipe.
-*
-* TODO("Fix this")
-*
-* */
+
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.ImageList
@@ -30,23 +23,31 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeDetailsViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val savedStateHandle: SavedStateHandle,
     private val dataStoreManager: DataStoreManager,
     private val likeUseCase: LikeUseCase,
     private val dislikeUseCase: DislikeUseCase,
     private val followUseCase: FollowUseCase,
 ) : BaseViewModel() {
 
-    private val _recipe = savedStateHandle.getLiveData<Recipe>(RECIPE)
+    private val _recipe = MutableLiveData<Recipe>()
     val recipe: LiveData<Recipe> get() = _recipe
 
     private val _comment: MutableLiveData<Comment?> = MutableLiveData()
     val comment: LiveData<Comment?> get() = _comment
 
-    private val recipeId: Int = _recipe.value?.id ?: 1
-    private val followedUserId: Int = _recipe.value?.user?.id ?: 1
+    private var recipeId: Int? = null
+    private var followedUserId: Int? = null
 
-    init {
+    override fun fetchExtras(bundle: Bundle?) {
+        super.fetchExtras(bundle)
+        val recipe = bundle?.getParcelable<Recipe>(RECIPE)
+        recipe?.let {
+            _recipe.value = it
+        }
+
+        recipeId = recipe?.id ?: -1
+        followedUserId = recipe?.user?.id ?: -1
+
         getRecipeById()
         getRecipeComments()
     }
@@ -54,16 +55,16 @@ class RecipeDetailsViewModel @Inject constructor(
     fun getRecipeById() {
         sendRequest(
             loading = true,
-            request = { recipeRepository.getRecipeById(recipeId) },
+            request = { recipeRepository.getRecipeById(recipeId!!) },
             success = {
-                setSavedStateAndValue(it)
+                _recipe.value = it
             }
         )
     }
 
     private fun getRecipeComments() {
         sendRequest(
-            request = { recipeRepository.getFirstComment(recipeId) },
+            request = { recipeRepository.getFirstComment(recipeId!!) },
             success = {
                 _comment.value = it
             }
@@ -80,7 +81,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     fun onCommentAdd() {
         navigate(
-            RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToCommentsFragment(recipeId)
+            RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToCommentsFragment(recipeId!!)
         )
     }
 
@@ -94,26 +95,26 @@ class RecipeDetailsViewModel @Inject constructor(
                 if (it.isLiked) dislike() else like()
             }
         } else {
-            openDialog(R.id.action_global_authDialog)
+            openNavigationDilog(R.id.action_global_authDialog)
         }
     }
 
     private fun like() {
         sendRequest(
-            request = { likeUseCase.invoke(RecipeParams(recipeId)) },
+            request = { likeUseCase.invoke(RecipeParams(recipeId!!)) },
             success = {
                 showMessageWithRes(R.string.success_like)
-                setSavedStateAndValue(it)
+                _recipe.value = it
             }
         )
     }
 
     private fun dislike() {
         sendRequest(
-            request = { dislikeUseCase.invoke(RecipeParams(recipeId)) },
+            request = { dislikeUseCase.invoke(RecipeParams(recipeId!!)) },
             success = {
                 showMessageWithRes(R.string.success_dislike)
-                setSavedStateAndValue(it)
+                _recipe.value = it
             }
         )
     }
@@ -122,11 +123,11 @@ class RecipeDetailsViewModel @Inject constructor(
         if (recipe.value?.user?.isFollowing == true) {
             navigate(
                 RecipeDetailsFragmentDirections
-                    .actionRecipeDetailsFragmentToUnfollowDialog(followedUserId)
+                    .actionRecipeDetailsFragmentToUnfollowDialog(followedUserId!!)
             )
         } else {
             if (!dataStoreManager.isLogin()) {
-                openDialog(R.id.action_global_authDialog)
+                openNavigationDilog(R.id.action_global_authDialog)
             } else {
                 _recipe.value?.let {
                     follow()
@@ -137,17 +138,12 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun follow() {
         sendRequest(
-            request = { followUseCase.invoke(FollowParams(followedUserId, recipeId)) },
+            request = { followUseCase.invoke(FollowParams(followedUserId!!, recipeId!!)) },
             success = {
                 showMessageWithRes(R.string.success_follow)
-                setSavedStateAndValue(it)
+                _recipe.value = it
             }
         )
-    }
-
-    private fun setSavedStateAndValue(recipe: Recipe) {
-        _recipe.value = recipe
-        savedStateHandle.set(RECIPE, recipe)
     }
 
     companion object {

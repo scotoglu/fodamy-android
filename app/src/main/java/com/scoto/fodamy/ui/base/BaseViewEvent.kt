@@ -2,6 +2,7 @@ package com.scoto.fodamy.ui.base
 
 import androidx.annotation.StringRes
 import androidx.navigation.NavDirections
+import com.scoto.fodamy.util.ResultListenerParams
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -12,6 +13,6 @@ sealed class BaseViewEvent {
     data class ShowMessage(val message: String) : BaseViewEvent()
     data class OpenDialog(val actionId: Int) : BaseViewEvent()
     data class ShowMessageRes(@StringRes val messageId: Int) : BaseViewEvent()
-    data class Extras(val key: String, val value: Any) : BaseViewEvent()
+    data class Extras(val params:ResultListenerParams) : BaseViewEvent()
     object BackTo : BaseViewEvent()
 }

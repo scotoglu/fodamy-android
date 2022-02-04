@@ -1,5 +1,7 @@
 package com.scoto.fodamy.ui.base
 
+import android.os.Bundle
+import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +14,7 @@ import com.scoto.data.network.exceptions.GettingEmptyListItem
 import com.scoto.data.network.exceptions.SimpleHttpException
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
+import com.scoto.fodamy.util.ResultListenerParams
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -20,19 +23,24 @@ import java.io.IOException
  * @author Sefa ÇOTOĞLU
  * Created 28.12.2021 at 12:43
  */
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel(), FetchExtras {
 
     val baseEvent: SingleLiveEvent<BaseViewEvent> = SingleLiveEvent()
 
     private val _loading: MutableLiveData<Boolean> = MutableLiveData()
     val loading: LiveData<Boolean> get() = _loading
 
+    @CallSuper
+    override fun fetchExtras(bundle: Bundle?) {
+
+    }
+
     fun navigate(directions: NavDirections) {
         baseEvent.value = BaseViewEvent.NavigateTo(directions)
     }
 
-    fun setExtras(key: String, value: Any) {
-        baseEvent.value = BaseViewEvent.Extras(key, value)
+    fun setExtras(params:ResultListenerParams) {
+        baseEvent.value = BaseViewEvent.Extras(params)
     }
 
     open fun backTo() {
@@ -44,7 +52,7 @@ abstract class BaseViewModel : ViewModel() {
         baseEvent.value = BaseViewEvent.ShowMessage(message)
     }
 
-    fun openDialog(actionId: Int) {
+    fun openNavigationDilog(actionId: Int) {
         baseEvent.value = BaseViewEvent.OpenDialog(actionId)
     }
 

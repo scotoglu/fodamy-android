@@ -1,8 +1,8 @@
 package com.scoto.fodamy.ui.comments
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -23,8 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CommentsViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val dataStoreManager: DataStoreManager,
-    private val savedStateHandle: SavedStateHandle
+    private val dataStoreManager: DataStoreManager
 ) : BaseViewModel() {
 
     private val _comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
@@ -45,18 +44,30 @@ class CommentsViewModel @Inject constructor(
     val comment = MutableLiveData<String>()
 
     // gets passed arguments from recipe details fragment
-    private val recipeId: Int = savedStateHandle.get<Int>(RECIPE_ID) ?: 1
+    private var recipeId: Int? = null
 
     init {
+        isLogin()
+    }
+
+    override fun fetchExtras(bundle: Bundle?) {
+        super.fetchExtras(bundle)
+        recipeId = bundle?.getInt(RECIPE_ID) ?: -1
         getComments()
     }
 
-    fun getComments() = viewModelScope.launch {
+    private fun isLogin() = viewModelScope.launch {
+        if (!dataStoreManager.isLogin()) {
+            openNavigationDilog(R.id.action_global_authDialog)
+        }
+    }
+
+    private fun getComments() {
         sendRequest(
             request = {
                 Pager(
                     config = pageConfig,
-                    pagingSourceFactory = { CommentPagingSource(recipeRepository, recipeId) }
+                    pagingSourceFactory = { CommentPagingSource(recipeRepository, recipeId!!) }
                 ).flow
             },
             success = {
@@ -72,7 +83,7 @@ class CommentsViewModel @Inject constructor(
     fun onSend() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             sendRequest(
-                request = { recipeRepository.sendComment(recipeId, comment.value.toString()) },
+                request = { recipeRepository.sendComment(recipeId!!, comment.value.toString()) },
                 success = {
                     comment.value = ""
                     showMessageWithRes(R.string.success_comment_add)
@@ -80,7 +91,7 @@ class CommentsViewModel @Inject constructor(
                 }
             )
         } else {
-            openDialog(R.id.action_global_authDialog)
+            openNavigationDilog(R.id.action_global_authDialog)
         }
     }
 
@@ -93,7 +104,12 @@ class CommentsViewModel @Inject constructor(
 
     fun onEdit(comment: Comment) = viewModelScope.launch {
         if (dataStoreManager.isUserComment(comment.user.id)) {
-            navigate(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog(comment.id, recipeId))
+            navigate(
+                CommentsFragmentDirections.actionCommentsFragmentToCommentDialog(
+                    comment.id,
+                    recipeId!!
+                )
+            )
             editableComment.value = comment.text
             commentId.value = comment.id
         }
@@ -108,7 +124,7 @@ class CommentsViewModel @Inject constructor(
             sendRequest(
                 request = {
                     recipeRepository.editComment(
-                        recipeId = recipeId,
+                        recipeId = recipeId!!,
                         commentId = commentId.value!!,
                         text = editableComment.value.toString()
                     )
@@ -120,13 +136,13 @@ class CommentsViewModel @Inject constructor(
                 }
             )
         } else {
-            openDialog(R.id.action_global_authDialog)
+            openNavigationDilog(R.id.action_global_authDialog)
         }
     }
 
     fun onDelete() = viewModelScope.launch {
         sendRequest(
-            request = { recipeRepository.deleteComment(recipeId, commentId.value!!) },
+            request = { recipeRepository.deleteComment(recipeId!!, commentId.value!!) },
             success = {
                 showMessageWithRes(R.string.success_comment_delete)
                 event.value = CommentEvent.Success

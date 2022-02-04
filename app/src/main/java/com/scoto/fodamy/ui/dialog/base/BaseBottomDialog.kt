@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
@@ -21,6 +22,7 @@ import com.scoto.fodamy.ext.snackbar
 import com.scoto.fodamy.ui.MainActivity
 import com.scoto.fodamy.ui.base.BaseViewEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
+import com.scoto.fodamy.ui.base.FetchExtras
 import com.scoto.fodamy.util.findGenericSuperclass
 
 /**
@@ -29,7 +31,7 @@ import com.scoto.fodamy.util.findGenericSuperclass
  */
 abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layoutId: Int
-) : BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment(), FetchExtras {
 
     private var _binding: VB? = null
     val binding: VB get() = _binding!!
@@ -50,6 +52,7 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         viewModel = ViewModelProvider(this)[viewModelClass]
+        arguments?.let(::fetchExtras)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -89,12 +92,17 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
             is BaseViewEvent.ShowMessage -> snackbar(event.message, null)
             is BaseViewEvent.ShowMessageRes -> snackbar(getString(event.messageId), null)
             is BaseViewEvent.Extras -> setFragmentResult(
-                REQUEST_KEY,
-                bundleOf(event.key to event.value)
+                event.params.requestKey,
+                bundleOf(event.params.bundleKey to event.params.bundleValue)
             )
             is BaseViewEvent.NavigateTo -> return
             is BaseViewEvent.OpenDialog -> return
         }
+    }
+
+    @CallSuper
+    override fun fetchExtras(bundle: Bundle?) {
+        viewModel.fetchExtras(bundle)
     }
 
     override fun onDestroyView() {
