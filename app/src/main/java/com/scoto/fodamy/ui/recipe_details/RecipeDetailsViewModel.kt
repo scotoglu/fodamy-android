@@ -1,15 +1,8 @@
 package com.scoto.fodamy.ui.recipe_details
-/*
-* like/unLike and follow/unFollow operations send request per each call.
-* To update the like count we should update the recipe also.
-* So each successful request send two request, 1-Operation (like,unlike vs) request 2-getRecipeById request for update recipe.
-*
-* TODO("Fix this")
-*
-* */
+
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.ImageList
@@ -30,23 +23,29 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeDetailsViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val savedStateHandle: SavedStateHandle,
     private val dataStoreManager: DataStoreManager,
     private val likeUseCase: LikeUseCase,
     private val dislikeUseCase: DislikeUseCase,
     private val followUseCase: FollowUseCase,
 ) : BaseViewModel() {
 
-    private val _recipe = savedStateHandle.getLiveData<Recipe>(RECIPE)
+    private val _recipe = MutableLiveData<Recipe>()
     val recipe: LiveData<Recipe> get() = _recipe
 
     private val _comment: MutableLiveData<Comment?> = MutableLiveData()
     val comment: LiveData<Comment?> get() = _comment
 
-    private val recipeId: Int = _recipe.value?.id ?: 1
-    private val followedUserId: Int = _recipe.value?.user?.id ?: 1
+    private var recipeId: Int = -1
+    private var followedUserId: Int = -1
 
-    init {
+    override fun fetchExtras(bundle: Bundle) {
+        super.fetchExtras(bundle)
+        val recipe = RecipeDetailsFragmentArgs.fromBundle(bundle).recipe
+        _recipe.value = recipe
+
+        recipeId = recipe.id
+        followedUserId = recipe.user.id
+
         getRecipeById()
         getRecipeComments()
     }
@@ -56,7 +55,7 @@ class RecipeDetailsViewModel @Inject constructor(
             loading = true,
             request = { recipeRepository.getRecipeById(recipeId) },
             success = {
-                setSavedStateAndValue(it)
+                _recipe.value = it
             }
         )
     }
@@ -73,7 +72,7 @@ class RecipeDetailsViewModel @Inject constructor(
     fun onImageSlider() {
         navigate(
             RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToImagePopupFragment(
-                ImageList(recipe.value!!.images)
+                ImageList(recipe.value?.images!!)
             )
         )
     }
@@ -90,11 +89,11 @@ class RecipeDetailsViewModel @Inject constructor(
 
     fun onLike() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            recipe.value!!.let {
+            recipe.value?.let {
                 if (it.isLiked) dislike() else like()
             }
         } else {
-            openDialog(R.id.action_global_authDialog)
+            openNavigationDilog(R.id.action_global_authDialog)
         }
     }
 
@@ -103,7 +102,7 @@ class RecipeDetailsViewModel @Inject constructor(
             request = { likeUseCase.invoke(RecipeParams(recipeId)) },
             success = {
                 showMessageWithRes(R.string.success_like)
-                setSavedStateAndValue(it)
+                _recipe.value = it
             }
         )
     }
@@ -113,7 +112,7 @@ class RecipeDetailsViewModel @Inject constructor(
             request = { dislikeUseCase.invoke(RecipeParams(recipeId)) },
             success = {
                 showMessageWithRes(R.string.success_dislike)
-                setSavedStateAndValue(it)
+                _recipe.value = it
             }
         )
     }
@@ -126,7 +125,7 @@ class RecipeDetailsViewModel @Inject constructor(
             )
         } else {
             if (!dataStoreManager.isLogin()) {
-                openDialog(R.id.action_global_authDialog)
+                openNavigationDilog(R.id.action_global_authDialog)
             } else {
                 _recipe.value?.let {
                     follow()
@@ -140,14 +139,9 @@ class RecipeDetailsViewModel @Inject constructor(
             request = { followUseCase.invoke(FollowParams(followedUserId, recipeId)) },
             success = {
                 showMessageWithRes(R.string.success_follow)
-                setSavedStateAndValue(it)
+                _recipe.value = it
             }
         )
-    }
-
-    private fun setSavedStateAndValue(recipe: Recipe) {
-        _recipe.value = recipe
-        savedStateHandle.set(RECIPE, recipe)
     }
 
     companion object {

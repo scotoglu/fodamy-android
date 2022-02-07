@@ -1,11 +1,13 @@
 package com.scoto.fodamy.ui.dialog.comment
 
-import androidx.lifecycle.SavedStateHandle
+import android.os.Bundle
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ui.base.BaseViewModel
+import com.scoto.fodamy.util.DIALOG_ACTION
 import com.scoto.fodamy.util.KEY_COMMENT_DELETE
 import com.scoto.fodamy.util.KEY_COMMENT_EDIT
+import com.scoto.fodamy.util.ResultListenerParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -15,15 +17,20 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class CommentDialogViewModel @Inject constructor(
-    private val recipeRepository: RecipeRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val recipeRepository: RecipeRepository
 ) : BaseViewModel() {
 
-    private val commentId = savedStateHandle.get<Int>(COMMENT_ID) ?: 1
-    private val recipeId = savedStateHandle.get<Int>(RECIPE_ID) ?: 1
+    private var commentId: Int = -1
+    private var recipeId: Int = -1
+
+    override fun fetchExtras(bundle: Bundle) {
+        super.fetchExtras(bundle)
+        commentId = CommentDialogArgs.fromBundle(bundle).commentId
+        recipeId = CommentDialogArgs.fromBundle(bundle).recipeId
+    }
 
     fun edit() {
-        setExtras(KEY_COMMENT_EDIT, true)
+        setExtras(ResultListenerParams(DIALOG_ACTION, KEY_COMMENT_EDIT, true))
         backTo()
     }
 
@@ -38,7 +45,7 @@ class CommentDialogViewModel @Inject constructor(
             },
             success = {
                 showMessageWithRes(R.string.success_comment_delete)
-                setExtras(KEY_COMMENT_DELETE, true)
+                setExtras(ResultListenerParams(DIALOG_ACTION, KEY_COMMENT_DELETE, true))
                 backTo()
             }
         )

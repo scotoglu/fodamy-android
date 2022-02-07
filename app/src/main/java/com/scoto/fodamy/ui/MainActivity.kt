@@ -1,5 +1,6 @@
 package com.scoto.fodamy.ui
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -37,6 +39,27 @@ class MainActivity : AppCompatActivity() {
         if (!isDeviceHasConnection()) {
             showMessage(R.string.no_connection)
         }
+        setupDialog()
+    }
+
+    private fun setupDialog() {
+        dialog = Dialog(this)
+        dialog?.apply {
+            setContentView(R.layout.progress_custom_dialog)
+            setCancelable(true)
+            window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
+    }
+
+    fun showDialog() {
+        if (dialog == null) {
+            setupDialog()
+        }
+        dialog?.show()
+    }
+
+    fun hideDialog() {
+        dialog?.dismiss()
     }
 
     private fun navigationSetup() {

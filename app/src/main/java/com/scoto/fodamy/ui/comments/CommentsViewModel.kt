@@ -1,8 +1,8 @@
 package com.scoto.fodamy.ui.comments
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -23,8 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CommentsViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val dataStoreManager: DataStoreManager,
-    private val savedStateHandle: SavedStateHandle
+    private val dataStoreManager: DataStoreManager
 ) : BaseViewModel() {
 
     private val _comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
@@ -45,13 +44,25 @@ class CommentsViewModel @Inject constructor(
     val comment = MutableLiveData<String>()
 
     // gets passed arguments from recipe details fragment
-    private val recipeId: Int = savedStateHandle.get<Int>(RECIPE_ID) ?: 1
+    private var recipeId: Int = -1
 
     init {
+        isLogin()
+    }
+
+    override fun fetchExtras(bundle: Bundle) {
+        super.fetchExtras(bundle)
+        recipeId = CommentsFragmentArgs.fromBundle(bundle).recipeid
         getComments()
     }
 
-    fun getComments() = viewModelScope.launch {
+    private fun isLogin() = viewModelScope.launch {
+        if (!dataStoreManager.isLogin()) {
+            openNavigationDilog(R.id.action_global_authDialog)
+        }
+    }
+
+    private fun getComments() {
         sendRequest(
             request = {
                 Pager(
@@ -80,7 +91,7 @@ class CommentsViewModel @Inject constructor(
                 }
             )
         } else {
-            openDialog(R.id.action_global_authDialog)
+            openNavigationDilog(R.id.action_global_authDialog)
         }
     }
 
@@ -93,7 +104,12 @@ class CommentsViewModel @Inject constructor(
 
     fun onEdit(comment: Comment) = viewModelScope.launch {
         if (dataStoreManager.isUserComment(comment.user.id)) {
-            navigate(CommentsFragmentDirections.actionCommentsFragmentToCommentDialog(comment.id, recipeId))
+            navigate(
+                CommentsFragmentDirections.actionCommentsFragmentToCommentDialog(
+                    comment.id,
+                    recipeId
+                )
+            )
             editableComment.value = comment.text
             commentId.value = comment.id
         }
@@ -120,7 +136,7 @@ class CommentsViewModel @Inject constructor(
                 }
             )
         } else {
-            openDialog(R.id.action_global_authDialog)
+            openNavigationDilog(R.id.action_global_authDialog)
         }
     }
 
@@ -140,6 +156,5 @@ class CommentsViewModel @Inject constructor(
             maxSize = 100,
             enablePlaceholders = false
         )
-        private const val RECIPE_ID = "RECIPE_ID"
     }
 }

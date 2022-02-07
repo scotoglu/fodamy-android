@@ -7,7 +7,6 @@ import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentRecipeDetailsBinding
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.util.KEY_UNFOLLOW_COMPLETED
-import com.scoto.fodamy.util.REQUEST_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +17,7 @@ class RecipeDetailsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
+        setFragmentResultListener(com.scoto.fodamy.util.DIALOG_ACTION) { _, bundle ->
             val result = bundle.get(KEY_UNFOLLOW_COMPLETED)
             if (result as Boolean) {
                 viewModel.getRecipeById()

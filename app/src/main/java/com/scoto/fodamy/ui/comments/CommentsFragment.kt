@@ -14,7 +14,6 @@ import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.comments.adapter.CommentsAdapter
 import com.scoto.fodamy.util.KEY_COMMENT_DELETE
 import com.scoto.fodamy.util.KEY_COMMENT_EDIT
-import com.scoto.fodamy.util.REQUEST_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +27,7 @@ class CommentsFragment :
 
         setFocusToAddCommentEdittext()
 
-        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
+        setFragmentResultListener(DIALOG_ACTION) { _, bundle ->
             val resultDelete = bundle.get(KEY_COMMENT_DELETE)
             val resultEdit = bundle.get(KEY_COMMENT_EDIT)
             if (resultDelete != null && resultDelete as Boolean) {

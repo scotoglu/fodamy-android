@@ -1,8 +1,8 @@
 package com.scoto.fodamy.ui.category_recipes
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -26,12 +26,11 @@ import javax.inject.Inject
 class CategoryRecipesViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
     private val dataStoreManager: DataStoreManager,
-    private val savedStateHandle: SavedStateHandle,
     private val logoutUseCase: LogoutUseCase
 ) : BaseViewModel() {
 
-    private val id: Int = savedStateHandle.get<Int>(CATEGORY_ID) ?: 0
-    val title: String = savedStateHandle.get<String>(CATEGORY_TITLE) ?: ""
+    private var categoryId: Int = -1
+    var title: String = ""
 
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
@@ -39,8 +38,14 @@ class CategoryRecipesViewModel @Inject constructor(
     val event: SingleLiveEvent<CategoryEvent> = SingleLiveEvent()
 
     init {
-        getRecipesByCategory()
         isLogin()
+    }
+
+    override fun fetchExtras(bundle: Bundle) {
+        super.fetchExtras(bundle)
+        categoryId = CategoryRecipesFragmentArgs.fromBundle(bundle).categoryId
+        title = CategoryRecipesFragmentArgs.fromBundle(bundle).categoryTitle
+        getRecipesByCategory()
     }
 
     private fun isLogin() = viewModelScope.launch {
@@ -56,7 +61,7 @@ class CategoryRecipesViewModel @Inject constructor(
                         RecipePagingSource(
                             recipeRepository,
                             FROM_RECIPES_BY_CATEGORY,
-                            id
+                            categoryId
                         )
                     }
                 ).flow
@@ -98,7 +103,5 @@ class CategoryRecipesViewModel @Inject constructor(
             maxSize = 100,
             enablePlaceholders = false
         )
-        private const val CATEGORY_ID = "CategoryId"
-        private const val CATEGORY_TITLE = "CategoryTitle"
     }
 }

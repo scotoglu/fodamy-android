@@ -1,10 +1,10 @@
 package com.scoto.fodamy.ui.base
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
@@ -16,9 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.scoto.fodamy.BR
-import com.scoto.fodamy.R
 import com.scoto.fodamy.ext.snackbar
-import com.scoto.fodamy.util.REQUEST_KEY
+import com.scoto.fodamy.ui.MainActivity
 import com.scoto.fodamy.util.findGenericSuperclass
 
 /**
@@ -27,7 +26,7 @@ import com.scoto.fodamy.util.findGenericSuperclass
  */
 abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layoutId: Int
-) : Fragment() {
+) : Fragment(), FetchExtras {
 
     private var _binding: VB? = null
     val binding: VB get() = _binding!!
@@ -35,7 +34,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     lateinit var viewModel: VM
     open val isSharedViewModel = false
     private lateinit var navController: NavController
-    private lateinit var dialog: Dialog
 
     @Suppress("UNCHECKED_CAST")
     val viewModelClass: Class<VM>
@@ -53,6 +51,8 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
                 this
             }
         )[viewModelClass]
+
+        arguments?.let(::fetchExtras)
     }
 
     override fun onCreateView(
@@ -63,11 +63,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
 
         _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         navController = findNavController()
-
-        dialog = Dialog(requireActivity())
-        dialog.setCancelable(true)
-        dialog.setContentView(R.layout.progress_custom_dialog)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         initViews()
         eventObserver()
@@ -82,7 +77,14 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     }
 
     protected open fun initViews() {}
-    protected open fun registerObservables() {}
+    protected open fun registerObservables() {
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            val activity = (requireActivity() as MainActivity)
+            if (isLoading) activity.showDialog()
+            else activity.hideDialog()
+        }
+    }
+
     protected open fun addItemClicks() {}
     protected open fun addAdapterLoadStateListener() {}
 
@@ -103,13 +105,16 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
             is BaseViewEvent.ShowMessageRes -> snackbar(
                 getString(event.messageId), null
             )
-            BaseViewEvent.ShowDialog -> dialog.show()
-            BaseViewEvent.HideDialog -> dialog.dismiss()
             is BaseViewEvent.Extras -> setFragmentResult(
-                REQUEST_KEY,
-                bundleOf(event.key to event.value)
+                event.params.requestKey,
+                bundleOf(event.params.bundleKey to event.params.bundleValue)
             )
         }
+    }
+
+    @CallSuper
+    override fun fetchExtras(bundle: Bundle) {
+        viewModel.fetchExtras(bundle)
     }
 
     override fun onDestroyView() {
