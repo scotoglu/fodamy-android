@@ -7,5 +7,5 @@ import android.os.Bundle
  * Created 3.02.2022 at 12:01
  */
 interface FetchExtras {
-    fun fetchExtras(bundle: Bundle?)
+    fun fetchExtras(bundle: Bundle)
 }

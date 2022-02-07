@@ -101,7 +101,7 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
     }
 
     @CallSuper
-    override fun fetchExtras(bundle: Bundle?) {
+    override fun fetchExtras(bundle: Bundle) {
         viewModel.fetchExtras(bundle)
     }
 

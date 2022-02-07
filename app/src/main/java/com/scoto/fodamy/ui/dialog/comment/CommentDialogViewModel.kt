@@ -20,13 +20,13 @@ class CommentDialogViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : BaseViewModel() {
 
-    private var commentId: Int? = null
-    private var recipeId: Int? = null
+    private var commentId: Int = -1
+    private var recipeId: Int = -1
 
-    override fun fetchExtras(bundle: Bundle?) {
+    override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        commentId = bundle?.getInt(COMMENT_ID) ?: -1
-        recipeId = bundle?.getInt(RECIPE_ID) ?: -1
+        commentId = CommentDialogArgs.fromBundle(bundle).commentId
+        recipeId = CommentDialogArgs.fromBundle(bundle).recipeId
     }
 
     fun edit() {
@@ -39,8 +39,8 @@ class CommentDialogViewModel @Inject constructor(
             loading = true,
             request = {
                 recipeRepository.deleteComment(
-                    recipeId = recipeId!!,
-                    commentId = commentId!!
+                    recipeId = recipeId,
+                    commentId = commentId
                 )
             },
             success = {

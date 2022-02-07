@@ -29,8 +29,8 @@ class CategoryRecipesViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase
 ) : BaseViewModel() {
 
-    private var categoryId: Int? = null
-    var title: String? = null
+    private var categoryId: Int = -1
+    var title: String = ""
 
     private val _recipes: MutableLiveData<PagingData<Recipe>> = MutableLiveData()
     val recipes: LiveData<PagingData<Recipe>> get() = _recipes
@@ -41,10 +41,10 @@ class CategoryRecipesViewModel @Inject constructor(
         isLogin()
     }
 
-    override fun fetchExtras(bundle: Bundle?) {
+    override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        categoryId = bundle?.getInt(CATEGORY_ID) ?: -1
-        title = bundle?.getString(CATEGORY_TITLE) ?: ""
+        categoryId = CategoryRecipesFragmentArgs.fromBundle(bundle).categoryId
+        title = CategoryRecipesFragmentArgs.fromBundle(bundle).categoryTitle
         getRecipesByCategory()
     }
 
@@ -103,7 +103,5 @@ class CategoryRecipesViewModel @Inject constructor(
             maxSize = 100,
             enablePlaceholders = false
         )
-        private const val CATEGORY_ID = "CategoryId"
-        private const val CATEGORY_TITLE = "CategoryTitle"
     }
 }

@@ -19,17 +19,17 @@ class UnfollowViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 
-    private var userId: Int? = null
+    private var userId: Int = -1
 
-    override fun fetchExtras(bundle: Bundle?) {
+    override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        userId = bundle?.getInt(USER_ID) ?: -1
+        userId = UnfollowDialogArgs.fromBundle(bundle).userId
     }
 
     fun unfollow() {
         sendRequest(
             loading = true,
-            request = { userRepository.unFollowUser(userId!!) },
+            request = { userRepository.unFollowUser(userId) },
             success = {
                 showMessageWithRes(R.string.success_unfollow)
                 setExtras(ResultListenerParams(DIALOG_ACTION, KEY_UNFOLLOW_COMPLETED, true))

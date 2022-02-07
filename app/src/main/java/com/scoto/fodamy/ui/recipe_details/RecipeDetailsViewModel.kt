@@ -35,18 +35,16 @@ class RecipeDetailsViewModel @Inject constructor(
     private val _comment: MutableLiveData<Comment?> = MutableLiveData()
     val comment: LiveData<Comment?> get() = _comment
 
-    private var recipeId: Int? = null
-    private var followedUserId: Int? = null
+    private var recipeId: Int = -1
+    private var followedUserId: Int = -1
 
-    override fun fetchExtras(bundle: Bundle?) {
+    override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        val recipe = bundle?.getParcelable<Recipe>(RECIPE)
-        recipe?.let {
-            _recipe.value = it
-        }
+        val recipe = RecipeDetailsFragmentArgs.fromBundle(bundle).recipe
+        _recipe.value = recipe
 
-        recipeId = recipe?.id ?: -1
-        followedUserId = recipe?.user?.id ?: -1
+        recipeId = recipe.id
+        followedUserId = recipe.user.id
 
         getRecipeById()
         getRecipeComments()
@@ -55,7 +53,7 @@ class RecipeDetailsViewModel @Inject constructor(
     fun getRecipeById() {
         sendRequest(
             loading = true,
-            request = { recipeRepository.getRecipeById(recipeId!!) },
+            request = { recipeRepository.getRecipeById(recipeId) },
             success = {
                 _recipe.value = it
             }
@@ -64,7 +62,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun getRecipeComments() {
         sendRequest(
-            request = { recipeRepository.getFirstComment(recipeId!!) },
+            request = { recipeRepository.getFirstComment(recipeId) },
             success = {
                 _comment.value = it
             }
@@ -74,14 +72,14 @@ class RecipeDetailsViewModel @Inject constructor(
     fun onImageSlider() {
         navigate(
             RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToImagePopupFragment(
-                ImageList(recipe.value!!.images)
+                ImageList(recipe.value?.images!!)
             )
         )
     }
 
     fun onCommentAdd() {
         navigate(
-            RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToCommentsFragment(recipeId!!)
+            RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToCommentsFragment(recipeId)
         )
     }
 
@@ -91,7 +89,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     fun onLike() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
-            recipe.value!!.let {
+            recipe.value?.let {
                 if (it.isLiked) dislike() else like()
             }
         } else {
@@ -101,7 +99,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun like() {
         sendRequest(
-            request = { likeUseCase.invoke(RecipeParams(recipeId!!)) },
+            request = { likeUseCase.invoke(RecipeParams(recipeId)) },
             success = {
                 showMessageWithRes(R.string.success_like)
                 _recipe.value = it
@@ -111,7 +109,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun dislike() {
         sendRequest(
-            request = { dislikeUseCase.invoke(RecipeParams(recipeId!!)) },
+            request = { dislikeUseCase.invoke(RecipeParams(recipeId)) },
             success = {
                 showMessageWithRes(R.string.success_dislike)
                 _recipe.value = it
@@ -123,7 +121,7 @@ class RecipeDetailsViewModel @Inject constructor(
         if (recipe.value?.user?.isFollowing == true) {
             navigate(
                 RecipeDetailsFragmentDirections
-                    .actionRecipeDetailsFragmentToUnfollowDialog(followedUserId!!)
+                    .actionRecipeDetailsFragmentToUnfollowDialog(followedUserId)
             )
         } else {
             if (!dataStoreManager.isLogin()) {
@@ -138,7 +136,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun follow() {
         sendRequest(
-            request = { followUseCase.invoke(FollowParams(followedUserId!!, recipeId!!)) },
+            request = { followUseCase.invoke(FollowParams(followedUserId, recipeId)) },
             success = {
                 showMessageWithRes(R.string.success_follow)
                 _recipe.value = it

@@ -11,9 +11,9 @@ import javax.inject.Inject
 class ImagePopupViewModel @Inject constructor() : BaseViewModel() {
 
     private lateinit var images: ImageList
-    override fun fetchExtras(bundle: Bundle?) {
+    override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        images = bundle?.getParcelable(IMAGES) ?: ImageList(emptyList())
+        images = ImagePopupFragmentArgs.fromBundle(bundle).images
     }
 
     fun getImages(): ImageList {

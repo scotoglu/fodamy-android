@@ -31,7 +31,7 @@ abstract class BaseViewModel : ViewModel(), FetchExtras {
     val loading: LiveData<Boolean> get() = _loading
 
     @CallSuper
-    override fun fetchExtras(bundle: Bundle?) {
+    override fun fetchExtras(bundle: Bundle) {
     }
 
     fun navigate(directions: NavDirections) {

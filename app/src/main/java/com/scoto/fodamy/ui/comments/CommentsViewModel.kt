@@ -44,15 +44,15 @@ class CommentsViewModel @Inject constructor(
     val comment = MutableLiveData<String>()
 
     // gets passed arguments from recipe details fragment
-    private var recipeId: Int? = null
+    private var recipeId: Int = -1
 
     init {
         isLogin()
     }
 
-    override fun fetchExtras(bundle: Bundle?) {
+    override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        recipeId = bundle?.getInt(RECIPE_ID) ?: -1
+        recipeId = CommentsFragmentArgs.fromBundle(bundle).recipeid
         getComments()
     }
 
@@ -67,7 +67,7 @@ class CommentsViewModel @Inject constructor(
             request = {
                 Pager(
                     config = pageConfig,
-                    pagingSourceFactory = { CommentPagingSource(recipeRepository, recipeId!!) }
+                    pagingSourceFactory = { CommentPagingSource(recipeRepository, recipeId) }
                 ).flow
             },
             success = {
@@ -83,7 +83,7 @@ class CommentsViewModel @Inject constructor(
     fun onSend() = viewModelScope.launch {
         if (dataStoreManager.isLogin()) {
             sendRequest(
-                request = { recipeRepository.sendComment(recipeId!!, comment.value.toString()) },
+                request = { recipeRepository.sendComment(recipeId, comment.value.toString()) },
                 success = {
                     comment.value = ""
                     showMessageWithRes(R.string.success_comment_add)
@@ -107,7 +107,7 @@ class CommentsViewModel @Inject constructor(
             navigate(
                 CommentsFragmentDirections.actionCommentsFragmentToCommentDialog(
                     comment.id,
-                    recipeId!!
+                    recipeId
                 )
             )
             editableComment.value = comment.text
@@ -124,7 +124,7 @@ class CommentsViewModel @Inject constructor(
             sendRequest(
                 request = {
                     recipeRepository.editComment(
-                        recipeId = recipeId!!,
+                        recipeId = recipeId,
                         commentId = commentId.value!!,
                         text = editableComment.value.toString()
                     )
@@ -142,7 +142,7 @@ class CommentsViewModel @Inject constructor(
 
     fun onDelete() = viewModelScope.launch {
         sendRequest(
-            request = { recipeRepository.deleteComment(recipeId!!, commentId.value!!) },
+            request = { recipeRepository.deleteComment(recipeId, commentId.value!!) },
             success = {
                 showMessageWithRes(R.string.success_comment_delete)
                 event.value = CommentEvent.Success
@@ -156,6 +156,5 @@ class CommentsViewModel @Inject constructor(
             maxSize = 100,
             enablePlaceholders = false
         )
-        private const val RECIPE_ID = "RECIPE_ID"
     }
 }
