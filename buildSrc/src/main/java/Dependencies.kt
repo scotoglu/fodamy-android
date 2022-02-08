@@ -40,12 +40,18 @@ object Dependencies {
     const val CIRCLE_IMAGEVIEW="de.hdodenhof:circleimageview:${Versions.CIRCLE_IMAGEVIEW}"
     const val LOTTIE_ANIMATION="com.airbnb.android:lottie:${Versions.LOTTIE_ANIMATION}"
 
+    //Firebase
+    const val FIREBASE_BOM ="com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
+    const val FIREBASE_ANALYTICS="com.google.firebase:firebase-analytics-ktx"
+    const val FIREBASE_CRASHLYTICS="com.google.firebase:firebase-crashlytics-ktx"
     //classpath
     const val TOOLS_BUILD_GRADLE="com.android.tools.build:gradle:${Versions.TOOLS_BUILD_GRADLE}"
     const val KOTLIN_GRADLE_PLUGIN="org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN_GRADLE_PLUGIN}"
     const val DAGGER_HILT_GRADLE_PLUGIN="com.google.dagger:hilt-android-gradle-plugin:${Versions.DAGGER_HILT}"
     const val NAVIGATION_SAFE_ARGS="androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.NAVIGATION_COMPONENT}"
     const val KTLINT_GRADLE="org.jlleitschuh.gradle:ktlint-gradle:${Versions.KTLINT_VERSION}"
+    const val GOOGLE_SERVICES="com.google.gms:google-services:${Versions.GOOGLE_SERVICE}"
+    const val FIREBASE_CRASHLYTICS_GRADLE ="com.google.firebase:firebase-crashlytics-gradle:${Versions.FIREBASE_CRASHLYTICS_GRADLE}"
     //tests
     const val JUNIT = "junit:junit:${Versions.JUNIT}"
     const val EXT_JUNIT = "androidx.test.ext:junit:${Versions.EXT_JUNIT}"

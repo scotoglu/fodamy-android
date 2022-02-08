@@ -6,6 +6,8 @@ plugins {
     id(Plugins.NAVIGATION_SAFE_ARGS)
     id(Plugins.KOTLIN_PARCELIZE)
     id(Plugins.KTLINT)
+    id(Plugins.GOOGLE_SERVICE)
+    id(Plugins.FIREBASE_CRASHLYTICS)
 }
 
 android {
@@ -95,6 +97,11 @@ dependencies {
 
     implementation(Dependencies.CIRCLE_IMAGEVIEW)
     implementation(Dependencies.LOTTIE_ANIMATION)
+
+    // Firebase
+    implementation(platform(Dependencies.FIREBASE_BOM))
+    implementation(Dependencies.FIREBASE_ANALYTICS)
+    implementation(Dependencies.FIREBASE_CRASHLYTICS)
 }
 kapt {
     correctErrorTypes = true

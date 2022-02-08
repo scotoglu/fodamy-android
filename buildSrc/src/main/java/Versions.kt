@@ -21,10 +21,13 @@ object Versions {
     const val LEAK_CANARY = "2.7"
     const val DOTSINDICATOR = "4.2"
     const val CIRCLE_IMAGEVIEW = "3.1.0"
-    const val KTLINT_VERSION="10.2.0"
-    const val TOOLS_BUILD_GRADLE="7.0.4"
-    const val KOTLIN_GRADLE_PLUGIN="1.6.10"
-    const val LOTTIE_ANIMATION ="3.4.0"
+    const val KTLINT_VERSION = "10.2.0"
+    const val TOOLS_BUILD_GRADLE = "7.0.4"
+    const val KOTLIN_GRADLE_PLUGIN = "1.6.10"
+    const val LOTTIE_ANIMATION = "3.4.0"
+    const val GOOGLE_SERVICE = "4.3.10"
+    const val FIREBASE_BOM="29.0.4"
+    const val FIREBASE_CRASHLYTICS_GRADLE="2.8.1"
 
     //test
     const val JUNIT = "4.13.1"
