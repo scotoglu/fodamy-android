@@ -1,16 +1,16 @@
 package com.scoto.data.mapper
 
-import com.scoto.data.network.dto.AuthResponse
-import com.scoto.data.network.dto.CategoryResponse
-import com.scoto.data.network.dto.CommentResponse
-import com.scoto.data.network.dto.CommonResponse
-import com.scoto.data.network.dto.ImageResponse
-import com.scoto.data.network.dto.NumberOfPersonResponse
-import com.scoto.data.network.dto.PaginationResponse
-import com.scoto.data.network.dto.RecipePagingResponse
-import com.scoto.data.network.dto.RecipeResponse
-import com.scoto.data.network.dto.TimeOfRecipeResponse
-import com.scoto.data.network.dto.UserResponse
+import com.scoto.data.remote.remote_dto.AuthResponse
+import com.scoto.data.remote.remote_dto.CategoryResponse
+import com.scoto.data.remote.remote_dto.CommentResponse
+import com.scoto.data.remote.remote_dto.CommonResponse
+import com.scoto.data.remote.remote_dto.ImageResponse
+import com.scoto.data.remote.remote_dto.NumberOfPersonResponse
+import com.scoto.data.remote.remote_dto.PaginationResponse
+import com.scoto.data.remote.remote_dto.RecipePagingResponse
+import com.scoto.data.remote.remote_dto.RecipeResponse
+import com.scoto.data.remote.remote_dto.TimeOfRecipeResponse
+import com.scoto.data.remote.remote_dto.UserResponse
 import com.scoto.domain.models.Auth
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment

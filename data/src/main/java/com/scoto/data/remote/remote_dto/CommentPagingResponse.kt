@@ -1,14 +1,14 @@
-package com.scoto.data.network.dto
+package com.scoto.data.remote.remote_dto
 
 import com.google.gson.annotations.SerializedName
 
 /**
  * @author Sefa ÇOTOĞLU
- * Created 19.01.2022 at 22:13
+ * Created 19.01.2022 at 22:14
  */
-data class RecipePagingResponse(
+data class CommentPagingResponse(
     @SerializedName("data")
-    val data: List<RecipeResponse>,
+    val data: List<CommentResponse>,
     @SerializedName("pagination")
     val pagination: PaginationResponse
 )

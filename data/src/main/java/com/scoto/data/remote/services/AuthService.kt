@@ -1,7 +1,7 @@
-package com.scoto.data.network.services
+package com.scoto.data.remote.services
 
-import com.scoto.data.network.dto.AuthResponse
-import com.scoto.data.network.dto.CommonResponse
+import com.scoto.data.remote.remote_dto.AuthResponse
+import com.scoto.data.remote.remote_dto.CommonResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST

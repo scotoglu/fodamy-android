@@ -1,7 +1,7 @@
-package com.scoto.data.network.services
+package com.scoto.data.remote.services
 
-import com.scoto.data.network.dto.CommonResponse
-import com.scoto.data.network.dto.UserResponse
+import com.scoto.data.remote.remote_dto.CommonResponse
+import com.scoto.data.remote.remote_dto.UserResponse
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST

@@ -1,7 +1,7 @@
-package com.scoto.data.network.repositories
+package com.scoto.data.repositories
 
 import com.scoto.data.mapper.toDomainModel
-import com.scoto.data.network.services.RecipeService
+import com.scoto.data.remote.services.RecipeService
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Recipe

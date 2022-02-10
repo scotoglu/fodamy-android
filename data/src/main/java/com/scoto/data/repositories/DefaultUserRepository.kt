@@ -1,7 +1,7 @@
-package com.scoto.data.network.repositories
+package com.scoto.data.repositories
 
 import com.scoto.data.mapper.toDomainModel
-import com.scoto.data.network.services.UserService
+import com.scoto.data.remote.services.UserService
 import com.scoto.domain.models.User
 import com.scoto.domain.repositories.UserRepository
 import javax.inject.Inject

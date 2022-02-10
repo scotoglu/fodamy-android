@@ -1,11 +1,11 @@
 package com.scoto.fodamy.di.modules
 
-import com.scoto.data.network.repositories.DefaultAuthRepository
-import com.scoto.data.network.repositories.DefaultRecipeRepository
-import com.scoto.data.network.repositories.DefaultUserRepository
-import com.scoto.data.network.services.AuthService
-import com.scoto.data.network.services.RecipeService
-import com.scoto.data.network.services.UserService
+import com.scoto.data.repositories.DefaultAuthRepository
+import com.scoto.data.repositories.DefaultRecipeRepository
+import com.scoto.data.repositories.DefaultUserRepository
+import com.scoto.data.remote.services.AuthService
+import com.scoto.data.remote.services.RecipeService
+import com.scoto.data.remote.services.UserService
 import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.repositories.UserRepository

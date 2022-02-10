@@ -1,11 +1,11 @@
-package com.scoto.data.network.repositories
+package com.scoto.data.repositories
 
 import com.google.gson.Gson
-import com.scoto.data.network.exceptions.Authentication
-import com.scoto.data.network.exceptions.BaseException
-import com.scoto.data.network.exceptions.GettingEmptyListItem
-import com.scoto.data.network.exceptions.SimpleHttpException
-import com.scoto.data.network.exceptions.Unauthorized
+import com.scoto.data.remote.exceptions.Authentication
+import com.scoto.data.remote.exceptions.BaseException
+import com.scoto.data.remote.exceptions.GettingEmptyListItem
+import com.scoto.data.remote.exceptions.SimpleHttpException
+import com.scoto.data.remote.exceptions.Unauthorized
 import com.scoto.domain.models.ErrorControl
 import retrofit2.HttpException
 import java.io.IOException

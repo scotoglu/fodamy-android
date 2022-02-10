@@ -1,4 +1,4 @@
-package com.scoto.data.network.exceptions
+package com.scoto.data.remote.exceptions
 
 /**
  * @author Sefa ÇOTOĞLU

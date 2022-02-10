@@ -1,4 +1,4 @@
-package com.scoto.data.network.dto
+package com.scoto.data.remote.remote_dto
 
 import com.google.gson.annotations.SerializedName
 

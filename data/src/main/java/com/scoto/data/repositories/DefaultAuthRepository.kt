@@ -1,7 +1,7 @@
-package com.scoto.data.network.repositories
+package com.scoto.data.repositories
 
 import com.scoto.data.mapper.toDomainModel
-import com.scoto.data.network.services.AuthService
+import com.scoto.data.remote.services.AuthService
 import com.scoto.domain.models.Auth
 import com.scoto.domain.models.Common
 import com.scoto.domain.repositories.AuthRepository
