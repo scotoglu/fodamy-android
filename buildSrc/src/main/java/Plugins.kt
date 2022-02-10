@@ -13,4 +13,6 @@ object Plugins {
     const val DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
     const val ANDROID_LIBRARY = "com.android.library"
     const val BASE_GRADLE ="base-android-library"
+    const val GOOGLE_SERVICE="com.google.gms.google-services"
+    const val FIREBASE_CRASHLYTICS="com.google.firebase.crashlytics"
 }

@@ -10,7 +10,8 @@ buildscript {
         classpath(Dependencies.KOTLIN_GRADLE_PLUGIN)
         classpath(Dependencies.DAGGER_HILT_GRADLE_PLUGIN)
         classpath(Dependencies.NAVIGATION_SAFE_ARGS)
-
+        classpath(Dependencies.GOOGLE_SERVICES)
+        classpath(Dependencies.FIREBASE_CRASHLYTICS_GRADLE)
         // ktlint
         classpath(Dependencies.KTLINT_GRADLE)
         // NOTE: Do not place your application dependencies here; they belong

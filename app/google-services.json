@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "744651065157",
+    "project_id": "fodamy-6417e",
+    "storage_bucket": "fodamy-6417e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744651065157:android:1fa368ced9b427940ea02c",
+        "android_client_info": {
+          "package_name": "com.scoto.fodamy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744651065157-27lt0r1u5cog5qvb3s9qlges76h6jdh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSfLPHdDSGCeELaG_SgC08m4iSmqPXvOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744651065157-27lt0r1u5cog5qvb3s9qlges76h6jdh1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
