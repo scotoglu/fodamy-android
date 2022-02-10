@@ -43,8 +43,10 @@ class CategoryRecipesViewModel @Inject constructor(
 
     override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        categoryId = CategoryRecipesFragmentArgs.fromBundle(bundle).categoryId
-        title = CategoryRecipesFragmentArgs.fromBundle(bundle).categoryTitle
+        with(CategoryRecipesFragmentArgs.fromBundle(bundle)){
+            this@CategoryRecipesViewModel.categoryId = categoryId
+            this@CategoryRecipesViewModel.title = categoryTitle
+        }
         getRecipesByCategory()
     }
 

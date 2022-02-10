@@ -13,7 +13,9 @@ class ImagePopupViewModel @Inject constructor() : BaseViewModel() {
     private lateinit var images: ImageList
     override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        images = ImagePopupFragmentArgs.fromBundle(bundle).images
+        with(ImagePopupFragmentArgs.fromBundle(bundle)) {
+            this@ImagePopupViewModel.images = images
+        }
     }
 
     fun getImages(): ImageList {
@@ -26,9 +28,5 @@ class ImagePopupViewModel @Inject constructor() : BaseViewModel() {
         }
 
         return ImageList(populatedImages)
-    }
-
-    companion object {
-        private const val IMAGES = "images"
     }
 }

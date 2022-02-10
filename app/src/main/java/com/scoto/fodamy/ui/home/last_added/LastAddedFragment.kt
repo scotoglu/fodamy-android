@@ -19,9 +19,9 @@ class LastAddedFragment() :
 
     override fun registerObservables() {
         super.registerObservables()
-        viewModel.recipes.observe(viewLifecycleOwner, {
+        viewModel.recipes.observe(viewLifecycleOwner) {
             recipesAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        })
+        }
     }
 
     override fun initViews() {
