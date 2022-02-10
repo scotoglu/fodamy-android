@@ -24,9 +24,4 @@ class RecipeDetailsFragment :
             }
         }
     }
-
-    companion object {
-        private const val DIALOG_ACTION = "DialogAction"
-        private const val UNFOLLOW = "Unfollow"
-    }
 }

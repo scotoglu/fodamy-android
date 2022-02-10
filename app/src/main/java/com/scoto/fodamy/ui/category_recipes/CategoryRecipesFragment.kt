@@ -23,9 +23,9 @@ class CategoryRecipesFragment :
     }
 
     private fun recipeObserver() {
-        viewModel.recipes.observe(viewLifecycleOwner, {
+        viewModel.recipes.observe(viewLifecycleOwner) {
             categoryRecipesAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        })
+        }
     }
 
     override fun addItemClicks() {
@@ -57,12 +57,12 @@ class CategoryRecipesFragment :
     }
 
     private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner, { event ->
+        viewModel.event.observe(viewLifecycleOwner) { event ->
             val logoutIconVisibility: Boolean = when (event) {
                 is CategoryEvent.IsLogin -> event.isLogin
                 CategoryEvent.Success -> false
             }
             binding.customToolbar.setEndIconVisibility(logoutIconVisibility)
-        })
+        }
     }
 }

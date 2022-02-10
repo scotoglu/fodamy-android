@@ -109,8 +109,4 @@ abstract class BaseBottomDialog<VB : ViewDataBinding, VM : BaseViewModel>(
         super.onDestroyView()
         _binding = null
     }
-
-    companion object {
-        private const val REQUEST_KEY = "DialogAction"
-    }
 }

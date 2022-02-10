@@ -25,8 +25,10 @@ class CommentDialogViewModel @Inject constructor(
 
     override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        commentId = CommentDialogArgs.fromBundle(bundle).commentId
-        recipeId = CommentDialogArgs.fromBundle(bundle).recipeId
+        with(CommentDialogArgs.fromBundle(bundle)) {
+            this@CommentDialogViewModel.commentId = commentId
+            this@CommentDialogViewModel.recipeId = recipeId
+        }
     }
 
     fun edit() {

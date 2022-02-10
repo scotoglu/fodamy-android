@@ -40,12 +40,11 @@ class RecipeDetailsViewModel @Inject constructor(
 
     override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        val recipe = RecipeDetailsFragmentArgs.fromBundle(bundle).recipe
-        _recipe.value = recipe
-
-        recipeId = recipe.id
-        followedUserId = recipe.user.id
-
+        with(RecipeDetailsFragmentArgs.fromBundle(bundle)) {
+            this@RecipeDetailsViewModel._recipe.value = recipe
+            this@RecipeDetailsViewModel.recipeId = recipe.id
+            this@RecipeDetailsViewModel.followedUserId = recipe.user.id
+        }
         getRecipeById()
         getRecipeComments()
     }

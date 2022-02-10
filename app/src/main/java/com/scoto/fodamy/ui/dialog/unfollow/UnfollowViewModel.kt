@@ -23,7 +23,9 @@ class UnfollowViewModel @Inject constructor(
 
     override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        userId = UnfollowDialogArgs.fromBundle(bundle).userId
+        with(UnfollowDialogArgs.fromBundle(bundle)) {
+            this@UnfollowViewModel.userId = userId
+        }
     }
 
     fun unfollow() {
