@@ -35,9 +35,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
     }
 
     private fun userObserver() {
-        viewModel.user.observe(viewLifecycleOwner, { user ->
+        viewModel.user.observe(viewLifecycleOwner) { user ->
             binding.user = user
-        })
+        }
     }
 
     private fun tokenObserverForRefresh() {

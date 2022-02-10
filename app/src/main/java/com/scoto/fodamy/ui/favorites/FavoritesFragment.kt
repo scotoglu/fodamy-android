@@ -24,9 +24,9 @@ class FavoritesFragment :
     }
 
     private fun categoryObserver() {
-        viewModel.categories.observe(viewLifecycleOwner, {
+        viewModel.categories.observe(viewLifecycleOwner) {
             categoryAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        })
+        }
     }
 
     override fun addItemClicks() {
@@ -61,12 +61,12 @@ class FavoritesFragment :
     }
 
     private fun eventObserver() {
-        viewModel.event.observe(viewLifecycleOwner, { event ->
+        viewModel.event.observe(viewLifecycleOwner) { event ->
             val logoutIconVisibility: Boolean = when (event) {
                 is FavoritesEvent.IsLogin -> event.isLogin
                 FavoritesEvent.Success -> false
             }
             binding.customToolbar.setEndIconVisibility(logoutIconVisibility)
-        })
+        }
     }
 }

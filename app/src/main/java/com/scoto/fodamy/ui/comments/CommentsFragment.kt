@@ -12,6 +12,7 @@ import com.scoto.fodamy.ext.hideSoftKeyboard
 import com.scoto.fodamy.ext.showIme
 import com.scoto.fodamy.ui.base.BaseFragment
 import com.scoto.fodamy.ui.comments.adapter.CommentsAdapter
+import com.scoto.fodamy.util.DIALOG_ACTION
 import com.scoto.fodamy.util.KEY_COMMENT_DELETE
 import com.scoto.fodamy.util.KEY_COMMENT_EDIT
 import dagger.hilt.android.AndroidEntryPoint
@@ -94,11 +95,5 @@ class CommentsFragment :
     private fun setFocusToAddCommentEdittext() {
         (activity as AppCompatActivity).showIme()
         binding.etAddComment.requestFocus()
-    }
-
-    companion object {
-        private const val DIALOG_ACTION = "DialogAction"
-        private const val EDIT = "EDIT"
-        private const val DELETE = "DELETE"
     }
 }

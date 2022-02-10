@@ -29,7 +29,7 @@ class SliderAdapter(private val images: ImageList) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(images.images?.get(position)!!)
+        holder.bind(images.images[position])
     }
 
     override fun getItemCount(): Int {

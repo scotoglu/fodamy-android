@@ -52,7 +52,9 @@ class CommentsViewModel @Inject constructor(
 
     override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        recipeId = CommentsFragmentArgs.fromBundle(bundle).recipeid
+        with(CommentsFragmentArgs.fromBundle(bundle)){
+            this@CommentsViewModel.recipeId = recipeid
+        }
         getComments()
     }
 
