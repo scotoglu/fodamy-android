@@ -1,0 +1,18 @@
+package com.scoto.data.local.local_dto
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+/**
+ * @author Sefa ÇOTOĞLU
+ * Created 11.02.2022 at 09:40
+ */
+@Entity(tableName = "categories")
+data class CategoryDb(
+    @PrimaryKey(autoGenerate = false)
+    val id: Int,
+    val name: String,
+    @ColumnInfo(name = "image_id")
+    val imageId: Int
+)
