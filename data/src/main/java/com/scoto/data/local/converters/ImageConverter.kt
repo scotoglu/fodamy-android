@@ -21,6 +21,7 @@ class ImageConverter @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
+    // Downloads images as bitmap
     private fun urlToBitmap(imageDb: ImageDb): Bitmap {
         return Glide.with(context)
             .asBitmap()
@@ -29,17 +30,16 @@ class ImageConverter @Inject constructor(
     }
 
     @TypeConverter
-    fun imageToByte(imageDb: ImageDb): ByteArray {
-        val bitmap = urlToBitmap(imageDb)
+    fun imageToByte(bitmap: Bitmap): ByteArray {
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream)
         return outputStream.toByteArray()
     }
 
     @TypeConverter
-    fun byteToImage(imageByte: ByteArray): ImageDb {
+    fun byteToImage(imageByte: ByteArray): Bitmap {
         val inputStream = ByteArrayInputStream(imageByte)
         val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
-        return ImageDb(0, "", bitmap, 0)
+        return bitmap
     }
 }
