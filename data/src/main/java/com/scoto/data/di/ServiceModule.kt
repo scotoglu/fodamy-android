@@ -1,9 +1,9 @@
 package com.scoto.data.di
 
 import com.scoto.data.BuildConfig
-import com.scoto.data.network.services.AuthService
-import com.scoto.data.network.services.RecipeService
-import com.scoto.data.network.services.UserService
+import com.scoto.data.remote.services.AuthService
+import com.scoto.data.remote.services.RecipeService
+import com.scoto.data.remote.services.UserService
 import com.scoto.data.utils.AuthInterceptor
 import dagger.Module
 import dagger.Provides

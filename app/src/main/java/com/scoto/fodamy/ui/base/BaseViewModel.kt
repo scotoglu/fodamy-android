@@ -8,10 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
-import com.scoto.data.network.exceptions.Authentication
-import com.scoto.data.network.exceptions.BaseException
-import com.scoto.data.network.exceptions.GettingEmptyListItem
-import com.scoto.data.network.exceptions.SimpleHttpException
+import com.scoto.data.remote.exceptions.Authentication
+import com.scoto.data.remote.exceptions.BaseException
+import com.scoto.data.remote.exceptions.GettingEmptyListItem
+import com.scoto.data.remote.exceptions.SimpleHttpException
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.util.ResultListenerParams
