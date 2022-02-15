@@ -57,6 +57,9 @@ dependencies {
     implementation(Dependencies.LOGGING_INTERCEPTOR)
 
     implementation(Dependencies.ROOM_RUNTIME)
-    annotationProcessor(Dependencies.ROOM_COMPILER)
+    kapt(Dependencies.ROOM_COMPILER)
     implementation(Dependencies.ROOM_EXTENSIONS)
+
+    implementation(Dependencies.GLIDE)
+    kapt(Dependencies.GLIDE_COMPILER)
 }

@@ -1,6 +1,5 @@
 package com.scoto.data.local.local_dto
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -13,6 +12,6 @@ data class CategoryDb(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String,
-    @ColumnInfo(name = "image_id")
-    val imageId: Int
+    val image: ImageDb,
+    val recipes: List<RecipeDb>
 )

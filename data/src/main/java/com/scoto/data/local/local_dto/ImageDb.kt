@@ -1,5 +1,6 @@
 package com.scoto.data.local.local_dto
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,8 +11,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "images")
 data class ImageDb(
     val height: Int,
-    val image: String,
-    val width: Int
+    val url: String,
+    val image: Bitmap?,
+    val width: Int,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
