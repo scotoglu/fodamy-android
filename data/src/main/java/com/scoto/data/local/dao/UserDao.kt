@@ -13,7 +13,5 @@ import com.scoto.data.local.local_dto.UserDb
 @Dao
 interface UserDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUser(userDb: UserDb)
 
 }

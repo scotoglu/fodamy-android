@@ -22,24 +22,51 @@ class ImageConverter @Inject constructor(
 ) {
 
     // Downloads images as bitmap
-    private fun urlToBitmap(imageDb: ImageDb): Bitmap {
-        return Glide.with(context)
-            .asBitmap()
-            .load(imageDb.url)
-            .submit(imageDb.width, imageDb.height).get()
+    private fun urlToBitmap(imageDb: ImageDb): Bitmap? {
+        var bitmap: Bitmap? = null
+        try {
+            if (imageDb.url.isNotBlank()) {
+                bitmap = Glide.with(context)
+                    .asBitmap()
+                    .load(imageDb.url)
+                    .submit(imageDb.width, imageDb.height).get()
+            }
+            return bitmap
+        } catch (ex: Exception) {
+            throw ex
+        }
     }
 
+    //
+//    @TypeConverter
+//    fun imageToByte(bitmap: Bitmap): ByteArray {
+//        val outputStream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream)
+//        return outputStream.toByteArray()
+//    }
+//
+//    @TypeConverter
+//    fun byteToImage(imageByte: ByteArray): Bitmap {
+//        val inputStream = ByteArrayInputStream(imageByte)
+//        val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
+//        return bitmap
+//    }
     @TypeConverter
-    fun imageToByte(bitmap: Bitmap): ByteArray {
+    fun imageDbToJson(imageDb: ImageDb): String {
+        val bitmap = urlToBitmap(imageDb)
         val outputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream)
-        return outputStream.toByteArray()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 0, outputStream)
+        val imageByte = outputStream.toByteArray()
+        imageDb.imageByte = imageByte
+        return toJson<ImageDb>(imageDb)
     }
 
     @TypeConverter
-    fun byteToImage(imageByte: ByteArray): Bitmap {
-        val inputStream = ByteArrayInputStream(imageByte)
-        val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
-        return bitmap
+    fun jsonToImageDb(imageDbSrc: String): ImageDb {
+        val imageDbObj: ImageDb = fromJson<ImageDb>(imageDbSrc)
+        val inputStream = ByteArrayInputStream(imageDbObj.imageByte)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        imageDbObj.image = bitmap
+        return imageDbObj
     }
 }

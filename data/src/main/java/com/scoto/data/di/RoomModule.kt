@@ -4,7 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.scoto.data.BuildConfig
 import com.scoto.data.local.converters.ImageConverter
-import com.scoto.data.local.converters.JsonConverter
+import com.scoto.data.local.converters.ImageListConverter
+import com.scoto.data.local.converters.RecipeListConverter
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.UserDao
 import com.scoto.data.local.database.AppDatabase
@@ -44,8 +45,14 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideJsonConverter(): JsonConverter {
-        return JsonConverter()
+    fun provideJsonConverter(): RecipeListConverter {
+        return RecipeListConverter()
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageListConverter(): ImageListConverter {
+        return ImageListConverter()
     }
 
     @Provides
@@ -53,7 +60,8 @@ object RoomModule {
     fun provideAppDatabase(
         @ApplicationContext context: Context,
         imageConverter: ImageConverter,
-        jsonConverter: JsonConverter
+        jsonConverter: RecipeListConverter,
+        imageListConverter: ImageListConverter
     ): AppDatabase {
         return Room.databaseBuilder(
             context,
@@ -62,6 +70,7 @@ object RoomModule {
         ).fallbackToDestructiveMigration()
             .addTypeConverter(jsonConverter)
             .addTypeConverter(imageConverter)
+            .addTypeConverter(imageListConverter)
             .build()
     }
 }

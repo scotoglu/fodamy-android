@@ -43,7 +43,6 @@ fun ImageResponse.toLocalDto(): ImageDb {
         width = this.width,
         height = this.height,
         url = this.url,
-        image = null
     )
 }
 
@@ -58,7 +57,7 @@ fun UserResponse.toLocalDto(): UserDb {
         isFollowing = this.isFollowing,
         likesCount = this.likesCount ?: 0,
         recipeCount = this.recipeCount ?: 0,
-        image = this.image?.toLocalDto()?:ImageDb(0, "", null, 0)
+        image = this.image?.toLocalDto() ?: ImageDb.EMPTY
     )
 }
 
@@ -75,6 +74,6 @@ fun CategoryResponse.toLocalDto(): CategoryDb {
         id = this.id,
         name = this.name ?: "",
         recipes = this.recipes?.map { it.toLocalDto() } ?: emptyList(),
-        image = this.image?.toLocalDto() ?: ImageDb(0, "", null, 0)
+        image = this.image?.toLocalDto() ?:ImageDb.EMPTY
     )
 }

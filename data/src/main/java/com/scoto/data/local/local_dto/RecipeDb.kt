@@ -25,12 +25,13 @@ data class RecipeDb(
     val likeCount: Int,
     @ColumnInfo(name = "comment_count")
     val commentCount: Int,
+    @ColumnInfo(name = "user")
     val user: UserDb,
     @Embedded(prefix = "time_of_recipe")
     val timeOfRecipe: TimeOfRecipeDb,
     @Embedded(prefix = "number_of_person")
     val numberOfPerson: NumberOfPersonDb,
-    @ColumnInfo(name = "category_id")
+    @ColumnInfo(name = "category")
     val category: CategoryDb,
     val image:List<ImageDb>
 )

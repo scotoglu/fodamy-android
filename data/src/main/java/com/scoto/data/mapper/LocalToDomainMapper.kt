@@ -2,12 +2,14 @@ package com.scoto.data.mapper
 
 import com.scoto.data.local.local_dto.CategoryDb
 import com.scoto.data.local.local_dto.CommentDb
+import com.scoto.data.local.local_dto.ImageDb
 import com.scoto.data.local.local_dto.NumberOfPersonDb
 import com.scoto.data.local.local_dto.RecipeDb
 import com.scoto.data.local.local_dto.TimeOfRecipeDb
 import com.scoto.data.local.local_dto.UserDb
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
+import com.scoto.domain.models.Image
 import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.models.TimeOfRecipe
@@ -34,14 +36,14 @@ fun RecipeDb.toDomainModel(): Recipe {
         timeOfRecipe = this.timeOfRecipe.toDomainModel(),
         numberOfPerson = this.numberOfPerson.toDomainModel(),
         category = this.category.toDomainModel(),
-        images = emptyList()// TODO("")
+        images = this.image.map { it.toDomainModel() }
     )
 }
 
 fun UserDb.toDomainModel(): User {
     return User(
         id = this.id,
-        image = null,// TODO("")
+        image = this.image.toDomainModel(),
         name = this.name,
         username = this.username,
         favoritesCount = this.favoritesCount,
@@ -50,6 +52,15 @@ fun UserDb.toDomainModel(): User {
         isFollowing = this.isFollowing,
         likesCount = this.likesCount,
         recipeCount = this.recipeCount
+    )
+}
+
+fun ImageDb.toDomainModel(): Image {
+    return Image(
+        height = this.height,
+        width = this.width,
+        url = this.url,
+        image = this.image
     )
 }
 
@@ -65,7 +76,7 @@ fun CategoryDb.toDomainModel(): Category {
     return Category(
         id = this.id,
         name = this.name,
-        image = null,// TODO(""),
+        image = this.image.toDomainModel(),
         recipes = this.recipes.map { it.toDomainModel() }
     )
 }

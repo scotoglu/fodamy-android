@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
  * @author Sefa ÇOTOĞLU
  * Created 11.02.2022 at 09:41
  */
+
 data class UserDb(
     val id: Int,
     val name: String,

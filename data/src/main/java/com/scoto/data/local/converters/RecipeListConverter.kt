@@ -9,7 +9,7 @@ import com.scoto.data.local.local_dto.RecipeDb
  * Created 14.02.2022 at 14:24
  */
 @ProvidedTypeConverter
-class JsonConverter {
+class RecipeListConverter {
 
     @TypeConverter
     fun recipeListToJson(recipes: List<RecipeDb>): String {
