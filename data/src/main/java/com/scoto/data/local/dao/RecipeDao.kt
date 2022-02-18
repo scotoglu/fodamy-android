@@ -26,14 +26,11 @@ interface RecipeDao {
     @Query("select * from recipes where id =:recipeId")
     suspend fun getRecipeDetails(recipeId: Int): RecipeDb
 
-    /*
-    * Boolean values stored as 0(false) and 1(true)
-    * Last added and editor choice recipes stores in one table.
-    * if recipe is editor choice then field value is 1 else 0
-    * */
-    // TODO("")
-    @Query("select * from recipes where is_editor_choice =:recipeType")
-    suspend fun getRecipes(recipeType: Int): List<RecipeDb>
+    @Query("select * from recipes where is_editor_choice =1")
+    suspend fun getEditorChoices(): List<RecipeDb>
+
+    @Query("select * from recipes where is_last_added=1")
+    suspend fun getLastAdded(): List<RecipeDb>
 
     @Query("select * from categories")
     suspend fun getCategories(): List<CategoryDb>
@@ -43,6 +40,4 @@ interface RecipeDao {
 
     @Query("select * from comments where recipe_id =:recipeId")
     suspend fun getRecipeComments(recipeId: Int): List<CommentDb>
-
-
 }

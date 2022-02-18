@@ -37,20 +37,6 @@ class ImageConverter @Inject constructor(
         }
     }
 
-    //
-//    @TypeConverter
-//    fun imageToByte(bitmap: Bitmap): ByteArray {
-//        val outputStream = ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream)
-//        return outputStream.toByteArray()
-//    }
-//
-//    @TypeConverter
-//    fun byteToImage(imageByte: ByteArray): Bitmap {
-//        val inputStream = ByteArrayInputStream(imageByte)
-//        val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
-//        return bitmap
-//    }
     @TypeConverter
     fun imageDbToJson(imageDb: ImageDb): String {
         val bitmap = urlToBitmap(imageDb)

@@ -24,7 +24,7 @@ import com.scoto.data.local.local_dto.RecipeDb
         CategoryDb::class,
         CommentDb::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 @TypeConverters(

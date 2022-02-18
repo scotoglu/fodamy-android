@@ -1,12 +1,14 @@
 package com.scoto.data.mapper
 
 import com.scoto.data.local.local_dto.CategoryDb
+import com.scoto.data.local.local_dto.CommentDb
 import com.scoto.data.local.local_dto.ImageDb
 import com.scoto.data.local.local_dto.NumberOfPersonDb
 import com.scoto.data.local.local_dto.RecipeDb
 import com.scoto.data.local.local_dto.TimeOfRecipeDb
 import com.scoto.data.local.local_dto.UserDb
 import com.scoto.data.remote.remote_dto.CategoryResponse
+import com.scoto.data.remote.remote_dto.CommentResponse
 import com.scoto.data.remote.remote_dto.ImageResponse
 import com.scoto.data.remote.remote_dto.NumberOfPersonResponse
 import com.scoto.data.remote.remote_dto.RecipeResponse
@@ -18,7 +20,7 @@ import com.scoto.data.remote.remote_dto.UserResponse
  * Created 14.02.2022 at 14:51
  */
 
-fun RecipeResponse.toLocalDto(): RecipeDb {
+fun RecipeResponse.toLocalDto(isLastAdded: Boolean = false): RecipeDb {
     return RecipeDb(
         id = this.id,
         title = this.title,
@@ -27,6 +29,7 @@ fun RecipeResponse.toLocalDto(): RecipeDb {
         directions = this.directions,
         difference = this.difference,
         isEditorChoice = this.isEditorChoice,
+        isLastAdded = isLastAdded,
         isLiked = this.isLiked,
         likeCount = this.likeCount,
         commentCount = this.commentCount,
@@ -74,6 +77,16 @@ fun CategoryResponse.toLocalDto(): CategoryDb {
         id = this.id,
         name = this.name ?: "",
         recipes = this.recipes?.map { it.toLocalDto() } ?: emptyList(),
-        image = this.image?.toLocalDto() ?:ImageDb.EMPTY
+        image = this.image?.toLocalDto() ?: ImageDb.EMPTY
+    )
+}
+
+fun CommentResponse.toLocalDto(recipeId: Int): CommentDb {
+    return CommentDb(
+        id = this.id,
+        text = this.text,
+        difference = this.difference,
+        user = this.user.toLocalDto(),
+        recipeId = recipeId
     )
 }

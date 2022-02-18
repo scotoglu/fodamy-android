@@ -2,7 +2,6 @@ package com.scoto.data.repositories
 
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.mapper.toDomainModel
-import com.scoto.data.mapper.toLocalDto
 import com.scoto.data.remote.services.RecipeService
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
@@ -82,9 +81,4 @@ class DefaultRecipeRepository @Inject constructor(
         execute {
             recipeService.getRecipesByCategory(categoryId, page).data.map { it.toDomainModel() }
         }
-
-    companion object {
-        private const val RECIPE_EDITOR_CHOICE: Int = 1
-        private const val RECIPE_LAST_ADDED: Int = 0
-    }
 }

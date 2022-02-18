@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+
 /**
  * @author Sefa ÇOTOĞLU
  * Created 10.02.2022 at 13:50
@@ -19,6 +20,8 @@ data class RecipeDb(
     val difference: String,
     @ColumnInfo(name = "is_editor_choice")
     val isEditorChoice: Boolean,
+    @ColumnInfo(name = "is_last_added")
+    val isLastAdded: Boolean = false,
     @ColumnInfo(name = "is_liked")
     val isLiked: Boolean,
     @ColumnInfo(name = "like_count")
@@ -33,5 +36,5 @@ data class RecipeDb(
     val numberOfPerson: NumberOfPersonDb,
     @ColumnInfo(name = "category")
     val category: CategoryDb,
-    val image:List<ImageDb>
+    val image: List<ImageDb>
 )
