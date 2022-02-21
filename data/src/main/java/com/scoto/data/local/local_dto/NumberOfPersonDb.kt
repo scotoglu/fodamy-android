@@ -5,6 +5,6 @@ package com.scoto.data.local.local_dto
  * Created 11.02.2022 at 12:26
  */
 data class NumberOfPersonDb(
-    val id:Int,
-    val text:String
+    val id: Int,
+    val text: String
 )

@@ -15,6 +15,6 @@ data class CommentDb(
     val text: String,
     val user: UserDb,
     val difference: String,
-    @ColumnInfo(name="recipe_id")
-    val recipeId:Int
+    @ColumnInfo(name = "recipe_id")
+    val recipeId: Int
 )

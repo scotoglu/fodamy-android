@@ -102,9 +102,11 @@ class DefaultRecipeRepository @Inject constructor(
             } else {
                 val remote = recipeService.getCategoriesWithRecipes(page).data
                 saveToLocal {
-                    recipeDao.insertCategories(remote.filter {
-                        it.recipes?.size!! > 0
-                    }.map { it.toLocalDto() })
+                    recipeDao.insertCategories(
+                        remote.filter {
+                            it.recipes?.size!! > 0
+                        }.map { it.toLocalDto() }
+                    )
                 }
                 remote.map { it.toDomainModel() }
                     .filter { it.recipes?.size!! > 0 }

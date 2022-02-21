@@ -16,8 +16,8 @@ interface UserDao {
     suspend fun insertUser(userDb: UserDb)
 
     @Query("select * from user")
-    suspend fun getUser():UserDb
+    suspend fun getUser(): UserDb
 
     @Query("delete from user where id=:userId")
-    suspend fun deleteUser(userId:Int)
+    suspend fun deleteUser(userId: Int)
 }
