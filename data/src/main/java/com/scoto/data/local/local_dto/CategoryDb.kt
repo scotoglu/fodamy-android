@@ -1,5 +1,6 @@
 package com.scoto.data.local.local_dto
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -12,6 +13,7 @@ data class CategoryDb(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String,
+    @Embedded
     val image: ImageDb,
     val recipes: List<RecipeDb>
 )

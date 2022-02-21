@@ -2,6 +2,7 @@ package com.scoto.data.repositories
 
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.mapper.toDomainModel
+import com.scoto.data.mapper.toLocalDto
 import com.scoto.data.remote.services.RecipeService
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
@@ -20,29 +21,52 @@ class DefaultRecipeRepository @Inject constructor(
 
     override suspend fun getEditorChoiceRecipes(page: Int): List<Recipe> =
         execute {
-            recipeService.getEditorChoiceRecipes(page).data.map {
-                it.toDomainModel()
+            val local = fetchFromLocal { recipeDao.getEditorChoices().map { it.toDomainModel() } }
+            if (local?.isNotEmpty() == true) {
+                local
+            } else {
+                val remote = recipeService.getEditorChoiceRecipes(page).data
+                saveToLocal { recipeDao.insertRecipes(remote.map { it.toLocalDto() }) }
+                remote.map { it.toDomainModel() }
             }
         }
 
     override suspend fun getLastAdded(page: Int): List<Recipe> =
         execute {
-            recipeService.getLastAddedRecipes(page).data.map { it.toDomainModel() }
+            val local = fetchFromLocal { recipeDao.getLastAdded().map { it.toDomainModel() } }
+            if (local?.isNotEmpty() == true) {
+                local
+            } else {
+                val remote = recipeService.getLastAddedRecipes(page).data
+                saveToLocal { recipeDao.insertRecipes(remote.map { it.toLocalDto(isLastAdded = true) }) }
+                remote.map { it.toDomainModel() }
+            }
         }
 
     override suspend fun getRecipeById(recipeId: Int): Recipe =
         execute {
-            recipeService.getRecipeById(recipeId).toDomainModel()
+            val local = fetchFromLocal { recipeDao.getRecipeDetails(recipeId).toDomainModel() }
+            local ?: recipeService.getRecipeById(recipeId).toDomainModel()
         }
 
     override suspend fun getRecipeComments(recipeId: Int, page: Int): List<Comment> =
         execute {
-            recipeService.getRecipeComments(recipeId, page).data.map { it.toDomainModel() }
+            val local =
+                fetchFromLocal { recipeDao.getRecipeComments(recipeId).map { it.toDomainModel() } }
+            if (local?.isNotEmpty() == true) {
+                local
+            } else {
+                val remote = recipeService.getRecipeComments(recipeId, page).data
+                saveToLocal { recipeDao.insertComments(remote.map { it.toLocalDto(recipeId) }) }
+                remote.map { it.toDomainModel() }
+            }
         }
 
     override suspend fun getFirstComment(recipeId: Int): Comment =
         execute {
-            recipeService.getRecipeComments(recipeId, 1).data.get(0).toDomainModel()
+            val local =
+                fetchFromLocal { recipeDao.getFirstRecipeComments(recipeId).toDomainModel() }
+            local ?: recipeService.getRecipeComments(recipeId, 1).data[0].toDomainModel()
         }
 
     override suspend fun sendComment(recipeId: Int, text: String): Unit =
@@ -72,13 +96,27 @@ class DefaultRecipeRepository @Inject constructor(
 
     override suspend fun getCategoriesWithRecipes(page: Int): List<Category> =
         execute {
-            recipeService.getCategoriesWithRecipes(page).data
-                .map { it.toDomainModel() }
-                .filter { it.recipes?.size!! > 0 }
+            val local = fetchFromLocal { recipeDao.getCategories().map { it.toDomainModel() } }
+            if (local?.isNotEmpty() == true) {
+                local
+            } else {
+                val remote = recipeService.getCategoriesWithRecipes(page).data
+                saveToLocal {
+                    recipeDao.insertCategories(remote.filter {
+                        it.recipes?.size!! > 0
+                    }.map { it.toLocalDto() })
+                }
+                remote.map { it.toDomainModel() }
+                    .filter { it.recipes?.size!! > 0 }
+            }
         }
 
     override suspend fun getRecipesByCategory(categoryId: Int, page: Int): List<Recipe> =
         execute {
-            recipeService.getRecipesByCategory(categoryId, page).data.map { it.toDomainModel() }
+            fetchFromLocal { recipeDao.getRecipesByCategory(categoryId).recipes.map { it.toDomainModel() } }
+                ?: recipeService.getRecipesByCategory(
+                    categoryId,
+                    page
+                ).data.map { it.toDomainModel() }
         }
 }

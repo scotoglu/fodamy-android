@@ -40,4 +40,7 @@ interface RecipeDao {
 
     @Query("select * from comments where recipe_id =:recipeId")
     suspend fun getRecipeComments(recipeId: Int): List<CommentDb>
+
+    @Query("select * from comments where recipe_id =:recipeId limit 1")
+    suspend fun getFirstRecipeComments(recipeId: Int): CommentDb
 }

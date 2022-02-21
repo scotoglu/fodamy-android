@@ -1,6 +1,8 @@
 package com.scoto.data.repositories
 
+import com.scoto.data.local.dao.UserDao
 import com.scoto.data.mapper.toDomainModel
+import com.scoto.data.mapper.toLocalDto
 import com.scoto.data.remote.services.UserService
 import com.scoto.domain.models.User
 import com.scoto.domain.repositories.UserRepository
@@ -11,7 +13,8 @@ import javax.inject.Inject
  * Created 19.01.2022 at 17:35
  */
 class DefaultUserRepository @Inject constructor(
-    private val userService: UserService
+    private val userService: UserService,
+    private val userDao: UserDao
 ) : UserRepository, BaseRepository() {
 
     override suspend fun followUser(followedId: Int): Unit =
@@ -26,6 +29,13 @@ class DefaultUserRepository @Inject constructor(
 
     override suspend fun getUserDetails(userId: Int): User =
         execute {
-            userService.getUserDetails(userId).toDomainModel()
+            val local = fetchFromLocal { userDao.getUser().toDomainModel() }
+            if (local != null) {
+                local
+            } else {
+                val remote = userService.getUserDetails(userId)
+                userDao.insertUser(remote.toLocalDto())
+                remote.toDomainModel()
+            }
         }
 }

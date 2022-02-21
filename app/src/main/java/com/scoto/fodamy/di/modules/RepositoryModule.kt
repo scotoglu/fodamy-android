@@ -1,6 +1,8 @@
 package com.scoto.fodamy.di.modules
 
 import com.scoto.data.local.dao.RecipeDao
+import com.scoto.data.local.dao.UserDao
+import com.scoto.data.local.database.AppDatabase
 import com.scoto.data.remote.services.AuthService
 import com.scoto.data.remote.services.RecipeService
 import com.scoto.data.remote.services.UserService
@@ -36,8 +38,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userService: UserService): UserRepository {
-        return DefaultUserRepository(userService)
+    fun provideUserRepository(userService: UserService,userDao: UserDao): UserRepository {
+        return DefaultUserRepository(userService,userDao)
     }
 
     @Provides

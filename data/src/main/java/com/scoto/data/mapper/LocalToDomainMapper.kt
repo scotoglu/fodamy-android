@@ -59,8 +59,7 @@ fun ImageDb.toDomainModel(): Image {
     return Image(
         height = this.height,
         width = this.width,
-        url = this.url,
-        image = this.image
+        url = this.url
     )
 }
 
