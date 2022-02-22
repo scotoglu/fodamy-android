@@ -1,5 +1,6 @@
 package com.scoto.domain.models
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -11,5 +12,6 @@ import kotlinx.parcelize.Parcelize
 data class Image(
     val height: Int,
     val url: String,
-    val width: Int
+    val width: Int,
+    val image: Bitmap? = null
 ) : Parcelable

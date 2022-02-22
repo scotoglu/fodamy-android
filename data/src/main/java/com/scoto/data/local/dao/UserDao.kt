@@ -1,6 +1,10 @@
 package com.scoto.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.scoto.data.local.local_dto.UserDb
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -8,5 +12,12 @@ import androidx.room.Dao
  */
 @Dao
 interface UserDao {
-    fun getUserDetails(userId: Int)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUser(userDb: UserDb)
+
+    @Query("select * from user")
+    suspend fun getUser(): UserDb
+
+    @Query("delete from user where id=:userId")
+    suspend fun deleteUser(userId: Int)
 }

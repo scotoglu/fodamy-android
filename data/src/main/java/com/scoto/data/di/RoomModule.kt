@@ -3,6 +3,8 @@ package com.scoto.data.di
 import android.content.Context
 import androidx.room.Room
 import com.scoto.data.BuildConfig
+import com.scoto.data.local.converters.ImageListConverter
+import com.scoto.data.local.converters.RecipeListConverter
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.UserDao
 import com.scoto.data.local.database.AppDatabase
@@ -36,11 +38,30 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+    fun provideRecipeList(): RecipeListConverter {
+        return RecipeListConverter()
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageListConverter(): ImageListConverter {
+        return ImageListConverter()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(
+        @ApplicationContext context: Context,
+        recipeListConverter: RecipeListConverter,
+        imageListConverter: ImageListConverter
+    ): AppDatabase {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
             BuildConfig.DBNAME
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .addTypeConverter(recipeListConverter)
+            .addTypeConverter(imageListConverter)
+            .build()
     }
 }

@@ -15,9 +15,26 @@ import java.io.IOException
  * Created 19.01.2022 at 17:32
  */
 abstract class BaseRepository {
+
     suspend fun <T : Any> execute(request: suspend () -> T): T {
         try {
             return request.invoke()
+        } catch (ex: Exception) {
+            throw parseException(ex)
+        }
+    }
+
+    open suspend fun <T> fetchFromLocal(cached: suspend () -> T?): T? {
+        return try {
+            cached.invoke()
+        } catch (ex: Exception) {
+            throw parseException(ex)
+        }
+    }
+
+    open suspend fun saveToLocal(store: suspend () -> Unit) {
+        try {
+            store.invoke()
         } catch (ex: Exception) {
             throw parseException(ex)
         }

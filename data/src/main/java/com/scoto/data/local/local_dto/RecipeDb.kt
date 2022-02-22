@@ -4,8 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.scoto.domain.models.NumberOfPerson
-import com.scoto.domain.models.TimeOfRecipe
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -15,27 +13,28 @@ import com.scoto.domain.models.TimeOfRecipe
 data class RecipeDb(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
-    val title: String,
+    val title: String?,
     val definition: String,
     val ingredients: String,
     val directions: String,
     val difference: String,
     @ColumnInfo(name = "is_editor_choice")
     val isEditorChoice: Boolean,
+    @ColumnInfo(name = "is_last_added")
+    val isLastAdded: Boolean = false,
     @ColumnInfo(name = "is_liked")
     val isLiked: Boolean,
     @ColumnInfo(name = "like_count")
     val likeCount: Int,
     @ColumnInfo(name = "comment_count")
     val commentCount: Int,
-    @ColumnInfo(name = "user_id")
-    val userId: Int,
-    @Embedded
-    val timeOfRecipe: TimeOfRecipe,
-    @Embedded
-    val numberOfPerson: NumberOfPerson,
-    @ColumnInfo(name = "category_id")
-    val categoryId: Int,
-    @ColumnInfo(name = "image_id")
-    val imageId: Int
+    @ColumnInfo(name = "user")
+    val user: UserDb,
+    @Embedded(prefix = "time_of_recipe")
+    val timeOfRecipe: TimeOfRecipeDb,
+    @Embedded(prefix = "number_of_person")
+    val numberOfPerson: NumberOfPersonDb,
+    @ColumnInfo(name = "category")
+    val category: CategoryDb,
+    val image: List<ImageDb>
 )

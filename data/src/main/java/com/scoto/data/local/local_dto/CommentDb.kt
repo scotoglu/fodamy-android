@@ -1,5 +1,6 @@
 package com.scoto.data.local.local_dto
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -12,6 +13,8 @@ data class CommentDb(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val text: String,
-    val userId: Int,
-    val difference: String
+    val user: UserDb,
+    val difference: String,
+    @ColumnInfo(name = "recipe_id")
+    val recipeId: Int
 )
