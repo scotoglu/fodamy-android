@@ -1,23 +1,71 @@
 package com.scoto.data.repositories
 
+import androidx.paging.*
 import com.scoto.data.local.dao.RecipeDao
+import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.mapper.toLocalDto
 import com.scoto.data.remote.services.RecipeService
+import com.scoto.data.utils.EDITOR_CHOICE
+import com.scoto.data.utils.LAST_ADDED
+import com.scoto.data.utils.RecipeEditorRemoteMediator
+import com.scoto.data.utils.RemoteKeyProvider
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.RecipeRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
  * @author Sefa ÇOTOĞLU
  * Created 19.01.2022 at 19:41
  */
+@ExperimentalPagingApi
 class DefaultRecipeRepository @Inject constructor(
     private val recipeService: RecipeService,
-    private val recipeDao: RecipeDao
+    private val recipeDao: RecipeDao,
+    private val remoteKeysDao: RemoteKeysDao,
+    private val keyProvider: RemoteKeyProvider
 ) : RecipeRepository, BaseRepository() {
+
+    private val pageConfig = PagingConfig(
+        pageSize = PAGE_SIZE,
+        maxSize = MAX_SIZE,
+        enablePlaceholders = false
+    )
+
+    override suspend fun getRecipePaging(from: String): Flow<PagingData<Recipe>> =
+        execute {
+            val pagingSourceFactory = {
+                when (from) {
+                    EDITOR_CHOICE -> {
+                        recipeDao.getEditorChoicesPaging()
+                    }
+                    LAST_ADDED -> {
+                        recipeDao.getLastAddedPaging()
+                    }
+                    else -> {
+                        recipeDao.getEditorChoicesPaging()
+                    }
+                }
+            }
+            Pager(
+                config = pageConfig,
+                remoteMediator = RecipeEditorRemoteMediator(
+                    recipeService = recipeService,
+                    recipeDao = recipeDao,
+                    remoteKeysDao = remoteKeysDao,
+                    keyProvider = keyProvider
+                ),
+                pagingSourceFactory = pagingSourceFactory
+            ).flow.map { pagingData ->
+                pagingData.map {
+                    it.toDomainModel()
+                }
+            }
+        }
 
     override suspend fun getEditorChoiceRecipes(page: Int): List<Recipe> =
         execute {
@@ -121,4 +169,9 @@ class DefaultRecipeRepository @Inject constructor(
                     page
                 ).data.map { it.toDomainModel() }
         }
+
+    companion object {
+        private const val PAGE_SIZE = 24
+        private const val MAX_SIZE = 100
+    }
 }

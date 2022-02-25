@@ -1,5 +1,6 @@
 package com.scoto.data.local.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -23,8 +24,14 @@ interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertComments(comments: List<CommentDb>)
 
-    @Query("select * from recipes where id =:recipeId")
+    @Query("select * from recipes where id =:recipeId ")
     suspend fun getRecipeDetails(recipeId: Int): RecipeDb
+
+    @Query("select * from recipes where is_editor_choice = 1 order by id desc")
+    fun getEditorChoicesPaging(): PagingSource<Int, RecipeDb>
+
+    @Query("select * from recipes where is_last_added = 1 order by id desc")
+    fun getLastAddedPaging(): PagingSource<Int, RecipeDb>
 
     @Query("select * from recipes where is_editor_choice =1")
     suspend fun getEditorChoices(): List<RecipeDb>

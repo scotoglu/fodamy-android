@@ -1,14 +1,16 @@
 package com.scoto.fodamy.di.modules
 
+import androidx.paging.ExperimentalPagingApi
 import com.scoto.data.local.dao.RecipeDao
+import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.local.dao.UserDao
-import com.scoto.data.local.database.AppDatabase
 import com.scoto.data.remote.services.AuthService
 import com.scoto.data.remote.services.RecipeService
 import com.scoto.data.remote.services.UserService
 import com.scoto.data.repositories.DefaultAuthRepository
 import com.scoto.data.repositories.DefaultRecipeRepository
 import com.scoto.data.repositories.DefaultUserRepository
+import com.scoto.data.utils.RemoteKeyProvider
 import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.repositories.UserRepository
@@ -23,6 +25,7 @@ import javax.inject.Singleton
  * @author Sefa ÇOTOĞLU
  * Created 20.01.2022 at 10:18
  */
+@ExperimentalPagingApi
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
@@ -38,16 +41,18 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userService: UserService,userDao: UserDao): UserRepository {
-        return DefaultUserRepository(userService,userDao)
+    fun provideUserRepository(userService: UserService, userDao: UserDao): UserRepository {
+        return DefaultUserRepository(userService, userDao)
     }
 
     @Provides
     @Singleton
     fun provideRecipeRepository(
         recipeService: RecipeService,
-        recipeDao: RecipeDao
+        recipeDao: RecipeDao,
+        remoteKeysDao: RemoteKeysDao,
+        keyProvider: RemoteKeyProvider
     ): RecipeRepository {
-        return DefaultRecipeRepository(recipeService, recipeDao)
+        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao, keyProvider)
     }
 }

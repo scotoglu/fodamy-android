@@ -1,14 +1,17 @@
 package com.scoto.domain.repositories
 
+import androidx.paging.PagingData
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Recipe
+import kotlinx.coroutines.flow.Flow
 
 /**
  * @author Sefa ÇOTOĞLU
  * Created 19.01.2022 at 15:26
  */
 interface RecipeRepository {
+    suspend fun getRecipePaging(from: String): Flow<PagingData<Recipe>>
     suspend fun getEditorChoiceRecipes(page: Int = 1): List<Recipe>
     suspend fun getLastAdded(page: Int = 1): List<Recipe>
     suspend fun getRecipeById(recipeId: Int): Recipe

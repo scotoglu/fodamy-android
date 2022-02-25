@@ -42,4 +42,5 @@ dependencies {
     androidTestImplementation(Dependencies.EXT_JUNIT)
     implementation(Dependencies.DAGGER_HILT)
     kapt(Dependencies.DAGGER_HILT_COMPILER)
+    implementation(Dependencies.PAGING_RUNTIME)
 }
