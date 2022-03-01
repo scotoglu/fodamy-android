@@ -11,10 +11,12 @@ import kotlinx.coroutines.flow.Flow
  * Created 19.01.2022 at 15:26
  */
 interface RecipeRepository {
-    suspend fun getRecipePaging(from: String): Flow<PagingData<Recipe>>
+    suspend fun getEditorChoicePaging(): Flow<PagingData<Recipe>>
+    suspend fun getLastAddedPaging(): Flow<PagingData<Recipe>>
+    suspend fun getRecipeCommentsPaging(recipeId: Int): Flow<PagingData<Comment>>
     suspend fun getEditorChoiceRecipes(page: Int = 1): List<Recipe>
     suspend fun getLastAdded(page: Int = 1): List<Recipe>
-    suspend fun getRecipeById(recipeId: Int): Recipe
+    suspend fun getRecipeById(recipeId: Int, onlyRemote: Boolean): Recipe
     suspend fun getRecipeComments(recipeId: Int, page: Int = 1): List<Comment>
     suspend fun getFirstComment(recipeId: Int): Comment
     suspend fun sendComment(recipeId: Int, text: String)

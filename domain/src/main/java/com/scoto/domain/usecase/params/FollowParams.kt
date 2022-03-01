@@ -8,5 +8,6 @@ import com.scoto.domain.usecase.base.Params
  */
 data class FollowParams(
     val userId: Int,
-    val recipeId: Int
+    val recipeId: Int,
+    val onlyRemote: Boolean
 ) : Params()

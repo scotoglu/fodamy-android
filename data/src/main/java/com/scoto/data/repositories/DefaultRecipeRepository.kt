@@ -6,10 +6,9 @@ import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.mapper.toLocalDto
 import com.scoto.data.remote.services.RecipeService
-import com.scoto.data.utils.EDITOR_CHOICE
-import com.scoto.data.utils.LAST_ADDED
+import com.scoto.data.utils.CommentsRemoteMediator
 import com.scoto.data.utils.RecipeEditorRemoteMediator
-import com.scoto.data.utils.RemoteKeyProvider
+import com.scoto.data.utils.RecipeLastAddedRemoteMediator
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Recipe
@@ -27,7 +26,6 @@ class DefaultRecipeRepository @Inject constructor(
     private val recipeService: RecipeService,
     private val recipeDao: RecipeDao,
     private val remoteKeysDao: RemoteKeysDao,
-    private val keyProvider: RemoteKeyProvider
 ) : RecipeRepository, BaseRepository() {
 
     private val pageConfig = PagingConfig(
@@ -36,34 +34,56 @@ class DefaultRecipeRepository @Inject constructor(
         enablePlaceholders = false
     )
 
-    override suspend fun getRecipePaging(from: String): Flow<PagingData<Recipe>> =
+    override suspend fun getEditorChoicePaging(): Flow<PagingData<Recipe>> =
         execute {
-            val pagingSourceFactory = {
-                when (from) {
-                    EDITOR_CHOICE -> {
-                        recipeDao.getEditorChoicesPaging()
-                    }
-                    LAST_ADDED -> {
-                        recipeDao.getLastAddedPaging()
-                    }
-                    else -> {
-                        recipeDao.getEditorChoicesPaging()
-                    }
-                }
-            }
+            val pagingSourceFactory = { recipeDao.getEditorChoicesPaging() }
             Pager(
                 config = pageConfig,
                 remoteMediator = RecipeEditorRemoteMediator(
                     recipeService = recipeService,
                     recipeDao = recipeDao,
-                    remoteKeysDao = remoteKeysDao,
-                    keyProvider = keyProvider
+                    remoteKeysDao = remoteKeysDao
                 ),
                 pagingSourceFactory = pagingSourceFactory
             ).flow.map { pagingData ->
                 pagingData.map {
                     it.toDomainModel()
                 }
+            }
+        }
+
+    override suspend fun getLastAddedPaging(): Flow<PagingData<Recipe>> =
+        execute {
+            val pagingSourceFactory = { recipeDao.getLastAddedPaging() }
+            Pager(
+                config = pageConfig,
+                remoteMediator = RecipeLastAddedRemoteMediator(
+                    recipeService = recipeService,
+                    recipeDao = recipeDao,
+                    remoteKeysDao = remoteKeysDao
+                ),
+                pagingSourceFactory = pagingSourceFactory
+            ).flow.map { pagingData ->
+                pagingData.map {
+                    it.toDomainModel()
+                }
+            }
+        }
+
+    override suspend fun getRecipeCommentsPaging(recipeId: Int): Flow<PagingData<Comment>> =
+        execute {
+            val pagingSourceFactory = { recipeDao.getRecipeCommentsPaging(recipeId) }
+            Pager(
+                config = pageConfig,
+                remoteMediator = CommentsRemoteMediator(
+                    recipeService = recipeService,
+                    recipeDao = recipeDao,
+                    remoteKeysDao = remoteKeysDao,
+                    recipeId = recipeId
+                ),
+                pagingSourceFactory = pagingSourceFactory
+            ).flow.map { pagingData ->
+                pagingData.map { it.toDomainModel() }
             }
         }
 
@@ -91,10 +111,13 @@ class DefaultRecipeRepository @Inject constructor(
             }
         }
 
-    override suspend fun getRecipeById(recipeId: Int): Recipe =
+    override suspend fun getRecipeById(recipeId: Int, onlyRemote: Boolean): Recipe =
         execute {
-            val local = fetchFromLocal { recipeDao.getRecipeDetails(recipeId).toDomainModel() }
-            local ?: recipeService.getRecipeById(recipeId).toDomainModel()
+            if (onlyRemote) {
+                recipeService.getRecipeById(recipeId).toDomainModel()
+            } else {
+                fetchFromLocal { recipeDao.getRecipeDetails(recipeId).toDomainModel() }!!
+            }
         }
 
     override suspend fun getRecipeComments(recipeId: Int, page: Int): List<Comment> =

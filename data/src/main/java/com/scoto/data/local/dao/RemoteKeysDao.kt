@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.scoto.data.local.local_dto.RemoteKeyComment
 import com.scoto.data.local.local_dto.RemoteKeysEditor
 import com.scoto.data.local.local_dto.RemoteKeysLast
 
@@ -14,6 +15,7 @@ import com.scoto.data.local.local_dto.RemoteKeysLast
 @Dao
 interface RemoteKeysDao {
 
+    // EditorChoices Recipes Remote Keys
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertEditorRemoteKeys(remoteKeys: List<RemoteKeysEditor>)
 
@@ -23,6 +25,7 @@ interface RemoteKeysDao {
     @Query("delete from remote_keys_editor")
     fun deleteEditorKeys()
 
+    // Last Added Recipes Remote Keys
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLasAtAddedRemoteKeys(remoteKeys: List<RemoteKeysLast>)
 
@@ -31,4 +34,14 @@ interface RemoteKeysDao {
 
     @Query("delete from remote_keys_last")
     fun deleteLastKeys()
+
+    // Recipe Comments Remote Key
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCommentsRemoteKeys(remoteKeys: List<RemoteKeyComment>)
+
+    @Query("select * from remote_key_comments where id =:id")
+    fun getCommentsRemoteKey(id: Int): RemoteKeyComment
+
+    @Query("delete from remote_key_comments")
+    fun deleteCommentsRemoteKeys()
 }

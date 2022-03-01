@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -14,7 +13,6 @@ import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
-import com.scoto.fodamy.util.paging_sources.CommentPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -52,7 +50,7 @@ class CommentsViewModel @Inject constructor(
 
     override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
-        with(CommentsFragmentArgs.fromBundle(bundle)){
+        with(CommentsFragmentArgs.fromBundle(bundle)) {
             this@CommentsViewModel.recipeId = recipeid
         }
         getComments()
@@ -67,10 +65,7 @@ class CommentsViewModel @Inject constructor(
     private fun getComments() {
         sendRequest(
             request = {
-                Pager(
-                    config = pageConfig,
-                    pagingSourceFactory = { CommentPagingSource(recipeRepository, recipeId) }
-                ).flow
+                recipeRepository.getRecipeCommentsPaging(recipeId)
             },
             success = {
                 viewModelScope.launch {

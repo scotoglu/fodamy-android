@@ -94,7 +94,7 @@ abstract class BaseViewModel : ViewModel(), FetchExtras {
             is IOException -> showMessageWithRes(R.string.check_internet_connection)
             is GettingEmptyListItem -> showMessageWithRes(R.string.no_comment_in_list)
             is SimpleHttpException -> showMessage(ex.friendlyMessage)
-            is BaseException -> showMessage(ex.exMessage)
+            is BaseException -> if (ex.message != null) showMessage(ex.exMessage)
         }
     }
 }

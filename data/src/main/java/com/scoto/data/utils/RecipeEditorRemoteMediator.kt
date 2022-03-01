@@ -20,25 +20,27 @@ class RecipeEditorRemoteMediator(
     private val recipeService: RecipeService,
     private val recipeDao: RecipeDao,
     private val remoteKeysDao: RemoteKeysDao,
-    private val keyProvider: RemoteKeyProvider
 ) : RemoteMediator<Int, RecipeDb>() {
+
 
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, RecipeDb>
     ): MediatorResult {
-
-        keyProvider.setKeyType(PagingKeyType.EDITOR_CHOICE)
-
         return try {
-            val currentPage = when (val keyData = keyProvider.getCurrentPage(loadType, state)) {
-                is MediatorResult.Success -> {
-                    return keyData
+            val utils = RemoteMediatorUtils<Int, RecipeDb>(
+                remoteKeysDao = remoteKeysDao,
+                keyType = PagingKeyType.EDITOR_CHOICE
+            )
+            val currentPage =
+                when (val keyData = utils.getPageKey(loadType, state)) {
+                    is MediatorResult.Success -> {
+                        return keyData
+                    }
+                    else -> {
+                        keyData as Int
+                    }
                 }
-                else -> {
-                    keyData as Int
-                }
-            }
 
             val response = recipeService.getEditorChoiceRecipes(currentPage)
             val endOfPagination = response.data.isEmpty()
@@ -63,6 +65,7 @@ class RecipeEditorRemoteMediator(
             MediatorResult.Error(ex)
         }
     }
+
 
     companion object {
         private const val STARTING_INDEX = 1

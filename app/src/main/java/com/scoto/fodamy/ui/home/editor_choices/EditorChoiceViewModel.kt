@@ -34,7 +34,7 @@ class EditorChoiceViewModel @Inject constructor(
     private fun getRecipes() {
         sendRequest(
             request = {
-                recipeRepository.getRecipePaging(EDITOR_CHOICE)
+                recipeRepository.getEditorChoicePaging()
             },
             success = {
                 it.cachedIn(viewModelScope).collect { pagingData ->

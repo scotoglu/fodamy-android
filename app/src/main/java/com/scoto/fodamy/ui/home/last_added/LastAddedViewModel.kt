@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.scoto.data.utils.LAST_ADDED
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.fodamy.ui.base.BaseViewModel
@@ -34,7 +33,7 @@ class LastAddedViewModel @Inject constructor(
     private fun getRecipes() {
         sendRequest(
             request = {
-                recipeRepository.getRecipePaging(LAST_ADDED)
+                recipeRepository.getLastAddedPaging()
             },
             success = {
                 it.cachedIn(viewModelScope).collect { pagingData ->

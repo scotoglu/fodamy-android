@@ -24,9 +24,9 @@ import com.scoto.data.local.local_dto.*
         UserDb::class,
         RemoteKeysEditor::class,
         RemoteKeysLast::class,
-        RemoteKeyRecipesByCategory::class
+        RemoteKeyComment::class
     ],
-    version = 19,
+    version = 24,
     exportSchema = false
 )
 @TypeConverters(

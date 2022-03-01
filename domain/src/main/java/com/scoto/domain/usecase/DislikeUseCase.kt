@@ -15,6 +15,6 @@ class DislikeUseCase @Inject constructor(
 ) : UseCase<RecipeParams, Recipe>() {
     override suspend fun invoke(params: RecipeParams): Recipe {
         recipeRepository.dislikeRecipe(params.recipeId)
-        return recipeRepository.getRecipeById(params.recipeId)
+        return recipeRepository.getRecipeById(params.recipeId, params.onlyRemote)
     }
 }

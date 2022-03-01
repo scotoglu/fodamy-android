@@ -6,30 +6,30 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.RemoteKeysDao
-import com.scoto.data.local.local_dto.RecipeDb
-import com.scoto.data.local.local_dto.RemoteKeysLast
+import com.scoto.data.local.local_dto.CommentDb
+import com.scoto.data.local.local_dto.RemoteKeyComment
 import com.scoto.data.mapper.toLocalDto
 import com.scoto.data.remote.services.RecipeService
 
 /**
  * @author Sefa ÇOTOĞLU
- * Created 24.02.2022 at 22:56
+ * Created 27.02.2022 at 22:08
  */
 @ExperimentalPagingApi
-class RecipeLastAddedRemoteMediator(
+class CommentsRemoteMediator(
     private val recipeService: RecipeService,
     private val recipeDao: RecipeDao,
     private val remoteKeysDao: RemoteKeysDao,
-) : RemoteMediator<Int, RecipeDb>() {
+    private val recipeId: Int
+) : RemoteMediator<Int, CommentDb>() {
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, RecipeDb>
+        state: PagingState<Int, CommentDb>
     ): MediatorResult {
-
         return try {
-            val utils = RemoteMediatorUtils<Int, RecipeDb>(
+            val utils = RemoteMediatorUtils<Int, CommentDb>(
                 remoteKeysDao = remoteKeysDao,
-                keyType = PagingKeyType.LAST_ADDED
+                keyType = PagingKeyType.COMMENT
             )
             val currentPage =
                 when (val keyData = utils.getPageKey(loadType, state)) {
@@ -41,25 +41,25 @@ class RecipeLastAddedRemoteMediator(
                     }
                 }
 
-            val response = recipeService.getLastAddedRecipes(currentPage)
-            val endOfPagination = response.data.isEmpty()
+            val response = recipeService.getRecipeComments(recipeId, currentPage)
+            val endODPagination = response.data.isEmpty()
 
             val prevPage = if (currentPage == STARTING_INDEX) null else currentPage - 1
-            val nextPage = if (endOfPagination) null else currentPage + 1
+            val nextPage = if (endODPagination) null else currentPage + 1
 
             if (loadType == LoadType.REFRESH) {
-                remoteKeysDao.deleteLastKeys()
+                remoteKeysDao.deleteCommentsRemoteKeys()
             }
             val keys = response.data.map {
-                RemoteKeysLast(
+                RemoteKeyComment(
                     id = it.id,
                     prev = prevPage,
                     next = nextPage
                 )
             }
-            remoteKeysDao.insertLasAtAddedRemoteKeys(keys)
-            recipeDao.insertRecipes(response.data.map { it.toLocalDto(isLastAdded = true) })
-            MediatorResult.Success(endOfPaginationReached = endOfPagination)
+            remoteKeysDao.insertCommentsRemoteKeys(keys)
+            recipeDao.insertComments(response.data.map { it.toLocalDto(recipeId) })
+            MediatorResult.Success(endOfPaginationReached = true)
         } catch (ex: Exception) {
             MediatorResult.Error(ex)
         }
