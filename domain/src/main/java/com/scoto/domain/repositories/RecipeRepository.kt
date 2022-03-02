@@ -14,6 +14,7 @@ interface RecipeRepository {
     suspend fun getEditorChoicePaging(): Flow<PagingData<Recipe>>
     suspend fun getLastAddedPaging(): Flow<PagingData<Recipe>>
     suspend fun getRecipeCommentsPaging(recipeId: Int): Flow<PagingData<Comment>>
+    suspend fun getCategoriesPaging(): Flow<PagingData<Category>>
     suspend fun getEditorChoiceRecipes(page: Int = 1): List<Recipe>
     suspend fun getLastAdded(page: Int = 1): List<Recipe>
     suspend fun getRecipeById(recipeId: Int, onlyRemote: Boolean): Recipe

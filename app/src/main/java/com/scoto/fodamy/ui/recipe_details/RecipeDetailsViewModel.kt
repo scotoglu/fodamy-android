@@ -54,7 +54,7 @@ class RecipeDetailsViewModel @Inject constructor(
     fun getRecipeById() {
         sendRequest(
             loading = true,
-            request = { recipeRepository.getRecipeById(recipeId,deviceConnection.isHasConnection()) },
+            request = { recipeRepository.getRecipeById(recipeId, deviceConnection.isHasConnection()) },
             success = {
                 _recipe.value = it
             }
@@ -100,7 +100,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun like() {
         sendRequest(
-            request = { likeUseCase.invoke(RecipeParams(recipeId,deviceConnection.isHasConnection())) },
+            request = { likeUseCase.invoke(RecipeParams(recipeId, deviceConnection.isHasConnection())) },
             success = {
                 showMessageWithRes(R.string.success_like)
                 _recipe.value = it
@@ -110,7 +110,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun dislike() {
         sendRequest(
-            request = { dislikeUseCase.invoke(RecipeParams(recipeId,deviceConnection.isHasConnection())) },
+            request = { dislikeUseCase.invoke(RecipeParams(recipeId, deviceConnection.isHasConnection())) },
             success = {
                 showMessageWithRes(R.string.success_dislike)
                 _recipe.value = it
@@ -137,7 +137,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun follow() {
         sendRequest(
-            request = { followUseCase.invoke(FollowParams(followedUserId, recipeId,deviceConnection.isHasConnection())) },
+            request = { followUseCase.invoke(FollowParams(followedUserId, recipeId, deviceConnection.isHasConnection())) },
             success = {
                 showMessageWithRes(R.string.success_follow)
                 _recipe.value = it

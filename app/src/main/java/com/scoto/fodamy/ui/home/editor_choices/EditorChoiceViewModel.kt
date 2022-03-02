@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.scoto.data.utils.EDITOR_CHOICE
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.fodamy.ui.base.BaseViewModel

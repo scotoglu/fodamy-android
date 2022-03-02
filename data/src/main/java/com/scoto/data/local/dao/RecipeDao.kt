@@ -45,6 +45,9 @@ interface RecipeDao {
     @Query("select * from categories where id =:categoryId")
     suspend fun getRecipesByCategory(categoryId: Int): CategoryDb
 
+    @Query("select * from categories")
+    fun getCategoriesPaging(): PagingSource<Int, CategoryDb>
+
     @Query("select * from comments where recipe_id =:recipeId")
     fun getRecipeCommentsPaging(recipeId: Int): PagingSource<Int, CommentDb>
 

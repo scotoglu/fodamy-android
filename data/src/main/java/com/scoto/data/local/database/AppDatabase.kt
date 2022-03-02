@@ -10,7 +10,15 @@ import com.scoto.data.local.converters.UserConverter
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.local.dao.UserDao
-import com.scoto.data.local.local_dto.*
+import com.scoto.data.local.local_dto.CategoryDb
+import com.scoto.data.local.local_dto.CommentDb
+import com.scoto.data.local.local_dto.RecipeDb
+import com.scoto.data.local.local_dto.RemoteKeyComment
+import com.scoto.data.local.local_dto.RemoteKeysCategory
+import com.scoto.data.local.local_dto.RemoteKeysEditor
+import com.scoto.data.local.local_dto.RemoteKeysLast
+import com.scoto.data.local.local_dto.UserDb
+
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -24,9 +32,10 @@ import com.scoto.data.local.local_dto.*
         UserDb::class,
         RemoteKeysEditor::class,
         RemoteKeysLast::class,
-        RemoteKeyComment::class
+        RemoteKeyComment::class,
+        RemoteKeysCategory::class
     ],
-    version = 24,
+    version = 27,
     exportSchema = false
 )
 @TypeConverters(

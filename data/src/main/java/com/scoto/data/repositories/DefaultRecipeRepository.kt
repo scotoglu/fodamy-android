@@ -6,9 +6,7 @@ import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.mapper.toLocalDto
 import com.scoto.data.remote.services.RecipeService
-import com.scoto.data.utils.CommentsRemoteMediator
-import com.scoto.data.utils.RecipeEditorRemoteMediator
-import com.scoto.data.utils.RecipeLastAddedRemoteMediator
+import com.scoto.data.utils.*
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Recipe
@@ -163,6 +161,22 @@ class DefaultRecipeRepository @Inject constructor(
     override suspend fun dislikeRecipe(recipeId: Int): Unit =
         execute {
             recipeService.dislikeRecipe(recipeId)
+        }
+
+    override suspend fun getCategoriesPaging(): Flow<PagingData<Category>> =
+        execute {
+            val pagingSourceFactory = { recipeDao.getCategoriesPaging() }
+            Pager(
+                config = pageConfig,
+                remoteMediator = RemoteMediatorCategories(
+                    recipeService = recipeService,
+                    recipeDao = recipeDao,
+                    remoteKeysDao = remoteKeysDao
+                ),
+                pagingSourceFactory = pagingSourceFactory
+            ).flow.map { pagingData ->
+                pagingData.map { it.toDomainModel() }
+            }
         }
 
     override suspend fun getCategoriesWithRecipes(page: Int): List<Category> =

@@ -5,6 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.scoto.data.local.dao.RemoteKeysDao
+import com.scoto.data.local.local_dto.CategoryDb
 import com.scoto.data.local.local_dto.CommentDb
 import com.scoto.data.local.local_dto.RecipeDb
 
@@ -26,7 +27,9 @@ class RemoteMediatorUtils<Key : Any, Value : Any>(
             PagingKeyType.LAST_ADDED -> {
                 remoteKeysDao.getLastAddedRemoteKeys((data as RecipeDb).id)
             }
-            PagingKeyType.BY_CATEGORY -> TODO()
+            PagingKeyType.BY_CATEGORY -> {
+                remoteKeysDao.getCategoryRemoteKeys((data as CategoryDb).id)
+            }
             PagingKeyType.COMMENT -> {
                 remoteKeysDao.getCommentsRemoteKey((data as CommentDb).id)
             }
