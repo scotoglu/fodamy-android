@@ -19,7 +19,6 @@ import com.scoto.data.local.local_dto.RemoteKeysEditor
 import com.scoto.data.local.local_dto.RemoteKeysLast
 import com.scoto.data.local.local_dto.UserDb
 
-
 /**
  * @author Sefa ÇOTOĞLU
  * Created 10.02.2022 at 13:48
