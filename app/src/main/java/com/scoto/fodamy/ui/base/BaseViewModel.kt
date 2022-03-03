@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.scoto.data.remote.exceptions.Authentication
-import com.scoto.data.remote.exceptions.BaseException
 import com.scoto.data.remote.exceptions.GettingEmptyListItem
 import com.scoto.data.remote.exceptions.SimpleHttpException
 import com.scoto.fodamy.R
@@ -94,7 +93,9 @@ abstract class BaseViewModel : ViewModel(), FetchExtras {
             is IOException -> showMessageWithRes(R.string.check_internet_connection)
             is GettingEmptyListItem -> showMessageWithRes(R.string.no_comment_in_list)
             is SimpleHttpException -> showMessage(ex.friendlyMessage)
-            is BaseException -> if (ex.message != null) showMessage(ex.exMessage)
+            else -> {
+                ex.printStackTrace()
+            }
         }
     }
 }

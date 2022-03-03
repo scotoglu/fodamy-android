@@ -3,7 +3,6 @@ package com.scoto.fodamy.ui.favorites
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.scoto.domain.models.Category
@@ -59,10 +58,8 @@ class FavoritesViewModel @Inject constructor(
                 recipeRepository.getCategoriesPaging()
             },
             success = {
-                viewModelScope.launch {
-                    it.cachedIn(viewModelScope).collect {
-                        _categories.value = it
-                    }
+                it.cachedIn(viewModelScope).collect {
+                    _categories.value = it
                 }
             }
         )
@@ -81,14 +78,6 @@ class FavoritesViewModel @Inject constructor(
             FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFlow2(
                 recipe
             )
-        )
-    }
-
-    companion object {
-        private val pageConfig = PagingConfig(
-            pageSize = 24,
-            maxSize = 100,
-            enablePlaceholders = false
         )
     }
 }

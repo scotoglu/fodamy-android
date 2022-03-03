@@ -68,11 +68,9 @@ class CategoryRecipesViewModel @Inject constructor(
                     }
                 ).flow
             },
-            success = {
-                viewModelScope.launch {
-                    it.cachedIn(viewModelScope).collect {
-                        _recipes.value = it
-                    }
+            success = { pagingData ->
+                pagingData.cachedIn(viewModelScope).collect {
+                    _recipes.value = it
                 }
             }
         )

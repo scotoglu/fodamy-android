@@ -28,7 +28,7 @@ interface RemoteKeysDao {
 
     // Last Added Recipes Remote Keys
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLasAtAddedRemoteKeys(remoteKeys: List<RemoteKeysLast>)
+    fun insertLastAddedRemoteKeys(remoteKeys: List<RemoteKeysLast>)
 
     @Query("select * from remote_keys_last where id =:id")
     fun getLastAddedRemoteKeys(id: Int): RemoteKeysLast

@@ -57,7 +57,7 @@ class RecipeLastAddedRemoteMediator(
                     next = nextPage
                 )
             }
-            remoteKeysDao.insertLasAtAddedRemoteKeys(keys)
+            remoteKeysDao.insertLastAddedRemoteKeys(keys)
             recipeDao.insertRecipes(response.data.map { it.toLocalDto(isLastAdded = true) })
             MediatorResult.Success(endOfPaginationReached = endOfPagination)
         } catch (ex: Exception) {

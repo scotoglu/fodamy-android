@@ -31,11 +31,13 @@ class FavoritesFragment :
 
     override fun addItemClicks() {
         super.addItemClicks()
-        categoryAdapter.onItemClicked = { category ->
-            viewModel.toSeeAll(category)
-        }
-        categoryAdapter.onChildItemClicked = { recipe ->
-            viewModel.toRecipeDetail(recipe)
+        categoryAdapter.apply {
+            onItemClicked = { category ->
+                viewModel.toSeeAll(category)
+            }
+            onChildItemClicked = { recipe ->
+                viewModel.toRecipeDetail(recipe)
+            }
         }
     }
 

@@ -2,7 +2,6 @@ package com.scoto.data.repositories
 
 import com.google.gson.Gson
 import com.scoto.data.remote.exceptions.Authentication
-import com.scoto.data.remote.exceptions.BaseException
 import com.scoto.data.remote.exceptions.GettingEmptyListItem
 import com.scoto.data.remote.exceptions.SimpleHttpException
 import com.scoto.data.remote.exceptions.Unauthorized
@@ -32,6 +31,7 @@ abstract class BaseRepository {
         }
     }
 
+    // TODO("Async")
     open suspend fun saveToLocal(store: suspend () -> Unit) {
         try {
             store.invoke()
@@ -46,7 +46,7 @@ abstract class BaseRepository {
             // cast HttpException here.
             is HttpException -> {
                 when (ex.response()?.code()) {
-                    CODE_UNAUTHORIZIED -> Unauthorized()
+                    CODE_UNAUTHORISED -> Unauthorized()
                     CODE_AUTHENTICATION -> Authentication()
                     else -> {
                         val response = Gson().fromJson(
@@ -59,12 +59,12 @@ abstract class BaseRepository {
             }
             is IOException -> IOException()
             is IndexOutOfBoundsException -> GettingEmptyListItem()
-            else -> BaseException(ex.message.toString())
+            else -> ex
         }
     }
 
     companion object {
         private const val CODE_AUTHENTICATION = 403
-        private const val CODE_UNAUTHORIZIED = 401
+        private const val CODE_UNAUTHORISED = 401
     }
 }

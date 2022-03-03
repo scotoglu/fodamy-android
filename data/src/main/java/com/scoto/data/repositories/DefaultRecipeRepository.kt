@@ -1,12 +1,20 @@
 package com.scoto.data.repositories
 
-import androidx.paging.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.filter
+import androidx.paging.map
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.mapper.toLocalDto
 import com.scoto.data.remote.services.RecipeService
-import com.scoto.data.utils.*
+import com.scoto.data.utils.CommentsRemoteMediator
+import com.scoto.data.utils.RecipeEditorRemoteMediator
+import com.scoto.data.utils.RecipeLastAddedRemoteMediator
+import com.scoto.data.utils.RemoteMediatorCategories
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Recipe
@@ -175,7 +183,12 @@ class DefaultRecipeRepository @Inject constructor(
                 ),
                 pagingSourceFactory = pagingSourceFactory
             ).flow.map { pagingData ->
-                pagingData.map { it.toDomainModel() }
+                pagingData.filter {
+                    // Some categories has no recipes
+                    it.recipes.isNotEmpty()
+                }.map {
+                    it.toDomainModel()
+                }
             }
         }
 

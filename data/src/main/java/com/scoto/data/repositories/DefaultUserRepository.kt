@@ -1,6 +1,5 @@
 package com.scoto.data.repositories
 
-import com.scoto.data.local.dao.UserDao
 import com.scoto.data.mapper.toDomainModel
 import com.scoto.data.remote.services.UserService
 import com.scoto.domain.models.User
@@ -13,7 +12,6 @@ import javax.inject.Inject
  */
 class DefaultUserRepository @Inject constructor(
     private val userService: UserService,
-    private val userDao: UserDao
 ) : UserRepository, BaseRepository() {
 
     override suspend fun followUser(followedId: Int): Unit =

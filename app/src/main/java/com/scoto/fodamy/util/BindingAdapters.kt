@@ -128,8 +128,3 @@ fun setTimeOfRecipe(tv: TextView, timeOfRecipe: String?) {
         tv.text = tv.context.resources.getString(R.string.timeOfRecie, timeOfRecipe)
     }
 }
-
-@BindingAdapter("progressbarState")
-fun setProgressbarState(view: View, state: Boolean) {
-    view.isVisible = state
-}

@@ -63,8 +63,4 @@ class CustomStateView @JvmOverloads constructor(
             btnRetry.onClick { onRetryClick?.onClick() }
         }
     }
-
-    companion object {
-        private const val TAG = "CustomStateView"
-    }
 }

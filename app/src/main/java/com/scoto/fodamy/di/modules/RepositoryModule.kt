@@ -48,8 +48,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userService: UserService, userDao: UserDao): UserRepository {
-        return DefaultUserRepository(userService, userDao)
+    fun provideUserRepository(userService: UserService): UserRepository {
+        return DefaultUserRepository(userService)
     }
 
     @Provides
