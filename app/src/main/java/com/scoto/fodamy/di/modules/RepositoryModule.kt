@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.RemoteKeysDao
-import com.scoto.data.local.dao.UserDao
 import com.scoto.data.remote.services.AuthService
 import com.scoto.data.remote.services.RecipeService
 import com.scoto.data.remote.services.UserService

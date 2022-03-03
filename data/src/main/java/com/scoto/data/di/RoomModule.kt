@@ -67,7 +67,7 @@ object RoomModule {
             AppDatabase::class.java,
             BuildConfig.DBNAME
         ).fallbackToDestructiveMigration()
-            .allowMainThreadQueries()// TODO
+            .allowMainThreadQueries() // TODO
             .addTypeConverter(recipeListConverter)
             .addTypeConverter(imageListConverter)
             .build()
