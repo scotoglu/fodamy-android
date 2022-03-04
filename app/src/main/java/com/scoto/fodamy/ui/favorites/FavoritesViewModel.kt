@@ -3,7 +3,6 @@ package com.scoto.fodamy.ui.favorites
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -15,7 +14,6 @@ import com.scoto.domain.usecase.params.NoParams
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
-import com.scoto.fodamy.util.paging_sources.CategoryPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -58,10 +56,7 @@ class FavoritesViewModel @Inject constructor(
     private fun getCategories() {
         sendRequest(
             request = {
-                Pager(
-                    config = pageConfig,
-                    pagingSourceFactory = { CategoryPagingSource(recipeRepository) }
-                ).flow
+                recipeRepository.getCategoriesPaging()
             },
             success = {
                 viewModelScope.launch {

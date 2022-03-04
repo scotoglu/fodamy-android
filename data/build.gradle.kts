@@ -59,6 +59,7 @@ dependencies {
     implementation(Dependencies.ROOM_RUNTIME)
     kapt(Dependencies.ROOM_COMPILER)
     implementation(Dependencies.ROOM_EXTENSIONS)
+    implementation(Dependencies.ROOM_PAGING)
 
     implementation(Dependencies.GLIDE)
     kapt(Dependencies.GLIDE_COMPILER)

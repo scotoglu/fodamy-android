@@ -17,6 +17,6 @@ class FollowUseCase @Inject constructor(
 ) : UseCase<FollowParams, Recipe>() {
     override suspend fun invoke(params: FollowParams): Recipe {
         userRepository.followUser(params.userId)
-        return recipeRepository.getRecipeById(params.recipeId)
+        return recipeRepository.getRecipeById(params.recipeId, params.onlyRemote)
     }
 }

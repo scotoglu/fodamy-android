@@ -1,8 +1,10 @@
 package com.scoto.fodamy.di.modules
 
+import android.content.Context
+import androidx.paging.ExperimentalPagingApi
 import com.scoto.data.local.dao.RecipeDao
+import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.local.dao.UserDao
-import com.scoto.data.local.database.AppDatabase
 import com.scoto.data.remote.services.AuthService
 import com.scoto.data.remote.services.RecipeService
 import com.scoto.data.remote.services.UserService
@@ -13,9 +15,11 @@ import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.repositories.UserRepository
 import com.scoto.domain.utils.DataStoreManager
+import com.scoto.fodamy.util.DeviceConnection
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -23,9 +27,15 @@ import javax.inject.Singleton
  * @author Sefa ÇOTOĞLU
  * Created 20.01.2022 at 10:18
  */
+@ExperimentalPagingApi
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
+
+    @Provides
+    fun provideDeviceConnection(
+        @ApplicationContext context: Context
+    ): DeviceConnection = DeviceConnection(context)
 
     @Provides
     @Singleton
@@ -38,16 +48,17 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userService: UserService,userDao: UserDao): UserRepository {
-        return DefaultUserRepository(userService,userDao)
+    fun provideUserRepository(userService: UserService, userDao: UserDao): UserRepository {
+        return DefaultUserRepository(userService, userDao)
     }
 
     @Provides
     @Singleton
     fun provideRecipeRepository(
         recipeService: RecipeService,
-        recipeDao: RecipeDao
+        recipeDao: RecipeDao,
+        remoteKeysDao: RemoteKeysDao
     ): RecipeRepository {
-        return DefaultRecipeRepository(recipeService, recipeDao)
+        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao)
     }
 }

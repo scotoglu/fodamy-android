@@ -29,6 +29,7 @@ object Versions {
     const val FIREBASE_BOM="29.0.4"
     const val FIREBASE_CRASHLYTICS_GRADLE="2.8.1"
     const val ROOM="2.4.1"
+    const val ROOM_PAGING="2.5.0-alpha01"
 
     //test
     const val JUNIT = "4.13.1"

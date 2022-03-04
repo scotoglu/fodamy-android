@@ -11,10 +11,10 @@ import javax.inject.Inject
  * Created 31.01.2022 at 12:33
  */
 class LikeUseCase @Inject constructor(
-    private val recipeRepository: RecipeRepository
+    private val recipeRepository: RecipeRepository,
 ) : UseCase<RecipeParams, Recipe>() {
     override suspend fun invoke(params: RecipeParams): Recipe {
         recipeRepository.likeRecipe(params.recipeId)
-        return recipeRepository.getRecipeById(params.recipeId)
+        return recipeRepository.getRecipeById(params.recipeId, params.onlyRemote)
     }
 }

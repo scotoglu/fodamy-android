@@ -8,10 +8,15 @@ import com.scoto.data.local.converters.ImageListConverter
 import com.scoto.data.local.converters.RecipeListConverter
 import com.scoto.data.local.converters.UserConverter
 import com.scoto.data.local.dao.RecipeDao
+import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.local.dao.UserDao
 import com.scoto.data.local.local_dto.CategoryDb
 import com.scoto.data.local.local_dto.CommentDb
 import com.scoto.data.local.local_dto.RecipeDb
+import com.scoto.data.local.local_dto.RemoteKeyComment
+import com.scoto.data.local.local_dto.RemoteKeysCategory
+import com.scoto.data.local.local_dto.RemoteKeysEditor
+import com.scoto.data.local.local_dto.RemoteKeysLast
 import com.scoto.data.local.local_dto.UserDb
 
 /**
@@ -23,9 +28,13 @@ import com.scoto.data.local.local_dto.UserDb
         RecipeDb::class,
         CategoryDb::class,
         CommentDb::class,
-        UserDb::class
+        UserDb::class,
+        RemoteKeysEditor::class,
+        RemoteKeysLast::class,
+        RemoteKeyComment::class,
+        RemoteKeysCategory::class
     ],
-    version = 14,
+    version = 27,
     exportSchema = false
 )
 @TypeConverters(
@@ -37,4 +46,5 @@ import com.scoto.data.local.local_dto.UserDb
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun userDao(): UserDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 }

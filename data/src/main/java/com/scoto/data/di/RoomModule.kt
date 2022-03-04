@@ -6,6 +6,7 @@ import com.scoto.data.BuildConfig
 import com.scoto.data.local.converters.ImageListConverter
 import com.scoto.data.local.converters.RecipeListConverter
 import com.scoto.data.local.dao.RecipeDao
+import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.local.dao.UserDao
 import com.scoto.data.local.database.AppDatabase
 import dagger.Module
@@ -38,6 +39,12 @@ object RoomModule {
 
     @Provides
     @Singleton
+    fun provideRemoteKeysDao(appDatabase: AppDatabase): RemoteKeysDao {
+        return appDatabase.remoteKeysDao()
+    }
+
+    @Provides
+    @Singleton
     fun provideRecipeList(): RecipeListConverter {
         return RecipeListConverter()
     }
@@ -60,6 +67,7 @@ object RoomModule {
             AppDatabase::class.java,
             BuildConfig.DBNAME
         ).fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
             .addTypeConverter(recipeListConverter)
             .addTypeConverter(imageListConverter)
             .build()

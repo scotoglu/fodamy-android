@@ -16,6 +16,7 @@ import com.scoto.domain.usecase.params.RecipeParams
 import com.scoto.domain.utils.DataStoreManager
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ui.base.BaseViewModel
+import com.scoto.fodamy.util.DeviceConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +28,7 @@ class RecipeDetailsViewModel @Inject constructor(
     private val likeUseCase: LikeUseCase,
     private val dislikeUseCase: DislikeUseCase,
     private val followUseCase: FollowUseCase,
+    private val deviceConnection: DeviceConnection
 ) : BaseViewModel() {
 
     private val _recipe = MutableLiveData<Recipe>()
@@ -52,7 +54,7 @@ class RecipeDetailsViewModel @Inject constructor(
     fun getRecipeById() {
         sendRequest(
             loading = true,
-            request = { recipeRepository.getRecipeById(recipeId) },
+            request = { recipeRepository.getRecipeById(recipeId, deviceConnection.isHasConnection()) },
             success = {
                 _recipe.value = it
             }
@@ -98,7 +100,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun like() {
         sendRequest(
-            request = { likeUseCase.invoke(RecipeParams(recipeId)) },
+            request = { likeUseCase.invoke(RecipeParams(recipeId, deviceConnection.isHasConnection())) },
             success = {
                 showMessageWithRes(R.string.success_like)
                 _recipe.value = it
@@ -108,7 +110,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun dislike() {
         sendRequest(
-            request = { dislikeUseCase.invoke(RecipeParams(recipeId)) },
+            request = { dislikeUseCase.invoke(RecipeParams(recipeId, deviceConnection.isHasConnection())) },
             success = {
                 showMessageWithRes(R.string.success_dislike)
                 _recipe.value = it
@@ -135,7 +137,7 @@ class RecipeDetailsViewModel @Inject constructor(
 
     private fun follow() {
         sendRequest(
-            request = { followUseCase.invoke(FollowParams(followedUserId, recipeId)) },
+            request = { followUseCase.invoke(FollowParams(followedUserId, recipeId, deviceConnection.isHasConnection())) },
             success = {
                 showMessageWithRes(R.string.success_follow)
                 _recipe.value = it

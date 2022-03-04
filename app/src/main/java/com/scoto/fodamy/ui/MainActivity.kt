@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.ActivityMainBinding
 import com.scoto.fodamy.ext.isDeviceHasConnection
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false)
 
         navigationSetup()
         navControllerListener()
