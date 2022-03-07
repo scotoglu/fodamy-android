@@ -26,7 +26,7 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun toHome() {
-        navigate(SplashFragmentDirections.actionSplashFragmentToBottomNavHome())
+        navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
     }
 
     private fun toWalkthrough() {

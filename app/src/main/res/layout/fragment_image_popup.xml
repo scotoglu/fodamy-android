@@ -25,7 +25,8 @@
             android:onClick="@{()->viewModel.backTo()}"
             android:src="@drawable/ic_cross"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_slider"

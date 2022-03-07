@@ -32,7 +32,6 @@ class FavoritesViewModel @Inject constructor(
 
     init {
         getCategories()
-        isLogin()
     }
 
     fun isLogin() = viewModelScope.launch {

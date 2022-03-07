@@ -6,6 +6,8 @@ import com.scoto.data.remote.exceptions.GettingEmptyListItem
 import com.scoto.data.remote.exceptions.SimpleHttpException
 import com.scoto.data.remote.exceptions.Unauthorized
 import com.scoto.domain.models.ErrorControl
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -31,10 +33,11 @@ abstract class BaseRepository {
         }
     }
 
-    // TODO("Async")
     open suspend fun saveToLocal(store: suspend () -> Unit) {
         try {
-            store.invoke()
+            withContext(Dispatchers.IO) {
+                store.invoke()
+            }
         } catch (ex: Exception) {
             throw parseException(ex)
         }

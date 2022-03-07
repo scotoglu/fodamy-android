@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.map
+import com.scoto.data.di.ApplicationScope
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.mapper.toDomainModel
@@ -19,8 +20,11 @@ import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Recipe
 import com.scoto.domain.repositories.RecipeRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -32,6 +36,7 @@ class DefaultRecipeRepository @Inject constructor(
     private val recipeService: RecipeService,
     private val recipeDao: RecipeDao,
     private val remoteKeysDao: RemoteKeysDao,
+    @ApplicationScope private val scope: CoroutineScope
 ) : RecipeRepository, BaseRepository() {
 
     private val pageConfig = PagingConfig(
@@ -139,6 +144,7 @@ class DefaultRecipeRepository @Inject constructor(
             }
         }
 
+    // TODO not working
     override suspend fun getFirstComment(recipeId: Int): Comment =
         execute {
             val local =
@@ -148,17 +154,18 @@ class DefaultRecipeRepository @Inject constructor(
 
     override suspend fun sendComment(recipeId: Int, text: String): Unit =
         execute {
-            recipeService.sendComment(recipeId, text).toDomainModel()
+            recipeService.sendComment(recipeId, text)
         }
 
     override suspend fun editComment(recipeId: Int, commentId: Int, text: String): Unit =
         execute {
-            recipeService.editComment(recipeId, commentId, text).toDomainModel()
+            recipeService.editComment(recipeId, commentId, text)
         }
 
     override suspend fun deleteComment(recipeId: Int, commentId: Int): Unit =
         execute {
-            recipeService.deleteComment(recipeId, commentId).toDomainModel()
+            recipeService.deleteComment(recipeId, commentId)
+            recipeDao.deleteComment(commentId)
         }
 
     override suspend fun likeRecipe(recipeId: Int): Unit =

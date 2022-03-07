@@ -121,4 +121,7 @@
     <string name="try_to_login">Bu işlemi yapabilmek için, giriş yapmalısınız.</string>
     <string name="no_comment_in_list">Tarife ait henüz yorum eklenmemiş.</string>
     <string name="no_connection">Bağlantınızı kontrol edin.</string>
+    <string name="profile_text_recipes">Tarif</string>
+    <string name="profile_text_comments">Yorum</string>
+    <string name="profile_text_like">Beğeni</string>
 </resources>

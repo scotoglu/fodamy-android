@@ -34,7 +34,7 @@ import com.scoto.data.local.local_dto.UserDb
         RemoteKeyComment::class,
         RemoteKeysCategory::class
     ],
-    version = 28,
+    version = 30,
     exportSchema = false
 )
 @TypeConverters(

@@ -20,6 +20,7 @@ class HomeFragment :
         super.onViewCreated(view, savedInstanceState)
 
         setupViewPagerAndTabLayout()
+        viewModel.isLogin()
     }
 
     private fun setupViewPagerAndTabLayout() {

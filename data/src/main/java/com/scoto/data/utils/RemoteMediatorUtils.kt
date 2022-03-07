@@ -19,7 +19,7 @@ class RemoteMediatorUtils<Key : Any, Value : Any>(
     private val keyType: PagingKeyType
 ) {
 
-    private fun getKey(data: Value): RemoteKey {
+    private suspend fun getKey(data: Value): RemoteKey {
         return when (keyType) {
             PagingKeyType.EDITOR_CHOICE -> {
                 remoteKeysDao.getEditorRemoteKeys((data as RecipeDb).id)
@@ -36,7 +36,7 @@ class RemoteMediatorUtils<Key : Any, Value : Any>(
         }
     }
 
-    fun getPageKey(loadType: LoadType, state: PagingState<Key, Value>): Any {
+    suspend fun getPageKey(loadType: LoadType, state: PagingState<Key, Value>): Any {
         return when (loadType) {
             LoadType.REFRESH -> INITIAL_LOAD
             LoadType.PREPEND -> {
@@ -50,7 +50,7 @@ class RemoteMediatorUtils<Key : Any, Value : Any>(
         }
     }
 
-    private fun getFirstRemoteKey(state: PagingState<Key, Value>): RemoteKey? {
+    private suspend fun getFirstRemoteKey(state: PagingState<Key, Value>): RemoteKey? {
         state.firstItemOrNull()
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
@@ -60,7 +60,7 @@ class RemoteMediatorUtils<Key : Any, Value : Any>(
             }
     }
 
-    private fun getLastRemoteKey(state: PagingState<Key, Value>): RemoteKey? {
+    private suspend fun getLastRemoteKey(state: PagingState<Key, Value>): RemoteKey? {
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()

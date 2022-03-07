@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_nav_home"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -15,12 +15,8 @@
                 android:name="RECIPE"
                 app:argType="com.scoto.domain.models.Recipe" />
         </action>
-        <action
-            android:id="@+id/action_homeFragment_to_login_flow"
-            app:destination="@id/login_flow" />
     </fragment>
     <include app:graph="@navigation/recipe_flow" />
-    <include app:graph="@navigation/login_flow" />
     <fragment
         android:id="@+id/editorChoiceFragment"
         android:name="com.scoto.fodamy.ui.home.editor_choices.EditorChoiceFragment"
@@ -29,4 +25,39 @@
         android:id="@+id/lastAddedFragment"
         android:name="com.scoto.fodamy.ui.home.last_added.LastAddedFragment"
         android:label="LastAddedFragment" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.scoto.fodamy.ui.splash.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/bottom_nav_home"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_walkThroughFragment"
+            app:destination="@id/walkThroughFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/walkThroughFragment"
+        android:name="com.scoto.fodamy.ui.walkthrough.WalkThroughFragment"
+        android:label="WalkThroughFragment" >
+        <action
+            android:id="@+id/action_walkThroughFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/bottom_nav_home"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/authDialog"
+        android:name="com.scoto.fodamy.ui.dialog.auth_requiered.AuthDialog"
+        android:label="AuthDialog" >
+        <action
+            android:id="@+id/action_authDialog_to_login_flow"
+            app:destination="@id/login_flow" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_authDialog"
+        app:destination="@id/authDialog" />
+    <include app:graph="@navigation/login_flow" />
 </navigation>

@@ -13,7 +13,6 @@ import com.scoto.data.local.local_dto.RecipeDb
  * @author Sefa ÇOTOĞLU
  * Created 10.02.2022 at 13:49
  */
-// TODO add delete comment
 @Dao
 interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -54,6 +53,9 @@ interface RecipeDao {
 
     @Query("select * from comments where recipe_id =:recipeId")
     suspend fun getRecipeComments(recipeId: Int): List<CommentDb>
+
+    @Query("delete from comments where id =:commentId")
+    suspend fun deleteComment(commentId: Int)
 
     @Query("select * from comments where recipe_id =:recipeId order by id desc limit 1")
     suspend fun getFirstRecipeComments(recipeId: Int): CommentDb
