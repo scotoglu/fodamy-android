@@ -94,7 +94,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
                         tvLogin.isVisible = true
                         customToolbar.setEndIconVisibility(false)
                     }
-
                 }
                 is ProfileEvent.IsLogin -> {
                     binding.apply {

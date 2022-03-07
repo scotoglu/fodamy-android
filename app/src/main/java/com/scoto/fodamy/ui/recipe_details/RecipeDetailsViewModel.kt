@@ -55,7 +55,8 @@ class RecipeDetailsViewModel @Inject constructor(
         sendRequest(
             loading = true,
             request = {
-                recipeRepository.getRecipeById(recipeId, deviceConnection.isHasConnection()) },
+                recipeRepository.getRecipeById(recipeId, deviceConnection.isHasConnection())
+            },
             success = {
                 _recipe.value = it
             }
@@ -65,7 +66,8 @@ class RecipeDetailsViewModel @Inject constructor(
     private fun getRecipeComments() {
         sendRequest(
             request = {
-                recipeRepository.getFirstComment(recipeId) },
+                recipeRepository.getFirstComment(recipeId)
+            },
             success = {
                 _comment.value = it
             }

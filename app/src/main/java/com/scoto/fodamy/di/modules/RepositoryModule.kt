@@ -60,6 +60,6 @@ object RepositoryModule {
         remoteKeysDao: RemoteKeysDao,
         @ApplicationScope scope: CoroutineScope
     ): RecipeRepository {
-        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao,scope)
+        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao, scope)
     }
 }
