@@ -46,7 +46,6 @@ class ProfileViewModel @Inject constructor(
 
     init {
         getUserDetails()
-        isLogin()
     }
 
     fun getUserDetails() = viewModelScope.launch {

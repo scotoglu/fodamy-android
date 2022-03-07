@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.RemoteKeysDao
-import com.scoto.data.local.dao.UserDao
 import com.scoto.data.remote.services.AuthService
 import com.scoto.data.remote.services.RecipeService
 import com.scoto.data.remote.services.UserService
@@ -21,6 +20,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 /**
@@ -48,8 +48,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userService: UserService, userDao: UserDao): UserRepository {
-        return DefaultUserRepository(userService, userDao)
+    fun provideUserRepository(userService: UserService): UserRepository {
+        return DefaultUserRepository(userService)
     }
 
     @Provides
@@ -57,8 +57,9 @@ object RepositoryModule {
     fun provideRecipeRepository(
         recipeService: RecipeService,
         recipeDao: RecipeDao,
-        remoteKeysDao: RemoteKeysDao
+        remoteKeysDao: RemoteKeysDao,
+        @ApplicationScope scope: CoroutineScope
     ): RecipeRepository {
-        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao)
+        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao, scope)
     }
 }

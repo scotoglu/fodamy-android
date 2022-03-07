@@ -3,7 +3,6 @@ package com.scoto.fodamy.ui.home.last_added
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.scoto.domain.models.Recipe
@@ -45,13 +44,5 @@ class LastAddedViewModel @Inject constructor(
 
     fun toRecipeDetails(recipe: Recipe) {
         navigate(HomeFragmentDirections.actionHomeFragmentToRecipeFlow(recipe))
-    }
-
-    companion object {
-        private val pageConfig = PagingConfig(
-            pageSize = 24,
-            maxSize = 100,
-            enablePlaceholders = false
-        )
     }
 }

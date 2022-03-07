@@ -1,5 +1,9 @@
 package com.scoto.fodamy.ui.profile
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -19,6 +23,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 
     private lateinit var profilePagingAdapter: ProfilePagingAdapter
     override val isSharedViewModel: Boolean = true
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        viewModel.isLogin()
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun registerObservables() {
         super.registerObservables()
@@ -77,7 +90,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         viewModel.event.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is ProfileEvent.Success -> {
-                    binding.tvLogin.isVisible = true
+                    binding.apply {
+                        tvLogin.isVisible = true
+                        customToolbar.setEndIconVisibility(false)
+                    }
                 }
                 is ProfileEvent.IsLogin -> {
                     binding.apply {

@@ -48,12 +48,15 @@ interface RecipeDao {
     @Query("select * from categories")
     fun getCategoriesPaging(): PagingSource<Int, CategoryDb>
 
-    @Query("select * from comments where recipe_id =:recipeId")
+    @Query("select * from comments where recipe_id =:recipeId order by id desc")
     fun getRecipeCommentsPaging(recipeId: Int): PagingSource<Int, CommentDb>
 
     @Query("select * from comments where recipe_id =:recipeId")
     suspend fun getRecipeComments(recipeId: Int): List<CommentDb>
 
-    @Query("select * from comments where recipe_id =:recipeId limit 1")
+    @Query("delete from comments where id =:commentId")
+    suspend fun deleteComment(commentId: Int)
+
+    @Query("select * from comments where recipe_id =:recipeId order by id desc limit 1")
     suspend fun getFirstRecipeComments(recipeId: Int): CommentDb
 }

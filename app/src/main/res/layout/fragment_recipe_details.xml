@@ -63,7 +63,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:src="@drawable/photo" />
+                        tools:src="@drawable/photo"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/tv_title"
@@ -136,7 +137,8 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_comment" />
+                            android:src="@drawable/ic_comment"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             android:id="@+id/tv_comment_count"
@@ -233,7 +235,8 @@
                         android:src="@drawable/ic_restaurant"
                         app:layout_constraintBottom_toTopOf="@+id/tv_number_of_person"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/tv_number_of_person"
@@ -314,7 +317,8 @@
                         app:layout_constraintBottom_toTopOf="@+id/tv_duration"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed" />
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/tv_duration"

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.scoto.domain.models.Comment
@@ -36,7 +35,7 @@ class CommentsViewModel @Inject constructor(
     val editMode = MutableLiveData(false)
 
     // used in delete
-    private val commentId: SingleLiveEvent<Int> = SingleLiveEvent()
+    private var commentId: Int = -1
 
     // Holds the comment that user will be add
     val comment = MutableLiveData<String>()
@@ -68,10 +67,8 @@ class CommentsViewModel @Inject constructor(
                 recipeRepository.getRecipeCommentsPaging(recipeId)
             },
             success = {
-                viewModelScope.launch {
-                    it.cachedIn(viewModelScope).collect {
-                        _comments.value = it
-                    }
+                it.cachedIn(viewModelScope).collect {
+                    _comments.value = it
                 }
             }
         )
@@ -108,7 +105,7 @@ class CommentsViewModel @Inject constructor(
                 )
             )
             editableComment.value = comment.text
-            commentId.value = comment.id
+            commentId = comment.id
         }
     }
 
@@ -122,7 +119,7 @@ class CommentsViewModel @Inject constructor(
                 request = {
                     recipeRepository.editComment(
                         recipeId = recipeId,
-                        commentId = commentId.value!!,
+                        commentId = commentId,
                         text = editableComment.value.toString()
                     )
                 },
@@ -137,21 +134,13 @@ class CommentsViewModel @Inject constructor(
         }
     }
 
-    fun onDelete() = viewModelScope.launch {
+    fun onDelete() {
         sendRequest(
-            request = { recipeRepository.deleteComment(recipeId, commentId.value!!) },
+            request = { recipeRepository.deleteComment(recipeId, commentId) },
             success = {
                 showMessageWithRes(R.string.success_comment_delete)
                 event.value = CommentEvent.Success
             }
-        )
-    }
-
-    companion object {
-        private val pageConfig = PagingConfig(
-            pageSize = 24,
-            maxSize = 100,
-            enablePlaceholders = false
         )
     }
 }

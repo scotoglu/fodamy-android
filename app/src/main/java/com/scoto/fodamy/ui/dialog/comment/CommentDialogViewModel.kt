@@ -52,9 +52,4 @@ class CommentDialogViewModel @Inject constructor(
             }
         )
     }
-
-    companion object {
-        private const val COMMENT_ID = "commentId"
-        private const val RECIPE_ID = "recipeId"
-    }
 }

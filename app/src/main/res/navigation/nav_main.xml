@@ -2,45 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_main"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/bottom_nav_home">
 
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.scoto.fodamy.ui.splash.SplashFragment"
-        android:label="SplashFragment">
-        <action
-            android:id="@+id/action_splashFragment_to_walkThroughFragment"
-            app:destination="@id/walkThroughFragment" />
-        <action
-            android:id="@+id/action_splashFragment_to_bottom_nav_home"
-            app:destination="@id/bottom_nav_home"
-            app:popUpTo="@id/nav_main"
-            app:popUpToInclusive="true"/>
-    </fragment>
-    <fragment
-        android:id="@+id/walkThroughFragment"
-        android:name="com.scoto.fodamy.ui.walkthrough.WalkThroughFragment"
-        android:label="WalkThroughFragment">
-        <action
-            android:id="@+id/action_walkThroughFragment_to_bottom_nav_home"
-            app:destination="@id/bottom_nav_home"
-            app:popUpTo="@id/nav_main"
-            app:popUpToInclusive="true"
-           />
-    </fragment>
     <include app:graph="@navigation/bottom_nav_home" />
     <include app:graph="@navigation/bottom_nav_favorites" />
-    <dialog
-        android:id="@+id/authDialog"
-        android:name="com.scoto.fodamy.ui.dialog.auth_requiered.AuthDialog"
-        android:label="AuthDialog" >
-        <action
-            android:id="@+id/action_authDialog_to_login_flow"
-            app:destination="@id/login_flow" />
-    </dialog>
-    <action
-        android:id="@+id/action_global_authDialog"
-        app:destination="@id/authDialog" />
-    <include app:graph="@navigation/login_flow" />
     <include app:graph="@navigation/bottom_nav_user" />
 </navigation>

@@ -58,12 +58,8 @@ class RemoteMediatorCategories(
                 )
             }
             remoteKeysDao.insertCategoryRecipesRemoteKeys(keys)
+            recipeDao.insertCategories(response.data.map { it.toLocalDto() })
 
-            val filteredCategories = response.data.filter {
-                it.recipes?.size!! > 0
-            }.map { it.toLocalDto() }
-
-            recipeDao.insertCategories(filteredCategories)
             MediatorResult.Success(endOfPaginationReached = endOfPagination)
         } catch (ex: Exception) {
             MediatorResult.Error(ex)

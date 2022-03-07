@@ -18,41 +18,41 @@ interface RemoteKeysDao {
 
     // EditorChoices Recipes Remote Keys
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertEditorRemoteKeys(remoteKeys: List<RemoteKeysEditor>)
+    suspend fun insertEditorRemoteKeys(remoteKeys: List<RemoteKeysEditor>)
 
     @Query("select * from remote_keys_editor where id =:id")
-    fun getEditorRemoteKeys(id: Int): RemoteKeysEditor
+    suspend fun getEditorRemoteKeys(id: Int): RemoteKeysEditor
 
     @Query("delete from remote_keys_editor")
-    fun deleteEditorKeys()
+    suspend fun deleteEditorKeys()
 
     // Last Added Recipes Remote Keys
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLasAtAddedRemoteKeys(remoteKeys: List<RemoteKeysLast>)
+    suspend fun insertLastAddedRemoteKeys(remoteKeys: List<RemoteKeysLast>)
 
     @Query("select * from remote_keys_last where id =:id")
-    fun getLastAddedRemoteKeys(id: Int): RemoteKeysLast
+    suspend fun getLastAddedRemoteKeys(id: Int): RemoteKeysLast
 
     @Query("delete from remote_keys_last")
-    fun deleteLastKeys()
+    suspend fun deleteLastKeys()
 
     // Recipe Comments Remote Key
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCommentsRemoteKeys(remoteKeys: List<RemoteKeyComment>)
+    suspend fun insertCommentsRemoteKeys(remoteKeys: List<RemoteKeyComment>)
 
     @Query("select * from remote_key_comments where id =:id")
-    fun getCommentsRemoteKey(id: Int): RemoteKeyComment
+    suspend fun getCommentsRemoteKey(id: Int): RemoteKeyComment
 
     @Query("delete from remote_key_comments")
-    fun deleteCommentsRemoteKeys()
+    suspend fun deleteCommentsRemoteKeys()
 
     // Category Recipes Remote Key
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCategoryRecipesRemoteKeys(remoteKeys: List<RemoteKeysCategory>)
+    suspend fun insertCategoryRecipesRemoteKeys(remoteKeys: List<RemoteKeysCategory>)
 
     @Query("select * from remote_keys_category where id =:id")
-    fun getCategoryRemoteKeys(id: Int): RemoteKeysCategory
+    suspend fun getCategoryRemoteKeys(id: Int): RemoteKeysCategory
 
     @Query("delete from remote_keys_category")
-    fun deleteCategoryRecipesKeys()
+    suspend fun deleteCategoryRecipesKeys()
 }

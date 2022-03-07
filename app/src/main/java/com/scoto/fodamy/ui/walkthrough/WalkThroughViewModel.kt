@@ -8,6 +8,6 @@ import javax.inject.Inject
 class WalkThroughViewModel @Inject constructor() : BaseViewModel() {
 
     fun toHome() {
-        navigate(WalkThroughFragmentDirections.actionWalkThroughFragmentToBottomNavHome())
+        navigate(WalkThroughFragmentDirections.actionWalkThroughFragmentToHomeFragment())
     }
 }

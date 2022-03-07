@@ -25,7 +25,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tool:src="@drawable/photo" />
+            tool:src="@drawable/photo"
+            tool:ignore="ContentDescription" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

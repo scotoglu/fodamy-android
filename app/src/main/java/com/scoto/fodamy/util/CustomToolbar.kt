@@ -26,9 +26,6 @@ class CustomToolbar @JvmOverloads constructor(
         fun onClick()
     }
 
-//    var onBackClick: (() -> Unit)? = null
-//    var onEndClick: (() -> Unit)? = null
-
     var onBackListener: OnBackListener? = null
     var onEndIconListener: OnEndIconListener? = null
 
