@@ -142,7 +142,6 @@ class DefaultRecipeRepository @Inject constructor(
             }
         }
 
-    // TODO not working
     override suspend fun getFirstComment(recipeId: Int): Comment =
         execute {
             val local =

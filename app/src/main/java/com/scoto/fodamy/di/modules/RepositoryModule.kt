@@ -10,6 +10,8 @@ import com.scoto.data.remote.services.UserService
 import com.scoto.data.repositories.DefaultAuthRepository
 import com.scoto.data.repositories.DefaultRecipeRepository
 import com.scoto.data.repositories.DefaultUserRepository
+import com.scoto.data.repositories.MockRepository
+import com.scoto.data.utils.JsonReader
 import com.scoto.domain.repositories.AuthRepository
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.domain.repositories.UserRepository
@@ -32,6 +34,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
+    private val mock = false
+
     @Provides
     fun provideDeviceConnection(
         @ApplicationContext context: Context
@@ -41,14 +45,24 @@ object RepositoryModule {
     @Singleton
     fun provideAuthRepository(
         authService: AuthService,
-        dataStoreManager: DataStoreManager
+        dataStoreManager: DataStoreManager,
+        jsonReader: JsonReader
     ): AuthRepository {
+        if (mock) {
+            return MockRepository(jsonReader)
+        }
         return DefaultAuthRepository(authService, dataStoreManager)
     }
 
     @Provides
     @Singleton
-    fun provideUserRepository(userService: UserService): UserRepository {
+    fun provideUserRepository(
+        userService: UserService,
+        jsonReader: JsonReader
+    ): UserRepository {
+        if (mock) {
+            return MockRepository(jsonReader)
+        }
         return DefaultUserRepository(userService)
     }
 
@@ -58,8 +72,17 @@ object RepositoryModule {
         recipeService: RecipeService,
         recipeDao: RecipeDao,
         remoteKeysDao: RemoteKeysDao,
+        jsonReader: JsonReader,
         @ApplicationScope scope: CoroutineScope
     ): RecipeRepository {
-        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao, scope)
+        if (mock) {
+            return MockRepository(jsonReader)
+        }
+        return DefaultRecipeRepository(
+            recipeService,
+            recipeDao,
+            remoteKeysDao,
+            scope
+        )
     }
 }
