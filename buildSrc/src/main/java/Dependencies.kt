@@ -61,6 +61,7 @@ object Dependencies {
     const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx"
     const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics-ktx"
+    const val FIREBASE_CLOUD_MESSAGING="com.google.firebase:firebase-messaging-ktx"
 
     //classpath
     const val TOOLS_BUILD_GRADLE = "com.android.tools.build:gradle:${Versions.TOOLS_BUILD_GRADLE}"
