@@ -26,10 +26,11 @@ object Versions {
     const val KOTLIN_GRADLE_PLUGIN = "1.6.10"
     const val LOTTIE_ANIMATION = "3.4.0"
     const val GOOGLE_SERVICE = "4.3.10"
-    const val FIREBASE_BOM="29.0.4"
-    const val FIREBASE_CRASHLYTICS_GRADLE="2.8.1"
-    const val ROOM="2.4.1"
-    const val ROOM_PAGING="2.5.0-alpha01"
+    const val FIREBASE_BOM = "29.0.4"
+    const val FIREBASE_CRASHLYTICS_GRADLE = "2.8.1"
+    const val FIREBASE_CLOUD_MESSAGING = "23.0.0"
+    const val ROOM = "2.4.1"
+    const val ROOM_PAGING = "2.5.0-alpha01"
 
     //test
     const val JUNIT = "4.13.1"

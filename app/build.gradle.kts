@@ -102,6 +102,7 @@ dependencies {
     implementation(platform(Dependencies.FIREBASE_BOM))
     implementation(Dependencies.FIREBASE_ANALYTICS)
     implementation(Dependencies.FIREBASE_CRASHLYTICS)
+    implementation(Dependencies.FIREBASE_CLOUD_MESSAGING)
 }
 kapt {
     correctErrorTypes = true
