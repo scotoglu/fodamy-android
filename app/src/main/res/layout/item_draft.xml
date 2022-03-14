@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/size_margin_8dp"
+    android:layout_marginTop="@dimen/size_margin_8dp"
+    android:layout_marginEnd="@dimen/size_margin_8dp"
+    android:background="@color/white"
+    app:cardCornerRadius="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/draft_recipe_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:paddingStart="@dimen/size_padding_4dp"
+            android:paddingTop="@dimen/size_padding_4dp"
+            android:paddingEnd="@dimen/size_padding_4dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Pesto Soslu ve Kremalı Makarna" />
+
+        <TextView
+            android:id="@+id/draft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:paddingStart="@dimen/size_padding_4dp"
+            android:paddingEnd="@dimen/size_padding_4dp"
+            android:paddingBottom="@dimen/size_padding_4dp"
+            android:text="@string/draft_name"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/draft_recipe_name" />
+
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/draft" />
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_margin_8dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toStartOf="@+id/iv_add_photo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider8"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_add_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_margin_8dp"
+            android:src="@drawable/ic_camera"
+            app:layout_constraintEnd_toStartOf="@+id/iv_delete"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_edit"
+            app:layout_constraintTop_toBottomOf="@id/divider8"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_margin_8dp"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_add_photo"
+            app:layout_constraintTop_toBottomOf="@id/divider8"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_margin_8dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:padding="@dimen/size_padding_4dp"
+            android:text="@string/add_recipe_edit"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_edit"
+            app:layout_constraintStart_toStartOf="@+id/iv_edit"
+            app:layout_constraintTop_toBottomOf="@+id/iv_edit" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_margin_8dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:padding="@dimen/size_padding_4dp"
+            android:text="@string/add_recipe_add_photo"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_add_photo"
+            app:layout_constraintStart_toStartOf="@+id/iv_add_photo"
+            app:layout_constraintTop_toBottomOf="@id/iv_add_photo" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_margin_8dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:padding="@dimen/size_padding_4dp"
+            android:text="@string/add_recipe_delete"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_delete"
+            app:layout_constraintStart_toStartOf="@+id/iv_delete"
+            app:layout_constraintTop_toBottomOf="@+id/iv_delete" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

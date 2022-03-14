@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_nav_send_recipe"
+    app:startDestination="@id/recipesDraftsFragment">
+
+    <fragment
+        android:id="@+id/addRecipeFragment"
+        android:name="com.scoto.fodamy.ui.add_recipe.AddRecipeFragment"
+        android:label="AddRecipeFragment" />
+    <fragment
+        android:id="@+id/recipesDraftsFragment"
+        android:name="com.scoto.fodamy.ui.add_recipe.drafts.RecipesDraftsFragment"
+        android:label="RecipesDraftsFragment" >
+        <action
+            android:id="@+id/action_recipesDraftsFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
+    </fragment>
+</navigation>

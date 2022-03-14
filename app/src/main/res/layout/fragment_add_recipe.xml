@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/secondary_background">
+
+        <com.scoto.fodamy.util.CustomToolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="0dp"
+            app:title="@string/edit_draft"
+            app:endIcon="@drawable/ic_save"
+            app:endIconVisibility="true"
+            android:layout_height="wrap_content"
+            app:backButtonVisible="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/btn_save_draft"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_margin_16dp"
+                android:layout_marginBottom="@dimen/size_margin_8dp"
+                android:background="@color/white">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/recipe_title"
+                    style="@style/TextInputStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_8dp"
+                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:textColorHint="@color/color_add_recipe_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/text_input_layout_background"
+                        android:hint="@string/recipe_title"
+                        android:singleLine="true"
+                        tools:text="@tools:sample/lorem[5]" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout5"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_8dp"
+                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:hint="@string/recipe_number_of_person"
+                    android:textColorHint="@color/color_add_recipe_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipe_title">
+
+                    <AutoCompleteTextView
+                        tools:text="@tools:sample/lorem"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        tools:ignore="LabelFor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout6"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:hint="@string/recipe_time_of_recipe"
+                    android:textColorHint="@color/color_add_recipe_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+
+                    <AutoCompleteTextView
+                        tools:text="@tools:sample/lorem"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        tools:ignore="LabelFor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/recipe_ingredients"
+                    style="@style/TextInputStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_8dp"
+                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:textColorHint="@color/color_add_recipe_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/text_input_layout_background"
+                        android:hint="@string/recipe_ingredients"
+                        tools:text="@tools:sample/lorem[20]" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/recipe_direction"
+                    style="@style/TextInputStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_8dp"
+                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:textColorHint="@color/color_add_recipe_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipe_ingredients">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/text_input_layout_background"
+                        android:hint="@string/recipe_directions"
+                        tools:text="@tools:sample/lorem[23]" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout7"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_8dp"
+                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:hint="@string/recipe_category"
+                    android:textColorHint="@color/color_add_recipe_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipe_direction">
+
+                    <AutoCompleteTextView
+                        tools:text="@tools:sample/lorem"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_draft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:backgroundTint="@color/color_add_recipe_title"
+            android:padding="@dimen/size_padding_15dp"
+            android:text="@string/btn_save_draft"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

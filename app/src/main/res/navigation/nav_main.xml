@@ -7,4 +7,5 @@
     <include app:graph="@navigation/bottom_nav_home" />
     <include app:graph="@navigation/bottom_nav_favorites" />
     <include app:graph="@navigation/bottom_nav_user" />
+    <include app:graph="@navigation/bottom_nav_send_recipe" />
 </navigation>
