@@ -18,7 +18,10 @@ import com.scoto.data.utils.RecipeLastAddedRemoteMediator
 import com.scoto.data.utils.RemoteMediatorCategories
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
+import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.Recipe
+import com.scoto.domain.models.RecipeDraft
+import com.scoto.domain.models.TimeOfRecipe
 import com.scoto.domain.repositories.RecipeRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -223,6 +226,36 @@ class DefaultRecipeRepository @Inject constructor(
                     categoryId,
                     page
                 ).data.map { it.toDomainModel() }
+        }
+
+    override suspend fun getRecipeTimes(): List<TimeOfRecipe> =
+        execute {
+            recipeService.getRecipeTimes().data.map { it.toDomainModel() }
+        }
+
+    override suspend fun getRecipeServing(): List<NumberOfPerson> =
+        execute {
+            recipeService.getRecipeServing().data.map { it.toDomainModel() }
+        }
+
+    override suspend fun insertDraft(draft: RecipeDraft) =
+        execute {
+            recipeDao.insertDraft(draft.toLocalDto())
+        }
+
+    override suspend fun getAllDrafts(): List<RecipeDraft> =
+        execute {
+            recipeDao.getAllDrafts().map { it.toDomainModel() }
+        }
+
+    override suspend fun deleteDraft(draftId: Int) =
+        execute {
+            recipeDao.deleteDraft(draftId)
+        }
+
+    override suspend fun updateDraft(draft: RecipeDraft) =
+        execute {
+            recipeDao.updateDraft(draft.toLocalDto())
         }
 
     companion object {

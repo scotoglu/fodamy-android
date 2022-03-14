@@ -3,7 +3,10 @@ package com.scoto.domain.repositories
 import androidx.paging.PagingData
 import com.scoto.domain.models.Category
 import com.scoto.domain.models.Comment
+import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.Recipe
+import com.scoto.domain.models.RecipeDraft
+import com.scoto.domain.models.TimeOfRecipe
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -27,4 +30,10 @@ interface RecipeRepository {
     suspend fun dislikeRecipe(recipeId: Int)
     suspend fun getCategoriesWithRecipes(page: Int = 1): List<Category>
     suspend fun getRecipesByCategory(categoryId: Int, page: Int = 1): List<Recipe>
+    suspend fun getRecipeTimes(): List<TimeOfRecipe>
+    suspend fun getRecipeServing(): List<NumberOfPerson>
+    suspend fun insertDraft(draft: RecipeDraft)
+    suspend fun getAllDrafts(): List<RecipeDraft>
+    suspend fun deleteDraft(draftId: Int)
+    suspend fun updateDraft(draft: RecipeDraft)
 }

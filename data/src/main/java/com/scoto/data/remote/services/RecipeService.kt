@@ -6,6 +6,8 @@ import com.scoto.data.remote.remote_dto.CommentResponse
 import com.scoto.data.remote.remote_dto.CommonResponse
 import com.scoto.data.remote.remote_dto.RecipePagingResponse
 import com.scoto.data.remote.remote_dto.RecipeResponse
+import com.scoto.data.remote.remote_dto.RecipeServingResponse
+import com.scoto.data.remote.remote_dto.RecipeTimesResponse
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -82,4 +84,10 @@ interface RecipeService {
         @Path("category_id") categoryId: Int,
         @Query("page") page: Int
     ): RecipePagingResponse
+
+    @GET("time")
+    suspend fun getRecipeTimes(): RecipeTimesResponse
+
+    @GET("serving")
+    suspend fun getRecipeServing(): RecipeServingResponse
 }

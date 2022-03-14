@@ -5,6 +5,7 @@ import com.scoto.data.local.local_dto.CommentDb
 import com.scoto.data.local.local_dto.ImageDb
 import com.scoto.data.local.local_dto.NumberOfPersonDb
 import com.scoto.data.local.local_dto.RecipeDb
+import com.scoto.data.local.local_dto.RecipeDraftDb
 import com.scoto.data.local.local_dto.TimeOfRecipeDb
 import com.scoto.data.local.local_dto.UserDb
 import com.scoto.domain.models.Category
@@ -12,6 +13,7 @@ import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Image
 import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.Recipe
+import com.scoto.domain.models.RecipeDraft
 import com.scoto.domain.models.TimeOfRecipe
 import com.scoto.domain.models.User
 
@@ -86,5 +88,17 @@ fun CommentDb.toDomainModel(): Comment {
         text = this.text,
         user = this.user.toDomainModel(),
         difference = this.difference
+    )
+}
+
+fun RecipeDraftDb.toDomainModel(): RecipeDraft {
+    return RecipeDraft(
+        title = this.title,
+        direction = this.direction,
+        ingredients = this.ingredients,
+        categoryId = this.categoryId,
+        numberOfPersonId = this.numberOfPersonId,
+        timeOfRecipeId = this.timeOfRecipeId,
+        image = this.images
     )
 }

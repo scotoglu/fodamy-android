@@ -5,9 +5,11 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.scoto.data.local.local_dto.CategoryDb
 import com.scoto.data.local.local_dto.CommentDb
 import com.scoto.data.local.local_dto.RecipeDb
+import com.scoto.data.local.local_dto.RecipeDraftDb
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -59,4 +61,16 @@ interface RecipeDao {
 
     @Query("select * from comments where recipe_id =:recipeId order by id desc limit 1")
     suspend fun getFirstRecipeComments(recipeId: Int): CommentDb
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDraft(drafts: RecipeDraftDb)
+
+    @Query("select * from recipe_drafts")
+    suspend fun getAllDrafts(): List<RecipeDraftDb>
+
+    @Query("delete from recipe_drafts where id =:draftId")
+    suspend fun deleteDraft(draftId: Int)
+
+    @Update
+    suspend fun updateDraft(draft: RecipeDraftDb)
 }
