@@ -5,17 +5,19 @@ import kotlinx.parcelize.Parcelize
 
 /**
  * @author Sefa ÇOTOĞLU
- * Created 19.01.2022 at 15:37
+ * Created 16.03.2022
  */
 @Parcelize
-data class NumberOfPerson(
+data class CategoryDraft(
     val id: Int,
-    val text: String
+    val name: String,
+    val mainCategoryId: Int?
 ) : Parcelable {
     override fun toString(): String {
-        return "$text kişi"
+        return name
     }
+
     companion object {
-        val EMPTY = NumberOfPerson(-1, "")
+        val EMPTY = CategoryDraft(-1, "", null)
     }
 }

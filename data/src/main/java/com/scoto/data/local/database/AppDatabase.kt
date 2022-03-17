@@ -37,7 +37,7 @@ import com.scoto.data.local.local_dto.UserDb
         RemoteKeysCategory::class,
         RecipeDraftDb::class
     ],
-    version = 31,
+    version = 34,
     exportSchema = false
 )
 @TypeConverters(

@@ -1,15 +1,20 @@
 package com.scoto.domain.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * @author Sefa ÇOTOĞLU
  * Created 14.03.2022
  */
+@Parcelize
 data class RecipeDraft(
+    val id: String,
     val title: String,
     val ingredients: String,
     val direction: String,
-    val categoryId: Int,
-    val numberOfPersonId: Int,
-    val timeOfRecipeId: Int,
+    val category: CategoryDraft,
+    val numberOfPerson: NumberOfPerson,
+    val timeOfRecipe: TimeOfRecipe,
     val image: List<String>
-)
+) : Parcelable

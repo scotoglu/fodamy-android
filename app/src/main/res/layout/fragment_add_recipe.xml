@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.scoto.fodamy.ui.add_recipe.new_recipe.AddRecipeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,14 +18,16 @@
         <com.scoto.fodamy.util.CustomToolbar
             android:id="@+id/custom_toolbar"
             android:layout_width="0dp"
-            app:title="@string/edit_draft"
-            app:endIcon="@drawable/ic_save"
-            app:endIconVisibility="true"
             android:layout_height="wrap_content"
             app:backButtonVisible="true"
+            app:endIcon="@drawable/ic_save"
+            app:endIconVisibility="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:onBackListener="@{()->viewModel.backTo()}"
+            app:onEndIconListener="@{()->viewModel.saveDraft()}"
+            app:title="@string/edit_draft" />
 
         <ScrollView
             android:layout_width="0dp"
@@ -59,6 +64,7 @@
                         android:background="@drawable/text_input_layout_background"
                         android:hint="@string/recipe_title"
                         android:singleLine="true"
+                        android:text="@={viewModel.recipeTitle}"
                         tools:text="@tools:sample/lorem[5]" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,12 +82,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recipe_title">
 
-                    <AutoCompleteTextView
-                        tools:text="@tools:sample/lorem"
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/number_of_person"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="none"
-                        tools:ignore="LabelFor" />
+                        android:text="@{viewModel.timeOfRecipe.text}"
+                        tools:ignore="LabelFor"
+                        tools:text="@tools:sample/lorem" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -90,8 +98,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_margin_8dp"
-                    android:layout_marginEnd="@dimen/size_margin_8dp"
                     android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
                     android:hint="@string/recipe_time_of_recipe"
                     android:textColorHint="@color/color_add_recipe_title"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -99,11 +107,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
                     <AutoCompleteTextView
-                        tools:text="@tools:sample/lorem"
+                        android:id="@+id/time_of_recipe"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="none"
-                        tools:ignore="LabelFor" />
+                        android:text="@{viewModel.numberOfPerson.text}"
+                        tools:ignore="LabelFor"
+                        tools:text="@tools:sample/lorem" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +134,9 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/text_input_layout_background"
                         android:hint="@string/recipe_ingredients"
-                        tools:text="@tools:sample/lorem[20]" />
+                        android:minLines="4"
+                        android:text="@={viewModel.recipeIngredients}"
+                        tools:text="@tools:sample/lorem[100]" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -145,6 +157,8 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/text_input_layout_background"
                         android:hint="@string/recipe_directions"
+                        android:minLines="4"
+                        android:text="@={viewModel.recipeDirection}"
                         tools:text="@tools:sample/lorem[23]" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,10 +178,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/recipe_direction">
 
                     <AutoCompleteTextView
-                        tools:text="@tools:sample/lorem"
+                        android:id="@+id/category"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="none" />
+                        android:inputType="none"
+                        android:text="@{viewModel.draft.category.name}"
+                        tools:ignore="LabelFor"
+                        tools:text="@tools:sample/lorem" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
@@ -179,6 +196,7 @@
             android:layout_marginStart="@dimen/size_margin_16dp"
             android:layout_marginEnd="@dimen/size_margin_16dp"
             android:backgroundTint="@color/color_add_recipe_title"
+            android:onClick="@{()->viewModel.saveDraft()}"
             android:padding="@dimen/size_padding_15dp"
             android:text="@string/btn_save_draft"
             android:textAllCaps="true"

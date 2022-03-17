@@ -1,6 +1,7 @@
 package com.scoto.data.mapper
 
 import com.scoto.data.local.local_dto.CategoryDb
+import com.scoto.data.local.local_dto.CategoryDraftDb
 import com.scoto.data.local.local_dto.CommentDb
 import com.scoto.data.local.local_dto.ImageDb
 import com.scoto.data.local.local_dto.NumberOfPersonDb
@@ -9,6 +10,7 @@ import com.scoto.data.local.local_dto.RecipeDraftDb
 import com.scoto.data.local.local_dto.TimeOfRecipeDb
 import com.scoto.data.local.local_dto.UserDb
 import com.scoto.domain.models.Category
+import com.scoto.domain.models.CategoryDraft
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Image
 import com.scoto.domain.models.NumberOfPerson
@@ -93,12 +95,21 @@ fun CommentDb.toDomainModel(): Comment {
 
 fun RecipeDraftDb.toDomainModel(): RecipeDraft {
     return RecipeDraft(
+        id = this.id,
         title = this.title,
         direction = this.direction,
         ingredients = this.ingredients,
-        categoryId = this.categoryId,
-        numberOfPersonId = this.numberOfPersonId,
-        timeOfRecipeId = this.timeOfRecipeId,
+        category = this.category.toDomainModel(),
+        numberOfPerson = this.numberOfPerson.toDomainModel(),
+        timeOfRecipe = this.timeOfRecipe.toDomainModel(),
         image = this.images
+    )
+}
+
+fun CategoryDraftDb.toDomainModel(): CategoryDraft {
+    return CategoryDraft(
+        id = this.id,
+        name = this.name,
+        mainCategoryId = this.mainCategoryId
     )
 }

@@ -117,22 +117,55 @@
         <item name="elevation">0dp</item>
     </style>
 
-    <style name="AddRecipe.Titles" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/color_add_recipe_title</item>
-        <item name="fontFamily">@font/nunito_semibold</item>
-        <item name="android:textSize">@dimen/text_size_12sp</item>
-        <item name="textAllCaps">true</item>
+    <style name="PublishDraft.Label.Thin" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_marginStart">@dimen/size_margin_8dp</item>
+        <item name="android:layout_marginTop">@dimen/size_margin_8dp</item>
+        <item name="android:layout_marginEnd">@dimen/size_margin_8dp</item>
         <item name="android:paddingTop">@dimen/size_padding_8dp</item>
-        <item name="android:paddingStart">@dimen/size_padding_8dp</item>
-        <item name="android:paddingEnd">@dimen/size_padding_8dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@color/white</item>
     </style>
 
-    <style name="AddRecipe.Hints" parent="TextAppearance.AppCompat">
-        <item name="textAllCaps">false</item>
-        <item name="android:textSize">@dimen/text_size_12sp</item>
-        <item name="fontFamily">@font/nunito_semibold</item>
-        <item name="singleLine">true</item>
+    <style name="PublishDraft.Label.Bold" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_marginStart">@dimen/size_margin_8dp</item>
+        <item name="android:layout_marginEnd">@dimen/size_margin_8dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="fontFamily">@font/nunito_bold</item>
+        <item name="android:paddingStart">@dimen/size_padding_8dp</item>
         <item name="android:padding">@dimen/size_padding_4dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+    </style>
 
+    <style name="PublishDraft.Content.Thin" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:paddingTop">@dimen/size_padding_15dp</item>
+        <item name="android:paddingBottom">@dimen/size_padding_15dp</item>
+        <item name="android:paddingStart">@dimen/size_padding_8dp</item>
+        <item name="android:paddingEnd">@dimen/size_padding_4dp</item>
+        <item name="android:layout_marginStart">@dimen/size_margin_8dp</item>
+        <item name="android:layout_marginEnd">@dimen/size_margin_8dp</item>
+    </style>
+
+    <style name="PublishDraft.Content.Bold" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@color/white</item>
+        <item name="fontFamily">@font/nunito_semibold</item>
+        <item name="android:paddingBottom">@dimen/size_padding_8dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_18sp</item>
+    </style>
+
+    <style name="PublishDraft.Label" parent="Widget.AppCompat.TextView">
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginStart">@dimen/size_margin_8dp</item>
+        <item name="android:layout_marginTop">@dimen/size_margin_8dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="fontFamily">@font/nunito_semibold</item>
+        <item name="android:padding">@dimen/size_padding_15dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
     </style>
 </resources>

@@ -2,6 +2,7 @@ package com.scoto.domain.repositories
 
 import androidx.paging.PagingData
 import com.scoto.domain.models.Category
+import com.scoto.domain.models.CategoryDraft
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.Recipe
@@ -34,6 +35,7 @@ interface RecipeRepository {
     suspend fun getRecipeServing(): List<NumberOfPerson>
     suspend fun insertDraft(draft: RecipeDraft)
     suspend fun getAllDrafts(): List<RecipeDraft>
-    suspend fun deleteDraft(draftId: Int)
+    suspend fun deleteDraft(draftId: String)
     suspend fun updateDraft(draft: RecipeDraft)
+    suspend fun getAllCategories(): List<CategoryDraft>
 }

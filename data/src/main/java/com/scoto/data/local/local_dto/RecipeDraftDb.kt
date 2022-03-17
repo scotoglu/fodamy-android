@@ -1,6 +1,6 @@
 package com.scoto.data.local.local_dto
 
-import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,16 +10,16 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "recipe_drafts")
 data class RecipeDraftDb(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: String,
     val title: String,
     val ingredients: String,
     val direction: String,
-    @ColumnInfo("category_id")
-    val categoryId: Int,
-    @ColumnInfo("number_of_person_id")
-    val numberOfPersonId: Int,
-    @ColumnInfo("time_of_recipe_id")
-    val timeOfRecipeId: Int,
+    @Embedded("category")
+    val category: CategoryDraftDb,
+    @Embedded("number_of_person")
+    val numberOfPerson: NumberOfPersonDb,
+    @Embedded("time_of_recipe")
+    val timeOfRecipe: TimeOfRecipeDb,
     val images: List<String>
 )

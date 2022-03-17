@@ -1,4 +1,4 @@
-package com.scoto.fodamy.ui.add_recipe
+package com.scoto.fodamy.ui.add_recipe.new_recipe
 
 /**
  * @author Sefa ÇOTOĞLU

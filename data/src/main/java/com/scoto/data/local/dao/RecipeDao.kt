@@ -69,8 +69,8 @@ interface RecipeDao {
     suspend fun getAllDrafts(): List<RecipeDraftDb>
 
     @Query("delete from recipe_drafts where id =:draftId")
-    suspend fun deleteDraft(draftId: Int)
+    suspend fun deleteDraft(draftId: String)
 
-    @Update
+    @Update(entity = RecipeDraftDb::class)
     suspend fun updateDraft(draft: RecipeDraftDb)
 }

@@ -17,6 +17,7 @@ import com.scoto.data.utils.RecipeEditorRemoteMediator
 import com.scoto.data.utils.RecipeLastAddedRemoteMediator
 import com.scoto.data.utils.RemoteMediatorCategories
 import com.scoto.domain.models.Category
+import com.scoto.domain.models.CategoryDraft
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.Recipe
@@ -248,7 +249,7 @@ class DefaultRecipeRepository @Inject constructor(
             recipeDao.getAllDrafts().map { it.toDomainModel() }
         }
 
-    override suspend fun deleteDraft(draftId: Int) =
+    override suspend fun deleteDraft(draftId: String) =
         execute {
             recipeDao.deleteDraft(draftId)
         }
@@ -257,6 +258,10 @@ class DefaultRecipeRepository @Inject constructor(
         execute {
             recipeDao.updateDraft(draft.toLocalDto())
         }
+
+    override suspend fun getAllCategories(): List<CategoryDraft> = execute {
+        recipeService.getAllCategories().data.map { it.toDomainModel() }
+    }
 
     companion object {
         private const val PAGE_SIZE = 24

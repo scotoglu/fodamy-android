@@ -1,5 +1,6 @@
 package com.scoto.data.remote.services
 
+import com.scoto.data.remote.remote_dto.CategoryDraftData
 import com.scoto.data.remote.remote_dto.CategoryPagingResponse
 import com.scoto.data.remote.remote_dto.CommentPagingResponse
 import com.scoto.data.remote.remote_dto.CommentResponse
@@ -90,4 +91,7 @@ interface RecipeService {
 
     @GET("serving")
     suspend fun getRecipeServing(): RecipeServingResponse
+
+    @GET("category")
+    suspend fun getAllCategories(): CategoryDraftData
 }

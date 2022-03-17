@@ -6,14 +6,39 @@
 
     <fragment
         android:id="@+id/addRecipeFragment"
-        android:name="com.scoto.fodamy.ui.add_recipe.AddRecipeFragment"
-        android:label="AddRecipeFragment" />
+        android:name="com.scoto.fodamy.ui.add_recipe.new_recipe.AddRecipeFragment"
+        android:label="AddRecipeFragment" >
+        <action
+            android:id="@+id/action_addRecipeFragment_to_publishDraftFragment"
+            app:destination="@id/publishDraftFragment" />
+        <argument
+            android:name="editableDraft"
+            app:argType="com.scoto.domain.models.RecipeDraft"
+            app:nullable="true" />
+        <argument
+            android:name="editMode"
+            app:argType="boolean" />
+    </fragment>
     <fragment
         android:id="@+id/recipesDraftsFragment"
         android:name="com.scoto.fodamy.ui.add_recipe.drafts.RecipesDraftsFragment"
         android:label="RecipesDraftsFragment" >
         <action
             android:id="@+id/action_recipesDraftsFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
+        <action
+            android:id="@+id/action_recipesDraftsFragment_to_publishDraftFragment"
+            app:destination="@id/publishDraftFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/publishDraftFragment"
+        android:name="com.scoto.fodamy.ui.add_recipe.publish_draft.PublishDraftFragment"
+        android:label="PublishDraftFragment" >
+        <argument
+            android:name="recipeDraft"
+            app:argType="com.scoto.domain.models.RecipeDraft" />
+        <action
+            android:id="@+id/action_publishDraftFragment_to_addRecipeFragment"
             app:destination="@id/addRecipeFragment" />
     </fragment>
 </navigation>

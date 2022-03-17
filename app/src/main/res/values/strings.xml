@@ -141,4 +141,8 @@
     <string name="recipe_directions">Hazırlanışı</string>
     <string name="recipe_category">Kategori</string>
     <string name="edit_draft">Taslak Düzenle</string>
+    <string name="publish_draft">Tarifi Yayına Gönder</string>
+    <string name="edit_draft_2">Taslağı Düzenle</string>
+    <string name="text_privacy_policy">Kullanım koşullarını kabul ediyorum.</string>
+    <string name="btn_ready_and_send">Tarifim Hazır, Yayına Gönder</string>
 </resources>
