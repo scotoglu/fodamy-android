@@ -54,11 +54,9 @@ class PushNotificationService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.category_item)
             .setAutoCancel(true)
 
-
         with(NotificationManagerCompat.from(this)) {
             notify(notificationId, notification.build())
         }
-
     }
 
     companion object {

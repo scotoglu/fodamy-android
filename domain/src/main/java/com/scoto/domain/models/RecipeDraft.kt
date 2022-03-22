@@ -16,5 +16,5 @@ data class RecipeDraft(
     val category: CategoryDraft,
     val numberOfPerson: NumberOfPerson,
     val timeOfRecipe: TimeOfRecipe,
-    val image: List<String>
+    var image: List<String>
 ) : Parcelable

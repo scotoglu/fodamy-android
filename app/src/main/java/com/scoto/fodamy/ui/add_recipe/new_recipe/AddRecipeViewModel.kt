@@ -8,10 +8,10 @@ import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.RecipeDraft
 import com.scoto.domain.models.TimeOfRecipe
 import com.scoto.domain.repositories.RecipeRepository
-import com.scoto.fodamy.helper.SingleLiveEvent
+import com.scoto.fodamy.R
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -22,8 +22,6 @@ import javax.inject.Inject
 class AddRecipeViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : BaseViewModel() {
-
-    val event: SingleLiveEvent<AddRecipeEvent> = SingleLiveEvent()
 
     // Recipe Times ( ie. 2 dk,5 dk)
     private val _times: MutableLiveData<List<TimeOfRecipe>> = MutableLiveData()
@@ -56,14 +54,15 @@ class AddRecipeViewModel @Inject constructor(
     override fun fetchExtras(bundle: Bundle) {
         super.fetchExtras(bundle)
         with(AddRecipeFragmentArgs.fromBundle(bundle)) {
+            this@AddRecipeViewModel.editMode = editMode
             if (editMode) {
-                this@AddRecipeViewModel.editMode = editMode
                 this@AddRecipeViewModel.draft = editableDraft
                 initialValues()
             }
         }
     }
 
+    // if editMode == true, sets data that will be edited.
     private fun initialValues() {
         draft?.let { recipeDraft ->
             recipeTitle.value = recipeDraft.title
@@ -108,39 +107,60 @@ class AddRecipeViewModel @Inject constructor(
     private fun updateDraft(draft: RecipeDraft) {
         sendRequest(
             loading = true,
-            request = { recipeRepository.updateDraft(draft) }
+            request = { recipeRepository.updateDraft(draft) },
+            success = {
+                navigate(
+                    AddRecipeFragmentDirections.actionAddRecipeFragmentToPublishDraftFragment(
+                        draft
+                    )
+                )
+            }
         )
     }
 
+    private fun checkFields(): Boolean {
+        return when {
+            recipeTitle.value.toString().isBlank() -> false
+            recipeDirection.value.toString().isBlank() -> false
+            recipeIngredients.value.toString().isBlank() -> false
+            category == null -> false
+            else -> true
+        }
+    }
+
     fun saveDraft() {
-        val draft = RecipeDraft(
-            id = if (editMode) {
-                draft?.id!!
-            } else {
-                UUID.randomUUID().toString()
-            },
-            title = recipeTitle.value.toString(),
-            ingredients = recipeIngredients.value.toString(),
-            direction = recipeDirection.value.toString(),
-            category = category ?: CategoryDraft.EMPTY,
-            numberOfPerson = numberOfPerson ?: NumberOfPerson.EMPTY,
-            timeOfRecipe = timeOfRecipe ?: TimeOfRecipe.EMPTY,
-            image = emptyList()
-        )
-        if (editMode) {
-            updateDraft(draft)
+        if (!checkFields()) {
+            showMessageWithRes(R.string.add_recipe_required_fields)
         } else {
-            sendRequest(
-                loading = true,
-                request = { recipeRepository.insertDraft(draft) },
-                success = {
-                    navigate(
-                        AddRecipeFragmentDirections.actionAddRecipeFragmentToPublishDraftFragment(
-                            draft
-                        )
-                    )
-                }
+            val draft = RecipeDraft(
+                id = if (editMode) {
+                    draft?.id!!
+                } else {
+                    UUID.randomUUID().toString()
+                },
+                title = recipeTitle.value.toString(),
+                ingredients = recipeIngredients.value.toString(),
+                direction = recipeDirection.value.toString(),
+                category = category ?: CategoryDraft.EMPTY,
+                numberOfPerson = numberOfPerson ?: NumberOfPerson.EMPTY,
+                timeOfRecipe = timeOfRecipe ?: TimeOfRecipe.EMPTY,
+                image = emptyList()
             )
+            if (editMode) {
+                updateDraft(draft)
+            } else {
+                sendRequest(
+                    loading = true,
+                    request = { recipeRepository.insertDraft(draft) },
+                    success = {
+                        navigate(
+                            AddRecipeFragmentDirections.actionAddRecipeFragmentToPublishDraftFragment(
+                                draft
+                            )
+                        )
+                    }
+                )
+            }
         }
     }
 }

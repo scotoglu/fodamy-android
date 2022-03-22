@@ -1,8 +1,9 @@
 package com.scoto.fodamy.ui.add_recipe.drafts
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.scoto.domain.models.RecipeDraft
 import com.scoto.fodamy.databinding.ItemDraftBinding
@@ -14,15 +15,25 @@ import com.scoto.fodamy.ext.onClick
  */
 class RecipeDraftsAdapter : RecyclerView.Adapter<RecipeDraftsAdapter.ViewHolder>() {
 
-    private var drafts: List<RecipeDraft>? = null
     var itemClicked: ((RecipeDraft) -> Unit)? = null
     var deleteClicked: ((RecipeDraft) -> Unit)? = null
     var editClicked: ((RecipeDraft) -> Unit)? = null
+    var addPhotoClicked: ((RecipeDraft) -> Unit)? = null
 
-    @SuppressLint("NotifyDataSetChanged")
+    private val diffCallback = object : DiffUtil.ItemCallback<RecipeDraft>() {
+        override fun areItemsTheSame(oldItem: RecipeDraft, newItem: RecipeDraft): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: RecipeDraft, newItem: RecipeDraft): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    private val differ = AsyncListDiffer(this, diffCallback)
+
     fun setData(drafts: List<RecipeDraft>) {
-        this.drafts = drafts
-        notifyDataSetChanged()
+        differ.submitList(drafts)
     }
 
     override fun onCreateViewHolder(
@@ -35,12 +46,12 @@ class RecipeDraftsAdapter : RecyclerView.Adapter<RecipeDraftsAdapter.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: RecipeDraftsAdapter.ViewHolder, position: Int) {
-        val currentDraft = drafts?.get(position)
+        val currentDraft = differ.currentList[position]
         holder.bind(currentDraft!!)
     }
 
     override fun getItemCount(): Int {
-        return drafts?.size ?: 0
+        return differ.currentList.size
     }
 
     inner class ViewHolder(private val binding: ItemDraftBinding) :
@@ -48,22 +59,16 @@ class RecipeDraftsAdapter : RecyclerView.Adapter<RecipeDraftsAdapter.ViewHolder>
         init {
             binding.apply {
                 draftRecipeName.onClick {
-                    if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                        drafts?.get(bindingAdapterPosition)
-                            ?.let { item -> itemClicked?.invoke(item) }
-                    }
+                    currentItem()?.let { item -> itemClicked?.invoke(item) }
                 }
                 ivDelete.onClick {
-                    if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                        drafts?.get(bindingAdapterPosition)
-                            ?.let { item -> deleteClicked?.invoke(item) }
-                    }
+                    currentItem()?.let { item -> deleteClicked?.invoke(item) }
                 }
                 ivEdit.onClick {
-                    if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                        drafts?.get(bindingAdapterPosition)
-                            ?.let { item -> editClicked?.invoke(item) }
-                    }
+                    currentItem()?.let { item -> editClicked?.invoke(item) }
+                }
+                ivAddPhoto.onClick {
+                    currentItem()?.let { item -> addPhotoClicked?.invoke(item) }
                 }
             }
         }
@@ -71,5 +76,12 @@ class RecipeDraftsAdapter : RecyclerView.Adapter<RecipeDraftsAdapter.ViewHolder>
         fun bind(item: RecipeDraft) {
             binding.draftRecipeName.text = item.title
         }
+    }
+
+    fun ViewHolder.currentItem(): RecipeDraft? {
+        if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+            return differ.currentList[bindingAdapterPosition]
+        }
+        return null
     }
 }

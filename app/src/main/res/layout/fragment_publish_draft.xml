@@ -25,7 +25,7 @@
             app:onBackListener="@{()->viewModel.backTo()}"
             app:title="@string/publish_draft" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/size_margin_16dp"
@@ -59,6 +59,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{()->viewModel.toChoosePhoto()}"
                     android:text="@string/add_recipe_add_photo"
                     android:textColor="@color/color_add_recipe_title"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -173,9 +176,34 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView20"
-                    tools:text="@tools:sample/lorem[45]" />
+                    tools:text="@tools:sample/lorem[75]" />
+
+                <TextView
+                    android:id="@+id/tv_loaded_photos"
+                    style="@style/PublishDraft.Label.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loaded_photos"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView19" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/capture_and_pick_recyclerview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_loaded_photos"
+                    app:spanCount="2"
+                    tools:listitem="@layout/item_photo_view" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/cb_accept"

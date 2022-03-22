@@ -145,4 +145,7 @@
     <string name="edit_draft_2">Taslağı Düzenle</string>
     <string name="text_privacy_policy">Kullanım koşullarını kabul ediyorum.</string>
     <string name="btn_ready_and_send">Tarifim Hazır, Yayına Gönder</string>
+    <string name="access_denied">İzin Verilmedi.</string>
+    <string name="loaded_photos">Yüklenen Fotoğraflar</string>
+    <string name="add_recipe_required_fields">Tarif adı, Malzemeler, Hazırlanış ve Kategori kısımları boş bırakılamaz.</string>
 </resources>

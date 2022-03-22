@@ -55,8 +55,10 @@ class RecipesDraftsFragment : BaseFragment<FragmentDraftsBinding, RecipeDraftsVi
                 viewModel.deleteDraft(it.id)
             }
             editClicked = {
-                viewModel.selectedDraft = it
-                viewModel.toEdit()
+                viewModel.toEdit(it)
+            }
+            addPhotoClicked = {
+                viewModel.toChoosePhoto(it)
             }
         }
     }

@@ -20,8 +20,6 @@ class RecipeDraftsViewModel @Inject constructor(
     private val _drafts: MutableLiveData<List<RecipeDraft>> = MutableLiveData()
     val drafts: LiveData<List<RecipeDraft>> get() = _drafts
 
-    var selectedDraft: RecipeDraft? = null
-
     fun getDrafts() {
         sendRequest(
             loading = true,
@@ -40,19 +38,27 @@ class RecipeDraftsViewModel @Inject constructor(
         )
     }
 
+    fun toChoosePhoto(draft: RecipeDraft) {
+        navigate(
+            RecipesDraftsFragmentDirections.actionRecipesDraftsFragmentToChoosePhotoFragment(
+                draft
+            )
+        )
+    }
+
     fun toAddRecipe() {
         navigate(
             RecipesDraftsFragmentDirections.actionRecipesDraftsFragmentToAddRecipeFragment(
-                selectedDraft,
+                null,
                 false
             )
         )
     }
 
-    fun toEdit() {
+    fun toEdit(draft: RecipeDraft) {
         navigate(
             RecipesDraftsFragmentDirections.actionRecipesDraftsFragmentToAddRecipeFragment(
-                selectedDraft,
+                draft,
                 true
             )
         )
