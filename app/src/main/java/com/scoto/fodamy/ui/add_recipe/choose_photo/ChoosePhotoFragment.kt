@@ -33,7 +33,6 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 
-
 /**
  * @author Sefa ÇOTOĞLU
  * Created 17.03.2022
