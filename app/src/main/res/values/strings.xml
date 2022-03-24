@@ -148,4 +148,9 @@
     <string name="access_denied">İzin Verilmedi.</string>
     <string name="loaded_photos">Yüklenen Fotoğraflar</string>
     <string name="add_recipe_required_fields">Tarif adı, Malzemeler, Hazırlanış ve Kategori kısımları boş bırakılamaz.</string>
+    <string name="accept_terms">Kullanım koşullarını kabul etmelisiniz.</string>
+    <string name="dialog_title">İzinler</string>
+    <string name="dialog_message">Devam edebilmek için izin vermelisiniz.</string>
+    <string name="dialog_positive_btn">İzin Ver</string>
+    <string name="success_send_recipe">Tarif gönderildi.</string>
 </resources>

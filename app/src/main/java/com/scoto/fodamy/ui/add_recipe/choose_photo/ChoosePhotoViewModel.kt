@@ -1,12 +1,12 @@
 package com.scoto.fodamy.ui.add_recipe.choose_photo
 
-import android.net.Uri
 import android.os.Bundle
 import com.scoto.domain.models.RecipeDraft
 import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.fodamy.helper.SingleLiveEvent
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.File
 import javax.inject.Inject
 
 /**
@@ -27,15 +27,12 @@ class ChoosePhotoViewModel @Inject constructor(
         }
     }
 
-    fun getSelectedImageIfHas(): List<Uri>? {
-        return draft?.image?.map {
-            Uri.parse(it)
-        }
+    fun getSelectedImageIfHas(): List<File>? {
+        return draft?.image
     }
 
-    fun toPublishDraft(images: List<Uri>) {
-        val imagesStr = images.map { it.toString() }
-        draft?.image = imagesStr
+    fun toPublishDraft(images: List<File>) {
+        draft?.image = images
         sendRequest(
             loading = true,
             request = { draft?.let { recipeRepository.updateDraft(it) } },

@@ -9,6 +9,7 @@ import com.scoto.domain.models.Recipe
 import com.scoto.domain.models.RecipeDraft
 import com.scoto.domain.models.TimeOfRecipe
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -38,4 +39,13 @@ interface RecipeRepository {
     suspend fun deleteDraft(draftId: String)
     suspend fun updateDraft(draft: RecipeDraft)
     suspend fun getAllCategories(): List<CategoryDraft>
+    suspend fun sendRecipe(
+        title: String,
+        ingredients: String,
+        directions: String,
+        timeOfRecipeId: Int,
+        numberOfPersonId: Int,
+        categoryId: Int,
+        images: List<File>
+    ): Recipe
 }

@@ -2,6 +2,7 @@ package com.scoto.domain.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.io.File
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -16,5 +17,5 @@ data class RecipeDraft(
     val category: CategoryDraft,
     val numberOfPerson: NumberOfPerson,
     val timeOfRecipe: TimeOfRecipe,
-    var image: List<String>
+    var image: List<File>
 ) : Parcelable

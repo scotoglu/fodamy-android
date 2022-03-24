@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-files-path
+    <files-path
         name="fodamy_images"
+        path="/" />
+    <cache-path
+        name="cache-images"
         path="/" />
 </paths>

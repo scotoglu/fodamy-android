@@ -18,6 +18,7 @@ import com.scoto.domain.models.Recipe
 import com.scoto.domain.models.RecipeDraft
 import com.scoto.domain.models.TimeOfRecipe
 import com.scoto.domain.models.User
+import java.io.File
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -102,7 +103,7 @@ fun RecipeDraftDb.toDomainModel(): RecipeDraft {
         category = this.category.toDomainModel(),
         numberOfPerson = this.numberOfPerson.toDomainModel(),
         timeOfRecipe = this.timeOfRecipe.toDomainModel(),
-        image = this.images
+        image = this.images.map { File(it) }
     )
 }
 

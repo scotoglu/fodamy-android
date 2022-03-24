@@ -34,6 +34,14 @@ class RecipesDraftsFragment : BaseFragment<FragmentDraftsBinding, RecipeDraftsVi
         viewModel.drafts.observe(viewLifecycleOwner) {
             draftsAdapter.setData(it)
         }
+
+        viewModel.event.observe(viewLifecycleOwner) { event ->
+            val logoutIconVisibility: Boolean = when (event) {
+                is RecipeDraftsEvent.IsLogin -> event.isLogin
+                RecipeDraftsEvent.Success -> false
+            }
+            binding.customToolbar.setEndIconVisibility(logoutIconVisibility)
+        }
     }
 
     override fun initViews() {

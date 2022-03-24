@@ -23,7 +23,7 @@ fun RecipeDraft.toLocalDto(): RecipeDraftDb {
         category = this.category.toLocalDto(),
         numberOfPerson = this.numberOfPerson.toLocalDto(),
         timeOfRecipe = this.timeOfRecipe.toLocalDto(),
-        images = this.image
+        images = this.image.map { it.toString() }
     )
 }
 

@@ -1,30 +1,31 @@
 package com.scoto.fodamy.ui.add_recipe.choose_photo.adapter
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.scoto.fodamy.databinding.ItemPhotoViewBinding
+import com.scoto.fodamy.ext.loadImageFromUrl
 import com.scoto.fodamy.ext.onClick
+import java.io.File
 
 /**
  * @author Sefa ÇOTOĞLU
  * Created 21.03.2022
  */
 class CaptureAndPickPhotoAdapter : RecyclerView.Adapter<CaptureAndPickPhotoAdapter.ViewHolder>() {
-    private lateinit var imageUri: List<Uri>
+    private lateinit var imageUri: List<File>
     private var hideDelete = true
-    var deleteClicked: ((Uri) -> Unit)? = null
+    var deleteClicked: ((File) -> Unit)? = null
 
     fun hideDelete() {
         hideDelete = false
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(imageUri: List<Uri>) {
+    fun setData(imageUri: List<File>) {
         this.imageUri = imageUri
         notifyDataSetChanged()
     }
@@ -56,10 +57,10 @@ class CaptureAndPickPhotoAdapter : RecyclerView.Adapter<CaptureAndPickPhotoAdapt
             }
         }
 
-        fun bind(uri: Uri) {
+        fun bind(file: File) {
             binding.apply {
                 ivDelete.isVisible = hideDelete
-                ivPhoto.setImageURI(uri)
+                ivPhoto.loadImageFromUrl(file.toString())
                 executePendingBindings()
             }
         }

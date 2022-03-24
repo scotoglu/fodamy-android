@@ -15,6 +15,7 @@ data class TimeOfRecipe(
     override fun toString(): String {
         return "$text dk"
     }
+
     companion object {
         val EMPTY = TimeOfRecipe(-1, "")
     }

@@ -6,7 +6,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.map
-import com.scoto.data.di.ApplicationScope
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.mapper.toDomainModel
@@ -24,9 +23,12 @@ import com.scoto.domain.models.Recipe
 import com.scoto.domain.models.RecipeDraft
 import com.scoto.domain.models.TimeOfRecipe
 import com.scoto.domain.repositories.RecipeRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import javax.inject.Inject
 
 /**
@@ -38,7 +40,6 @@ class DefaultRecipeRepository @Inject constructor(
     private val recipeService: RecipeService,
     private val recipeDao: RecipeDao,
     private val remoteKeysDao: RemoteKeysDao,
-    @ApplicationScope private val scope: CoroutineScope
 ) : RecipeRepository, BaseRepository() {
 
     private val pageConfig = PagingConfig(
@@ -261,6 +262,44 @@ class DefaultRecipeRepository @Inject constructor(
 
     override suspend fun getAllCategories(): List<CategoryDraft> = execute {
         recipeService.getAllCategories().data.map { it.toDomainModel() }
+    }
+
+    override suspend fun sendRecipe(
+        title: String,
+        ingredients: String,
+        directions: String,
+        timeOfRecipeId: Int,
+        numberOfPersonId: Int,
+        categoryId: Int,
+        images: List<File>
+    ): Recipe {
+        return execute {
+            recipeService.sendRecipe(
+                title = title,
+                ingredients = ingredients,
+                directions = directions,
+                timeOfRecipeId = timeOfRecipeId,
+                categoryId = categoryId,
+                numberOfPersonId = numberOfPersonId,
+                images = getMultipartFiles(images)
+            ).toDomainModel()
+        }
+    }
+
+    private fun getMultipartFiles(source: List<File>): Array<MultipartBody.Part> {
+        val imagesMultipart = mutableListOf<MultipartBody.Part>()
+        for (i in source.indices) {
+            val reqFile =
+                source[i].asRequestBody("file".toMediaTypeOrNull())
+            val part =
+                MultipartBody.Part.createFormData(
+                    "images[$i]",
+                    source[i].name,
+                    reqFile
+                )
+            imagesMultipart.add(part)
+        }
+        return imagesMultipart.toTypedArray()
     }
 
     companion object {

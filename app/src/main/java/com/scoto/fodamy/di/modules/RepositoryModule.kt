@@ -20,7 +20,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 /**
@@ -57,9 +56,8 @@ object RepositoryModule {
     fun provideRecipeRepository(
         recipeService: RecipeService,
         recipeDao: RecipeDao,
-        remoteKeysDao: RemoteKeysDao,
-        @ApplicationScope scope: CoroutineScope
+        remoteKeysDao: RemoteKeysDao
     ): RecipeRepository {
-        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao, scope)
+        return DefaultRecipeRepository(recipeService, recipeDao, remoteKeysDao)
     }
 }
