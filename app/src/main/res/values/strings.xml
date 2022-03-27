@@ -153,4 +153,6 @@
     <string name="dialog_message">Devam edebilmek için izin vermelisiniz.</string>
     <string name="dialog_positive_btn">İzin Ver</string>
     <string name="success_send_recipe">Tarif gönderildi.</string>
+    <string name="take_photo">Fotoğraf Çek</string>
+    <string name="choose_from_gallery">Galeriden Seç</string>
 </resources>

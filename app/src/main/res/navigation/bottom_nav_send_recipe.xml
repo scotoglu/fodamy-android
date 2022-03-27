@@ -11,6 +11,8 @@
         <action
             android:id="@+id/action_addRecipeFragment_to_publishDraftFragment"
             app:destination="@id/publishDraftFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right"
             app:popUpTo="@id/recipesDraftsFragment"
             app:popUpToInclusive="false" />
         <argument
@@ -27,13 +29,17 @@
         android:label="RecipesDraftsFragment" >
         <action
             android:id="@+id/action_recipesDraftsFragment_to_addRecipeFragment"
-            app:destination="@id/addRecipeFragment" />
+            app:destination="@id/addRecipeFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right" />
         <action
             android:id="@+id/action_recipesDraftsFragment_to_publishDraftFragment"
             app:destination="@id/publishDraftFragment" />
         <action
             android:id="@+id/action_recipesDraftsFragment_to_choosePhotoFragment"
-            app:destination="@id/choosePhotoFragment" />
+            app:destination="@id/choosePhotoFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/publishDraftFragment"
@@ -44,7 +50,9 @@
             app:argType="com.scoto.domain.models.RecipeDraft" />
         <action
             android:id="@+id/action_publishDraftFragment_to_addRecipeFragment"
-            app:destination="@id/addRecipeFragment" />
+            app:destination="@id/addRecipeFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right" />
         <action
             android:id="@+id/action_publishDraftFragment_to_choosePhotoFragment"
             app:destination="@id/choosePhotoFragment" />
@@ -56,6 +64,8 @@
         <action
             android:id="@+id/action_choosePhotoFragment_to_publishDraftFragment"
             app:destination="@id/publishDraftFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right"
             app:popUpTo="@id/recipesDraftsFragment"
             app:popUpToInclusive="false" />
         <argument

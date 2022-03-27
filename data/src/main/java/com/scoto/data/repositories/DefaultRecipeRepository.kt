@@ -288,13 +288,13 @@ class DefaultRecipeRepository @Inject constructor(
 
     private fun getMultipartFiles(source: List<File>): Array<MultipartBody.Part> {
         val imagesMultipart = mutableListOf<MultipartBody.Part>()
-        for (i in source.indices) {
+        source.forEachIndexed { index, file ->
             val reqFile =
-                source[i].asRequestBody("file".toMediaTypeOrNull())
+                file.asRequestBody("file".toMediaTypeOrNull())
             val part =
                 MultipartBody.Part.createFormData(
-                    "images[$i]",
-                    source[i].name,
+                    "images[$index]",
+                    file.name,
                     reqFile
                 )
             imagesMultipart.add(part)

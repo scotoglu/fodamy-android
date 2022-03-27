@@ -195,6 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_margin_8dp"
                     android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:layoutAnimation="@anim/rv_layout_anim"
                     android:background="@color/white"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"

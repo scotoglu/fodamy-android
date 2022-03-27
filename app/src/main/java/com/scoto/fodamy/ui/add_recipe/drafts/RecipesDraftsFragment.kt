@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RecipesDraftsFragment : BaseFragment<FragmentDraftsBinding, RecipeDraftsViewModel>(
     R.layout.fragment_drafts
 ) {
+    override val isSharedViewModel: Boolean = true
 
     private lateinit var draftsAdapter: RecipeDraftsAdapter
 

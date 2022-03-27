@@ -50,6 +50,7 @@
             android:id="@+id/draft_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layoutAnimation="@anim/rv_layout_anim"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
