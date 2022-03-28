@@ -33,6 +33,7 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 
+
 /**
  * @author Sefa ÇOTOĞLU
  * Created 17.03.2022
@@ -57,9 +58,12 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
             if (!isGranted) {
                 viewModel.showMessageWithRes(R.string.access_denied)
             } else {
-                when (grantedPermissionIs) {
-                    Manifest.permission.CAMERA -> takePhoto()
-                    Manifest.permission.READ_EXTERNAL_STORAGE -> chooseFromGallery()
+                grantedPermissionIs = if (grantedPermissionIs == Manifest.permission.CAMERA) {
+                    takePhoto()
+                    ""
+                } else {
+                    chooseFromGallery()
+                    ""
                 }
             }
         }
@@ -140,6 +144,7 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
                 requireContext().showPermissionDialog { requestPermissionLauncher.launch(permission) }
             }
             else -> {
+                grantedPermissionIs = permission
                 requestPermissionLauncher.launch(permission)
             }
         }
