@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.map
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -274,13 +275,21 @@ class DefaultRecipeRepository @Inject constructor(
         images: List<File>
     ): Recipe {
         return execute {
+            val titleReq = title.toRequestBody("text".toMediaTypeOrNull())
+            val ingredientsReq = ingredients.toRequestBody("text".toMediaTypeOrNull())
+            val directionsReq = directions.toRequestBody("text".toMediaTypeOrNull())
+            val timeOfRecipeIdReq =
+                timeOfRecipeId.toString().toRequestBody("text".toMediaTypeOrNull())
+            val numberOfPersonReq =
+                numberOfPersonId.toString().toRequestBody("text".toMediaTypeOrNull())
+            val categoryIdReq = categoryId.toString().toRequestBody("text".toMediaTypeOrNull())
             recipeService.sendRecipe(
-                title = title,
-                ingredients = ingredients,
-                directions = directions,
-                timeOfRecipeId = timeOfRecipeId,
-                categoryId = categoryId,
-                numberOfPersonId = numberOfPersonId,
+                title = titleReq,
+                ingredients = ingredientsReq,
+                directions = directionsReq,
+                timeOfRecipeId = timeOfRecipeIdReq,
+                categoryId = categoryIdReq,
+                numberOfPersonId = numberOfPersonReq,
                 images = getMultipartFiles(images)
             ).toDomainModel()
         }

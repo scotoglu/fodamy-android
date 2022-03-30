@@ -11,7 +11,7 @@ import com.scoto.domain.repositories.RecipeRepository
 import com.scoto.fodamy.R
 import com.scoto.fodamy.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 /**

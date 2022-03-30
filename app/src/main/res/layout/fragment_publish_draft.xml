@@ -70,7 +70,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/tv_title_label"
                     style="@style/PublishDraft.Label.Thin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -88,29 +88,29 @@
                     android:text="@{viewModel.draft.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView13"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_label"
                     tools:text="@tools:sample/lorem" />
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/tv_number_of_person_label"
                     style="@style/PublishDraft.Label.Thin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/recipe_number_of_person"
-                    app:layout_constraintEnd_toStartOf="@+id/textView14"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_time_of_label"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_recipe_title" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/tv_time_of_label"
                     style="@style/PublishDraft.Label.Thin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/recipe_time_of_recipe"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/textView15"
+                    app:layout_constraintStart_toEndOf="@+id/tv_number_of_person_label"
                     app:layout_constraintTop_toBottomOf="@+id/tv_recipe_title" />
 
                 <TextView
@@ -119,9 +119,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.draft.numberOfPerson.toString()}"
-                    app:layout_constraintEnd_toEndOf="@+id/textView15"
-                    app:layout_constraintStart_toStartOf="@+id/textView15"
-                    app:layout_constraintTop_toBottomOf="@+id/textView15"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_number_of_person_label"
+                    app:layout_constraintStart_toStartOf="@+id/tv_number_of_person_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_number_of_person_label"
                     tools:text="1-2 kişilik" />
 
                 <TextView
@@ -130,13 +130,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.draft.timeOfRecipe.toString()}"
-                    app:layout_constraintEnd_toEndOf="@+id/textView14"
-                    app:layout_constraintStart_toStartOf="@+id/textView14"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_time_of_label"
+                    app:layout_constraintStart_toStartOf="@+id/tv_time_of_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_time_of_label"
                     tools:text="12-20 dk" />
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/tv_ingredients_label"
                     style="@style/PublishDraft.Label.Bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -147,36 +147,35 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_number_od_person" />
 
                 <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/tv_ingredients"
                     style="@style/PublishDraft.Content.Thin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.draft.ingredients}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ingredients_label"
                     tools:text="@tools:sample/lorem[45]" />
 
                 <TextView
-                    android:id="@+id/textView20"
+                    android:id="@+id/tv_directions_label"
                     style="@style/PublishDraft.Label.Bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/recipe_directions"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ingredients" />
 
                 <TextView
-
-                    android:id="@+id/textView19"
+                    android:id="@+id/tv_direction"
                     style="@style/PublishDraft.Content.Thin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.draft.direction}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView20"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_directions_label"
                     tools:text="@tools:sample/lorem[75]" />
 
                 <TextView
@@ -187,7 +186,7 @@
                     android:text="@string/loaded_photos"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView19" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_direction" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/capture_and_pick_recyclerview"
@@ -195,8 +194,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_margin_8dp"
                     android:layout_marginEnd="@dimen/size_margin_8dp"
-                    android:layoutAnimation="@anim/rv_layout_anim"
                     android:background="@color/white"
+                    android:layoutAnimation="@anim/rv_layout_anim"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -229,8 +228,8 @@
             android:id="@+id/bt_publish_draft"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="@dimen/size_margin_8dp"
+            android:layout_marginEnd="@dimen/size_margin_8dp"
             android:backgroundTint="@color/white"
             android:letterSpacing="0"
             android:onClick="@{()->viewModel.publish()}"
