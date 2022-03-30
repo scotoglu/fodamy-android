@@ -10,6 +10,7 @@ import com.scoto.data.remote.remote_dto.RecipeResponse
 import com.scoto.data.remote.remote_dto.RecipeServingResponse
 import com.scoto.data.remote.remote_dto.RecipeTimesResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -92,12 +93,12 @@ interface RecipeService {
     @Multipart
     @POST("recipe")
     suspend fun sendRecipe(
-        @Part("title") title: String,
-        @Part("ingredients") ingredients: String,
-        @Part("directions") directions: String,
-        @Part("category_id") categoryId: Int,
-        @Part("number_of_person_id") numberOfPersonId: Int,
-        @Part("time_of_recipe_id") timeOfRecipeId: Int,
+        @Part("title") title: RequestBody,
+        @Part("ingredients") ingredients: RequestBody,
+        @Part("directions") directions: RequestBody,
+        @Part("category_id") categoryId: RequestBody,
+        @Part("number_of_person_id") numberOfPersonId: RequestBody,
+        @Part("time_of_recipe_id") timeOfRecipeId: RequestBody,
         @Part images: Array<MultipartBody.Part>
     ): RecipeResponse
 
