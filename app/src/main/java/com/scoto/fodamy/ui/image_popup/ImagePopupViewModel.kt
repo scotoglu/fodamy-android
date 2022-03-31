@@ -20,13 +20,14 @@ class ImagePopupViewModel @Inject constructor() : BaseViewModel() {
 
     fun getImages(): ImageList {
         val populatedImages = mutableListOf<Image>()
-        if (images.images.size == 1) {
+        return if (images.images.size == 1) {
             val image = images.images[0]
             for (i in 0 until 4) {
                 populatedImages.add(image)
             }
+            ImageList(populatedImages)
+        } else {
+            ImageList(images.images)
         }
-
-        return ImageList(populatedImages)
     }
 }
