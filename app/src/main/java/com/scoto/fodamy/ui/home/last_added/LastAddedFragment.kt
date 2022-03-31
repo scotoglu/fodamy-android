@@ -39,6 +39,12 @@ class LastAddedFragment() :
         recipesAdapter.onItemClicked = {
             viewModel.toRecipeDetails(it)
         }
+        binding.swipeLayout.apply {
+            setOnRefreshListener {
+                isRefreshing = true
+                recipesAdapter.refresh()
+            }
+        }
     }
 
     override fun addAdapterLoadStateListener() {
@@ -48,6 +54,7 @@ class LastAddedFragment() :
                 customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
                 customStateView.setErrorState(loadState.source.refresh is LoadState.Error)
                 rvRecipes.isVisible = loadState.source.refresh is LoadState.NotLoading
+                swipeLayout.isRefreshing = loadState.source.refresh !is LoadState.NotLoading
             }
         }
     }

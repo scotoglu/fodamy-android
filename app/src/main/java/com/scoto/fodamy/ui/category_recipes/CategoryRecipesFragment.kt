@@ -33,6 +33,12 @@ class CategoryRecipesFragment :
         categoryRecipesAdapter.onItemClicked = { recipe ->
             viewModel.toRecipeDetails(recipe)
         }
+        binding.swipeLayout.apply {
+            setOnRefreshListener {
+                isRefreshing = true
+                categoryRecipesAdapter.refresh()
+            }
+        }
     }
 
     override fun addAdapterLoadStateListener() {
@@ -42,6 +48,7 @@ class CategoryRecipesFragment :
                 customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
                 customStateView.setErrorState(loadState.source.refresh is LoadState.Error)
                 rvCategoryRecipes.isVisible = loadState.source.refresh is LoadState.NotLoading
+                swipeLayout.isRefreshing = loadState.source.refresh !is LoadState.NotLoading
             }
         }
     }

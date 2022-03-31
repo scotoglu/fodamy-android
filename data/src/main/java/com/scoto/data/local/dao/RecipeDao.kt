@@ -2,6 +2,7 @@ package com.scoto.data.local.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -79,4 +80,10 @@ interface RecipeDao {
 
     @Query("delete from recipes where is_editor_choice = 1")
     suspend fun deleteEditorChoices()
+
+    @Query("delete from categories")
+    suspend fun deleteCategories()
+
+    @Query("delete from comments")
+    suspend fun deleteComments()
 }

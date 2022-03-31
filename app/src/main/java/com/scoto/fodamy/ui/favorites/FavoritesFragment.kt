@@ -29,6 +29,7 @@ class FavoritesFragment :
         viewModel.isLogin()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
+
     override fun registerObservables() {
         super.registerObservables()
         categoryObserver()
@@ -51,6 +52,12 @@ class FavoritesFragment :
                 viewModel.toRecipeDetail(recipe)
             }
         }
+        binding.swipeLayout.apply {
+            setOnRefreshListener {
+                isRefreshing = true
+                categoryAdapter.refresh()
+            }
+        }
     }
 
     override fun addAdapterLoadStateListener() {
@@ -60,6 +67,7 @@ class FavoritesFragment :
                 customStateView.setLoadingState(loadState.source.refresh is LoadState.Loading)
                 customStateView.setErrorState(loadState.source.refresh is LoadState.Error)
                 rvCategories.isVisible = loadState.source.refresh is LoadState.NotLoading
+                swipeLayout.isRefreshing = loadState.source.refresh !is LoadState.NotLoading
             }
         }
     }

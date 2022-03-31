@@ -89,6 +89,7 @@ dependencies {
 
     // RecyclerView
     implementation(Dependencies.RECYCLERVIEW)
+    implementation(Dependencies.SWIPE_REFRESH)
 
     // SavedState
     implementation(Dependencies.SAVEDSTATE)

@@ -31,6 +31,7 @@ object Versions {
     const val FIREBASE_CLOUD_MESSAGING = "23.0.0"
     const val ROOM = "2.4.1"
     const val ROOM_PAGING = "2.5.0-alpha01"
+    const val SWIPE_REFRESH="1.1.0"
 
     //test
     const val JUNIT = "4.13.1"
