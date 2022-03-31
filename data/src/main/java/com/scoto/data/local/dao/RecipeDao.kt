@@ -73,4 +73,10 @@ interface RecipeDao {
 
     @Update(entity = RecipeDraftDb::class)
     suspend fun updateDraft(draft: RecipeDraftDb)
+
+    @Query("delete from recipes where is_last_added = 1")
+    suspend fun deleteLastAdded()
+
+    @Query("delete from recipes where is_editor_choice = 1")
+    suspend fun deleteEditorChoices()
 }

@@ -17,7 +17,9 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
+import com.scoto.fodamy.BuildConfig
 import com.scoto.fodamy.R
 import com.scoto.fodamy.databinding.FragmentChoosePhotoBinding
 import com.scoto.fodamy.ext.onClick
@@ -45,6 +47,7 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
     private val imagesFiles = mutableListOf<File>()
     private lateinit var captureAndPickPhotoAdapter: CaptureAndPickPhotoAdapter
     private var grantedPermissionIs = ""
+    private var currentImagePath = ""
 
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -70,10 +73,10 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                val bitmap = result.data?.extras?.get(DATA) as Bitmap
-                val imgFile = createTempFile()
-                convertBitmapToFile(imgFile, bitmap)
-                imagesFiles.add(imgFile)
+                // val bitmap = result.data?.extras?.get(DATA) as Bitmap
+                // val imgFile = createTempFile()
+                //   convertBitmapToFile(imgFile, bitmap)
+                imagesFiles.add(File(currentImagePath))
                 captureAndPickPhotoAdapter.setData(imagesFiles)
             }
         }
@@ -162,8 +165,21 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
     }
 
     // launch camera, after permission granted
+    @SuppressLint("QueryPermissionsNeeded")
     private fun takePhoto() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
+            val photoFile: File? = try {
+                createTempFile()
+            } catch (ex: Exception) {
+                null
+            }
+            photoFile?.also {
+                val photoUri: Uri =
+                    FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID, it)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+            }
+        }
         cameraLauncher.launch(takePictureIntent)
     }
 
@@ -230,7 +246,9 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
             "JPEG_${timeStamp}_", // prefix
             ".jpg", // suffix
             storageDir // directory
-        )
+        ).apply {
+            currentImagePath = absolutePath
+        }
     }
 
     //    private fun compressImage(filePath: String, targetMb: Double = 1.0) {

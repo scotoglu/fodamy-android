@@ -49,6 +49,7 @@ class RecipeEditorRemoteMediator(
 
             if (loadType == LoadType.REFRESH) {
                 remoteKeysDao.deleteEditorKeys()
+                recipeDao.deleteEditorChoices()
             }
             val keys = response.data.map {
                 RemoteKeysEditor(
