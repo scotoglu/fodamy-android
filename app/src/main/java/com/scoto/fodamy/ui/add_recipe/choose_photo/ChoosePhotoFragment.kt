@@ -82,14 +82,27 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
         }
 
     private val galleryLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_OK) {
-                val clipData = it.data?.clipData
-                val itemCount = clipData?.itemCount
-                if (itemCount != null) {
-                    for (i in 0 until itemCount) {
-                        val uri = clipData.getItemAt(i).uri
-                        imagesFiles.add(getImgFile(uri))
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // if multiple images are selected
+                if (result.data?.clipData != null) {
+                    val clipData = result.data?.clipData
+                    val itemCount = clipData?.itemCount
+                    itemCount?.let {
+                        for (i in 0 until itemCount) {
+                            val uri = clipData.getItemAt(i).uri
+                            val file = getImgFile(uri)
+                            compressImage(file)
+                            imagesFiles.add(file)
+                        }
+                    }
+                } else {
+                    // if single image is selected
+                    val uri: Uri? = result.data?.data
+                    uri?.let { uriPath ->
+                        val file = getImgFile(uriPath)
+                        compressImage(file)
+                        imagesFiles.add(file)
                     }
                 }
                 captureAndPickPhotoAdapter.setData(imagesFiles)
@@ -154,10 +167,7 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
 
     // opens gallery, allows multiple selection
     private fun chooseFromGallery() {
-        val galleryIntent = Intent(
-            Intent.ACTION_OPEN_DOCUMENT,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
+        val galleryIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         galleryIntent.type = "image/*"
         galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         galleryIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -251,33 +261,27 @@ class ChoosePhotoFragment : BaseFragment<FragmentChoosePhotoBinding, ChoosePhoto
         }
     }
 
-    //    private fun compressImage(filePath: String, targetMb: Double = 1.0) {
-//        var image: Bitmap = BitmapFactory.decodeFile(filePath)
-//        val exif = ExifInterface(filePath)
-//        val exifOrientation: Int = exif.getAttributeInt(
-//            ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL
-//        )
-//        val exifDegrees: Int = exifOrientationToDegrees(exifOrientation)
-//
-//        image = rotateImage(image, exifDegrees.toFloat())
-//        try {
-//            val file = File(filePath)
-//            val length = file.length()
-//            val fileSizeInKB = (length / 1024).toString().toDouble()
-//            val fileSizeInMB = (fileSizeInKB / 1024).toString().toDouble()
-//            var quality = 100
-//            if (fileSizeInMB > targetMb) {
-//                quality = ((targetMb / fileSizeInMB) * 100).toInt()
-//            }
-//            val fileOutputStream = FileOutputStream(filePath)
-//            image.compress(Bitmap.CompressFormat.JPEG, quality, fileOutputStream)
-//            fileOutputStream.close()
-//        } catch (ex: Exception) {
-//            ex.printStackTrace()
-//        }
-//    }
-//
-//    private fun exifOrientationToDegrees(exifOrientation: Int): Int {
+    private fun compressImage(filePath: File, targetMb: Double = 1.0) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val image: Bitmap = BitmapFactory.decodeFile(filePath.absolutePath)
+                val length = filePath.length()
+                val fileSizeInKB = (length / 1024).toString().toDouble()
+                val fileSizeInMB = (fileSizeInKB / 1024).toString().toDouble()
+                var quality = 100
+                if (fileSizeInMB > targetMb) {
+                    quality = ((targetMb / fileSizeInMB) * 100).toInt()
+                }
+                val fileOutputStream = FileOutputStream(filePath)
+                image.compress(Bitmap.CompressFormat.JPEG, quality, fileOutputStream)
+                fileOutputStream.close()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+    }
+
+    //    private fun exifOrientationToDegrees(exifOrientation: Int): Int {
 //        return when (exifOrientation) {
 //            ExifInterface.ORIENTATION_ROTATE_90 -> {
 //                90
