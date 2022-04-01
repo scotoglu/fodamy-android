@@ -17,7 +17,7 @@
         android:title="@string/menu_profile"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/list"
+        android:id="@+id/bottom_nav_send_recipe"
         android:icon="@drawable/ic_menu"
         android:title="@string/menu_list"
         app:showAsAction="ifRoom" />

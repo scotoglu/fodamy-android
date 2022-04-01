@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.scoto.fodamy.ui.add_recipe.publish_draft.PublishDraftViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scoto.fodamy.util.CustomToolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:backButtonVisible="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onBackListener="@{()->viewModel.backTo()}"
+            app:title="@string/publish_draft" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:background="@color/secondary_background"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/cb_accept"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_edit_draft"
+                    style="@style/PublishDraft.Label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->viewModel.toEdit()}"
+                    android:text="@string/edit_draft_2"
+                    android:textColor="@color/red"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_add_photo"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_add_photo"
+                    style="@style/PublishDraft.Label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{()->viewModel.toChoosePhoto()}"
+                    android:text="@string/add_recipe_add_photo"
+                    android:textColor="@color/color_add_recipe_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tv_edit_draft"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_title_label"
+                    style="@style/PublishDraft.Label.Thin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recipe_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_edit_draft" />
+
+                <TextView
+                    android:id="@+id/tv_recipe_title"
+                    style="@style/PublishDraft.Content.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/size_margin_8dp"
+                    android:text="@{viewModel.draft.title}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_label"
+                    tools:text="@tools:sample/lorem" />
+
+                <TextView
+                    android:id="@+id/tv_number_of_person_label"
+                    style="@style/PublishDraft.Label.Thin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recipe_number_of_person"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_time_of_label"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_recipe_title" />
+
+                <TextView
+                    android:id="@+id/tv_time_of_label"
+                    style="@style/PublishDraft.Label.Thin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recipe_time_of_recipe"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tv_number_of_person_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_recipe_title" />
+
+                <TextView
+                    android:id="@+id/tv_number_od_person"
+                    style="@style/PublishDraft.Content.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.draft.numberOfPerson.toString()}"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_number_of_person_label"
+                    app:layout_constraintStart_toStartOf="@+id/tv_number_of_person_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_number_of_person_label"
+                    tools:text="1-2 kişilik" />
+
+                <TextView
+                    android:id="@+id/tv_time_of_recipe"
+                    style="@style/PublishDraft.Content.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.draft.timeOfRecipe.toString()}"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_time_of_label"
+                    app:layout_constraintStart_toStartOf="@+id/tv_time_of_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_time_of_label"
+                    tools:text="12-20 dk" />
+
+                <TextView
+                    android:id="@+id/tv_ingredients_label"
+                    style="@style/PublishDraft.Label.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_margin_8dp"
+                    android:text="@string/recipe_ingredients"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_number_od_person" />
+
+                <TextView
+                    android:id="@+id/tv_ingredients"
+                    style="@style/PublishDraft.Content.Thin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.draft.ingredients}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ingredients_label"
+                    tools:text="@tools:sample/lorem[45]" />
+
+                <TextView
+                    android:id="@+id/tv_directions_label"
+                    style="@style/PublishDraft.Label.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recipe_directions"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ingredients" />
+
+                <TextView
+                    android:id="@+id/tv_direction"
+                    style="@style/PublishDraft.Content.Thin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.draft.direction}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_directions_label"
+                    tools:text="@tools:sample/lorem[75]" />
+
+                <TextView
+                    android:id="@+id/tv_loaded_photos"
+                    style="@style/PublishDraft.Label.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loaded_photos"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_direction" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/capture_and_pick_recyclerview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_8dp"
+                    android:layout_marginEnd="@dimen/size_margin_8dp"
+                    android:background="@color/white"
+                    android:layoutAnimation="@anim/rv_layout_anim"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_loaded_photos"
+                    app:spanCount="2"
+                    tools:listitem="@layout/item_photo_view" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cb_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_size_32dp"
+            android:layout_marginEnd="@dimen/size_margin_8dp"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:button="@drawable/custom_checkbox"
+            android:buttonTint="@color/red"
+            android:checked="@={viewModel.isChecked()}"
+            android:minHeight="100dp"
+            android:paddingStart="@dimen/size_padding_8dp"
+            android:paddingEnd="@dimen/size_padding_8dp"
+            android:text="@string/text_privacy_policy"
+            app:layout_constraintBottom_toTopOf="@+id/bt_publish_draft"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bt_publish_draft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_8dp"
+            android:layout_marginEnd="@dimen/size_margin_8dp"
+            android:backgroundTint="@color/white"
+            android:letterSpacing="0"
+            android:onClick="@{()->viewModel.publish()}"
+            android:paddingVertical="@dimen/size_padding_15dp"
+            android:text="@string/btn_ready_and_send"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            app:cornerRadius="@dimen/corner_radius_0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/red"
+            app:strokeWidth="1dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

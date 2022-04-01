@@ -19,5 +19,6 @@
     <color name="dialog_btn_bg">#DAD0CF</color>
     <color name="dialog_btn_text_blue">#007AFF</color>
     <color name="dialog_btn_text_blue_light">#0A84FF</color>
+    <color name="color_add_recipe_title">#E49D35</color>
 
 </resources>

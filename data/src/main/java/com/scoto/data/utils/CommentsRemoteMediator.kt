@@ -49,6 +49,7 @@ class CommentsRemoteMediator(
 
             if (loadType == LoadType.REFRESH) {
                 remoteKeysDao.deleteCommentsRemoteKeys()
+                recipeDao.deleteComments()
             }
             val keys = response.data.map {
                 RemoteKeyComment(

@@ -6,7 +6,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.map
-import com.scoto.data.di.ApplicationScope
 import com.scoto.data.local.dao.RecipeDao
 import com.scoto.data.local.dao.RemoteKeysDao
 import com.scoto.data.mapper.toDomainModel
@@ -17,12 +16,20 @@ import com.scoto.data.utils.RecipeEditorRemoteMediator
 import com.scoto.data.utils.RecipeLastAddedRemoteMediator
 import com.scoto.data.utils.RemoteMediatorCategories
 import com.scoto.domain.models.Category
+import com.scoto.domain.models.CategoryDraft
 import com.scoto.domain.models.Comment
+import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.Recipe
+import com.scoto.domain.models.RecipeDraft
+import com.scoto.domain.models.TimeOfRecipe
 import com.scoto.domain.repositories.RecipeRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import javax.inject.Inject
 
 /**
@@ -34,7 +41,6 @@ class DefaultRecipeRepository @Inject constructor(
     private val recipeService: RecipeService,
     private val recipeDao: RecipeDao,
     private val remoteKeysDao: RemoteKeysDao,
-    @ApplicationScope private val scope: CoroutineScope
 ) : RecipeRepository, BaseRepository() {
 
     private val pageConfig = PagingConfig(
@@ -224,6 +230,86 @@ class DefaultRecipeRepository @Inject constructor(
                     page
                 ).data.map { it.toDomainModel() }
         }
+
+    override suspend fun getRecipeTimes(): List<TimeOfRecipe> =
+        execute {
+            recipeService.getRecipeTimes().data.map { it.toDomainModel() }
+        }
+
+    override suspend fun getRecipeServing(): List<NumberOfPerson> =
+        execute {
+            recipeService.getRecipeServing().data.map { it.toDomainModel() }
+        }
+
+    override suspend fun insertDraft(draft: RecipeDraft) =
+        execute {
+            recipeDao.insertDraft(draft.toLocalDto())
+        }
+
+    override suspend fun getAllDrafts(): List<RecipeDraft> =
+        execute {
+            recipeDao.getAllDrafts().map { it.toDomainModel() }
+        }
+
+    override suspend fun deleteDraft(draftId: String) =
+        execute {
+            recipeDao.deleteDraft(draftId)
+        }
+
+    override suspend fun updateDraft(draft: RecipeDraft) =
+        execute {
+            recipeDao.updateDraft(draft.toLocalDto())
+        }
+
+    override suspend fun getAllCategories(): List<CategoryDraft> = execute {
+        recipeService.getAllCategories().data.map { it.toDomainModel() }
+    }
+
+    override suspend fun sendRecipe(
+        title: String,
+        ingredients: String,
+        directions: String,
+        timeOfRecipeId: Int,
+        numberOfPersonId: Int,
+        categoryId: Int,
+        images: List<File>
+    ): Recipe {
+        return execute {
+            val titleReq = title.toRequestBody("text".toMediaTypeOrNull())
+            val ingredientsReq = ingredients.toRequestBody("text".toMediaTypeOrNull())
+            val directionsReq = directions.toRequestBody("text".toMediaTypeOrNull())
+            val timeOfRecipeIdReq =
+                timeOfRecipeId.toString().toRequestBody("text".toMediaTypeOrNull())
+            val numberOfPersonReq =
+                numberOfPersonId.toString().toRequestBody("text".toMediaTypeOrNull())
+            val categoryIdReq = categoryId.toString().toRequestBody("text".toMediaTypeOrNull())
+            recipeService.sendRecipe(
+                title = titleReq,
+                ingredients = ingredientsReq,
+                directions = directionsReq,
+                timeOfRecipeId = timeOfRecipeIdReq,
+                categoryId = categoryIdReq,
+                numberOfPersonId = numberOfPersonReq,
+                images = getMultipartFiles(images)
+            ).toDomainModel()
+        }
+    }
+
+    private fun getMultipartFiles(source: List<File>): Array<MultipartBody.Part> {
+        val imagesMultipart = mutableListOf<MultipartBody.Part>()
+        source.forEachIndexed { index, file ->
+            val reqFile =
+                file.asRequestBody("file".toMediaTypeOrNull())
+            val part =
+                MultipartBody.Part.createFormData(
+                    "images[$index]",
+                    file.name,
+                    reqFile
+                )
+            imagesMultipart.add(part)
+        }
+        return imagesMultipart.toTypedArray()
+    }
 
     companion object {
         private const val PAGE_SIZE = 24

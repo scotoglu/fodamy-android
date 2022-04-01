@@ -49,6 +49,7 @@ class RecipeLastAddedRemoteMediator(
 
             if (loadType == LoadType.REFRESH) {
                 remoteKeysDao.deleteLastKeys()
+                recipeDao.deleteLastAdded()
             }
             val keys = response.data.map {
                 RemoteKeysLast(

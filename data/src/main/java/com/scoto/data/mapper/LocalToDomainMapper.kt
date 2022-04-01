@@ -1,19 +1,24 @@
 package com.scoto.data.mapper
 
 import com.scoto.data.local.local_dto.CategoryDb
+import com.scoto.data.local.local_dto.CategoryDraftDb
 import com.scoto.data.local.local_dto.CommentDb
 import com.scoto.data.local.local_dto.ImageDb
 import com.scoto.data.local.local_dto.NumberOfPersonDb
 import com.scoto.data.local.local_dto.RecipeDb
+import com.scoto.data.local.local_dto.RecipeDraftDb
 import com.scoto.data.local.local_dto.TimeOfRecipeDb
 import com.scoto.data.local.local_dto.UserDb
 import com.scoto.domain.models.Category
+import com.scoto.domain.models.CategoryDraft
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Image
 import com.scoto.domain.models.NumberOfPerson
 import com.scoto.domain.models.Recipe
+import com.scoto.domain.models.RecipeDraft
 import com.scoto.domain.models.TimeOfRecipe
 import com.scoto.domain.models.User
+import java.io.File
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -86,5 +91,26 @@ fun CommentDb.toDomainModel(): Comment {
         text = this.text,
         user = this.user.toDomainModel(),
         difference = this.difference
+    )
+}
+
+fun RecipeDraftDb.toDomainModel(): RecipeDraft {
+    return RecipeDraft(
+        id = this.id,
+        title = this.title,
+        direction = this.direction,
+        ingredients = this.ingredients,
+        category = this.category.toDomainModel(),
+        numberOfPerson = this.numberOfPerson.toDomainModel(),
+        timeOfRecipe = this.timeOfRecipe.toDomainModel(),
+        image = this.images.map { File(it) }
+    )
+}
+
+fun CategoryDraftDb.toDomainModel(): CategoryDraft {
+    return CategoryDraft(
+        id = this.id,
+        name = this.name,
+        mainCategoryId = this.mainCategoryId
     )
 }

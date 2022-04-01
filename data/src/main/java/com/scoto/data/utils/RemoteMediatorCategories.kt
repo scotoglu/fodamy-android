@@ -48,6 +48,7 @@ class RemoteMediatorCategories(
 
             if (loadType == LoadType.REFRESH) {
                 remoteKeysDao.deleteCategoryRecipesKeys()
+                recipeDao.deleteCategories()
             }
 
             val keys = response.data.map {

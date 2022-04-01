@@ -3,8 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_main"
     app:startDestination="@id/bottom_nav_home">
-
+    <dialog
+        android:id="@+id/authDialog"
+        android:name="com.scoto.fodamy.ui.dialog.auth_requiered.AuthDialog"
+        android:label="AuthDialog" >
+        <action
+            android:id="@+id/action_authDialog_to_login_flow"
+            app:destination="@id/login_flow" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_authDialog"
+        app:destination="@id/authDialog" />
+    <include app:graph="@navigation/login_flow" />
     <include app:graph="@navigation/bottom_nav_home" />
     <include app:graph="@navigation/bottom_nav_favorites" />
     <include app:graph="@navigation/bottom_nav_user" />
+    <include app:graph="@navigation/bottom_nav_send_recipe" />
 </navigation>

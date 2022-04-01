@@ -11,4 +11,12 @@ import kotlinx.parcelize.Parcelize
 data class TimeOfRecipe(
     val id: Int,
     val text: String
-) : Parcelable
+) : Parcelable {
+    override fun toString(): String {
+        return "$text dk"
+    }
+
+    companion object {
+        val EMPTY = TimeOfRecipe(-1, "")
+    }
+}

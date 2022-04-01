@@ -15,19 +15,26 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.last_added.EditorChoiceFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recipes"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/item_food_card" />
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recipes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_food_card" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         <com.scoto.fodamy.util.CustomStateView
             android:id="@+id/custom_state_view"

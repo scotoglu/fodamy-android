@@ -9,7 +9,6 @@ import com.scoto.domain.models.ErrorControl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import java.io.IOException
 
 /**
  * @author Sefa ÇOTOĞLU
@@ -60,7 +59,6 @@ abstract class BaseRepository {
                     }
                 }
             }
-            is IOException -> IOException()
             is IndexOutOfBoundsException -> GettingEmptyListItem()
             else -> ex
         }

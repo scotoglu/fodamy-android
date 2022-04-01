@@ -1,15 +1,22 @@
 package com.scoto.data.remote.services
 
+import com.scoto.data.remote.remote_dto.CategoryDraftData
 import com.scoto.data.remote.remote_dto.CategoryPagingResponse
 import com.scoto.data.remote.remote_dto.CommentPagingResponse
 import com.scoto.data.remote.remote_dto.CommentResponse
 import com.scoto.data.remote.remote_dto.CommonResponse
 import com.scoto.data.remote.remote_dto.RecipePagingResponse
 import com.scoto.data.remote.remote_dto.RecipeResponse
+import com.scoto.data.remote.remote_dto.RecipeServingResponse
+import com.scoto.data.remote.remote_dto.RecipeTimesResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -82,4 +89,25 @@ interface RecipeService {
         @Path("category_id") categoryId: Int,
         @Query("page") page: Int
     ): RecipePagingResponse
+
+    @Multipart
+    @POST("recipe")
+    suspend fun sendRecipe(
+        @Part("title") title: RequestBody,
+        @Part("ingredients") ingredients: RequestBody,
+        @Part("directions") directions: RequestBody,
+        @Part("category_id") categoryId: RequestBody,
+        @Part("number_of_person_id") numberOfPersonId: RequestBody,
+        @Part("time_of_recipe_id") timeOfRecipeId: RequestBody,
+        @Part images: Array<MultipartBody.Part>
+    ): RecipeResponse
+
+    @GET("time")
+    suspend fun getRecipeTimes(): RecipeTimesResponse
+
+    @GET("serving")
+    suspend fun getRecipeServing(): RecipeServingResponse
+
+    @GET("category")
+    suspend fun getAllCategories(): CategoryDraftData
 }

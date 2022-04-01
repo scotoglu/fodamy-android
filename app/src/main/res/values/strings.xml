@@ -54,6 +54,7 @@
     <string name="btn_move_next">İlerle</string>
     <string name="btn_start">Başla</string>
     <string name="btn_reload">Yeniden Yükle</string>
+    <string name="btn_save_draft">Taslağı Kaydet</string>
 
 
     <!--With Params-->
@@ -124,4 +125,34 @@
     <string name="profile_text_recipes">Tarif</string>
     <string name="profile_text_comments">Yorum</string>
     <string name="profile_text_like">Beğeni</string>
+
+    <!--    Draft Screen-->
+    <string name="draft_name">Taslak Tarif</string>
+    <string name="add_recipe_edit">Düzenle</string>
+    <string name="add_recipe_add_photo">Fotoğraf Ekle</string>
+    <string name="add_recipe_delete">Sil</string>
+    <string name="add_recipe_send_recipe">YENİ TARİF GÖNDER</string>
+
+    <!--    Add Recipe -->
+    <string name="recipe_title">Tarif Adı</string>
+    <string name="recipe_number_of_person">Kaç Kişilik</string>
+    <string name="recipe_time_of_recipe">Hazırlanma Süresi</string>
+    <string name="recipe_ingredients">Malzemeler</string>
+    <string name="recipe_directions">Hazırlanışı</string>
+    <string name="recipe_category">Kategori</string>
+    <string name="edit_draft">Taslak Düzenle</string>
+    <string name="publish_draft">Tarifi Yayına Gönder</string>
+    <string name="edit_draft_2">Taslağı Düzenle</string>
+    <string name="text_privacy_policy">Kullanım koşullarını kabul ediyorum.</string>
+    <string name="btn_ready_and_send">Tarifim Hazır, Yayına Gönder</string>
+    <string name="access_denied">İzin Verilmedi.</string>
+    <string name="loaded_photos">Yüklenen Fotoğraflar</string>
+    <string name="add_recipe_required_fields">Tarif adı, Malzemeler, Hazırlanış ve Kategori kısımları boş bırakılamaz.</string>
+    <string name="accept_terms">Kullanım koşullarını kabul etmelisiniz.</string>
+    <string name="dialog_title">İzinler</string>
+    <string name="dialog_message">Devam edebilmek için izin vermelisiniz.</string>
+    <string name="dialog_positive_btn">İzin Ver</string>
+    <string name="success_send_recipe">Tarif gönderildi.</string>
+    <string name="take_photo">Fotoğraf Çek</string>
+    <string name="choose_from_gallery">Galeriden Seç</string>
 </resources>

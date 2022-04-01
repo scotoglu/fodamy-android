@@ -29,18 +29,25 @@
             app:layout_constraintTop_toTopOf="parent"
             app:onEndIconListener="@{()->viewModel.logout()}" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_categories"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/size_margin_16dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
-            tools:listitem="@layout/item_category" />
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_categories"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_category" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         <com.scoto.fodamy.util.CustomStateView
             android:id="@+id/custom_state_view"

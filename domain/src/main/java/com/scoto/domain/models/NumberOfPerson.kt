@@ -11,4 +11,11 @@ import kotlinx.parcelize.Parcelize
 data class NumberOfPerson(
     val id: Int,
     val text: String
-) : Parcelable
+) : Parcelable {
+    override fun toString(): String {
+        return "$text kişi"
+    }
+    companion object {
+        val EMPTY = NumberOfPerson(-1, "")
+    }
+}

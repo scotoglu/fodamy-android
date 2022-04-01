@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_nav_send_recipe"
+    app:startDestination="@id/recipesDraftsFragment">
+
+    <fragment
+        android:id="@+id/addRecipeFragment"
+        android:name="com.scoto.fodamy.ui.add_recipe.new_recipe.AddRecipeFragment"
+        android:label="AddRecipeFragment" >
+        <action
+            android:id="@+id/action_addRecipeFragment_to_publishDraftFragment"
+            app:destination="@id/publishDraftFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right"
+            app:popUpTo="@id/recipesDraftsFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="editableDraft"
+            app:argType="com.scoto.domain.models.RecipeDraft"
+            app:nullable="true" />
+        <argument
+            android:name="editMode"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipesDraftsFragment"
+        android:name="com.scoto.fodamy.ui.add_recipe.drafts.RecipesDraftsFragment"
+        android:label="RecipesDraftsFragment" >
+        <action
+            android:id="@+id/action_recipesDraftsFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_recipesDraftsFragment_to_publishDraftFragment"
+            app:destination="@id/publishDraftFragment" />
+        <action
+            android:id="@+id/action_recipesDraftsFragment_to_choosePhotoFragment"
+            app:destination="@id/choosePhotoFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/publishDraftFragment"
+        android:name="com.scoto.fodamy.ui.add_recipe.publish_draft.PublishDraftFragment"
+        android:label="PublishDraftFragment" >
+        <argument
+            android:name="recipeDraft"
+            app:argType="com.scoto.domain.models.RecipeDraft" />
+        <action
+            android:id="@+id/action_publishDraftFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_publishDraftFragment_to_choosePhotoFragment"
+            app:destination="@id/choosePhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/choosePhotoFragment"
+        android:name="com.scoto.fodamy.ui.add_recipe.choose_photo.ChoosePhotoFragment"
+        android:label="ChoosePhotoFragment" >
+        <action
+            android:id="@+id/action_choosePhotoFragment_to_publishDraftFragment"
+            app:destination="@id/publishDraftFragment"
+            app:enterAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_right"
+            app:popUpTo="@id/recipesDraftsFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="draft"
+            app:nullable="true"
+            app:argType="com.scoto.domain.models.RecipeDraft" />
+    </fragment>
+</navigation>

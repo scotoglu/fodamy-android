@@ -1,6 +1,7 @@
 package com.scoto.fodamy.ext
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.net.ConnectivityManager
@@ -10,7 +11,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import com.scoto.fodamy.R
 
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
@@ -51,4 +54,18 @@ fun Context.isDeviceHasConnection(): Boolean {
             networkInfo.isConnected
         }
     }
+}
+
+fun Context.showPermissionDialog(
+    @StringRes message: Int = R.string.dialog_message,
+    positive: () -> Unit
+): AlertDialog {
+    return AlertDialog.Builder(this)
+        .setTitle(R.string.dialog_title)
+        .setMessage(message)
+        .setPositiveButton(R.string.dialog_positive_btn) { dialog, _ ->
+            positive.invoke()
+            dialog.dismiss()
+        }
+        .show()
 }

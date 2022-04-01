@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.scoto.data.local.converters.CategoryConverter
+import com.scoto.data.local.converters.DraftImageConverter
 import com.scoto.data.local.converters.ImageListConverter
 import com.scoto.data.local.converters.RecipeListConverter
 import com.scoto.data.local.converters.UserConverter
@@ -13,6 +14,7 @@ import com.scoto.data.local.dao.UserDao
 import com.scoto.data.local.local_dto.CategoryDb
 import com.scoto.data.local.local_dto.CommentDb
 import com.scoto.data.local.local_dto.RecipeDb
+import com.scoto.data.local.local_dto.RecipeDraftDb
 import com.scoto.data.local.local_dto.RemoteKeyComment
 import com.scoto.data.local.local_dto.RemoteKeysCategory
 import com.scoto.data.local.local_dto.RemoteKeysEditor
@@ -32,16 +34,18 @@ import com.scoto.data.local.local_dto.UserDb
         RemoteKeysEditor::class,
         RemoteKeysLast::class,
         RemoteKeyComment::class,
-        RemoteKeysCategory::class
+        RemoteKeysCategory::class,
+        RecipeDraftDb::class
     ],
-    version = 30,
+    version = 34,
     exportSchema = false
 )
 @TypeConverters(
     UserConverter::class,
     CategoryConverter::class,
     RecipeListConverter::class,
-    ImageListConverter::class
+    ImageListConverter::class,
+    DraftImageConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao

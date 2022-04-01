@@ -96,7 +96,9 @@ class MainActivity : AppCompatActivity() {
                     R.id.splashFragment,
                     R.id.imagePopupFragment,
                     R.id.commentsFragment,
-                    R.id.recipeDetailsFragment -> {
+                    R.id.recipeDetailsFragment,
+                    R.id.addRecipeFragment,
+                    R.id.publishDraftFragment -> {
                         false
                     }
                     else -> {

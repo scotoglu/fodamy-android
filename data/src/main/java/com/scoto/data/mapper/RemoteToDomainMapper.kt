@@ -1,6 +1,7 @@
 package com.scoto.data.mapper
 
 import com.scoto.data.remote.remote_dto.AuthResponse
+import com.scoto.data.remote.remote_dto.CategoryDraftResponse
 import com.scoto.data.remote.remote_dto.CategoryResponse
 import com.scoto.data.remote.remote_dto.CommentResponse
 import com.scoto.data.remote.remote_dto.CommonResponse
@@ -13,6 +14,7 @@ import com.scoto.data.remote.remote_dto.TimeOfRecipeResponse
 import com.scoto.data.remote.remote_dto.UserResponse
 import com.scoto.domain.models.Auth
 import com.scoto.domain.models.Category
+import com.scoto.domain.models.CategoryDraft
 import com.scoto.domain.models.Comment
 import com.scoto.domain.models.Common
 import com.scoto.domain.models.Image
@@ -130,3 +132,11 @@ fun RecipePagingResponse.toDomainModel(): RecipePaging =
         data = this.data.map { it.toDomainModel() },
         pagination = this.pagination.toDomainModel()
     )
+
+fun CategoryDraftResponse.toDomainModel(): CategoryDraft {
+    return CategoryDraft(
+        id = this.id,
+        name = this.name,
+        mainCategoryId = this.mainCategoryId
+    )
+}
