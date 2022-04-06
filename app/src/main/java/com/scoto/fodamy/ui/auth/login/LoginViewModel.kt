@@ -15,8 +15,8 @@ class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : BaseViewModel() {
 
-    val username = MutableLiveData("scoto")
-    val password = MutableLiveData("123456**")
+    val username = MutableLiveData<String>()
+    val password = MutableLiveData<String>()
 
     val requiredFieldWarning: SingleLiveEvent<InputErrorType> = SingleLiveEvent()
     val isRequiredFieldVisible = MutableLiveData<Boolean>()
