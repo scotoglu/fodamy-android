@@ -1,13 +1,13 @@
 ## Table of Content
-- [Abstract](https://github.com/scotoglu/fodamy-android/new/master?readme=1#abstract)
-- [Arts](https://github.com/scotoglu/fodamy-android/new/master?readme=1#arts)
-- [Features](https://github.com/scotoglu/fodamy-android/new/master?readme=1#features)
-- [Branches](https://github.com/scotoglu/fodamy-android/new/master?readme=1#branches)
-- [Modules](https://github.com/scotoglu/fodamy-android/new/master?readme=1#modules)
-- [Package Structure](https://github.com/scotoglu/fodamy-android/new/master?readme=1#package-structure)
-- [Arhitecture](https://github.com/scotoglu/fodamy-android/new/master?readme=1#architecture)
-- [Tech Stack](https://github.com/scotoglu/fodamy-android/new/master?readme=1#tech-stack)
-- [Author](https://github.com/scotoglu/fodamy-android/new/master?readme=1#author)
+- [Abstract](https://github.com/scotoglu/fodamy-android#abstract)
+- [Arts](https://github.com/scotoglu/fodamy-android#arts)
+- [Features](https://github.com/scotoglu/fodamy-android#features)
+- [Branches](https://github.com/scotoglu/fodamy-android#branches)
+- [Modules](https://github.com/scotoglu/fodamy-android#modules)
+- [Package Structure](https://github.com/scotoglu/fodamy-android#package-structure)
+- [Arhitecture](https://github.com/scotoglu/fodamy-android#architecture)
+- [Tech Stack](https://github.com/scotoglu/fodamy-android/#tech-stack)
+- [Author](https://github.com/scotoglu/fodamy-android#author)
 
 # Abstract
 
