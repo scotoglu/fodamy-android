@@ -1,0 +1,121 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="editMode"
+            type="Boolean" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="com.scoto.fodamy.ui.comments.adapter.CommentsAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.scoto.fodamy.ui.comments.CommentsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.comments.CommentsFragment">
+
+        <com.scoto.fodamy.util.CustomToolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backButtonVisible="true"
+            app:endIconVisibility="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onBackListener="@{()->viewModel.backTo() }"
+            app:title="@string/screen_title_comments" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_comments"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:background="@color/secondary_background"
+            android:orientation="vertical"
+            app:fieldVisibility="@{!viewModel.editMode}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/et_add_comment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
+            tools:listitem="@layout/user_comment_card" />
+
+        <EditText
+            android:id="@+id/et_add_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:layout_marginBottom="@dimen/size_margin_8dp"
+            android:background="@drawable/bg_add_comment_edittext"
+            android:hint="@string/hint_comment"
+            android:text="@={viewModel.comment}"
+            app:fieldVisibility="@{!viewModel.editMode}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_add_comment"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_add_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:background="@drawable/bg_send_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()->viewModel.onSend()}"
+            android:src="@drawable/ic_send"
+            app:fieldVisibility="@{!viewModel.editMode}"
+            app:layout_constraintBottom_toBottomOf="@+id/et_add_comment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_add_comment"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/et_edit_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="@dimen/size_padding_5dp"
+            android:text="@={viewModel.editableComment}"
+            app:fieldVisibility="@{viewModel.editMode}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
+            tools:text="@string/sample_directions" />
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/PrimaryButtonSmall.Filled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.onUpdate()}"
+            android:text="@string/btn_save"
+            app:fieldVisibility="@{viewModel.editMode}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.scoto.fodamy.util.CustomStateView
+            android:id="@+id/custom_state_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onRetryClick="@{() ->adapter.retry()}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

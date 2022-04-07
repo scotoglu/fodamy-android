@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.scoto.fodamy.ui.dialog.unfollow.UnfollowViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/size_margin_16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_unfollow"
+            style="@style/PrimaryButtonLarge.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dialog_btn_bg"
+            android:onClick="@{()->vm.unfollow()}"
+            android:text="@string/btn_unfollow"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_20sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel"
+            style="@style/PrimaryButtonLarge.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:backgroundTint="@color/white"
+            android:onClick="@{()->vm.backTo()}"
+            android:text="@string/btn_cancel"
+            android:textColor="@color/dialog_btn_text_blue"
+            android:textSize="@dimen/text_size_20sp" />
+
+    </LinearLayout>
+</layout>

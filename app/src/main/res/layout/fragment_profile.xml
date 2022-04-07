@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.scoto.fodamy.ui.profile.ProfileViewModel" />
+
+        <variable
+            name="user"
+            type="com.scoto.domain.models.User" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.scoto.fodamy.util.CustomToolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconVisibility="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onEndIconListener="@{()->viewModel.logout()}" />
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_margin_8dp"
+            android:layout_marginEnd="@dimen/size_margin_8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/nunito_semibold"
+            android:gravity="center"
+            android:onClick="@{()->viewModel.toLogin()}"
+            android:padding="4dp"
+            android:text="@string/login"
+            android:textSize="@dimen/text_size_16sp"
+            android:visibility="gone"
+            app:drawableEndCompat="@drawable/ic_arrow_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            imageLoaderCircle="@{user.image.url}"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="@dimen/size_margin_8dp"
+            android:src="@drawable/ic_user_placeholder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@{user.username}"
+            android:textAlignment="center"
+            android:textColor="@color/cinder"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            tools:text="Username" />
+
+        <TextView
+            android:id="@+id/tv_followed_and_following"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_semibold"
+            android:textAlignment="center"
+            app:followerCount="@{user.followedCount}"
+            app:followingCount="@{user.followingCount}"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username"
+            tools:text="12 Takipçi 12 Takip Edilen" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_8dp"
+            android:layout_marginTop="@dimen/size_margin_16dp"
+            android:layout_marginEnd="@dimen/size_margin_8dp"
+            app:cardCornerRadius="@dimen/corner_radius_0dp"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_followed_and_following">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_title_recipe"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/profile_text_recipes"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_title_comment"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_title_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/profile_text_comments"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_title_likes"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tv_title_recipe"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_title_likes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/profile_text_like"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tv_title_comment"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/tv_count_recipe"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@{Integer.toString(user.recipeCount)}"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_count_comment"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title_recipe"
+                    tools:text="12" />
+
+                <!--                    There is no data about comment count form user. It's dummy data-->
+                <TextView
+                    android:id="@+id/tv_count_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@{Integer.toString(user.followingCount)}"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_count_like"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tv_count_recipe"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title_comment"
+                    tools:text="12" />
+
+                <TextView
+                    android:id="@+id/tv_count_like"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@{Integer.toString(user.likesCount)}"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tv_count_comment"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title_likes"
+                    tools:text="12" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_view">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size_margin_8dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_recipes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/text_recipes"
+                    android:textColor="@color/cinder"
+                    android:textSize="@dimen/text_size_18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recipes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_recipes"
+                    tools:listitem="@layout/item_category_recipe" />
+
+                <TextView
+                    android:id="@+id/tv_likes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_16dp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/text_likes"
+                    android:textColor="@color/cinder"
+                    android:textSize="@dimen/text_size_18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_recipes" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_likes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_likes"
+                    tools:listitem="@layout/item_category_recipe" />
+
+                <com.scoto.fodamy.util.CustomStateView
+                    android:id="@+id/custom_state_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

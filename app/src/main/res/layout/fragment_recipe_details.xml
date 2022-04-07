@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.scoto.fodamy.ui.recipe_details.RecipeDetailsViewModel" />
+
+        <variable
+            name="recipe"
+            type="com.scoto.domain.models.Recipe" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.scoto.fodamy.util.CustomToolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backButtonVisible="true"
+            app:endIcon="@drawable/ic_share"
+            app:endIconVisibility="true"
+            app:onBackListener="@{()->viewModel.backTo()}"
+            app:onEndIconListener="@{()->viewModel.onShare()}"
+            app:title="@{viewModel.recipe.title}" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/secondary_background">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:context=".ui.recipe_details.RecipeDetailsFragment">
+
+
+                    <ImageView
+                        android:id="@+id/iv_food_image"
+                        imageLoaderNormal="@{viewModel.recipe.images.get(0).url}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{()->viewModel.onImageSlider()}"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/photo"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="@{viewModel.recipe.title}"
+                        android:textColor="@color/cinder"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_food_image"
+                        tools:text="Makarna Tarifi" />
+
+                    <TextView
+                        android:id="@+id/tv_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:text="@{viewModel.recipe.category.name}"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintBottom_toTopOf="@id/divider3"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_title"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                        tools:text="Hamur İşi" />
+
+                    <TextView
+                        android:id="@+id/tv_difference"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/size_margin_16dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:text="@{viewModel.recipe.difference}"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_category"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_category"
+                        tools:text="1 dakika önce" />
+
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="8dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_comment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_margin_16dp"
+                        android:layout_marginBottom="@dimen/size_margin_16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:onClick="@{()->viewModel.onCommentAdd()}"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/linear_layout_like"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider3">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_comment"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_comment_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:textSize="@dimen/text_size_16sp"
+                            app:comments="@{viewModel.recipe.commentCount}"
+                            tools:text="1 Yorum" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_like"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_margin_16dp"
+                        android:layout_marginBottom="@dimen/size_margin_16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:onClick="@{()->viewModel.onLike()}"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/linear_layout_comment"
+                        app:layout_constraintTop_toBottomOf="@id/divider3">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_heart"
+                            android:tint="@{viewModel.recipe.isLiked ? @color/red : @color/black}" />
+
+                        <TextView
+                            android:id="@+id/tv_like_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:textSize="@dimen/text_size_16sp"
+                            app:likes="@{viewModel.recipe.likeCount}"
+                            tools:text="1 Beğeni" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include
+                    android:id="@+id/include_user"
+                    layout="@layout/user_info_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_margin_16dp"
+                    app:isFollowing="@{viewModel.recipe.user.isFollowing}"
+                    app:isVisible="@{true}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                    app:user="@{viewModel.recipe.user}"
+                    app:vm="@{viewModel}" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_margin_16dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/include_user">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_margin_16dp"
+                        android:layout_marginTop="@dimen/size_margin_32dp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:padding="@dimen/size_padding_4dp"
+                        android:text="@string/text_title_ingredients"
+                        android:textColor="@color/cinder"
+                        android:textSize="@dimen/text_size_18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="@dimen/icon_size_32dp"
+                        android:layout_height="@dimen/icon_size_32dp"
+                        android:layout_marginTop="@dimen/size_margin_16dp"
+                        android:layout_marginEnd="@dimen/size_margin_16dp"
+                        android:background="@drawable/bg_recipe_details_icons"
+                        android:src="@drawable/ic_restaurant"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_number_of_person"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_number_of_person"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/size_margin_16dp"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:padding="@dimen/size_padding_4dp"
+                        android:text="@{viewModel.recipe.numberOfPerson.text}"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintBottom_toTopOf="@id/divider4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView"
+                        tools:text="4-6" />
+
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/size_margin_16dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_number_of_person" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_margin_16dp"
+                        android:layout_marginTop="@dimen/size_margin_8dp"
+                        android:layout_marginEnd="@dimen/size_margin_16dp"
+                        android:layout_marginBottom="@dimen/size_margin_8dp"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:text="@{viewModel.recipe.ingredients}"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider4"
+                        tools:text="@string/sample_directions" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_margin_16dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+                    <TextView
+                        android:id="@+id/tv_description_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_margin_16dp"
+                        android:layout_marginTop="@dimen/size_margin_32dp"
+                        android:layout_marginBottom="@dimen/size_margin_32dp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:padding="@dimen/size_padding_4dp"
+                        android:text="@string/text_title_directions"
+                        android:textColor="@color/cinder"
+                        android:textSize="@dimen/text_size_18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/divider5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_margin_16dp"
+                        android:layout_marginEnd="@dimen/size_margin_16dp"
+                        android:background="@drawable/bg_recipe_details_icons"
+                        android:src="@drawable/ic_clock"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_duration"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/size_margin_16dp"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:padding="@dimen/size_padding_4dp"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/divider5"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/imageView2"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                        app:timeOfRecipe="@{viewModel.recipe.timeOfRecipe.text}"
+                        tools:text="20 dk" />
+
+                    <View
+                        android:id="@+id/divider5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintTop_toBottomOf="@id/tv_duration" />
+
+                    <TextView
+                        android:id="@+id/tv_directions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_margin_16dp"
+                        android:layout_marginTop="@dimen/size_margin_8dp"
+                        android:layout_marginEnd="@dimen/size_margin_16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@{viewModel.recipe.directions}"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider5"
+                        tools:text="@string/sample_directions" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <include
+                    android:id="@+id/include_comment"
+                    layout="@layout/user_comment_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_margin_16dp"
+                    app:comment="@{viewModel.comment}"
+                    app:isEmptyComment="@{viewModel.comment != null ? false :true }"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/PrimaryButtonLarge.Filled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_margin_16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="@dimen/size_margin_16dp"
+                    android:layout_marginBottom="@dimen/size_margin_16dp"
+                    android:onClick="@{()->viewModel.onCommentAdd()}"
+                    android:text="@string/btn_add_comment"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/include_comment" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</layout>

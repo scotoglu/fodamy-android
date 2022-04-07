@@ -1,3 +1,158 @@
 <resources>
     <string name="app_name">Fodamy</string>
+
+    <!--Walkthrough Contents-->
+    <string name="walkthrough_title_1">Welcome to Fodamy Network!</string>
+    <string name="walkthrough_title_2">Finding recipes were not that easy.</string>
+    <string name="walkthrough_title_3">Add new recipe.</string>
+    <string name="walkthrough_title_4">Share recipes with others.</string>
+
+    <string name="walkthrough_descriptions_1">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="walkthrough_descriptions_2">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="walkthrough_descriptions_3">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="walkthrough_descriptions_4">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+
+
+    <!--  Auth-->
+    <string name="username">Kullanıcı Adı</string>
+    <string name="email_address">E-mail Adresi</string>
+    <string name="password">Şifre</string>
+    <string name="forgotten_password">Şifrenizi mi unuttunuz?</string>
+    <string name="reset">Sıfırla</string>
+    <string name="signup">Üye Ol</string>
+    <string name="login">Giriş Yap</string>
+    <string name="reset_password">Şifre Sıfırlama</string>
+    <string name="have_account">Hesabın mı var?\u0020</string>
+    <string name="dont_have_account">Hesabın yok mu?\u0020</string>
+    <!--Required Fields-->
+    <string name="required_field_password">Şifre alanı boş bırakılamaz.</string>
+    <string name="required_field_password_length">Şifre en az altı karakter olmalıdır.</string>
+    <string name="required_field_email">Email alanı boş bırakılamaz.</string>
+    <string name="required_field_username">Kullanıcı adı alanı boş bırakılamaz.</string>
+    <string name="required_auth">Giriş yapmanız gereklidir.</string>
+    <string name="empty_field">""</string>
+
+    <!--    Tabs-->
+    <string name="tab_editor_choice">Editör Seçimi</string>
+    <string name="tab_recently_added">Son Eklenenler</string>
+    <string name="tab_empty">Empty</string>
+
+    <!--    Hints-->
+    <string name="hint_comment">Bir şey yaz...</string>
+
+    <!--    Buttons-->
+    <string name="btn_followed">Takip Ediliyor</string>
+    <string name="btn_unfollowed">Takip Et</string>
+    <string name="btn_cancel">İptal</string>
+    <string name="btn_giveup">Vazgeç</string>
+    <string name="btn_unfollow">Takibi Bırak</string>
+    <string name="btn_edit">Düzenle</string>
+    <string name="btn_delete">Sil</string>
+    <string name="btn_save">Kaydet</string>
+    <string name="btn_back">Geri</string>
+    <string name="btn_add_comment">Yorum Ekle</string>
+    <string name="btn_move_next">İlerle</string>
+    <string name="btn_start">Başla</string>
+    <string name="btn_reload">Yeniden Yükle</string>
+    <string name="btn_save_draft">Taslağı Kaydet</string>
+
+
+    <!--With Params-->
+    <string name="comment">%1$d Yorum</string>
+    <string name="like">%1$d Beğeni</string>
+    <string name="recipe">%1$d Tarif</string>
+    <string name="follower">%1$d Takipçi</string>
+    <string name="timeOfRecie">%1s dk</string>
+    <string name="comment_and_like_count">%1d Yorum %1d Beğeni</string>
+    <string name="recipes_and_following_count">%1d Tarif %1d Takipçi</string>
+    <string name="followed_and_following_count">%1d Takip Edilen %1d Takipçi</string>
+
+    <!--    Menu items-->
+    <string name="menu_home">Home</string>
+    <string name="menu_favorites">Favorites</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_list">List</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    Content Description-->
+    <string name="user_profile_content_description">user profile</string>
+    <string name="editor_choice_badge_content_description">Editor Choice Badge</string>
+    <string name="food_image_content_description">Food Image</string>
+
+    <!--    Error Texts-->
+    <string name="text_error_load_state">Tarifler yüklenemedi.</string>
+    <string name="empty_list_text">Henüz birşeyler eklenmedi.</string>
+
+    <!--    Titles-->
+    <string name="text_title_ingredients">Malzemeler</string>
+    <string name="text_title_directions">Yapılışı</string>
+    <string name="text_title_comments">Yorumlar</string>
+    <string name="empty_comment">Yorum yok.</string>
+
+    <!--    Samples-->
+    <string name="sample_comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="sample_ingredients">8 su bardağı su 1 silme yemek kaşığı tuz 250 gram makarna(yarım paket) 3 yemek kaşığı sıvı yağ Makarna süzgeci</string>
+    <string name="sample_directions">8 su bardağı su 1 silme yemek kaşığı tuz 250 gram makarna(yarım paket) 3 yemek kaşığı sıvı yağ Makarna süzgeci</string>
+
+
+    <string name="toolbar_back_text">Geri</string>
+    <string name="screen_title_comments">YORUMLAR</string>
+    <string name="see_all_items">TÜMÜNÜ GÖR</string>
+    <string name="text_loading">Yükleniyor...</string>
+    <string name="text_goes_wrong">Bir şeyler yanlış gitti!</string>
+    <string name="text_recipes">Tarifler</string>
+    <string name="text_likes">Beğeniler</string>
+    <string name="text_action">OK</string>
+    <string name="text_sharing">Tarif paylaşımı yakında aktif olucak</string>
+
+    <string name="success_comment_add">Yorum Eklendi.</string>
+    <string name="success_comment_delete">Yorum Silindi.</string>
+    <string name="success_comment_edit">Yorum Düzenlendi.</string>
+    <string name="success_register">Kullanıcı kaydedildi.Giriş yapabilirsiniz.</string>
+    <string name="success_login">Giriş Başarılı.</string>
+    <string name="success_reset_password">Emaili kontrol edin.</string>
+    <string name="success_like">Tarif beğenildi.</string>
+    <string name="success_dislike">Tarif beğeni kaldırıldı.</string>
+    <string name="success_follow">Takip edildi.</string>
+    <string name="success_unfollow">Takip edilme kaldırıldı.</string>
+    <!--    Warnings-->
+    <string name="check_internet_connection">İnternet bağlantınızı kontrol edin</string>
+    <string name="try_to_login">Bu işlemi yapabilmek için, giriş yapmalısınız.</string>
+    <string name="no_comment_in_list">Tarife ait henüz yorum eklenmemiş.</string>
+    <string name="no_connection">Bağlantınızı kontrol edin.</string>
+    <string name="profile_text_recipes">Tarif</string>
+    <string name="profile_text_comments">Yorum</string>
+    <string name="profile_text_like">Beğeni</string>
+
+    <!--    Draft Screen-->
+    <string name="draft_name">Taslak Tarif</string>
+    <string name="add_recipe_edit">Düzenle</string>
+    <string name="add_recipe_add_photo">Fotoğraf Ekle</string>
+    <string name="add_recipe_delete">Sil</string>
+    <string name="add_recipe_send_recipe">YENİ TARİF GÖNDER</string>
+
+    <!--    Add Recipe -->
+    <string name="recipe_title">Tarif Adı</string>
+    <string name="recipe_number_of_person">Kaç Kişilik</string>
+    <string name="recipe_time_of_recipe">Hazırlanma Süresi</string>
+    <string name="recipe_ingredients">Malzemeler</string>
+    <string name="recipe_directions">Hazırlanışı</string>
+    <string name="recipe_category">Kategori</string>
+    <string name="edit_draft">Taslak Düzenle</string>
+    <string name="publish_draft">Tarifi Yayına Gönder</string>
+    <string name="edit_draft_2">Taslağı Düzenle</string>
+    <string name="text_privacy_policy">Kullanım koşullarını kabul ediyorum.</string>
+    <string name="btn_ready_and_send">Tarifim Hazır, Yayına Gönder</string>
+    <string name="access_denied">İzin Verilmedi.</string>
+    <string name="loaded_photos">Yüklenen Fotoğraflar</string>
+    <string name="add_recipe_required_fields">Tarif adı, Malzemeler, Hazırlanış ve Kategori kısımları boş bırakılamaz.</string>
+    <string name="accept_terms">Kullanım koşullarını kabul etmelisiniz.</string>
+    <string name="dialog_title">İzinler</string>
+    <string name="dialog_message">Devam edebilmek için izin vermelisiniz.</string>
+    <string name="dialog_positive_btn">İzin Ver</string>
+    <string name="success_send_recipe">Tarif gönderildi.</string>
+    <string name="take_photo">Fotoğraf Çek</string>
+    <string name="choose_from_gallery">Galeriden Seç</string>
 </resources>

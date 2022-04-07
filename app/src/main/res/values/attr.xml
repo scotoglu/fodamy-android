@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomToolbar">
+        <attr name="backButtonVisible" format="boolean" />
+        <attr name="endIcon" format="reference" />
+        <attr name="title" format="string" />
+        <attr name="endIconVisibility" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomStateView">
+        <attr name="cv_text_size" format="dimension" />
+        <attr name="isLoading" format="boolean" />
+        <attr name="isErrorOccured" format="boolean" />
+    </declare-styleable>
+</resources>

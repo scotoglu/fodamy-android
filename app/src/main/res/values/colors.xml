@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#EC381C</color>
+    <color name="cinder">#212529</color>
+    <color name="raven">#6C757D</color>
+    <color name="zircon">#DEE2E6</color>
+    <color name="heather">#ADB5BD</color>
+    <color name="text_dark">#212529</color>
+    <color name="text_content">#6C757D</color>
+    <color name="indicator_inactive">#F9C3BB</color>
+    <color name="secondary_background">#F1F2F3</color>
+    <color name="dialog_btn_bg">#DAD0CF</color>
+    <color name="dialog_btn_text_blue">#007AFF</color>
+    <color name="dialog_btn_text_blue_light">#0A84FF</color>
+    <color name="color_add_recipe_title">#E49D35</color>
+
 </resources>

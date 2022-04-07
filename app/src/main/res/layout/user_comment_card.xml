@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isEmptyComment"
+            type="Boolean" />
+
+        <variable
+            name="comment"
+            type="com.scoto.domain.models.Comment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_margin_16dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginTop="@dimen/size_margin_16dp"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:fontFamily="@font/nunito_bold"
+            android:padding="@dimen/size_padding_4dp"
+            android:text="@string/text_title_comments"
+            android:textColor="@color/cinder"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintBottom_toTopOf="@+id/divider2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toTopOf="@id/iv_user_image"
+            app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+        <ImageView
+            android:id="@+id/iv_user_image"
+            imageLoaderCircle="@{comment.user.image.url}"
+            android:layout_width="@dimen/icon_size_48dp"
+            android:layout_height="@dimen/icon_size_48dp"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginTop="@dimen/size_margin_16dp"
+            android:visibility="@{isEmptyComment ? View.GONE :  View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            tools:src="@drawable/ic_baseline_person_outline_48" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_8dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@{comment.user.username}"
+            android:textColor="@color/cinder"
+            android:textSize="@dimen/text_size_18sp"
+            android:visibility="@{isEmptyComment ? View.GONE :  View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/rv_recipes_and_followers"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_image"
+            app:layout_constraintTop_toTopOf="@+id/iv_user_image"
+            tools:text="scoto" />
+
+        <TextView
+            android:id="@+id/rv_recipes_and_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_8dp"
+            android:layout_marginTop="@dimen/size_margin_16dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:textSize="@dimen/text_size_16sp"
+            android:visibility="@{isEmptyComment ? View.GONE :  View.VISIBLE}"
+            app:followerCount="@{comment.user.followingCount}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_user_image"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_image"
+            app:layout_constraintTop_toTopOf="@+id/iv_user_image"
+            app:recipeCount="@{comment.user.recipeCount}"
+            tools:text="3 Tarif 3 Takipçi" />
+
+
+        <TextView
+            android:id="@+id/tv_difference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginTop="@dimen/size_margin_8dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="@{comment.difference}"
+            android:visibility="@{isEmptyComment ? View.GONE :  View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_user_image"
+            tools:text="3 dakika önce" />
+
+        <TextView
+            android:id="@+id/tv_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_margin_16dp"
+            android:layout_marginTop="@dimen/size_margin_8dp"
+            android:layout_marginEnd="@dimen/size_margin_16dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:paddingBottom="5dp"
+            android:text="@{comment.text}"
+            android:textSize="@dimen/text_size_16sp"
+            android:visibility="@{isEmptyComment ? View.GONE :  View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_difference"
+            tools:text="@string/sample_comment" />
+
+
+        <TextView
+            android:id="@+id/tv_no_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_margin_16dp"
+            android:layout_marginBottom="@dimen/size_margin_16dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="@string/empty_comment"
+            android:textSize="@dimen/text_size_20sp"
+            android:visibility="@{isEmptyComment ? View.VISIBLE :  View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

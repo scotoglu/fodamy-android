@@ -1,0 +1,157 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="recipe"
+            type="com.scoto.domain.models.Recipe" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_food_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_margin_16dp"
+        app:cardCornerRadius="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/civ_profile"
+                imageLoaderCircle="@{recipe.user.image.url}"
+                android:layout_width="@dimen/icon_size_48dp"
+                android:layout_height="@dimen/icon_size_48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/user_profile_content_description"
+                android:src="@drawable/ic_baseline_person_outline_48"
+                app:layout_constraintBottom_toTopOf="@id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_margin_8dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@{recipe.user.username}"
+                android:textColor="@color/cinder"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_follower_and_followed"
+                app:layout_constraintStart_toEndOf="@+id/civ_profile"
+                app:layout_constraintTop_toTopOf="@+id/civ_profile"
+                tools:text="scoto" />
+
+            <TextView
+                android:id="@+id/tv_follower_and_followed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_margin_8dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="@dimen/text_size_16sp"
+                app:followerCount="@{recipe.user.followingCount}"
+                app:layout_constraintBottom_toBottomOf="@+id/civ_profile"
+                app:layout_constraintStart_toEndOf="@+id/civ_profile"
+                app:layout_constraintTop_toBottomOf="@+id/tv_username"
+                app:recipeCount="@{recipe.user.recipeCount}"
+                tools:text="3 Tarif 0 Takipçi" />
+
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_margin_16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@{recipe.title}"
+                android:textColor="@color/cinder"
+                android:textSize="@dimen/text_size_18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                tools:text="Makarna Tarifi" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_margin_16dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@{recipe.category.name}"
+                android:textSize="@dimen/text_size_18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                tools:text="Hamur İşi" />
+
+            <ImageView
+                android:id="@+id/iv_food_image"
+                imageLoaderNormal="@{recipe.images.get(0).url}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/size_margin_16dp"
+                android:layout_marginTop="@dimen/size_margin_16dp"
+                android:layout_marginEnd="@dimen/size_margin_16dp"
+                android:contentDescription="@string/food_image_content_description"
+                android:scaleType="centerCrop"
+                android:src="@drawable/photo"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_category" />
+
+            <ImageView
+                android:id="@+id/iv_badge"
+                android:layout_width="@dimen/icon_size_48dp"
+                android:layout_height="@dimen/icon_size_48dp"
+                android:layout_marginTop="@dimen/size_margin_16dp"
+                android:layout_marginEnd="@dimen/size_margin_16dp"
+                android:background="@drawable/bg_editor_choice"
+                android:contentDescription="@string/editor_choice_badge_content_description"
+                android:src="@drawable/ic_editor_pick"
+                android:visibility="@{recipe.isEditorChoice ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="@+id/iv_food_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_food_image" />
+
+
+            <TextView
+                android:id="@+id/tv_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_margin_16dp"
+                android:layout_marginTop="@dimen/size_margin_16dp"
+                android:layout_marginBottom="@dimen/size_margin_16dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="@dimen/text_size_16sp"
+                app:commentCount="@{recipe.commentCount}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_food_image"
+                app:likeCount="@{recipe.likeCount}"
+                tools:text="0 Yorum 0 Takipçi" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_20sp">20sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_15sp">15sp</dimen>
+    <dimen name="text_size_14sp">14sp</dimen>
+    <dimen name="text_size_12sp">12sp</dimen>
+
+
+    <dimen name="size_margin_40dp">40dp</dimen>
+    <dimen name="size_margin_32dp">32dp</dimen>
+    <dimen name="size_margin_24dp">24dp</dimen>
+    <dimen name="size_margin_16dp">16dp</dimen>
+    <dimen name="size_margin_8dp">8dp</dimen>
+
+    <dimen name="size_padding_32dp">32dp</dimen>
+    <dimen name="size_padding_15dp">15dp</dimen>
+    <dimen name="size_padding_8dp">8dp</dimen>
+    <dimen name="size_padding_4dp">4dp</dimen>
+    <dimen name="size_padding_5dp">5dp</dimen>
+
+    <dimen name="icon_size_32dp">32dp</dimen>
+    <dimen name="icon_size_48dp">48dp</dimen>
+
+    <dimen name="corner_radius_15dp">15dp</dimen>
+    <dimen name="corner_radius_0dp">0dp</dimen>
+
+    <dimen name="card_radius_5dp">5dp</dimen>
+    <dimen name="view_size_256dp">256dp</dimen>
+    <dimen name="size_45dp">45dp</dimen>
+
+</resources>

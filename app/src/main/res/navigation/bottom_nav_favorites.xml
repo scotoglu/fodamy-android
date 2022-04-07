@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_nav_favorites"
+    app:startDestination="@id/favoritesFragment">
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.scoto.fodamy.ui.favorites.FavoritesFragment"
+        android:label="FavoritesFragment">
+        <action
+            android:id="@+id/action_favoritesFragment_to_login_flow2"
+            app:destination="@id/login_flow" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_categoryRecipesFragment"
+            app:destination="@id/categoryRecipesFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_recipe_flow2"
+            app:destination="@id/recipe_flow">
+            <argument
+                android:name="RECIPE"
+                app:argType="com.scoto.domain.models.Recipe" />
+        </action>
+    </fragment>
+    <include app:graph="@navigation/login_flow" />
+    <include app:graph="@navigation/recipe_flow" />
+    <fragment
+        android:id="@+id/categoryRecipesFragment"
+        android:name="com.scoto.fodamy.ui.category_recipes.CategoryRecipesFragment"
+        android:label="CategoryRecipesFragment">
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_recipe_flow"
+            app:destination="@id/recipe_flow">
+            <argument
+                android:name="RECIPE"
+                app:argType="com.scoto.domain.models.Recipe" />
+        </action>
+        <argument
+            android:name="CategoryId"
+            app:argType="integer" />
+        <argument
+            android:name="CategoryTitle"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_login_flow"
+            app:destination="@id/login_flow" />
+    </fragment>
+</navigation>

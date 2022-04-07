@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recipe_flow"
+    app:startDestination="@id/recipeDetailsFragment">
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="com.scoto.fodamy.ui.recipe_details.RecipeDetailsFragment"
+        android:label="RecipeDetailsFragment">
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_imagePopupFragment"
+            app:destination="@id/imagePopupFragment" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_unfollowDialog"
+            app:destination="@id/unfollowDialog" />
+        <argument
+            android:name="RECIPE"
+            app:argType="com.scoto.domain.models.Recipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.scoto.fodamy.ui.comments.CommentsFragment"
+        android:label="CommentsFragment">
+        <argument
+            android:name="RECIPE_ID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_commentsFragment_to_commentDialog"
+            app:destination="@id/commentDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/imagePopupFragment"
+        android:name="com.scoto.fodamy.ui.image_popup.ImagePopupFragment"
+        android:label="ImagePopupFragment">
+        <argument
+            android:name="images"
+            app:argType="com.scoto.domain.models.ImageList" />
+    </fragment>
+    <dialog
+        android:id="@+id/unfollowDialog"
+        android:name="com.scoto.fodamy.ui.dialog.unfollow.UnfollowDialog"
+        android:label="UnfollowDialog">
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+    </dialog>
+    <dialog
+        android:id="@+id/commentDialog"
+        android:name="com.scoto.fodamy.ui.dialog.comment.CommentDialog"
+        android:label="CommentDialog" >
+        <argument
+            android:name="commentId"
+            app:argType="integer" />
+        <argument
+            android:name="recipeId"
+            app:argType="integer" />
+    </dialog>
+</navigation>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.scoto.fodamy.ui.dialog.comment.CommentDialogViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/size_margin_16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dialog_button_up"
+            android:backgroundTint="@color/dialog_btn_bg"
+            android:fontFamily="@font/nunito_semibold"
+            android:letterSpacing="0"
+            android:onClick="@{()->vm.edit()}"
+            android:padding="0dp"
+            android:text="@string/btn_edit"
+            android:textAllCaps="false"
+            android:textColor="@color/dialog_btn_text_blue_light"
+            android:textSize="@dimen/text_size_20sp"
+            app:backgroundTint="@color/dialog_btn_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dialog_button_down"
+            android:backgroundTint="@color/dialog_btn_bg"
+            android:fontFamily="@font/nunito_semibold"
+            android:letterSpacing="0"
+            android:onClick="@{()->vm.delete()}"
+            android:padding="0dp"
+            android:text="@string/btn_delete"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_20sp"
+            app:backgroundTint="@color/dialog_btn_bg"
+            app:layout_constraintTop_toBottomOf="@+id/divider7"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel"
+            style="@style/PrimaryButtonLarge.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/white"
+            android:onClick="@{()->vm.backTo()}"
+            android:text="@string/btn_cancel"
+            android:textColor="@color/dialog_btn_text_blue"
+            android:textSize="@dimen/text_size_20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_delete" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/heather"
+            app:layout_constraintBottom_toTopOf="@id/btn_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_edit" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
